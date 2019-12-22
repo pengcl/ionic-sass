@@ -1,0 +1,85 @@
+<app-header></app-header>
+<mat-sidenav-container class="example-container">
+    <mat-sidenav mode="side" opened>
+        <div class="user">
+            <ion-avatar>
+                <img src="/assets/images/avatar.jpg">
+            </ion-avatar>
+            <p class="user-name">{{user.name}}</p>
+            <ion-list>
+                <ion-item routerLink="/admin/company/list" detail>
+                    <ion-label>
+                        <p>当前组织名称</p>
+                        <h3><a (click)="$event.stopPropagation()" [routerLink]="['/admin/company/item',company.id]" href="javascript:;">{{company.companyName}}</a></h3>
+                    </ion-label>
+                </ion-item>
+                <ion-item lines="none">
+                    <ion-label>
+                        <p>当前账户余额（含知产通）</p>
+                        <h3 [innerHTML]="balance | rmb"></h3>
+                    </ion-label>
+                </ion-item>
+                <!--<ion-item lines="none" detail>
+                    <ion-label>
+                        <p>我的身份</p>
+                        <h3>组织管理员</h3>
+                    </ion-label>
+                    <ion-note>更换身份</ion-note>
+                </ion-item>-->
+            </ion-list>
+        </div>
+        <mat-list>
+            <h3 routerLink="/admin/dashboard" routerLinkActive="active" mat-subheader>
+                <mat-icon mat-list-icon>cloud</mat-icon>
+                知识产权云服务
+            </h3>
+            <mat-divider></mat-divider>
+            <ng-container>
+                <h3 mat-subheader>
+                    <mat-icon mat-list-icon>thumb_up</mat-icon>
+                    托管
+                </h3>
+                <mat-list-item [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:0}"
+                               routerLinkActive="active">
+                    <p mat-line>商标托管</p>
+                </mat-list-item>
+                <mat-list-item [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:1}"
+                               routerLinkActive="active">
+                    <p mat-line>专利托管</p>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </ng-container>
+            <ng-container>
+                <h3 mat-subheader>
+                    <mat-icon mat-list-icon>card_travel</mat-icon>
+                    保险箱
+                </h3>
+                <mat-list-item routerLink="/admin/box/list" routerLinkActive="active">
+                    <p mat-line>我的资产</p>
+                </mat-list-item>
+                <mat-list-item routerLink="/admin/box/upload" routerLinkActive="active">
+                    <p mat-line>添加资产</p>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </ng-container>
+            <ng-container>
+                <h3 mat-subheader>
+                    <mat-icon mat-list-icon>supervisor_account</mat-icon>
+                    报告
+                </h3>
+                <mat-list-item routerLink="/admin/plan/list" routerLinkActive="active">
+                    <p mat-line>企业体检报告</p>
+                </mat-list-item>
+                <mat-list-item routerLink="/admin/risk/list" routerLinkActive="active">
+                    <p mat-line>知产风险报告</p>
+                </mat-list-item>
+                <mat-list-item routerLink="/admin/monitor/list" routerLinkActive="active">
+                    <p mat-line>竞争对手监控报告</p>
+                </mat-list-item>
+            </ng-container>
+        </mat-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

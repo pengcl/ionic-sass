@@ -1,0 +1,70 @@
+<mat-card class="profile">
+  <div class="position">
+    <a class="link" href="/admin/dashboard"><mat-icon slot="start">home</mat-icon>首页</a>
+    <span class="divider">/</span>
+    <span>企业体检报告</span>
+  </div>
+  <mat-card-header>
+    <mat-card-title>企业体检报告</mat-card-title>
+  </mat-card-header>
+</mat-card>
+<div class="container">
+  <table *ngIf="dataSource" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef style="width: 50px">
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                      [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)"
+                      [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> 索引.</th>
+      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> 报告名称</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.name}}
+      </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef style="width: 200px"> 生成日期</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.createTime}}
+      </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef style="width: 250px"> 操作</th>
+      <td mat-cell *matCellDef="let element">
+        <ion-button (click)="preDownload(element.id)" [download]="'1.docx'" size="small" color="light" [href]="FILE_PREFIX_URL + element.fileId">
+          <ion-icon name="md-download"></ion-icon>
+          下载
+        </ion-button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        (click)="selection.toggle(row)">
+    </tr>
+  </table>
+  <mat-paginator showFirstLastButtons></mat-paginator>
+</div>

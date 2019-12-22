@@ -1,0 +1,117 @@
+<mat-card class="profile">
+    <div class="position">
+        <a routerLink="/admin/dashboard" class="link">
+            <mat-icon slot="start">home</mat-icon>
+            首页</a>
+        <span class="divider">/</span>
+        <a routerLink="/admin/box/list" class="link" href="javascript:;">知产保险箱</a>
+        <span class="divider">/</span>
+        <span>上传文件</span>
+    </div>
+    <mat-card-header>
+        <mat-card-title>上传文件</mat-card-title>
+    </mat-card-header>
+</mat-card>
+<div class="container">
+<mat-card>
+    <mat-card-content>
+        <form [formGroup]="form">
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="6">
+                        <mat-form-field class="uploader">
+                            <mat-label>上传文件</mat-label>
+                            <input type="text" formControlName="fileId" matInput style="display: none" required>
+                            <div class="weui-uploader">
+                                <div class="weui-uploader__hd">
+                                    <div class="weui-uploader__info"></div>
+                                </div>
+                                <div class="weui-uploader__bd">
+                                    <div class="weui-uploader__input-box" [ngClass]="{'uploaded' : form.get('fileId').valid}" [ngStyle]="{'backgroundImage':'url(' + FILE_PREFIX_URL + form.get('fileId').value + ')'}">
+                                        <div *ngIf="form.get('fileId').invalid" class="weui-uploader__input-box-text">
+                                            <ion-icon name="cloud-upload"></ion-icon>
+                                            <h3>请选择上传文件</h3>
+                                            <p>可上传图片、文档类型文件</p>
+                                        </div>
+                                        <div *ngIf="form.get('fileId').valid" class="weui-uploader__input-box-text">
+                                            <ion-icon name="cloud-upload"></ion-icon>
+                                            <h3>重新上传</h3>
+                                        </div>
+                                        <input
+                                                class="weui-uploader__input"
+                                                type="file"
+                                                accept="image/*"
+                                                multiple
+                                                [weui-uploader-file]="uploader"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-form-field>
+                    </ion-col>
+                    <ion-col size="6"></ion-col>
+                    <ion-col size="6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>文件属性</mat-label>
+                            <mat-select formControlName="fileField" required>
+                                <mat-option [value]="0">
+                                    商标
+                                </mat-option>
+                                <mat-option [value]="1">
+                                    专利
+                                </mat-option>
+                                <mat-option [value]="2">
+                                    版权
+                                </mat-option>
+                                <mat-option [value]="3">
+                                    科技项目
+                                </mat-option>
+                                <mat-option [value]="4">
+                                    品牌
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="form.get('fileField').hasError('required')">
+                                文件属性是 <strong>必填</strong> 项
+                            </mat-error>
+                        </mat-form-field>
+                    </ion-col>
+                    <ion-col size="6"></ion-col>
+                    <ion-col size="6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>文件类型</mat-label>
+                            <mat-select formControlName="fileType" required>
+                                <mat-option [value]="0">
+                                    发票
+                                </mat-option>
+                                <mat-option [value]="1">
+                                    合同
+                                </mat-option>
+                                <mat-option [value]="2">
+                                    证书
+                                </mat-option>
+                                <mat-option [value]="3">
+                                    作件
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="form.get('fileField').hasError('required')">
+                                文件类型是 <strong>必填</strong> 项
+                            </mat-error>
+                        </mat-form-field>
+                    </ion-col>
+                    <ion-col size="6"></ion-col>
+                    <ion-col size="12">
+                        <div class="row-buttons">
+                            <ion-button (click)="submit()" mat-raised-button color="primary">
+                                确认上传
+                            </ion-button>
+                            <ion-button (click)="back()" mat-raised-button color="light">
+                                返回
+                            </ion-button>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </mat-card-content>
+</mat-card>
+</div>

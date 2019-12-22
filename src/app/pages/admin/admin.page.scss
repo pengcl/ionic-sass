@@ -1,0 +1,59 @@
+mat-sidenav-container {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  mat-sidenav {
+    width: 250px;
+
+    mat-list {
+      h3 {
+        /*&.active {
+          //background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
+          background: rgba(0, 0, 0, .12);
+          position: relative;
+        }*/
+        outline: none;
+
+        mat-icon {
+          font-size: 16px;
+          width: 16px;
+          height: 16px;
+          margin-right: 10px;
+        }
+      }
+
+      mat-list-item {
+        font-size: 12px;
+        padding-left: 26px;
+        height: 32px;
+        color: #666;
+        box-sizing: border-box;
+        cursor: pointer;
+        outline: unset;
+
+        &.active {
+          background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
+          position: relative;
+        }
+      }
+    }
+
+  }
+}
+
+ion-avatar {
+  margin: 40px auto 10px;
+}
+
+.user-name {
+  text-align: center;
+}
+
+.sign-fab {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+}

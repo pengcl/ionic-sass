@@ -1,0 +1,52 @@
+.button-row {
+  position: absolute;
+  right: var(--ion-grid-column-padding-xl, var(--ion-grid-column-padding, 5px));
+  z-index: 999;
+
+  button {
+    margin-left: 10px;
+  }
+}
+
+.content {
+  background: #fff;
+  display: block;
+}
+
+mat-tab-group.main-tab {
+  &::ng-deep {
+    .mat-tab-label {
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      border-radius: 4px 4px 0 0;
+      opacity: 0.85;
+      margin-right: 5px;
+
+      &.mat-tab-label-active {
+        background: #027CFF;
+        opacity: 1;
+        color: #fff;
+      }
+    }
+
+    .mat-tab-body-wrapper {
+      display: none !important;
+    }
+  }
+}
+
+mat-tab-group.sub-tab {
+  &::ng-deep {
+    .mat-tab-label {
+      min-width: 100px;
+    }
+    .mat-tab-body-wrapper {
+      display: none !important;
+    }
+  }
+}
+table {
+  th {
+    background: #fafafa;
+  }
+}

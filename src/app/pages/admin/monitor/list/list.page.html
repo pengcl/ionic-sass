@@ -1,0 +1,83 @@
+<mat-card class="profile">
+    <div class="position">
+        <a class="link" href="/admin/dashboard">
+            <mat-icon slot="start">home</mat-icon>
+            首页</a>
+        <span class="divider">/</span>
+        <span>竞争对手监控</span>
+    </div>
+    <mat-card-header>
+        <mat-card-title>竞争对手监控</mat-card-title>
+    </mat-card-header>
+</mat-card>
+<div class="container">
+    <mat-form-field class="example-full-width">
+        <mat-label>请输入您需要监控的竞争对手名称</mat-label>
+        <input [(ngModel)]="name" type="tel" matInput autocomplete="off">
+        <button (click)="add(name)" mat-button matSuffix>
+            <mat-icon matSuffix>mode_edit</mat-icon>
+            添加
+        </button>
+    </mat-form-field>
+    <table *ngIf="dataSource" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef style="width: 50px">
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()"
+                              [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)"
+                              [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef style="width: 80px"> 索引.</th>
+            <td mat-cell *matCellDef="let element;let i = index"> {{i + 1}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> 企业名称</th>
+            <td mat-cell *matCellDef="let element">
+                <a [routerLink]="['/admin/project/item',element.id]" class="link"
+                   href="javascript:;">{{element.companyName}}</a>
+            </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef style="width: 200px"> 添加时间</th>
+            <td mat-cell *matCellDef="let element">
+                <a [routerLink]="['/admin/employee/list']"
+                   [queryParams]="{supplier:'',type:'',project:element.id}"
+                   class="link" href="javascript:;">{{element.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}</a>
+            </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef style="width: 250px"> 操作</th>
+            <td mat-cell *matCellDef="let element">
+                <ion-button (click)="delete(element.id,element.companyName)" size="small" color="light">
+                    <ion-icon name="trash"></ion-icon>
+                    删除
+                </ion-button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            (click)="selection.toggle(row)">
+        </tr>
+    </table>
+    <mat-paginator showFirstLastButtons></mat-paginator>
+</div>

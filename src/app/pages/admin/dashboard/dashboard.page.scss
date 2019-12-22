@@ -1,0 +1,113 @@
+.content {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px;
+  .content-left {
+    flex: 0.7;
+  }
+  .content-right {
+    flex: 0.3;
+  }
+
+  mat-card {
+    margin: 10px;
+    mat-card-header {
+      border-bottom: 1px solid #dedede;
+      mat-card-title {
+        font-size: 14px;
+      }
+      mat-card-subtitle {
+        top: 16px;
+        right: 16px;
+        position: absolute;
+        margin: 0;
+      }
+      &::ng-deep {
+        .mat-card-header-text {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+mat-card.profile {
+  border-radius: 0;
+
+  [mat-card-avatar] {
+    width: 72px;
+    height: 72px;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  mat-card-header {
+    display: flex;
+
+    mat-card-title {
+      margin-top: 10px;
+    }
+    &::ng-deep {
+      mat-card-header-text {
+        align-self: center;
+      }
+    }
+  }
+
+  .page-extra {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    white-space: nowrap;
+    min-width: 242px;
+    margin: 0 0 0 88px;
+
+    & > div {
+      position: relative;
+      display: inline-block;
+      padding: 0 32px;
+
+      & > p:first-child {
+        margin-bottom: 4px;
+        color: #666;
+        font-size: 14px;
+        line-height: 22px;
+      }
+
+      & > p {
+        margin: 0;
+        color: #333;
+        font-size: 30px;
+        line-height: 38px;
+
+        & > span {
+          color: #666;
+          font-size: 20px;
+        }
+      }
+
+      &::after {
+        position: absolute;
+        top: 8px;
+        right: 0;
+        width: 1px;
+        height: 40px;
+        background-color: #999;
+        content: '';
+      }
+    }
+
+    & > div:last-child {
+      padding-right: 0;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+}

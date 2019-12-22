@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab *ngFor="let notify of data" [label]="notify.title">
+        <ion-list>
+          <ion-item *ngFor="let item of notify.list;let i = index" [lines]="notify.list.length - 1 === i ? 'none' : ''">
+            <ion-avatar *ngIf="item.type !== '待办'" slot="start">
+              <img [src]="item.avatar">
+            </ion-avatar>
+            <ion-label>
+              <h3>{{item.title}}</h3>
+              <p *ngIf="item.type !== '待办'">{{item.datetime}}</p>
+              <p *ngIf="item.type === '待办'">{{item.description}}</p>
+            </ion-label>
+            <ion-note *ngIf="item.type === '待办'">{{item.extra}}</ion-note>
+          </ion-item>
+        </ion-list>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

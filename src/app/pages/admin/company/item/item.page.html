@@ -1,0 +1,230 @@
+<mat-card class="profile">
+    <div class="position">
+        <a routerLink="/admin/dashboard" class="link">
+            <mat-icon slot="start">home</mat-icon>
+            首页</a>
+        <span class="divider">/</span>
+        <a routerLink="/admin/company/list" class="link" href="javascript:;">我的主体</a>
+        <span class="divider">/</span>
+        <span>{{id === '0' ? '添加主体' : form.get('companyName').value}}</span>
+    </div>
+    <mat-card-header>
+        <mat-card-title>{{id === '0' ? '添加主体' : form.get('companyName').value}}</mat-card-title>
+    </mat-card-header>
+</mat-card>
+<div class="container">
+    <form [formGroup]="form">
+        <ion-grid>
+            <ion-row>
+                <ion-col size="6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>企业名称</mat-label>
+                        <input type="text" formControlName="companyName" matInput placeholder="请填写企业完整名称" required>
+                        <mat-error
+                                *ngIf="form.get('companyName').hasError('maxLength') && !form.get('companyName').hasError('required')">
+                            企业名称必须小于 <strong>32位</strong>
+                        </mat-error>
+                        <mat-error
+                                *ngIf="form.get('companyName').hasError('minLength') && !form.get('companyName').hasError('required')">
+                            企业名称须大于 <strong>4位</strong>
+                        </mat-error>
+                        <mat-error *ngIf="form.get('companyName').hasError('required')">
+                            企业名称是 <strong>必填</strong> 项
+                        </mat-error>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>统一社会信用代码</mat-label>
+                        <input type="text" formControlName="creditNumber" matInput placeholder="请填写统一社会信用代码" required>
+                        <span (click)="getNumber()" mat-button matSuffix>获取</span>
+                        <mat-error
+                                *ngIf="form.get('creditNumber').hasError('maxLength') && !form.get('creditNumber').hasError('required')">
+                            统一社会信用代码必须小于 <strong>18位</strong>
+                        </mat-error>
+                        <mat-error
+                                *ngIf="form.get('creditNumber').hasError('minLength') && !form.get('creditNumber').hasError('required')">
+                            统一社会信用代码必须大于 <strong>18位</strong>
+                        </mat-error>
+                        <mat-error *ngIf="form.get('creditNumber').hasError('required')">
+                            统一社会信用代码是 <strong>必填</strong> 项
+                        </mat-error>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>所在地区</mat-label>
+                        <input style="display: none" formControlName="province" matInput required>
+                        <input style="display: none" formControlName="city" matInput required>
+                        <input style="display: none" formControlName="area" matInput required>
+                        <input (click)="cityPicker()"
+                               [value]="form.get('province').value + form.get('city').value + form.get('area').value"
+                               matInput
+                               placeholder="请选择所在地区" required readonly>
+                        <button (click)="cityPicker()" mat-button matSuffix mat-icon-button>
+                            <ion-icon name="arrow-down"></ion-icon>
+                        </button>
+                        <mat-error *ngIf="form.get('province').hasError('required')">
+                            所在地区是 <strong>必填</strong> 项
+                        </mat-error>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>详细地址</mat-label>
+                        <input formControlName="address" matInput placeholder="请输入企业详细地址" required>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>所属行业</mat-label>
+                        <input style="display: none" formControlName="industryIds" matInput
+                               required>
+                        <mat-chip-list #chipList required>
+                            <mat-chip *ngFor="let industry of selectedIndustries" (removed)="remove(industry)">
+                                {{industry.industryName}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                            <input [matChipInputFor]="chipList" (click)="presentModal()" matInput
+                                   required readonly>
+                        </mat-chip-list>
+                        <button (click)="presentModal()" mat-button matSuffix mat-icon-button>
+                            <ion-icon name="arrow-down"></ion-icon>
+                        </button>
+                        <mat-error *ngIf="form.get('industryIds').hasError('required')">
+                            所属行业是 <strong>必填</strong> 项
+                        </mat-error>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>联系人</mat-label>
+                        <input type="text" formControlName="name" matInput placeholder="请填写企业联系人姓名" required>
+                        <mat-error
+                                *ngIf="form.get('name').hasError('pattern') && !form.get('name').hasError('required')">
+                            联系人必须是 <strong>中文</strong>
+                        </mat-error>
+                        <mat-error *ngIf="form.get('name').hasError('required')">
+                            联系人名称是 <strong>必填</strong> 项
+                        </mat-error>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>联系电话</mat-label>
+                        <input type="text" formControlName="mobile" matInput placeholder="请填写企业联系人电话" required>
+                        <mat-error
+                                *ngIf="form.get('mobile').hasError('pattern') && !form.get('mobile').hasError('required')">
+                            请输入 <strong>正确</strong> 的联系电话
+                        </mat-error>
+                        <mat-error *ngIf="form.get('mobile').hasError('required')">
+                            联系电话是 <strong>必填</strong> 项
+                        </mat-error>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>邮箱</mat-label>
+                        <input matInput formControlName="email" [errorStateMatcher]="matcher">
+                        <!--<mat-hint>Errors appear instantly!</mat-hint>-->
+                        <mat-error
+                                *ngIf="form.get('email').hasError('email') && !form.get('email').hasError('required')">
+                            请输入<strong>正确</strong>的邮箱地址
+                        </mat-error>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="6">
+                    <mat-form-field class="uploader">
+                        <mat-label>营业执照</mat-label>
+                        <input type="text" formControlName="licenseFileId" matInput placeholder="请填写统一社会信用代码"
+                               style="display: none">
+                        <div class="weui-uploader">
+                            <div class="weui-uploader__hd">
+                                <div class="weui-uploader__info"></div>
+                            </div>
+                            <div class="weui-uploader__bd">
+                                <div class="weui-uploader__input-box"
+                                     [ngClass]="{'uploaded' : form.get('licenseFileId').valid}"
+                                     [ngStyle]="{'backgroundImage':'url(' + FILE_PREFIX_URL + form.get('licenseFileId').value + ')'}">
+                                    <div *ngIf="form.get('licenseFileId').invalid"
+                                         class="weui-uploader__input-box-text">
+                                        <ion-icon name="cloud-upload"></ion-icon>
+                                        <h3>请选择上传文件</h3>
+                                        <p>可上传图片、文档类型文件</p>
+                                    </div>
+                                    <div *ngIf="form.get('licenseFileId').valid" class="weui-uploader__input-box-text">
+                                        <ion-icon name="cloud-upload"></ion-icon>
+                                        <h3>重新上传</h3>
+                                    </div>
+                                    <input
+                                            class="weui-uploader__input"
+                                            type="file"
+                                            accept="image/*"
+                                            multiple
+                                            [weui-uploader-file]="uploader.A"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="6">
+                    <mat-form-field class="uploader">
+                        <mat-label>组织机构代证</mat-label>
+                        <input type="text" formControlName="mechanismId" matInput placeholder="请上传组织机构代证"
+                               style="display: none">
+                        <div class="weui-uploader">
+                            <div class="weui-uploader__hd">
+                                <div class="weui-uploader__info"></div>
+                            </div>
+                            <div class="weui-uploader__bd">
+                                <div class="weui-uploader__input-box"
+                                     [ngClass]="{'uploaded' : form.get('mechanismId').valid}"
+                                     [ngStyle]="{'backgroundImage':'url(' + FILE_PREFIX_URL + form.get('mechanismId').value + ')'}">
+                                    <div *ngIf="form.get('mechanismId').invalid" class="weui-uploader__input-box-text">
+                                        <ion-icon name="cloud-upload"></ion-icon>
+                                        <h3>请选择上传文件</h3>
+                                        <p>可上传图片、文档类型文件</p>
+                                    </div>
+                                    <div *ngIf="form.get('mechanismId').valid" class="weui-uploader__input-box-text">
+                                        <ion-icon name="cloud-upload"></ion-icon>
+                                        <h3>重新上传</h3>
+                                    </div>
+                                    <input
+                                            class="weui-uploader__input"
+                                            type="file"
+                                            accept="image/*"
+                                            multiple
+                                            [weui-uploader-file]="uploader.B"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>备注</mat-label>
+                        <textarea formControlName="remark" matInput
+                                  placeholder="若有其他关于企业的详细情况可在此处记录，以便我们更好地服务客户..."></textarea>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="12">
+                    <div class="row-buttons">
+                        <ion-button (click)="submit()" mat-raised-button color="primary">
+                            <span *ngIf="id === '0'">
+                                <span *ngIf="submitted">下一步</span>
+                                <span *ngIf="!submitted">确定新增</span>
+                            </span>
+                            <span *ngIf="id !== '0'">修改</span>
+                            <ion-ripple-effect></ion-ripple-effect>
+                        </ion-button>
+                        <ion-button (click)="back()" mat-raised-button color="light">
+                            返回
+                        </ion-button>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+</div>

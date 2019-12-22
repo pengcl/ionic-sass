@@ -1,0 +1,20 @@
+ion-grid {
+  --ion-grid-padding: 0;
+
+  ion-col {
+    --ion-grid-column-padding: 0;
+  }
+}
+
+.table-actions {
+  mat-form-field {
+    width: 90%;
+  }
+  .actions {
+    text-align: right;
+    button {
+      margin-left: 8px;
+      margin-top: 10px;
+    }
+  }
+}

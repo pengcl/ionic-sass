@@ -1,0 +1,16 @@
+mat-card {
+  padding: 0;
+}
+
+:host {
+  ::ng-deep {
+    .mat-tab-labels {
+      display: block;
+      text-align: center;
+    }
+
+    .mat-tab-label {
+      min-width: auto;
+    }
+  }
+}

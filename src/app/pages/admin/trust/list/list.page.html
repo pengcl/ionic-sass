@@ -1,0 +1,162 @@
+<mat-card class="profile">
+    <div class="position">
+        <a class="link" href="javascript:;">
+            <mat-icon slot="start">home</mat-icon>
+            首页</a>
+        <span class="divider">/</span>
+        <span>知产托管</span>
+    </div>
+    <mat-card-header>
+        <mat-card-title>知产托管</mat-card-title>
+    </mat-card-header>
+</mat-card>
+<div class="container">
+    <div class="button-row">
+        <button mat-raised-button (click)="trusts(1)" color="primary">托管</button>
+        <button mat-raised-button (click)="trusts(0)" color="warn">取消</button>
+    </div>
+    <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="onTab($event)">
+        <mat-tab aria-label="trademark" label="商标">
+            <table *ngIf="source.trademark" mat-table [dataSource]="source.trademark" class="mat-elevation-z8">
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef style="width: 50px">
+                        <mat-checkbox (change)="$event ? masterToggle('trademark') : null"
+                                      [checked]="selection['trademark'].hasValue() && isAllSelected('trademark')"
+                                      [indeterminate]="selection['trademark'].hasValue() && !isAllSelected('trademark')"
+                                      [aria-label]="checkboxLabel('trademark')">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                      (change)="$event ? selection['trademark'].toggle(row) : null"
+                                      [checked]="selection['trademark'].isSelected(row)"
+                                      [aria-label]="checkboxLabel('trademark',row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> 索引.</th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef style="width: 250px"> 名称</th>
+                    <td mat-cell *matCellDef="let element">{{element.brandName}}</td>
+                </ng-container>
+
+                <!-- Level Column -->
+                <ng-container matColumnDef="logo">
+                    <th mat-header-cell *matHeaderCellDef style="width: 250px"> 商标</th>
+                    <td mat-cell *matCellDef="let element">
+                        <img *ngIf="element.imageUrl" style="height: 36px" [src]="element.imageUrl">
+                    </td>
+                </ng-container>
+
+                <!-- Qualification Column -->
+                <ng-container matColumnDef="types">
+                    <th mat-header-cell *matHeaderCellDef> 包含分类</th>
+                    <td mat-cell *matCellDef="let element">{{element.type}}</td>
+                </ng-container>
+
+                <!-- Used Column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef style="width: 80px"> 托管</th>
+                    <td class="actions" mat-cell *matCellDef="let element">
+                        <mat-slide-toggle (click)="trust('trademark',element);$event.stopPropagation()"
+                                          [checked]="!!element.status"></mat-slide-toggle>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayed['trademark']"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayed['trademark'];"
+                    (click)="selection['trademark'].toggle(row)">
+                </tr>
+            </table>
+            <mat-paginator [pageIndex]="trademark.params.page - 1" (page)="trademarkPage($event)"
+                           [length]="trademark.total" [pageSize]="trademark.params.rows"
+                           showFirstLastButtons></mat-paginator>
+        </mat-tab>
+        <mat-tab aria-label="patent" label="专利">
+            <table *ngIf="source.patent" mat-table [dataSource]="source.patent" class="mat-elevation-z8">
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef style="width: 50px">
+                        <mat-checkbox (change)="$event ? masterToggle('patent') : null"
+                                      [checked]="selection['patent'].hasValue() && isAllSelected('patent')"
+                                      [indeterminate]="selection['patent'].hasValue() && !isAllSelected('patent')"
+                                      [aria-label]="checkboxLabel('patent')">
+                        </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                                      (change)="$event ? selection['patent'].toggle(row) : null"
+                                      [checked]="selection['patent'].isSelected(row)"
+                                      [aria-label]="checkboxLabel('patent',row)">
+                        </mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> 索引.</th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> 申请公布日</th>
+                    <td mat-cell *matCellDef="let element">{{element.publicationDate}}</td>
+                </ng-container>
+
+                <!-- Level Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> 专利名称</th>
+                    <td mat-cell *matCellDef="let element">
+                        <a *ngIf="element.status" [routerLink]="['/admin/trust/item',element.applicationCode]"
+                           class="link" href="javascript:;">{{element.inventionTitle}}</a>
+                        <span *ngIf="!element.status">{{element.inventionTitle}}</span>
+                    </td>
+                </ng-container>
+
+                <!-- Qualification Column -->
+                <ng-container matColumnDef="no">
+                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> 申请号</th>
+                    <td mat-cell *matCellDef="let element">{{element.applicationCode}}</td>
+                </ng-container>
+
+                <!-- Qualification Column -->
+                <ng-container matColumnDef="publishNo">
+                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> 申请公布号</th>
+                    <td mat-cell *matCellDef="let element">{{element.publicationCode}}</td>
+                </ng-container>
+
+                <!-- Qualification Column -->
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef style="width: 100px"> 专利类型</th>
+                    <td mat-cell *matCellDef="let element">{{element.patentType}}</td>
+                </ng-container>
+
+                <!-- Used Column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef style="width: 80px"> 托管</th>
+                    <td class="actions" mat-cell *matCellDef="let element">
+                        <mat-slide-toggle (click)="trust('patent',element)"
+                                          [checked]="!!element.status"></mat-slide-toggle>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayed['patent']"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayed['patent'];"
+                    (click)="selection['patent'].toggle(row)">
+                </tr>
+            </table>
+            <mat-paginator [pageIndex]="patent.params.page - 1" (page)="patentPage($event)"
+                           [length]="patent.total" [pageSize]="patent.params.rows"
+                           showFirstLastButtons></mat-paginator>
+        </mat-tab>
+    </mat-tab-group>
+</div>

@@ -1,0 +1,29 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>选择行业</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">关闭</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <ion-list *ngFor="let industry of industries">
+      <ion-list-header>
+        <mat-checkbox ngDefaultControl [(ngModel)]="selected[industry.id]" (ngModelChange)="checked(industry)">{{industry.industryName}}</mat-checkbox>
+      </ion-list-header>
+
+      <ion-item *ngIf="industry.children">
+          <mat-checkbox ngDefaultControl [(ngModel)]="selected[sub.id]" (ngModelChange)="checked(sub)" *ngFor="let sub of industry.children">{{sub.industryName}}</mat-checkbox>
+      </ion-item>
+    </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="confirm()" expand="full">
+      确定
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
