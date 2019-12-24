@@ -11,13 +11,14 @@ import {PlanService} from '../plan.service';
     styleUrls: ['./list.page.scss']
 })
 export class AdminPlanListPage {
-    company = this.companySvc.currentCompany;
+    id = this.route.snapshot.queryParams.company ? this.route.snapshot.queryParams.company : this.companySvc.currentCompany.id;
+
     displayedColumns: string[] = ['name', 'time', 'actions'];
     dataSource;
     selection = new SelectionModel<any>(true, []);
-    suppliers;
+    total = 0;
     params = {
-        id: this.company.id,
+        id: this.id,
         demension: '0',
         page: 1,
         rows: 10
@@ -27,14 +28,24 @@ export class AdminPlanListPage {
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
                 private companySvc: CompanyService,
                 private planSvc: PlanService) {
-        planSvc.list(this.params).subscribe(res => {
-            console.log(res);
+        this.getData();
+    }
+
+    getData() {
+        this.planSvc.list(this.params).subscribe(res => {
+            this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });
     }
 
     preDownload(id) {
         this.planSvc.preDownload(id, 1).subscribe();
+    }
+
+    page(e) {
+        this.params.page = e.pageIndex + 1;
+        this.params.rows = e.pageSize;
+        this.getData();
     }
 
     /** Whether the number of selected elements matches the total number of rows. */

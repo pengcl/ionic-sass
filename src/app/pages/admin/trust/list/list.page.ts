@@ -81,11 +81,13 @@ export class AdminTrustListPage {
     }
 
     trademarkPage(e) {
+        this.trademark.params.rows = e.pageSize;
         this.trademark.params.page = e.pageIndex + 1;
         this.getTrusts();
     }
 
     patentPage(e) {
+        this.patent.params.rows = e.pageSize;
         this.patent.params.page = e.pageIndex + 1;
         this.getPatents();
     }
@@ -97,13 +99,16 @@ export class AdminTrustListPage {
                 custId: this.company.id,
                 brandNames: item.brandName,
                 status: item.status === 1 ? 0 : 1
-            }).subscribe();
+            }).subscribe(res => {
+                this.getTrusts();
+            });
         } else {
             this.trustSvc.patentTrust({
                 custId: this.company.id,
                 applicationCodes: item.applicationCode,
                 status: item.status === 1 ? 0 : 1
             }).subscribe(res => {
+                this.getPatents();
             });
         }
     }
@@ -132,13 +137,16 @@ export class AdminTrustListPage {
                 custId: this.company.id,
                 brandNames: values,
                 status
-            }).subscribe();
+            }).subscribe((res) => {
+                this.getTrusts();
+            });
         } else {
             this.trustSvc.patentTrust({
                 custId: this.company.id,
                 applicationCodes: values,
                 status
             }).subscribe(res => {
+                this.getPatents();
             });
         }
     }

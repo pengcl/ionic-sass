@@ -1,0 +1,121 @@
+/*ion-grid {
+  --ion-grid-padding: 0;
+
+  ion-col {
+    --ion-grid-column-padding: 0;
+  }
+}*/
+.mat-radio-content {
+  margin-bottom: 20px;
+
+  label {
+    line-height: 20px;
+    display: inline-block;
+  }
+
+  mat-radio-button {
+    margin: 0 5px;
+  }
+}
+
+:host {
+  &::ng-deep {
+    .mat-horizontal-content-container {
+      padding: 24px;
+    }
+  }
+}
+
+mat-form-field {
+  &.no-border {
+    &::ng-deep {
+      .mat-form-field-underline {
+        display: none;
+      }
+    }
+  }
+}
+
+.uploader {
+  &::ng-deep {
+    .mat-form-field-underline {
+      display: none;
+    }
+  }
+
+  .weui-uploader__input-box {
+    margin: 10px 10px 0 0;
+    border-radius: 5px;
+    border: 1px dashed currentColor;
+
+    &:before, &:after {
+      display: none;
+    }
+
+    .weui-uploader__input-box-text {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate3d(-50%, -50%, 0);
+
+      ion-icon {
+        display: block;
+        margin: 5px auto;
+        font-size: 36px;
+      }
+
+      h3 {
+        font-size: 14px;
+        text-align: center;
+        margin: 5px 0 10px;
+      }
+
+      p {
+        text-align: center;
+        margin: 10px 0 0;
+        color: #999;
+      }
+    }
+    &.uploaded {
+      border: 1px dashed #fff;
+      color: #fff;
+    }
+  }
+
+  .weui-uploader__bd {
+    margin-bottom: 0;
+    margin-right: 0;
+  }
+
+  .weui-uploader__file {
+    width: 100%;
+    height: 150px;
+  }
+
+  .weui-uploader__input-box {
+    width: 100%;
+    height: 150px;
+  }
+}
+
+.step-actions {
+  button {
+    margin-right: 10px;
+  }
+}
+
+.company-info {
+  p {
+    margin: 7px;
+    span {
+      color: #666;
+    }
+  }
+}
+
+h5 {
+  span {
+    font-size: 14px;
+    color: #999;
+  }
+}

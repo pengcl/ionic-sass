@@ -13,16 +13,23 @@ export class AdminPage {
     user = this.authSvc.currentUser;
     company = this.companySvc.currentCompany;
     balance = 0;
+    show = true;
 
     constructor(private dialogSvc: DialogService,
                 private authSvc: AuthService,
                 private accountSvc: AccountService,
                 private companySvc: CompanyService) {
-        console.log(this.user);
+        companySvc.company.subscribe(res => {
+            this.company = res;
+        });
         accountSvc.balance(this.company.id).subscribe(res => {
             console.log(res);
             this.balance = res;
         });
+    }
+
+    routeChange(e) {
+        console.log(e);
     }
 
 }

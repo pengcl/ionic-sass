@@ -30,29 +30,29 @@ const routes: Routes = [
                 loadChildren: () =>
                     import('./company/item/item.module').then(m => m.AdminCompanyItemPageModule)
             },
+            {// 生成报告
+                path: 'company/qualification/:id',
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./company/qualification/qualification.module').then(m => m.AdminCompanyQualificationPageModule)
+            },
+            {// 生成报告
+                path: 'checkout',
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./checkout/checkout.module').then(m => m.AdminCheckoutPageModule)
+            },
             {// 体检报告列表
                 path: 'plan/list',
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./plan/list/list.module').then(m => m.AdminPlanListPageModule)
             },
-            {// 体检报告详情
-                path: 'plan/item/:id',
-                canActivate: [CompanyGuard],
-                loadChildren: () =>
-                    import('./plan/item/item.module').then(m => m.AdminPlanItemPageModule)
-            },
             {// 风险报告列表
                 path: 'risk/list',
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./risk/list/list.module').then(m => m.AdminRiskListPageModule)
-            },
-            {// 风险报告详情
-                path: 'risk/item/:id',
-                canActivate: [CompanyGuard],
-                loadChildren: () =>
-                    import('./risk/item/item.module').then(m => m.AdminRiskItemPageModule)
             },
             {// 体检报告列表
                 path: 'monitor/list',
@@ -71,6 +71,12 @@ const routes: Routes = [
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./trust/item/item.module').then(m => m.AdminTrustItemPageModule)
+            },
+            {// 托管商标详情
+                path: 'trust/detail/:id',
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./trust/detail/detail.module').then(m => m.AdminTrustDetailPageModule)
             },
             {// 保险箱
                 path: 'box/list',

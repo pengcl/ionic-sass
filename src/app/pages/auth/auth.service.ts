@@ -82,7 +82,7 @@ export class AuthService {
     }
 
     logout() {
-        this.storage.remove('token');
+        this.storage.clear();
         this.router.navigate(['/auth']);
     }
 }

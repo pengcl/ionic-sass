@@ -26,7 +26,6 @@ export class LoaderPage implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.token);
         if (!this.token) {
             this.router.navigate(['/auth']);
         } else {
@@ -37,7 +36,7 @@ export class LoaderPage implements OnInit {
                         this.companySvc.list({}).subscribe(res => {
                             res.list.forEach((item) => {
                                 if (item.isPrimary === 1) {
-                                    this.storage.set('company', JSON.stringify(item));
+                                    this.companySvc.updateCompanyStatus(item);
                                 }
                             });
                             this.router.navigate(['/admin/dashboard']);

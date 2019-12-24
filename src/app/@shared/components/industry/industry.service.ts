@@ -5,17 +5,19 @@ import {resultProcess} from '../../../@core/utils/utils';
 import {mergeMap as observableMargeMap} from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class IndustryService {
 
-  constructor(@Inject('PREFIX_URL') private PREFIX_URL,
-              private http: HttpClient) {
-  }
+    constructor(@Inject('PREFIX_URL') private PREFIX_URL,
+                private http: HttpClient) {
+    }
 
-  list(): Observable<any> {
-    return this.http.get(this.PREFIX_URL + 'getIndustryList').pipe(observableMargeMap((res: any) => {
-      return resultProcess(res);
-    }));
-  }
+    list(type?): Observable<any> {
+        console.log(type);
+        const url = type ? this.PREFIX_URL + 'getBrandIndustryList' : this.PREFIX_URL + 'getIndustryList';
+        return this.http.get(url).pipe(observableMargeMap((res: any) => {
+            return resultProcess(res);
+        }));
+    }
 }

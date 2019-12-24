@@ -15,7 +15,7 @@ export class AdminRiskListPage {
     displayedColumns: string[] = ['name', 'time', 'actions'];
     dataSource;
     selection = new SelectionModel<any>(true, []);
-    suppliers;
+    total = 0;
     params = {
         custId: this.company.id,
         demension: '0',
@@ -27,14 +27,24 @@ export class AdminRiskListPage {
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
                 private companySvc: CompanyService,
                 private planSvc: RiskService) {
-        planSvc.list(this.params).subscribe(res => {
-            console.log(res);
+        this.getData();
+    }
+
+    getData() {
+        this.planSvc.list(this.params).subscribe(res => {
+            this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });
     }
 
     preDownload(id) {
         this.planSvc.preDownload(id, 1).subscribe();
+    }
+
+    page(e) {
+        this.params.page = e.pageIndex + 1;
+        this.params.rows = e.pageSize;
+        this.getData();
     }
 
     /** Whether the number of selected elements matches the total number of rows. */

@@ -25,7 +25,15 @@ import {
     MatTableModule,
     MatPaginatorModule,
     MatProgressBarModule,
-    MatTabsModule, MatSelectModule, MatButtonToggleModule, MatAutocompleteModule
+    MatTabsModule,
+    MatSelectModule,
+    MatButtonToggleModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatStepperModule,
+    MatRadioModule,
+    MatPaginatorIntl
 } from '@angular/material';
 
 const MATERIAL_PART = [
@@ -51,11 +59,20 @@ const MATERIAL_PART = [
     MatTabsModule,
     MatSelectModule,
     MatButtonToggleModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatStepperModule,
+    MatRadioModule
 ];
 
-import {UploaderModule} from './modules/uploader';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
+const CDK_PART = [DragDropModule];
+
+import {UploaderModule} from './modules/uploader';
+import {NgCircleProgressModule} from 'ng-circle-progress';
+import {Paginator} from './paginator';
 import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
 
 @NgModule({
@@ -67,7 +84,17 @@ import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
         RouterModule,
         IonicModule,
         MATERIAL_PART,
-        UploaderModule
+        CDK_PART,
+        UploaderModule,
+        NgCircleProgressModule.forRoot({
+            // set defaults here
+            radius: 100,
+            outerStrokeWidth: 16,
+            innerStrokeWidth: 8,
+            outerStrokeColor: '#78C000',
+            innerStrokeColor: '#C7E596',
+            animationDuration: 300
+        })
     ],
     exports: [
         CommonModule,
@@ -77,12 +104,15 @@ import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
         RouterModule,
         IonicModule,
         MATERIAL_PART,
+        CDK_PART,
         UploaderModule,
+        NgCircleProgressModule,
         ...COMPONENTS,
         ...PIPES
     ],
     declarations: [...COMPONENTS, ...ENTRY_COMPONENTS, ...PIPES],
-    entryComponents: [ENTRY_COMPONENTS]
+    entryComponents: [ENTRY_COMPONENTS],
+    providers: [{provide: MatPaginatorIntl, useValue: Paginator()}]
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders {

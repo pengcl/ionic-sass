@@ -6,16 +6,17 @@
     <form [formGroup]="form" class="auth-form">
       <mat-form-field>
         <mat-label>用户名</mat-label>
-        <input type="number" pattern="[0-9]*" matInput formControlName="loginid">
+        <input type="number" matInput formControlName="loginid">
       </mat-form-field>
       <mat-form-field>
         <mat-label>验证码</mat-label>
-        <input id="sendValidCode" formControlName="validCode" matInput placeholder="请输入验证码">
-        <span class="valid-code" [ngClass]="{'show' : form.get('loginid').valid}" (click)="sendValidCode()">
+        <input formControlName="validCode" matInput placeholder="请输入验证码">
+
+        <button mat-button matSuffix id="sendValidCode" class="valid-code" (click)="sendValidCode()">
           {{activeText}}
-        </span>
+        </button>
       </mat-form-field>
-      <button (click)="login()" type="button" mat-raised-button color="primary">登录</button>
+      <button id="submit" [disabled]="form.invalid" (click)="login()" type="button" mat-raised-button color="primary">登录</button>
     </form>
   </mat-card-content>
 </mat-card>

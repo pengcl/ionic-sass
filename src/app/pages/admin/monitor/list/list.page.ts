@@ -16,7 +16,7 @@ export class AdminMonitorListPage {
     displayedColumns: string[] = ['position', 'name', 'time', 'actions'];
     dataSource;
     selection = new SelectionModel<any>(true, []);
-    suppliers;
+    total = 0;
     params = {
         custId: this.company.id,
         demension: '0',
@@ -35,6 +35,7 @@ export class AdminMonitorListPage {
 
     getData() {
         this.monitorSvc.list(this.params).subscribe(res => {
+            this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });
     }
@@ -55,12 +56,18 @@ export class AdminMonitorListPage {
         this.dialogSvc.show({content: '您确定要删除' + name + '吗？', cancel: '不了', confirm: '是的'}).subscribe(state => {
             if (state.value) {
                 this.monitorSvc.delete(id, this.company.id).subscribe(res => {
-                    this.dialogSvc.show({content: '删除' + name + '成功', confirm: '我知道了'}).subscribe(()=>{
+                    this.dialogSvc.show({content: '删除' + name + '成功', confirm: '我知道了'}).subscribe(() => {
                         this.getData();
                     });
                 });
             }
         });
+    }
+
+    page(e) {
+        this.params.page = e.pageIndex + 1;
+        this.params.rows = e.pageSize;
+        this.getData();
     }
 
     /** Whether the number of selected elements matches the total number of rows. */

@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {Observable, of as observableOf, Subject} from 'rxjs';
+import {Observable, of as observableOf, Subject, BehaviorSubject} from 'rxjs';
 import {StorageService} from '../../../@core/services/storage.service';
 import {mergeMap as observableMargeMap} from 'rxjs/operators';
 import {resultProcess, formData} from '../../../@core/utils/utils';
@@ -10,11 +10,13 @@ import {resultProcess, formData} from '../../../@core/utils/utils';
 export class CompanyService {
     public companyRedirectUrl: string;
     private companyStatus = new Subject<boolean>();
+    company = new Subject<any>();
 
     constructor(@Inject('PREFIX_URL') private PREFIX_URL,
                 private router: Router,
                 private http: HttpClient,
                 private storage: StorageService) {
+        this.company.next(this.storage.get('company'));
     }
 
     requestCompany() {
@@ -30,6 +32,7 @@ export class CompanyService {
     }
 
     list(body): Observable<any> {
+        body.custType = 1;
         return this.http.get(this.PREFIX_URL + 'getCompCustList', {params: body}).pipe(observableMargeMap((res: any) => {
             return resultProcess(res);
         }));
@@ -47,6 +50,12 @@ export class CompanyService {
 
     update(body): Observable<any> {
         return this.http.post(this.PREFIX_URL + 'updateCust', body).pipe(observableMargeMap((res: any) => {
+            return resultProcess(res);
+        }));
+    }
+
+    default(id): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'setCustPrimary', {custId: id, custType: 1}).pipe(observableMargeMap((res: any) => {
             return resultProcess(res);
         }));
     }
@@ -79,6 +88,7 @@ export class CompanyService {
 
     updateCompanyStatus(company) {
         this.storage.set('company', JSON.stringify(company));
+        this.company.next(company);
         this.companyStatus.next(this.isExist);
     }
 }

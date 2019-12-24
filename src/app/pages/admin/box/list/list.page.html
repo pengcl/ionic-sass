@@ -100,6 +100,6 @@
                 (click)="selection.toggle(row)">
             </tr>
         </table>
-        <mat-paginator showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)" [pageSizeOptions]="[10,20,50]" showFirstLastButtons></mat-paginator>
     </div>
 </div>

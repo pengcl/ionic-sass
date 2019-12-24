@@ -80,22 +80,28 @@ export class AdminTrustItemPage {
 
     getChanges() {
         this.trustSvc.logs(this.change.params).subscribe(res => {
+            this.change.total = res.total;
             this.source.change = new MatTableDataSource<any>(res.list);
         });
     }
 
     getRisks() {
         this.trustSvc.logs(this.risk.params).subscribe(res => {
+            this.risk.total = res.total;
             this.source.risk = new MatTableDataSource<any>(res.list);
         });
     }
 
     changePage(e) {
+        this.change.params.rows = e.pageSize;
         this.change.params.page = e.pageIndex + 1;
+        this.getChanges();
     }
 
     riskPage(e) {
+        this.risk.params.rows = e.pageSize;
         this.risk.params.page = e.pageIndex + 1;
+        this.getRisks();
     }
 
     onTab(e) {

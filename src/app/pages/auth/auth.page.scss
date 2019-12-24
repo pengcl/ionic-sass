@@ -20,13 +20,9 @@ mat-card {
 
   mat-form-field {
     width: 100%;
-    .valid-code {
-      position: absolute;
-      right: 0;
-    }
   }
 
-  button {
+  button#submit {
     width: 100%;
     margin-top: 30px;
   }

@@ -75,7 +75,7 @@
                 </tr>
             </table>
             <mat-paginator [pageIndex]="change.params.page - 1" (page)="changePage($event)"
-                           [length]="change.total" [pageSize]="change.params.rows"
+                           [length]="change.total" [pageSize]="change.params.rows" [pageSizeOptions]="[10,20,50]"
                            showFirstLastButtons></mat-paginator>
         </mat-tab>
         <mat-tab aria-label="risk" label="风险">
@@ -97,7 +97,7 @@
                 </tr>
             </table>
             <mat-paginator [pageIndex]="risk.params.page - 1" (page)="riskPage($event)"
-                           [length]="risk.total" [pageSize]="risk.params.rows"
+                           [length]="risk.total" [pageSize]="risk.params.rows" [pageSizeOptions]="[10,20,50]"
                            showFirstLastButtons></mat-paginator>
         </mat-tab>
     </mat-tab-group>

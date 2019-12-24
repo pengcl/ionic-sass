@@ -15,14 +15,18 @@ export class IndustryComponent {
     selected = {};
     items = [];
     form: FormGroup = new FormGroup({});
+    type = '';
 
     constructor(private modalController: ModalController,
                 private navParams: NavParams,
                 private industrySvc: IndustryService) {
-        industrySvc.list().subscribe(res => {
-            this.industries = listToTree(res);
-        });
         this.items = this.navParams.data.items;
+        this.type = this.navParams.data.type ? this.navParams.data.type : '';
+        industrySvc.list(this.type).subscribe(res => {
+            console.log(res);
+            this.industries = listToTree(res);
+            console.log(this.industries);
+        });
         this.getSelected();
     }
 

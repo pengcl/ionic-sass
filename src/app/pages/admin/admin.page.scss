@@ -16,6 +16,7 @@ mat-sidenav-container {
           position: relative;
         }*/
         outline: none;
+        cursor: pointer;
 
         mat-icon {
           font-size: 16px;
@@ -52,8 +53,8 @@ ion-avatar {
   text-align: center;
 }
 
-.sign-fab {
+.fav-fab {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  right: 70px;
+  bottom: 70px;
 }

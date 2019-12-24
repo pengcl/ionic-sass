@@ -18,6 +18,13 @@ export class TrustService {
             }));
     }
 
+    trademark(id, name): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getBrandGroup&brandName=' + name + '&custId=' + id)
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
+
     patents(body): Observable<any> {
         return this.http.get(this.PREFIX_URL + 'getPatentList', {params: body})
             .pipe(observableMargeMap((res: any) => {

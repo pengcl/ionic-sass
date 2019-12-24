@@ -40,7 +40,7 @@ export class AdminBoxListPage {
 
     getData() {
         this.boxSvc.list(this.params).subscribe(res => {
-            console.log(res);
+            this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });
     }
@@ -52,6 +52,7 @@ export class AdminBoxListPage {
 
     page(e) {
         this.params.page = e.pageIndex + 1;
+        this.params.rows = e.pageSize;
         this.getData();
     }
 

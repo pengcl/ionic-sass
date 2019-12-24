@@ -31,7 +31,7 @@
         <mat-list>
             <h3 routerLink="/admin/dashboard" routerLinkActive="active" mat-subheader>
                 <mat-icon mat-list-icon>cloud</mat-icon>
-                知识产权云服务
+                首页
             </h3>
             <mat-divider></mat-divider>
             <ng-container>
@@ -74,12 +74,37 @@
                     <p mat-line>知产风险报告</p>
                 </mat-list-item>
                 <mat-list-item routerLink="/admin/monitor/list" routerLinkActive="active">
-                    <p mat-line>竞争对手监控报告</p>
+                    <p mat-line>竞争对手监控</p>
                 </mat-list-item>
             </ng-container>
         </mat-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <router-outlet></router-outlet>
+        <router-outlet (change)="routeChange($event)"></router-outlet>
+        <ion-fab class="fav-fab" *ngIf="show" horizontal="right" vertical="bottom" slot="fixed" cdkDrag>
+            <ion-fab-button>
+                <ion-icon name="ios-share"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-list side="top">
+                <ion-fab-button href="https://www.wispclouds.com/" color="primary">
+                    商城
+                </ion-fab-button>
+            </ion-fab-list>
+            <ion-fab-list side="end">
+                <ion-fab-button routerLink="/admin/checkout" color="dark">
+                    下单
+                </ion-fab-button>
+            </ion-fab-list>
+            <ion-fab-list side="bottom">
+                <ion-fab-button (click)="show = false" color="secondary">
+                    关闭
+                </ion-fab-button>
+            </ion-fab-list>
+            <ion-fab-list side="start">
+                <ion-fab-button routerLink="/admin/dashboard" color="light">
+                    首页
+                </ion-fab-button>
+            </ion-fab-list>
+        </ion-fab>
     </mat-sidenav-content>
 </mat-sidenav-container>

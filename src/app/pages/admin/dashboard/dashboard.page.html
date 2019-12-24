@@ -1,95 +1,236 @@
-<mat-card class="profile">
-  <mat-card-header>
-    <div mat-card-avatar class="header-image">
-      <img src="/assets/images/avatar.jpg">
-    </div>
-    <mat-card-title>彭琛岚</mat-card-title>
-    <mat-card-subtitle>前端开发工程师 <span>高级</span></mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-footer class="page-extra">
-    <div>
-      <p>项目数</p>
-      <p>2</p>
-    </div>
-    <div>
-      <p>团队成员</p>
-      <p> 4 </p>
-    </div>
-    <div>
-      <p>上月考勤</p>
-      <p> 20 <span>/ 24</span></p>
-    </div>
-  </mat-card-footer>
-</mat-card>
-
-<div class="content">
-  <div class="content-left">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>我的项目</mat-card-title>
-        <mat-card-subtitle>更多</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <ion-list>
-          <ion-list-header>
-            进行中
-          </ion-list-header>
-
-          <ion-item>
-            <ion-label>
-              <h2>南航外包管理平台</h2>
-              <h3>62% 完成</h3>
-              <p>负责人：彭琛岚，团队成员：彭琛岚、卢立江</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-        <ion-list>
-          <ion-list-header>
-            已完成
-          </ion-list-header>
-
-          <ion-item>
-            <ion-label>
-              <h2>广州品诺企业网站</h2>
-              <h3>100% 完成</h3>
-              <p>负责人：彭琛岚，团队成员：彭琛岚、卢立江</p>
-            </ion-label>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-label>
-              <h2>场所治安管理平台</h2>
-              <h3>100% 完成</h3>
-              <p>负责人：彭琛岚，团队成员：彭琛岚、卢立江、汤准生、唐相杰</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </mat-card-content>
-    </mat-card>
-  </div>
-  <div class="content-right">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>我的待办事项</mat-card-title>
-        <mat-card-subtitle>更多</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <ion-list>
-          <ion-item detail>
-            <ion-label>
-              <h2>签到</h2>
-              <p>签到状态：未签到</p>
-            </ion-label>
-            <ion-note>补签<p style="margin: 0">2019-11-07</p></ion-note>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-label>
-              <h2>工时</h2>
-              <p>今日工时：未提交</p>
-            </ion-label>
-            <ion-note>补签<p style="margin: 0">2019-11-07</p></ion-note>
-          </ion-item>
-        </ion-list>
-      </mat-card-content>
-    </mat-card>
-  </div>
+<div class="container">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="4">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>企业资质与政策匹配</mat-card-title>
+                        <mat-card-subtitle>详情</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <circle-progress *ngIf="matchingStatus"
+                                         [percent]="matchingStatus.custCondCount * 100 / matchingStatus.allCondCount"
+                                         [radius]="100"
+                                         [titleFontSize]="48"
+                                         [titleColor]="'#136BFF'"
+                                         [unitsFontSize]="24"
+                                         [unitsColor]="'#136BFF'"
+                                         [subtitleFontSize]="18"
+                                         [subtitle]="'企业资质完成度'"
+                                         [outerStrokeWidth]="24"
+                                         [innerStrokeWidth]="24"
+                                         [space]="-24"
+                                         [outerStrokeColor]="'#136BFF'"
+                                         [innerStrokeColor]="'#FAFAFA'"
+                                         [animation]="true"
+                                         [startFromZero]="true"
+                                         [animationDuration]="300"
+                        ></circle-progress>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="8">
+                                    <ion-list>
+                                        <ion-item lines="none" style="--padding-start:0;--padding-end: 5px">
+                                            <ion-label>
+                                                <p>最大累计可补贴金额(万元)</p>
+                                                <h3 style="font-size: 36px">{{matchingStatus?.totalSubsidyAmtEnd}}</h3>
+                                            </ion-label>
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-list>
+                                        <ion-item lines="none" style="--padding-start:5px">
+                                            <ion-label>
+                                                <p>匹配政策数量</p>
+                                                <h3 style="font-size: 36px">{{matchingStatus?.policyCount}}</h3>
+                                            </ion-label>
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="3">
+                <mat-card class="auto-height">
+                    <mat-card-header>
+                        <mat-card-title>竞争对手监控</mat-card-title>
+                        <mat-card-subtitle routerLink="/admin/monitor/list">管理</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content style="position: relative">
+                        <app-empty title="请添加您需要监控的企业" *ngIf="monitors && monitors.length < 1" (confirm)="addMonitor($event)"></app-empty>
+                        <ion-list *ngIf="monitors && monitors.length > 0">
+                            <ion-item *ngFor="let item of monitors;let i = index"
+                                      [lines]="i + 1 === monitors?.length ? 'none' : ''">
+                                <ion-label>
+                                    <h3>{{item.companyName}}</h3>
+                                </ion-label>
+                            </ion-item>
+                        </ion-list>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="5">
+                <mat-card class="auto-height">
+                    <mat-card-header>
+                        <mat-card-title>知产托管</mat-card-title>
+                        <mat-card-subtitle routerLink="/admin/trust/list" class="link">添加托管资产</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <app-empty *ngIf="trustStatus && (trustStatus.brandDepositCount === 0 && trustStatus.patentDepositCount === 0)" title="请添加您需要托管的知识产权内容" (confirm)="trust($event)"></app-empty>
+                        <ion-grid *ngIf="trustStatus && (trustStatus.brandDepositCount !== 0 || trustStatus.patentDepositCount !== 0)">
+                            <ion-row>
+                                <ion-col size="4">
+                                    <ion-list>
+                                        <ion-item lines="none" style="--padding-start:0;--padding-end: 5px">
+                                            <ion-label>
+                                                <p>托管商标数量</p>
+                                                <h3 style="font-size: 36px">{{trustStatus?.brandDepositCount}}</h3>
+                                            </ion-label>
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-list>
+                                        <ion-item lines="none" style="--padding-start:5px">
+                                            <ion-label>
+                                                <p>本月变更</p>
+                                                <h3 style="font-size: 36px">{{trustStatus?.brandMonthChangeCount}}</h3>
+                                            </ion-label>
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-list>
+                                        <ion-item lines="none" style="--padding-start:5px">
+                                            <ion-label>
+                                                <p>当前存在风险</p>
+                                                <h3 style="font-size: 36px">{{trustStatus?.brandRiskCount}}</h3>
+                                            </ion-label>
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-list>
+                                        <ion-item lines="none" style="--padding-start:5px">
+                                            <ion-label>
+                                                <p>托管专利数量</p>
+                                                <h3 style="font-size: 36px">{{trustStatus?.patentDepositCount}}</h3>
+                                            </ion-label>
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-list>
+                                        <ion-item lines="none" style="--padding-start:5px">
+                                            <ion-label>
+                                                <p>本月变更</p>
+                                                <h3 style="font-size: 36px">{{trustStatus?.patentMonthChangeCount}}</h3>
+                                            </ion-label>
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-list>
+                                        <ion-item lines="none" style="--padding-start:5px">
+                                            <ion-label>
+                                                <p>当前存在风险</p>
+                                                <h3 style="font-size: 36px">{{trustStatus?.patentRiskCount}}</h3>
+                                            </ion-label>
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="7">
+                <mat-card class="auto-height">
+                    <mat-card-header>
+                        <mat-card-title>报告中心</mat-card-title>
+                        <mat-card-subtitle routerLink="/admin/plan/list">查看更多</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-list>
+                            <ion-list-header>
+                                企业体检报告
+                                <a routerLink="/admin/plan/list" href="javascript:;">更多</a>
+                            </ion-list-header>
+                            <ion-item *ngFor="let item of plans;let i = index"
+                                      [lines]="i + 1 === plans.length ? 'none' : ''">
+                                <ion-label><p>{{item.name}}</p></ion-label>
+                                <ion-note>{{item.createTime | date : 'yyyy-MM-dd'}}</ion-note>
+                            </ion-item>
+                        </ion-list>
+                        <ion-list>
+                            <ion-list-header>
+                                知产风险报告
+                                <a routerLink="/admin/risk/list" href="javascript:;">更多</a>
+                            </ion-list-header>
+                            <ion-item *ngFor="let item of risks;let i = index"
+                                      [lines]="i + 1 === risks.length ? 'none' : ''">
+                                <ion-label><p>{{item.fileName}}</p></ion-label>
+                                <ion-note>{{item.createTime | date : 'yyyy-MM-dd'}}</ion-note>
+                            </ion-item>
+                        </ion-list>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="5">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>知产保险箱</mat-card-title>
+                        <mat-card-subtitle>查看更多</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="4">
+                                    <ion-list>
+                                        <ion-item lines="none" style="--padding-start:0;--padding-end: 5px">
+                                            <ion-label>
+                                                <p>商标相关内容</p>
+                                                <h3 style="font-size: 36px">{{boxStatus?.brandFileCount}}</h3>
+                                            </ion-label>
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-list>
+                                        <ion-item lines="none" style="--padding-start:5px">
+                                            <ion-label>
+                                                <p>专利相关内容</p>
+                                                <h3 style="font-size: 36px">{{boxStatus?.patentFileCount}}</h3>
+                                            </ion-label>
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-list>
+                                        <ion-item lines="none" style="--padding-start:5px">
+                                            <ion-label>
+                                                <p>版权相关内容</p>
+                                                <h3 style="font-size: 36px">{{boxStatus?.copyrightFileCount}}</h3>
+                                            </ion-label>
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>自助智能服务</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content style="height: 220px;position: relative">
+                        <app-empty title="自助下单" (confirm)="checkout($event)"></app-empty>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </div>

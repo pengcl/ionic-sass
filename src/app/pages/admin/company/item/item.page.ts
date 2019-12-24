@@ -13,6 +13,7 @@ import {AuthService} from '../../../auth/auth.service';
 import {IndustryService} from '../../../../@shared/components/industry/industry.service';
 import {IndustryComponent} from '../../../../@shared/components/industry/industry';
 import {DictService} from '../../../../@core/services/dict.service';
+import {AddressService} from '../../../../@core/services/address.service';
 import {CompanyService} from '../company.service';
 import {DATA} from '../../../../@core/utils/cities';
 import {getIndex} from '../../../../@core/utils/utils';
@@ -36,6 +37,7 @@ export class AdminCompanyItemPage implements OnInit {
     token = this.authSvc.token();
     form: FormGroup = new FormGroup({
         custId: new FormControl('', [Validators.required]),
+        custType: new FormControl(1, [Validators.required]),
         companyName: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
         creditNumber: new FormControl('', [Validators.required, Validators.minLength(18), Validators.maxLength(18)]),
         industryIds: new FormControl('', [Validators.required]),
@@ -79,20 +81,11 @@ export class AdminCompanyItemPage implements OnInit {
             }
         } as UploaderOptions)
     };
-    company;
-    /*uploader: Uploader = new Uploader({
-      url: this.PREFIX_URL + 'uploadFile',
-      auto: true,
-      limit: 1,
-      params: {
-        key: this.token.key, type: 'user', dir: 'user'
-      },
-      onUploadSuccess: (file, res) => {
-        console.log(JSON.parse(res).result);
-        this.form.get('licenseFileId').setValue(JSON.parse(res).result);
-      }
-    } as UploaderOptions);*/
+    company = this.companySvc.currentCompany;
     matcher = new MyErrorStateMatcher();
+    provinces = [];
+    cities = [];
+    districts = [];
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -104,12 +97,15 @@ export class AdminCompanyItemPage implements OnInit {
                 private loadingSvc: LoadingService,
                 private dialogSvc: DialogService,
                 private dictSvc: DictService,
+                private addressSvc: AddressService,
                 private industrySvc: IndustryService,
                 private authSvc: AuthService,
                 private companySvc: CompanyService) {
     }
 
     ngOnInit() {
+        console.log(this.company);
+        this.getProvinces();
         this.form.get('companyName').valueChanges.pipe(
             filter(text => text.length > 1),
             debounceTime(1000),
@@ -122,6 +118,15 @@ export class AdminCompanyItemPage implements OnInit {
                     // this.sameCompany = false;
                 }
             });
+        });
+        this.form.get('province').valueChanges.subscribe(res => {
+            this.cities = [];
+            this.districts = [];
+            this.getCities();
+        });
+        this.form.get('city').valueChanges.subscribe(res => {
+            this.districts = [];
+            this.getDistricts();
         });
         this.industrySvc.list()
             .pipe(map(res => this.industries = res))
@@ -176,6 +181,19 @@ export class AdminCompanyItemPage implements OnInit {
         });*/
     }
 
+    getProvinces() {
+        this.provinces = this.addressSvc.provinces();
+    }
+
+    getCities() {
+        this.cities = this.addressSvc.cities(this.form.get('province').value);
+    }
+
+    getDistricts() {
+        this.districts = this.addressSvc.districts(this.form.get('province').value, this.form.get('city').value);
+    }
+
+
     async presentModal() {
         const modal = await this.modalController.create({
             showBackdrop: true,
@@ -208,7 +226,7 @@ export class AdminCompanyItemPage implements OnInit {
     submit() {
         if (this.submitted) {
             console.log('submit');
-            this.router.navigate(['/pages/company/qualification', this.form.get('custId').value],
+            this.router.navigate(['/admin/company/qualification', this.form.get('custId').value],
                 {queryParams: {type: 0}});
             return false;
         }
@@ -221,11 +239,17 @@ export class AdminCompanyItemPage implements OnInit {
             if (res) {
                 this.form.get('custId').setValue(res.busCust.id);
                 this.submitted = true;
+                const cancel = this.company ? '我知道了' : '不了';
+                const confirm = this.company ? '' : '设为默认主体';
                 this.dialogSvc.show({
                     content: (this.id === '0' ? '添加' : '修改') + ' "' + this.form.get('companyName').value + '" 成功',
-                    cancel: '',
-                    confirm: '我知道了'
-                }).subscribe(() => {
+                    cancel,
+                    confirm
+                }).subscribe((state) => {
+                    if (state.value) {
+                        this.companySvc.default(res.busCust.id);
+                        this.companySvc.updateCompanyStatus(res.busCust);
+                    }
                     if (this.id !== '0') {
                         this.location.back();
                     }
