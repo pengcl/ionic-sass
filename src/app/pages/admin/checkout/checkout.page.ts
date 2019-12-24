@@ -123,7 +123,7 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
     selection = new SelectionModel<any>(true, []);*/
 
     displayed = {
-        base: ['name', 'logo', 'price', 'count', 'amount', 'total'],
+        base: ['name', 'logo', 'price', 'count', 'total'],
         type: ['select', 'name']
     };
     source = {
@@ -263,19 +263,17 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
     typeChange(e) {
         this.type = e.value;
         this.selection.type = new SelectionModel<any>(true, []);
-        this.order.price = 0;
+        this.order.price = 300;
+        this.order.count = 0;
         this.order.amount = 0;
-        this.storageSvc.set('order', JSON.stringify(this.order));
+        this.order.total = 0;
         this.setSource();
         if (e.value) {
             this.checkoutSvc.getAllTypes().subscribe(res => {
                 this.source.type = new MatTableDataSource<any>(res);
                 if (e.value === 2) {
                     this.source.type.data.forEach(row => this.selection.type.select(row));
-                    this.order.price = this.selection.type.selected.length * 300;
-                    this.order.amount = this.order.price;
-                    this.storageSvc.set('order', JSON.stringify(this.order));
-                    this.setSource();
+                    this.setPrice();
                 }
             });
         }
@@ -300,6 +298,8 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         });
         this.checkoutSvc.getTypes(ids).subscribe(res => {
             this.source.type = new MatTableDataSource<any>(res);
+            this.source.type.data.forEach(row => this.selection.type.select(row));
+            this.setPrice();
         });
         // this.form.get('industryIds').setValue(ids);
     }

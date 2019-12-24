@@ -18,6 +18,13 @@ mat-sidenav-container {
         outline: none;
         cursor: pointer;
 
+        &[routerLink] {
+          &.active, &:hover {
+            background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
+            position: relative;
+          }
+        }
+
         mat-icon {
           font-size: 16px;
           width: 16px;
@@ -35,7 +42,7 @@ mat-sidenav-container {
         cursor: pointer;
         outline: unset;
 
-        &.active {
+        &.active, &:hover {
           background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
           position: relative;
         }

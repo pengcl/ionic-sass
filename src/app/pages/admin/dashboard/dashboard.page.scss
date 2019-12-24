@@ -41,13 +41,13 @@ mat-card {
     height: calc(100% - 20px);
     box-sizing: border-box;
     cursor: pointer;
-    a {
+    /*a {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate3d(-50%,-50%,0);
       font-size: 12px;
-    }
+    }*/
   }
   mat-card-content {
     height: calc(100% - 32px);

@@ -60,4 +60,8 @@ export class AdminDashboardPage {
         this.router.navigate(['/admin/trust/list']);
     }
 
+    plan(e) {
+        this.router.navigate(['/admin/plan/list']);
+    }
+
 }

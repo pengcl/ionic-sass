@@ -13,6 +13,25 @@ mat-card {
   top: 50%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
+
+  .mat-card-avatar {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate3d(-50%, -50%, 0);
+    overflow: hidden;
+    background: #fff;
+    width: 96px;
+    height: 96px;
+    border: 7px solid #fff;
+  }
+  ::ng-deep {
+    .mat-card-header-text {
+      width: 100%;
+      text-align: center;
+      margin-top: 40px;
+    }
+  }
 }
 
 .auth-form {

@@ -40,13 +40,12 @@ export class AdminMonitorListPage {
         });
     }
 
-    add(name) {
-        this.dialogSvc.show({content: '您确定要添加 ' + name + ' 吗？', cancel: '不了', confirm: '是的'}).subscribe(state => {
+    add() {
+        this.dialogSvc.show({content: '您确定要添加 ' + this.name + ' 吗？', cancel: '不了', confirm: '是的'}).subscribe(state => {
             if (state.value) {
-                this.monitorSvc.add(this.company.id, name).subscribe(res => {
-                    this.dialogSvc.show({content: '添加' + name + '成功', confirm: '我知道了'}).subscribe(() => {
-                        this.getData();
-                    });
+                this.monitorSvc.add(this.company.id, this.name).subscribe(res => {
+                    this.name = '';
+                    this.getData();
                 });
             }
         });
@@ -56,9 +55,7 @@ export class AdminMonitorListPage {
         this.dialogSvc.show({content: '您确定要删除' + name + '吗？', cancel: '不了', confirm: '是的'}).subscribe(state => {
             if (state.value) {
                 this.monitorSvc.delete(id, this.company.id).subscribe(res => {
-                    this.dialogSvc.show({content: '删除' + name + '成功', confirm: '我知道了'}).subscribe(() => {
-                        this.getData();
-                    });
+                    this.getData();
                 });
             }
         });
