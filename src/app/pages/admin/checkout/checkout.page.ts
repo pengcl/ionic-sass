@@ -297,7 +297,10 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
             }
         });
         this.checkoutSvc.getTypes(ids).subscribe(res => {
+            res = res ? res : [];
+            console.log(res);
             this.source.type = new MatTableDataSource<any>(res);
+            this.selection.type = new SelectionModel<any>(true, []);
             this.source.type.data.forEach(row => this.selection.type.select(row));
             this.setPrice();
         });
