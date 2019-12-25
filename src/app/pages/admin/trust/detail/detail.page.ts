@@ -70,6 +70,7 @@ export class AdminTrustDetailPage {
             console.log(res);
             trustSvc.trademark(this.company.id, this.id).subscribe(data => {
                 console.log(data);
+                if (data.brandName){
                 res.forEach(item => {
                     data.type.split(',').forEach(dataItem => {
                         if (item.code === dataItem) {
@@ -95,6 +96,7 @@ export class AdminTrustDetailPage {
                         }
                     });
                 });
+                }
 
                 this.data = data;
                 this.types = res;

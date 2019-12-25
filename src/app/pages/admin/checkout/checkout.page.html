@@ -203,7 +203,8 @@
                                 </mat-checkbox>
                             </th>
                             <td mat-cell *matCellDef="let row">
-                                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection['type'].toggle(row) : null;setPrice()"
+                                <mat-checkbox (click)="$event.stopPropagation()"
+                                              (change)="$event ? selection['type'].toggle(row) : null;setPrice()"
                                               [checked]="selection['type'].isSelected(row)"
                                               [aria-label]="checkboxLabel('type',row)">
                                 </mat-checkbox>
@@ -263,7 +264,8 @@
                                 <ion-col size="6">
                                     <mat-form-field appearance="outline">
                                         <mat-label>身份证号</mat-label>
-                                        <input formControlName="idCard" matInput [required]="thirdForm.get('custType').value === 0">
+                                        <input formControlName="idCard" matInput
+                                               [required]="thirdForm.get('custType').value === 0">
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="6">
@@ -378,7 +380,9 @@
                                 </ion-col>
                                 <ion-col size="6">
                                     <mat-form-field class="uploader">
-                                        <mat-label>委托书</mat-label>
+                                        <mat-label>委托书
+                                            <span style="margin-left:5px; font-size: 16px;color: #3880ff">模板下载（下载后请盖章并扫描上传）</span>
+                                        </mat-label>
                                         <input type="text" formControlName="proxyFileId" matInput style="display: none">
                                         <div class="weui-uploader">
                                             <div class="weui-uploader__hd">
@@ -413,7 +417,9 @@
                                 </ion-col>
                                 <ion-col size="6">
                                     <mat-form-field class="uploader">
-                                        <mat-label>优先权证明</mat-label>
+                                        <mat-label>优先权证明
+                                            <span style="margin-left:5px; font-size: 16px;color: #3880ff">模板下载（下载后请盖章并扫描上传）</span>
+                                        </mat-label>
                                         <input type="text" formControlName="priorityFileId" matInput
                                                style="display: none">
                                         <div class="weui-uploader">
@@ -696,7 +702,8 @@
                     <ion-list>
                         <ion-item lines="none">
                             <ion-thumbnail slot="start" style="width: 72px;height: 72px">
-                                <ion-icon color="success" style="font-size: 72px;width: 72px;height: 72px" name="md-checkmark-circle"></ion-icon>
+                                <ion-icon color="success" style="font-size: 72px;width: 72px;height: 72px"
+                                          name="md-checkmark-circle"></ion-icon>
                             </ion-thumbnail>
                             <ion-label>
                                 <h3 style="font-size: 24px">订单提交成功，应付金额：￥{{order.amount}}.00</h3>

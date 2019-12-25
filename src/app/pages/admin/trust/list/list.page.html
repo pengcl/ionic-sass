@@ -46,9 +46,8 @@
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef style="width: 250px"> 名称</th>
                     <td mat-cell *matCellDef="let element">
-                        <a *ngIf="element.status" [routerLink]="['/admin/trust/detail',element.brandName]"
+                        <a [routerLink]="['/admin/trust/detail',element.brandName]"
                            class="link" href="javascript:;">{{element.brandName}}</a>
-                        <span *ngIf="!element.status">{{element.brandName}}</span>
                     </td>
                 </ng-container>
 
