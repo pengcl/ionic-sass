@@ -5,7 +5,9 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-card-title>企业资质与政策匹配</mat-card-title>
-                        <mat-card-subtitle [routerLink]="['/admin/company/item',company ? company.id : 0]" class="link">详情</mat-card-subtitle>
+                        <mat-card-subtitle [routerLink]="['/admin/company/item',company ? company.id : 0]" class="link">
+                            详情
+                        </mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
                         <circle-progress *ngIf="matchingStatus"
@@ -60,7 +62,8 @@
                         <mat-card-subtitle class="link" routerLink="/admin/monitor/list">管理</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content style="position: relative">
-                        <app-empty title="请添加您需要监控的企业" *ngIf="monitors && monitors.length < 1" (confirm)="addMonitor($event)"></app-empty>
+                        <app-empty title="请添加您需要监控的企业" *ngIf="monitors && monitors.length < 1"
+                                   (confirm)="addMonitor($event)"></app-empty>
                         <ion-list *ngIf="monitors && monitors.length > 0">
                             <ion-item *ngFor="let item of monitors;let i = index"
                                       [lines]="i + 1 === monitors?.length ? 'none' : ''">
@@ -76,11 +79,16 @@
                 <mat-card class="auto-height">
                     <mat-card-header>
                         <mat-card-title>知产托管</mat-card-title>
-                        <mat-card-subtitle routerLink="/admin/trust/list" class="link">添加托管资产</mat-card-subtitle>
+                        <mat-card-subtitle [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex : 0}"
+                                           class="link">添加托管资产
+                        </mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
-                        <app-empty *ngIf="trustStatus && (trustStatus.brandDepositCount === 0 && trustStatus.patentDepositCount === 0)" title="请添加您需要托管的知识产权内容" (confirm)="trust($event)"></app-empty>
-                        <ion-grid *ngIf="trustStatus && (trustStatus.brandDepositCount !== 0 || trustStatus.patentDepositCount !== 0)">
+                        <app-empty
+                                *ngIf="trustStatus && (trustStatus.brandDepositCount === 0 && trustStatus.patentDepositCount === 0)"
+                                title="请添加您需要托管的知识产权内容" (confirm)="trust($event)"></app-empty>
+                        <ion-grid
+                                *ngIf="trustStatus && (trustStatus.brandDepositCount !== 0 || trustStatus.patentDepositCount !== 0)">
                             <ion-row>
                                 <ion-col size="4">
                                     <ion-list>
@@ -154,7 +162,8 @@
                         <!--<mat-card-subtitle routerLink="/admin/plan/list">查看更多</mat-card-subtitle>-->
                     </mat-card-header>
                     <mat-card-content>
-                        <app-empty *ngIf="plans && risks && plans.length < 1 && risks.length < 1" title="生成报告" (confirm)="plan($event)"></app-empty>
+                        <app-empty *ngIf="plans && risks && plans.length < 1 && risks.length < 1" title="生成报告"
+                                   (confirm)="plan($event)"></app-empty>
                         <ion-list *ngIf="plans && plans.length > 0">
                             <ion-list-header>
                                 企业体检报告

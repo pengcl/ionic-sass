@@ -88,6 +88,7 @@ export class AdminCompanyQualificationPage implements OnInit {
                     this.setupForm(result.conditions);
                 });
             }
+            console.log(this.conditions);
         });
     }
 

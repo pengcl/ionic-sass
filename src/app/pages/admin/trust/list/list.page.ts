@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 
 import {SelectionModel} from '@angular/cdk/collections';
@@ -6,16 +6,16 @@ import {MatTableDataSource} from '@angular/material';
 import {AuthService} from '../../../auth/auth.service';
 import {CompanyService} from '../../company/company.service';
 import {TrustService} from '../trust.service';
-import {query} from '@angular/animations';
+
 
 @Component({
     selector: 'app-admin-trust-list',
     templateUrl: './list.page.html',
     styleUrls: ['./list.page.scss']
 })
-export class AdminTrustListPage {
+export class AdminTrustListPage implements OnDestroy {
     company = this.companySvc.currentCompany;
-    selectedIndex = 1;
+    selectedIndex;
     displayed = {
         trademark: ['select', 'name', 'logo', 'types', 'actions'],
         patent: ['select', 'date', 'name', 'no', 'publishNo', 'type', 'actions']
@@ -60,7 +60,7 @@ export class AdminTrustListPage {
         route.queryParamMap.subscribe((queryParams: Params) => {
             this.selectedIndex = queryParams.params.selectedIndex;
             this.tab.index = this.selectedIndex;
-            this.tab.target = this.selectedIndex === 0 ? 'trademark' : 'patent';
+            this.tab.target = this.selectedIndex === '0' ? 'trademark' : 'patent';
         });
         this.getTrusts();
         this.getPatents();
@@ -114,10 +114,10 @@ export class AdminTrustListPage {
     }
 
     trusts(status) {
-        console.log(this.selection[this.tab.target].selected);
         let values = '';
         this.selection[this.tab.target].selected.forEach(item => {
             if (this.tab.target === 'trademark') {
+                console.log(item);
                 if (values) {
                     values = values + ',' + item.brandName;
                 } else {
@@ -178,4 +178,7 @@ export class AdminTrustListPage {
         return `${this.selection[target].isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
     }
 
+    ngOnDestroy(): void {
+        this.selection = null;
+    }
 }
