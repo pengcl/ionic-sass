@@ -8,10 +8,6 @@ import {IonicModule} from '@ionic/angular';
 import {CoreModule} from './@core/core.module';
 
 import {environment} from '../environments/environment';
-import {ADMINCHECKOUTFORMCOMPONENT} from './pages/admin/checkout';
-import {AdminCheckoutFormFirstFormComponent} from './pages/admin/checkout/form/first-form/first-form.component';
-import {AdminCheckoutFormSecondFormComponent} from './pages/admin/checkout/form/second-form/second-form.component';
-import {AdminCheckoutFormFourthFormComponent} from './pages/admin/checkout/form/fourth-form/fourth-form.component';
 
 @NgModule({
     declarations: [
