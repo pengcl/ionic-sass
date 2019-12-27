@@ -1,0 +1,80 @@
+<mat-step [stepControl]="firstForm">
+    <form [formGroup]="firstForm">
+        <ng-template matStepLabel>填写商标信息</ng-template>
+        <ion-grid>
+            <ion-row>
+                <ion-col size="6">
+                    <div class="mat-radio-content">
+                        <label>商标类型：</label>
+                        <mat-radio-group formControlName="brandRegType" required>
+                            <mat-radio-button class="example-margin" [value]="0">文字</mat-radio-button>
+                            <mat-radio-button class="example-margin" [value]="1">图形</mat-radio-button>
+                            <mat-radio-button class="example-margin" [value]="2">文字及图形
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </ion-col>
+                <ion-col size="6"></ion-col>
+                <ion-col size="6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>商标名称</mat-label>
+                        <input matInput formControlName="brandName" required>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="6"></ion-col>
+                <ion-col size="6">
+                    <div class="mat-radio-content">
+                        <label>商标图标：</label>
+                        <mat-radio-group [value]="1" required>
+                            <mat-radio-button class="example-margin" value="1" checked>手动上传
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </ion-col>
+                <ion-col size="6"></ion-col>
+                <ion-col size="6">
+                    <mat-form-field class="uploader">
+                        <mat-label>上传商标图样</mat-label>
+                        <input type="text" formControlName="brandLogoId" matInput placeholder="请上传商标图样"
+                               style="display: none" required>
+                        <div class="weui-uploader">
+                            <div class="weui-uploader__hd">
+                                <div class="weui-uploader__info"></div>
+                            </div>
+                            <div class="weui-uploader__bd">
+                                <div class="weui-uploader__input-box"
+                                     [ngClass]="{'uploaded' : firstForm.get('brandLogoId').valid}"
+                                     [ngStyle]="{'backgroundImage':'url(' + FILE_PREFIX_URL + firstForm.get('brandLogoId').value + ')'}">
+                                    <div *ngIf="firstForm.get('brandLogoId').invalid"
+                                         class="weui-uploader__input-box-text">
+                                        <ion-icon name="cloud-upload"></ion-icon>
+                                        <h3>请选择上传文件</h3>
+                                        <p>可上传图片、文档类型文件</p>
+                                    </div>
+                                    <div *ngIf="firstForm.get('brandLogoId').valid"
+                                         class="weui-uploader__input-box-text">
+                                        <ion-icon name="cloud-upload"></ion-icon>
+                                        <h3>重新上传</h3>
+                                    </div>
+                                    <input
+                                            class="weui-uploader__input"
+                                            type="file"
+                                            accept="image/*"
+                                            multiple
+                                            [weui-uploader-file]="uploader.brandLogoId"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="6"></ion-col>
+            </ion-row>
+        </ion-grid>
+        <div>
+            <button [disabled]="this.firstForm.invalid" (click)="first()" mat-raised-button
+                    color="primary" matStepperNext>下一步
+            </button>
+        </div>
+    </form>
+</mat-step>

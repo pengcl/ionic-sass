@@ -74,6 +74,8 @@ import {UploaderModule} from './modules/uploader';
 import {NgCircleProgressModule} from 'ng-circle-progress';
 import {Paginator} from './paginator';
 import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
+import {ADMINCHECKOUTFORMCOMPONENT} from '../pages/admin/checkout';
+
 
 @NgModule({
     imports: [
@@ -108,9 +110,10 @@ import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
         UploaderModule,
         NgCircleProgressModule,
         ...COMPONENTS,
-        ...PIPES
+        ...PIPES,
+        ...ADMINCHECKOUTFORMCOMPONENT
     ],
-    declarations: [...COMPONENTS, ...ENTRY_COMPONENTS, ...PIPES],
+    declarations: [...COMPONENTS, ...ENTRY_COMPONENTS, ...PIPES, ...ADMINCHECKOUTFORMCOMPONENT],
     entryComponents: [ENTRY_COMPONENTS],
     providers: [{provide: MatPaginatorIntl, useValue: Paginator()}]
 })

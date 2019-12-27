@@ -1,0 +1,137 @@
+<mat-step [stepControl]="secondForm">
+    <ng-template matStepLabel>注册类别选择</ng-template>
+    <table *ngIf="source.base" mat-table [dataSource]="source.base"
+           style="background: #fafafa;border-radius: 5px">
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> 商标名称</th>
+            <td mat-cell *matCellDef="let element">
+                <span>{{element.brandName}}</span>
+            </td>
+        </ng-container>
+
+        <!-- Logo Column -->
+        <ng-container matColumnDef="logo">
+            <th mat-header-cell *matHeaderCellDef style="width: 250px"> 商标图样</th>
+            <td mat-cell *matCellDef="let element">
+                <img *ngIf="element.brandLogoId" style="height: 36px"
+                     [src]="FILE_PREFIX_URL + element.brandLogoId">
+            </td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef style="width: 100px"> 单价</th>
+            <td mat-cell *matCellDef="let element">￥{{element.price}}.00</td>
+        </ng-container>
+
+        <!-- count Column -->
+        <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef style="width: 100px"> 数量</th>
+            <td mat-cell *matCellDef="let element">{{element.count}}</td>
+        </ng-container>
+
+        <!-- Amount Column -->
+        <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef style="width: 200px"> 管费总额</th>
+            <td mat-cell *matCellDef="let element">￥{{element.amount}}.00</td>
+        </ng-container>
+
+        <!-- Total Column -->
+        <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef style="width: 200px"> 应付总额</th>
+            <td mat-cell *matCellDef="let element">￥{{element.total}}.00</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayed['base']"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayed['base'];"
+            (click)="selection['base'].toggle(row)">
+        </tr>
+    </table>
+    <form [formGroup]="secondForm" style="margin-top: 20px;">
+        <ion-grid>
+            <ion-row>
+                <ion-col size="12">
+                    <div class="mat-radio-content">
+                        <label>商标类型：</label>
+                        <mat-radio-group (change)="typeChange($event)">
+                            <mat-radio-button class="example-margin" [value]="0" [checked]="type === 0">
+                                智能推荐
+                            </mat-radio-button>
+                            <mat-radio-button class="example-margin" [value]="1" [checked]="type === 1">
+                                自主选择
+                            </mat-radio-button>
+                            <mat-radio-button class="example-margin" [value]="2" [checked]="type === 2">
+                                全类保护
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </ion-col>
+                <ion-col size="6">
+                    <mat-form-field *ngIf="type === 0">
+                        <mat-label>选择行业</mat-label>
+                        <mat-chip-list #chipList>
+                            <mat-chip *ngFor="let industry of selectedIndustries"
+                                      (removed)="remove(industry)">
+                                {{industry.industryName}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                            <input [matChipInputFor]="chipList" (click)="presentModal()" matInput
+                                   required readonly>
+                        </mat-chip-list>
+                        <button (click)="presentModal()" mat-button matSuffix mat-icon-button>
+                            <ion-icon name="arrow-down"></ion-icon>
+                        </button>
+                        <!--<mat-error *ngIf="form.get('industryIds').hasError('required')">
+                            所属行业是 <strong>必填</strong> 项
+                        </mat-error>-->
+                    </mat-form-field>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <!--<mat-form-field>
+            <input matInput placeholder="Address" formControlName="secondCtrl" required>
+        </mat-form-field>-->
+    </form>
+    <table *ngIf="source.type" mat-table [dataSource]="source.type"
+           style="background: #fafafa;border-radius: 5px">
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef style="width: 50px">
+                <mat-checkbox (change)="$event ? masterToggle('type') : null;setPrice()"
+                              [checked]="selection['type'].hasValue() && isAllSelected('type')"
+                              [indeterminate]="selection['type'].hasValue() && !isAllSelected('type')"
+                              [aria-label]="checkboxLabel('type')">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="$event ? selection['type'].toggle(row) : null;setPrice()"
+                              [checked]="selection['type'].isSelected(row)"
+                              [aria-label]="checkboxLabel('type',row)">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+
+        <!-- Level Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> 商标名称</th>
+            <td mat-cell *matCellDef="let element">
+                <span>{{element.name}}</span>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayed['type']"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayed['type'];"
+            (click)="selection['type'].toggle(row);setPrice()">
+        </tr>
+    </table>
+    <div class="step-actions" style="margin-top: 20px;">
+        <button [disabled]="this.firstForm.invalid" mat-raised-button matStepperPrevious>上一步</button>
+        <button [disabled]="!selection['type'].hasValue()" (click)="second()" mat-raised-button
+                color="primary" matStepperNext>下一步
+        </button>
+    </div>
+</mat-step>

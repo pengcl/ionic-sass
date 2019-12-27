@@ -1,19 +1,19 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CompanyService} from '../../../../pages/admin/company/company.service';
-import {StorageService} from '../../../../@core/services/storage.service';
+import {CompanyService} from '../../../company/company.service';
+import {StorageService} from '../../../../../@core/services/storage.service';
 import {MatTableDataSource} from '@angular/material';
-import {Uploader, UploaderOptions} from '../../../modules/uploader';
+import {Uploader, UploaderOptions} from '../../../../../@shared/modules/uploader';
 import {FormService} from '../form.service';
-import {CheckoutService} from '../../../../pages/admin/checkout/checkout.service';
+import {CheckoutService} from '../../checkout.service';
 
 
 @Component({
-    selector: 'app-first-form',
+    selector: 'app-admin-checkout-form-first-form',
     templateUrl: './first-form.component.html',
     styleUrls: ['./first-form.component.scss']
 })
-export class FirstFormComponent implements OnInit {
+export class AdminCheckoutFormFirstFormComponent implements OnInit {
     firstForm: FormGroup;
     uploader = {
         brandLogoId: new Uploader({
@@ -48,17 +48,6 @@ export class FirstFormComponent implements OnInit {
         this.formSvc.setFormValue('firstForm');
     }
 
-    setSource() {
-        this.formSvc.source.base = new MatTableDataSource<any>([{
-            brandName: this.firstForm.get('brandName').value,
-            brandLogoId: this.firstForm.get('brandLogoId').value,
-            amount: this.formSvc.order.amount,
-            price: this.formSvc.order.price,
-            count: this.formSvc.order.count,
-            total: this.formSvc.order.amount
-        }]);
-    }
-
     first() {
         if (this.firstForm.invalid) {
             return false;
@@ -70,7 +59,7 @@ export class FirstFormComponent implements OnInit {
                 this.formSvc.order.index = 1;
                 this.formSvc.order.firstForm = this.firstForm.value;
                 this.storageSvc.set('order', JSON.stringify(this.formSvc.order));
-                this.setSource();
+                this.formSvc.setSource();
                 this.formSvc.setFormValue('secondForm');
             }
         });

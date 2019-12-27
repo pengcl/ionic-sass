@@ -14,7 +14,6 @@ export class HeaderComponent {
 
   constructor(private popoverController: PopoverController,
               private authSvc: AuthService) {
-    console.log(this.user);
   }
 
   async presentPopover(e: any) {
