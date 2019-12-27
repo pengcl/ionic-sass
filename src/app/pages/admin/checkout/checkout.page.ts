@@ -14,6 +14,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
 import {AddressService} from '../../../@core/services/address.service';
 import {getIndex} from '../../../@core/utils/utils';
+import {PlanService} from '../plan/plan.service';
 
 declare interface Order {
     index: any;
@@ -48,17 +49,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
     secondForm: FormGroup;
     thirdForm: FormGroup;
     fourthForm: FormGroup;
-    /*uploader = new Uploader({
-        url: this.PREFIX_URL + 'uploadFile',
-        auto: true,
-        limit: 1,
-        params: {
-            key: this.token, type: 'cust_cert', dir: 'cust_cert'
-        },
-        onUploadSuccess: (file, res) => {
-            this.firstForm.get('brandLogoId').setValue(JSON.parse(res).result);
-        }
-    } as UploaderOptions);*/
 
     uploader = {
         brandLogoId: new Uploader({
@@ -118,9 +108,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         } as UploaderOptions)
     };
 
-    /*displayedColumns: string[] = ['name', 'logo', 'amount', 'price'];
-    dataSource = new MatTableDataSource<any>([{brandName: '', brandLogoId: '', amount: 0, price: 0}]);
-    selection = new SelectionModel<any>(true, []);*/
 
     displayed = {
         base: ['name', 'logo', 'price', 'count', 'total'],
@@ -143,6 +130,9 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
     cities = [];
     districts = [];
 
+    proxyId = '925b8ba9-2860-11ea-b1fb-00163e0e6521';
+    priorityId = '50f94535-2860-11ea-b1fb-00163e0e6521';
+
     constructor(private formBuilder: FormBuilder,
                 private router: Router,
                 @Inject('PREFIX_URL') public PREFIX_URL,
@@ -154,7 +144,8 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
                 private industrySvc: IndustryService,
                 private companySvc: CompanyService,
                 private addressSvc: AddressService,
-                private checkoutSvc: CheckoutService) {
+                private checkoutSvc: CheckoutService,
+                private planSvc: PlanService) {
     }
 
     ngOnInit() {
@@ -453,6 +444,10 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
             return `${this.isAllSelected(target) ? 'select' : 'deselect'} all`;
         }
         return `${this.selection[target].isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    }
+
+    download(id) {
+        this.planSvc.preDownload(id, 1).subscribe();
     }
 
     ngOnDestroy() {

@@ -41,6 +41,17 @@ mat-form-field {
     .mat-form-field-underline {
       display: none;
     }
+
+    a {
+      top: 4px;
+      font-size: 16px;
+      color: #3880ff;
+      cursor: pointer;
+      text-decoration: none;
+      position: absolute;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   .weui-uploader__input-box {
@@ -76,6 +87,7 @@ mat-form-field {
         color: #999;
       }
     }
+
     &.uploaded {
       border: 1px dashed #fff;
       color: #fff;
@@ -107,6 +119,7 @@ mat-form-field {
 .company-info {
   p {
     margin: 7px;
+
     span {
       color: #666;
     }

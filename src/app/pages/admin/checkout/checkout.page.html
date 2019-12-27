@@ -380,9 +380,8 @@
                                 </ion-col>
                                 <ion-col size="6">
                                     <mat-form-field class="uploader">
-                                        <mat-label>委托书
-                                            <span style="margin-left:5px; font-size: 16px;color: #3880ff">模板下载（下载后请盖章并扫描上传）</span>
-                                        </mat-label>
+                                        <mat-label>委托书</mat-label>
+                                        <a style="left:50px;" [href]="FILE_PREFIX_URL + proxyId">模板下载（下载后请盖章并扫描上传）</a>
                                         <input type="text" formControlName="proxyFileId" matInput style="display: none">
                                         <div class="weui-uploader">
                                             <div class="weui-uploader__hd">
@@ -417,9 +416,8 @@
                                 </ion-col>
                                 <ion-col size="6">
                                     <mat-form-field class="uploader">
-                                        <mat-label>优先权证明
-                                            <span style="margin-left:5px; font-size: 16px;color: #3880ff">模板下载（下载后请盖章并扫描上传）</span>
-                                        </mat-label>
+                                        <mat-label>优先权证明</mat-label>
+                                        <a style="left:80px;" [href]="FILE_PREFIX_URL + priorityId">模板下载（下载后请盖章并扫描上传）</a>
                                         <input type="text" formControlName="priorityFileId" matInput
                                                style="display: none">
                                         <div class="weui-uploader">
