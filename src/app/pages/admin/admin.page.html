@@ -1,13 +1,14 @@
 <app-header></app-header>
 <mat-sidenav-container class="example-container">
     <mat-sidenav mode="side" opened>
+        <img src="/assets/images/logo_2.png" height="38" width="146" style="display: block;margin: 25px auto"/>
         <div class="user">
             <ion-avatar>
                 <img src="/assets/images/avatar.jpg">
             </ion-avatar>
             <p class="user-name">{{user.name}}</p>
             <ion-list>
-                <ion-item routerLink="/admin/company/list" detail>
+                <ion-item routerLink="/admin/company/list" detail lines="none">
                     <ion-label>
                         <p>当前组织名称</p>
                         <h3><a (click)="$event.stopPropagation()" [routerLink]="['/admin/company/item',company.id]" href="javascript:;">{{company.companyName}}</a></h3>

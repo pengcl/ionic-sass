@@ -1,3 +1,6 @@
+.container{
+  background: #EFF2F9;
+}
 ion-grid {
   --ion-grid-padding: 0;
 
@@ -5,14 +8,15 @@ ion-grid {
     --ion-grid-column-padding: 0;
   }
 }
+
 mat-card {
   margin: 10px;
 
   mat-card-header {
-    border-bottom: 1px solid #dedede;
 
     mat-card-title {
       font-size: 14px;
+      font-weight: bold;
     }
 
     mat-card-subtitle {
@@ -49,6 +53,7 @@ mat-card {
       font-size: 12px;
     }*/
   }
+
   mat-card-content {
     height: calc(100% - 32px);
   }
@@ -57,10 +62,40 @@ mat-card {
 ion-list {
   ion-list-header {
     position: relative;
-    background: #fafafa;
+    background: #F7F9FC;
     padding-inline-end: calc(var(--ion-safe-area-left, 0px) + 16px);
+    font-weight:600;
+    font-size: 12px;
     a {
       float: right;
+      font-weight: 400;
+    }
+  }
+}
+
+ion-row {
+  border-radius: 50px;
+  ion-item {
+    &.deposit {
+      --background: #F7F9FC;
+    }
+
+    ion-label {
+      &.deposit_label{
+        padding-top: 10px;
+        padding-left: 48px;
+        p {
+          font-size: 14px;
+          margin-bottom: 5px;
+        }
+      }
+      &.box_label{
+        padding: 10px 20px;
+        p{
+          font-size: 14px;
+          margin-bottom: 16px;
+        }
+      }
     }
   }
 }

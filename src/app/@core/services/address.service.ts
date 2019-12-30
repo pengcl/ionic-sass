@@ -16,7 +16,6 @@ export class AddressService {
     }
 
     cities(province) {
-        console.log(province);
         const index = getIndex(DATA, 'name', province);
         return DATA[index].sub;
     }

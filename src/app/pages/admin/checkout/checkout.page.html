@@ -3,7 +3,7 @@
         <a routerLink="/admin/dashboard" class="link">
             <mat-icon slot="start">home</mat-icon>
             首页</a>
-        <span class="divider">/</span>
+        <span class="divider">></span>
         <span>商标自助智能申请</span>
     </div>
     <mat-card-header>
@@ -16,7 +16,7 @@
             <mat-horizontal-stepper labelPosition="bottom" [selectedIndex]="order.index" linear #stepper>
                 <mat-step [stepControl]="firstForm">
                     <form [formGroup]="firstForm">
-                        <ng-template matStepLabel>填写商标信息</ng-template>
+                        <ng-template matStepLabel><b>填写商标信息</b></ng-template>
                         <ion-grid>
                             <ion-row>
                                 <ion-col size="6">
@@ -95,7 +95,7 @@
                     </form>
                 </mat-step>
                 <mat-step [stepControl]="secondForm">
-                    <ng-template matStepLabel>注册类别选择</ng-template>
+                    <ng-template matStepLabel><b>注册类别选择</b></ng-template>
                     <table *ngIf="source.base" mat-table [dataSource]="source.base"
                            style="background: #fafafa;border-radius: 5px">
 
@@ -232,7 +232,7 @@
                     </div>
                 </mat-step>
                 <mat-step [stepControl]="thirdForm">
-                    <ng-template matStepLabel>填写申请人信息</ng-template>
+                    <ng-template matStepLabel><b>填写申请人信息</b></ng-template>
                     <mat-divider style="margin-top: -20px"></mat-divider>
                     <form [formGroup]="thirdForm" style="margin-top: 20px;">
                         <ion-grid>
@@ -497,7 +497,7 @@
                     </div>
                 </mat-step>
                 <mat-step [stepControl]="fourthForm">
-                    <ng-template matStepLabel>申请信息确认</ng-template>
+                    <ng-template matStepLabel><b>申请信息确认</b></ng-template>
                     <form [formGroup]="fourthForm" style="margin-top: 20px;">
                         <h5>商品信息</h5>
                         <table *ngIf="source.base" mat-table [dataSource]="source.base"
@@ -696,7 +696,7 @@
                     </div>
                 </mat-step>
                 <mat-step>
-                    <ng-template matStepLabel>订单提交成功</ng-template>
+                    <ng-template matStepLabel><b>订单提交成功</b></ng-template>
                     <ion-list>
                         <ion-item lines="none">
                             <ion-thumbnail slot="start" style="width: 72px;height: 72px">

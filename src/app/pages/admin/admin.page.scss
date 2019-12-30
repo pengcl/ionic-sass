@@ -7,7 +7,11 @@ mat-sidenav-container {
 
   mat-sidenav {
     width: 250px;
+    background: #027CFF;
+    color: #fff;
+
     mat-list {
+
       h3 {
         /*&.active {
           //background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
@@ -16,11 +20,14 @@ mat-sidenav-container {
         }*/
         outline: none;
         cursor: pointer;
+        color: #fff;
 
         &[routerLink] {
           &.active, &:hover {
-            background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
+            //background-image: linear-gradient(to right, #027CFF, #fff);
             position: relative;
+            background: #fff;
+            color: #027CFF;
           }
         }
 
@@ -36,14 +43,16 @@ mat-sidenav-container {
         font-size: 12px;
         padding-left: 26px;
         height: 32px;
-        color: #666;
+        color: #fff;
         box-sizing: border-box;
         cursor: pointer;
         outline: unset;
 
         &.active, &:hover {
-          background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
+          //background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
           position: relative;
+          background: #fff;
+          color: #027CFF;
         }
       }
     }
@@ -64,3 +73,22 @@ ion-avatar {
   right: 70px;
   bottom: 70px;
 }
+
+ion-list {
+  background: #027CFF;
+
+  ion-item {
+    --background: #027CFF;
+    --color: #fff;
+    --background-hover: #fff;
+    --color-hover: #027CFF;
+    p{
+      color: #595c66;
+    }
+    a{
+      text-decoration: none;
+    }
+  }
+}
+
+

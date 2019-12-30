@@ -10,6 +10,11 @@
 }
 mat-toolbar {
   height: 56px;
+  background: #fff;
+  span{
+    font-size: 16px;
+    font-weight: 600;
+  }
 }
 .fill-remaining-space {
   flex: 1 1 auto;

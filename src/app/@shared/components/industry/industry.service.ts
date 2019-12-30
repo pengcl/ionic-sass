@@ -14,7 +14,6 @@ export class IndustryService {
     }
 
     list(type?): Observable<any> {
-        console.log(type);
         const url = type ? this.PREFIX_URL + 'getBrandIndustryList' : this.PREFIX_URL + 'getIndustryList';
         return this.http.get(url).pipe(observableMargeMap((res: any) => {
             return resultProcess(res);

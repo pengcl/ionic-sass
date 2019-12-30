@@ -149,7 +149,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        console.log(this.company);
         this.selection.type.changed.subscribe(value => {
             console.log(value);
         });
