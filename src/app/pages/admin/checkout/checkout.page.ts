@@ -1,4 +1,5 @@
 import {Component, Inject, OnInit, OnDestroy} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {ModalService} from '../../../@core/services/modal.service';
@@ -15,6 +16,10 @@ import {MatTableDataSource} from '@angular/material';
 import {AddressService} from '../../../@core/services/address.service';
 import {getIndex} from '../../../@core/utils/utils';
 import {PlanService} from '../plan/plan.service';
+import {OrderService} from '../order/order.service';
+import {MatDialog} from '@angular/material';
+import {interval as observableInterval} from 'rxjs';
+import {AdminCheckoutCodeComponent} from './code/code.component';
 
 declare interface Order {
     index: any;
@@ -133,10 +138,17 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
     proxyId = '925b8ba9-2860-11ea-b1fb-00163e0e6521';
     priorityId = '50f94535-2860-11ea-b1fb-00163e0e6521';
 
+    payType = 'wxpay';
+    additionalPayTypes = ['', ''];
+
+    interval;
+
     constructor(private formBuilder: FormBuilder,
                 private router: Router,
+                private sanitizer: DomSanitizer,
                 @Inject('PREFIX_URL') public PREFIX_URL,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
+                public dialog: MatDialog,
                 private modalSvc: ModalService,
                 private modalController: ModalController,
                 private storageSvc: StorageService,
@@ -145,7 +157,8 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
                 private companySvc: CompanyService,
                 private addressSvc: AddressService,
                 private checkoutSvc: CheckoutService,
-                private planSvc: PlanService) {
+                private planSvc: PlanService,
+                private orderSvc: OrderService) {
     }
 
     ngOnInit() {
@@ -445,11 +458,77 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         return `${this.selection[target].isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
     }
 
+    setPay(type) {
+        this.payType = type;
+        if (type === 'OFFLINE_PAY') {
+            this.additionalPayTypes = ['', ''];
+        }
+    }
+
+    setPayTypes() {
+        let payTypes = this.payType;
+        if (this.payType !== 'OFFLINE_PAY') {
+            this.additionalPayTypes.forEach(item => {
+                if (item) {
+                    payTypes = payTypes + 'item';
+                }
+            });
+        }
+        return payTypes;
+    }
+
+    codeDialog(url, stepper) {
+        this.dialog.open(AdminCheckoutCodeComponent, {
+            data: {
+                url
+            }
+        });
+        this.interval = observableInterval(1000).subscribe(() => {
+            this.orderSvc.item(this.order.no).subscribe(res => {
+                if (res.order.status > 2) {
+                    console.log('支付成功');
+                    this.order.index = 5;
+                    this.storageSvc.set('order', JSON.stringify(this.order));
+                    this.interval.unsubscribe();
+                    this.dialog.closeAll();
+                    stepper.next();
+                }
+            });
+        });
+    }
+
+    fifth(stepper) {
+        const body = {
+            custId: this.company.id,
+            payTypes: this.setPayTypes(),
+            orderNos: this.order.no
+        };
+        if (this.payType !== 'OFFLINE_PAY') {
+            this.checkoutSvc.order(body).subscribe(res => {
+                console.log(res);
+                this.codeDialog(res.payCode, stepper);
+            });
+        } else {
+            console.log('haha');
+            this.order.index = 5;
+            this.storageSvc.set('order', JSON.stringify(this.order));
+            stepper.next();
+        }
+    }
+
+    setAdditionalPay(type, index) {
+        this.additionalPayTypes[index] === type ? this.additionalPayTypes[index] = '' : this.additionalPayTypes[index] = type;
+    }
+
     download(id) {
         this.planSvc.preDownload(id, 1).subscribe();
     }
 
     ngOnDestroy() {
         this.storageSvc.remove('order');
+        this.dialog.closeAll();
+        if (this.interval) {
+            this.interval.unsubscribe();
+        }
     }
 }

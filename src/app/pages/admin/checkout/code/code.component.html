@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>请扫码支付</h1>
+<div mat-dialog-content>
+    <ngx-qrcode
+            [qrc-element-type]="'url'"
+            [qrc-value] = "data.url"
+            qrc-class = "'qr'"
+            qrc-errorCorrectionLevel = "H">
+    </ngx-qrcode>
+</div>
