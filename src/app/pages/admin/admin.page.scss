@@ -1,6 +1,6 @@
 mat-sidenav-container {
   position: absolute;
-  top: 56px;
+  top:0;
   left: 0;
   right: 0;
   bottom: 0;
@@ -9,10 +9,30 @@ mat-sidenav-container {
     width: 250px;
     background: #027CFF;
     color: #fff;
+    &::ng-deep{
+      .mat-drawer-inner-container{
+        scrollbar-arrow-color: transparent; /*三角箭头的颜色*/
+        scrollbar-face-color: transparent; /*立体滚动条的颜色（包括箭头部分的背景色）*/
+        scrollbar-3dlight-color: transparent; /*立体滚动条亮边的颜色*/
+        scrollbar-highlight-color: transparent; /*滚动条的高亮颜色（左阴影？）*/
+        scrollbar-shadow-color: transparent; /*立体滚动条阴影的颜色*/
+        scrollbar-darkshadow-color: transparent; /*立体滚动条外阴影的颜色*/
+        scrollbar-track-color: transparent; /*立体滚动条背景颜色*/
+        scrollbar-base-color:transparent; /*滚动条的基色*/
 
+        -webkit-scrollbar-arrow-color: transparent; /*三角箭头的颜色*/
+        -webkit-scrollbar-face-color: transparent; /*立体滚动条的颜色（包括箭头部分的背景色）*/
+        -webkit-scrollbar-3dlight-color: transparent; /*立体滚动条亮边的颜色*/
+        -webkit-scrollbar-highlight-color: transparent; /*滚动条的高亮颜色（左阴影？）*/
+        -webkit-scrollbar-shadow-color: transparent; /*立体滚动条阴影的颜色*/
+        -webkit-scrollbar-darkshadow-color: transparent; /*立体滚动条外阴影的颜色*/
+        -webkit-scrollbar-track-color: transparent; /*立体滚动条背景颜色*/
+        -webkit-scrollbar-base-color:transparent; /*滚动条的基色*/
+      }
+    }
     mat-list {
 
-      h3 {
+      h3{
         /*&.active {
           //background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
           background: rgba(0, 0, 0, .12);
@@ -21,7 +41,6 @@ mat-sidenav-container {
         outline: none;
         cursor: pointer;
         color: #fff;
-
         &[routerLink] {
           &.active, &:hover {
             //background-image: linear-gradient(to right, #027CFF, #fff);
@@ -39,22 +58,7 @@ mat-sidenav-container {
         }
       }
 
-      mat-list-item {
-        font-size: 12px;
-        padding-left: 26px;
-        height: 32px;
-        color: #fff;
-        box-sizing: border-box;
-        cursor: pointer;
-        outline: unset;
 
-        &.active, &:hover {
-          //background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
-          position: relative;
-          background: #fff;
-          color: #027CFF;
-        }
-      }
     }
 
   }
@@ -82,13 +86,70 @@ ion-list {
     --color: #fff;
     --background-hover: #fff;
     --color-hover: #027CFF;
-    p{
+
+    p {
       color: #595c66;
     }
-    a{
+
+    a {
       text-decoration: none;
     }
   }
 }
 
+.accordion {
+  &::ng-deep {
+    .mat-expansion-panel:last-of-type,
+    .mat-expansion-panel:first-of-type {
+      border-radius: 0;
+    }
+  }
 
+  mat-expansion-panel {
+    background: #027CFF;
+    box-shadow: none;
+
+    mat-expansion-panel-header {
+      padding: 0;
+      &::ng-deep{
+        .mat-expansion-indicator{
+          display: none;
+        }
+      }
+    }
+
+    h3 {
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    mat-list-item {
+      font-size: 12px;
+      padding-left: 26px;
+      height: 32px;
+      color: #fff;
+      box-sizing: border-box;
+      cursor: pointer;
+      outline: unset;
+
+      &.active, &:hover {
+        //background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
+        position: relative;
+        background: #fff;
+        color: #027CFF;
+      }
+    }
+
+    &::ng-deep {
+      .mat-expansion-panel-body {
+        margin: 0;
+        padding: 0;
+
+        p {
+          font-size: 12px;
+          padding-left: 10px
+        }
+      }
+    }
+  }
+}
