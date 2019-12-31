@@ -13,7 +13,19 @@ export class AccountService {
     balance(id): Observable<any> {
         return this.http.get(this.PREFIX_URL + 'getTotalBalance&custId=' + id)
             .pipe(observableMargeMap((res: any) => {
-            return resultProcess(res);
-        }));
+                return resultProcess(res);
+            }));
+    }
+    zct(id): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getAccount&custId=' + id + '&type=' + 'zct')
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
+    qb(id): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getAccount&custId=' + id + '&type=' + 'qb')
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
     }
 }

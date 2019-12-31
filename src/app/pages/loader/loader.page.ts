@@ -34,11 +34,15 @@ export class LoaderPage implements OnInit {
                     this.storage.set('user', JSON.stringify(user));
                     if (!this.company) {
                         this.companySvc.list({}).subscribe(res => {
-                            res.list.forEach((item) => {
-                                if (item.isPrimary === 1) {
-                                    this.companySvc.updateCompanyStatus(item);
-                                }
-                            });
+                            if (res.list.length > 0) {
+                                let company = res.list[0];
+                                res.list.forEach((item) => {
+                                    if (item.isPrimary === 1) {
+                                        company = item;
+                                    }
+                                });
+                                this.companySvc.updateCompanyStatus(company);
+                            }
                             this.router.navigate(['/admin/dashboard']);
                         });
                     } else {
