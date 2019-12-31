@@ -417,7 +417,8 @@
                                 <ion-col size="6">
                                     <mat-form-field class="uploader">
                                         <mat-label>优先权证明</mat-label>
-                                        <a style="left:80px;" [href]="FILE_PREFIX_URL + priorityId">模板下载（下载后请盖章并扫描上传）</a>
+                                        <a style="left:80px;"
+                                           [href]="FILE_PREFIX_URL + priorityId">模板下载（下载后请盖章并扫描上传）</a>
                                         <input type="text" formControlName="priorityFileId" matInput
                                                style="display: none">
                                         <div class="weui-uploader">
@@ -710,8 +711,77 @@
                             </ion-label>
                         </ion-item>
                     </ion-list>
+                    <mat-divider></mat-divider>
+                    <h3>选择支付方式</h3>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col size="2">
+                                <div (click)="setPay('wxpay')"
+                                     class="{{payType === 'wxpay' ? 'curr' : ''}} pay-box">
+                                    <ion-icon name="logo-python"></ion-icon>
+                                    <span>微信支付</span>
+                                </div>
+                            </ion-col>
+                            <ion-col size="2">
+                                <div (click)="setPay('alipay')"
+                                     class="{{payType === 'alipay' ? 'curr' : ''}} pay-box disabled">
+                                    <ion-icon name="logo-python"></ion-icon>
+                                    <span>支付宝支付</span>
+                                </div>
+                            </ion-col>
+                            <ion-col size="2">
+                                <div (click)="setPay('OFFLINE_PAY')"
+                                     class="{{payType === 'OFFLINE_PAY' ? 'curr' : ''}} pay-box">
+                                    <ion-icon name="logo-python"></ion-icon>
+                                    <span>线下支付</span>
+                                </div>
+                            </ion-col>
+                            <ion-col size="2"></ion-col>
+                        </ion-row>
+                    </ion-grid>
+                    <div *ngIf="payType !== 'OFFLINE_PAY'" class="additional">
+                        <h3>使用余额</h3>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="2">
+                                    <div (click)="setAdditionalPay('zct',0)"
+                                         class="{{additionalPayTypes[0] === 'zct' ? 'curr' : ''}} pay-box">
+                                        <ion-icon name="logo-python"></ion-icon>
+                                        <span>知产通</span>
+                                    </div>
+                                </ion-col>
+                                <ion-col size="2">
+                                    <div (click)="setAdditionalPay('qb',1)"
+                                         class="{{additionalPayTypes[1] === 'qb' ? 'curr' : ''}} pay-box">
+                                        <ion-icon name="logo-python"></ion-icon>
+                                        <span>钱包</span>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </div>
                     <div class="step-actions" style="margin-top: 20px;">
-                        <button (click)="home()" color="primary" mat-raised-button>返回首页</button>
+                        <button (click)="fifth(stepper)" color="primary" mat-raised-button>确认支付</button>
+                        <!--<button (click)="reset(stepper)" mat-raised-button color="primary">再来一单</button>-->
+                    </div>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel><b>支付成功</b></ng-template>
+                    <ion-list>
+                        <ion-item lines="none">
+                            <ion-thumbnail slot="start" style="width: 72px;height: 72px">
+                                <ion-icon color="success" style="font-size: 72px;width: 72px;height: 72px"
+                                          name="md-checkmark-circle"></ion-icon>
+                            </ion-thumbnail>
+                            <ion-label>
+                                <h3 style="font-size: 24px">订单提交成功，应付金额：￥{{order.amount}}.00</h3>
+                                <p>(业务总价：¥{{order.amount}}.00，优惠：¥ 0.00)</p>
+                                <p>订单编号：{{order.no}}，购买服务：智能自助注册</p>
+                            </ion-label>
+                        </ion-item>
+                    </ion-list>
+                    <div class="step-actions" style="margin-top: 20px;">
+                        <button (click)="fifth()" color="primary" mat-raised-button>返回首页</button>
                         <!--<button (click)="reset(stepper)" mat-raised-button color="primary">再来一单</button>-->
                     </div>
                 </mat-step>
@@ -719,3 +789,4 @@
         </mat-card-content>
     </mat-card>
 </div>
+

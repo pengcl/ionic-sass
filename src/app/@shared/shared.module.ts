@@ -72,6 +72,7 @@ const CDK_PART = [DragDropModule];
 
 import {UploaderModule} from './modules/uploader';
 import {NgCircleProgressModule} from 'ng-circle-progress';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 import {Paginator} from './paginator';
 import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
 
@@ -86,6 +87,7 @@ import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
         MATERIAL_PART,
         CDK_PART,
         UploaderModule,
+        NgxQRCodeModule,
         NgCircleProgressModule.forRoot({
             // set defaults here
             radius: 100,
@@ -106,6 +108,7 @@ import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
         MATERIAL_PART,
         CDK_PART,
         UploaderModule,
+        NgxQRCodeModule,
         NgCircleProgressModule,
         ...COMPONENTS,
         ...PIPES,

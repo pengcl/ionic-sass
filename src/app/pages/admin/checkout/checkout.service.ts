@@ -70,4 +70,11 @@ export class CheckoutService {
                 return resultProcess(res);
             }));
     }
+
+    order(body: { custId: string, payTypes: string, orderNos: string }): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'payOrders', {params: body})
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
 }
