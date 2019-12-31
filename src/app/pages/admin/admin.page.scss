@@ -11,23 +11,9 @@ mat-sidenav-container {
     color: #fff;
     &::ng-deep{
       .mat-drawer-inner-container{
-        scrollbar-arrow-color: transparent; /*三角箭头的颜色*/
-        scrollbar-face-color: transparent; /*立体滚动条的颜色（包括箭头部分的背景色）*/
-        scrollbar-3dlight-color: transparent; /*立体滚动条亮边的颜色*/
-        scrollbar-highlight-color: transparent; /*滚动条的高亮颜色（左阴影？）*/
-        scrollbar-shadow-color: transparent; /*立体滚动条阴影的颜色*/
-        scrollbar-darkshadow-color: transparent; /*立体滚动条外阴影的颜色*/
-        scrollbar-track-color: transparent; /*立体滚动条背景颜色*/
-        scrollbar-base-color:transparent; /*滚动条的基色*/
-
-        -webkit-scrollbar-arrow-color: transparent; /*三角箭头的颜色*/
-        -webkit-scrollbar-face-color: transparent; /*立体滚动条的颜色（包括箭头部分的背景色）*/
-        -webkit-scrollbar-3dlight-color: transparent; /*立体滚动条亮边的颜色*/
-        -webkit-scrollbar-highlight-color: transparent; /*滚动条的高亮颜色（左阴影？）*/
-        -webkit-scrollbar-shadow-color: transparent; /*立体滚动条阴影的颜色*/
-        -webkit-scrollbar-darkshadow-color: transparent; /*立体滚动条外阴影的颜色*/
-        -webkit-scrollbar-track-color: transparent; /*立体滚动条背景颜色*/
-        -webkit-scrollbar-base-color:transparent; /*滚动条的基色*/
+        &::-webkit-scrollbar{
+          width:0;
+        }
       }
     }
     mat-list {
