@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
@@ -65,37 +65,38 @@ export class AdminTrustDetailPage {
                 private authSvc: AuthService,
                 private companySvc: CompanyService,
                 private checkoutSvc: CheckoutService,
-                private trustSvc: TrustService) {
+                private trustSvc: TrustService,
+                private router: Router) {
         this.checkoutSvc.getAllTypes().subscribe(res => {
             console.log(res);
             trustSvc.trademark(this.company.id, this.id).subscribe(data => {
                 console.log(data);
-                if (data.brandName){
-                res.forEach(item => {
-                    data.type.split(',').forEach(dataItem => {
-                        if (item.code === dataItem) {
-                            console.log('selected');
-                            item.type = 'selected';
-                        }
+                if (data.brandName) {
+                    res.forEach(item => {
+                        data.type.split(',').forEach(dataItem => {
+                            if (item.code === dataItem) {
+                                console.log('selected');
+                                item.type = 'selected';
+                            }
+                        });
                     });
-                });
-                res.forEach(item => {
-                    data.applyTypeCodes.split(',').forEach(dataItem => {
-                        if (item.code === dataItem) {
-                            console.log('suggest');
-                            item.type = 'suggest';
-                        }
+                    res.forEach(item => {
+                        data.applyTypeCodes.split(',').forEach(dataItem => {
+                            if (item.code === dataItem) {
+                                console.log('suggest');
+                                item.type = 'suggest';
+                            }
+                        });
                     });
-                });
 
-                res.forEach(item => {
-                    data.otherRegisteredTypeCodes.split(',').forEach(dataItem => {
-                        if (item.code === dataItem) {
-                            console.log('used');
-                            item.type = 'used';
-                        }
+                    res.forEach(item => {
+                        data.otherRegisteredTypeCodes.split(',').forEach(dataItem => {
+                            if (item.code === dataItem) {
+                                console.log('used');
+                                item.type = 'used';
+                            }
+                        });
                     });
-                });
                 }
 
                 this.data = data;
@@ -166,4 +167,7 @@ export class AdminTrustDetailPage {
         return `${this.selection[target].isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
     }
 
+    toCheckout() {
+        this.router.navigate(['/admin/checkout']);
+    }
 }

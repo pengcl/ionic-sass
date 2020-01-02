@@ -39,3 +39,36 @@
     }
   }
 }
+.container{
+  background-color: #EFF2F9;
+}
+mat-tab-group.mat-tab-group{
+  &::ng-deep {
+    .mat-tab-label {
+      color: #000;
+      font-weight: 400;
+      &.mat-tab-label-active {
+        color: #027CFF;
+      }
+    }
+
+    .mat-ink-bar {
+      background-color: #027CFF;
+    }
+
+  }
+}
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:14px;
+  margin-right: 5px;
+}
+.row-buttons{
+  ion-button{
+    --background: #fff;
+    color: #000;
+    font-weight: 500;
+    --box-shadow: none;
+  }
+}

@@ -11,9 +11,11 @@ mat-sidenav-container {
     color: #fff;
     &::ng-deep{
       .mat-drawer-inner-container{
-        &::-webkit-scrollbar{
+        /*&::-webkit-scrollbar{
           width:0;
         }
+        -ms-overflow-style:none;
+        overflow:-moz-scrollbars-none;*/
       }
     }
     mat-list {
@@ -67,19 +69,22 @@ ion-avatar {
 ion-list {
   background: #027CFF;
 
-  ion-item {
+  ion-item{
     --background: #027CFF;
     --color: #fff;
     --background-hover: #fff;
     --color-hover: #027CFF;
+    &:hover,&.active{
+      .organization{
+        color: #027CFF;
+      }
+    }
 
     p {
-      color: #595c66;
+      color: #fff;
+      opacity: 0.5;
     }
 
-    a {
-      text-decoration: none;
-    }
   }
 }
 
@@ -136,6 +141,13 @@ ion-list {
           padding-left: 10px
         }
       }
+    }
+  }
+}
+perfect-scrollbar{
+  &::ng-deep{
+    .ps__rail-y{
+      display: none;
     }
   }
 }

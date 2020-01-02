@@ -11,15 +11,31 @@
     <mat-card-header>
         <mat-card-title>{{data?.brandName}}</mat-card-title>
     </mat-card-header>
+    <ion-button color="primary" *ngIf="data?.brandName" (click)="toCheckout()"
+                style="width:200px;height:40px;right: 12px;top:50px;position: absolute">一键智能申请商标
+    </ion-button>
+
 </mat-card>
 <div class="container">
     <mat-card style="padding-top: 0;padding-bottom: 0">
         <mat-card-content>
             <div class="row-buttons" style="text-align: right;margin: 0;padding: 10px 0;">
-                <ion-button [color]="'' | color" size="small">对应分类无申请商标</ion-button>
-                <ion-button [color]="'selected' | color" size="small">对应分类有申请商标</ion-button>
-                <ion-button [color]="'suggest' | color" size="small">对应分类需要申请商标保护</ion-button>
-                <ion-button [color]="'used' | color" size="small">对应分类已被其他企业注册</ion-button>
+                <ion-button size="small">
+                    <div class="dot" style="background: #0cd1e8"></div>
+                    对应分类无申请商标
+                </ion-button>
+                <ion-button size="small">
+                    <div class="dot" style="background: #3880ff"></div>
+                    对应分类有申请商标
+                </ion-button>
+                <ion-button size="small">
+                    <div class="dot" style="background: #ffce00"></div>
+                    对应分类需要申请商标保护
+                </ion-button>
+                <ion-button size="small">
+                    <div class="dot" style="background: #f04141 "></div>
+                    对应分类已被其他企业注册
+                </ion-button>
             </div>
             <ion-grid>
                 <ion-row>
@@ -32,7 +48,8 @@
                                 <li *ngFor="let item of types">
                                     <div class="item-box">
                                         <div class="code">{{item.code}}</div>
-                                        <ion-button [color]="item.type | color" size="small">{{item.name.split('——')[1]}}</ion-button>
+                                        <ion-button [color]="item.type | color"
+                                                    size="small">{{item.name.split('——')[1]}}</ion-button>
                                     </div>
                                 </li>
                             </ul>
@@ -42,51 +59,55 @@
             </ion-grid>
         </mat-card-content>
     </mat-card>
+    <mat-card style="margin-top: 20px" *ngIf="!!data?.brandName">
+        <mat-card-content>
+            <mat-tab-group (selectedTabChange)="onTab($event)" style="margin-top: 16px" >
+                <mat-tab aria-label="change" label="商标变更信息">
+                    <table *ngIf="source.change" mat-table [dataSource]="source.change" class="mat-elevation-z8">
 
-    <mat-tab-group (selectedTabChange)="onTab($event)" style="margin-top: 16px" *ngIf="!!data?.brandName">
-        <mat-tab aria-label="change" label="变更记录">
-            <table *ngIf="source.change" mat-table [dataSource]="source.change" class="mat-elevation-z8">
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="title">
+                            <td mat-cell *matCellDef="let element">{{element.content}}</td>
+                        </ng-container>
 
-                <!-- Name Column -->
-                <ng-container matColumnDef="title">
-                    <td mat-cell *matCellDef="let element">{{element.content}}</td>
-                </ng-container>
-
-                <!-- Qualification Column -->
-                <ng-container matColumnDef="date">
-                    <td mat-cell *matCellDef="let element"
-                        style="width: 200px">{{element.createTime | date : 'yyyy-MM-dd'}}</td>
-                </ng-container>
-                <tr mat-row *matRowDef="let row; columns: displayed['change'];"
-                    (click)="selection['change'].toggle(row)">
-                </tr>
-            </table>
-            <mat-paginator [pageIndex]="change.params.page - 1" (page)="changePage($event)"
-                           [length]="change.total" [pageSize]="change.params.rows" [pageSizeOptions]="[10,20,50]"
-                           showFirstLastButtons></mat-paginator>
-        </mat-tab>
-        <mat-tab aria-label="risk" label="风险">
-            <table *ngIf="source.risk" mat-table [dataSource]="source.risk" class="mat-elevation-z8">
+                        <!-- Qualification Column -->
+                        <ng-container matColumnDef="date">
+                            <td mat-cell *matCellDef="let element"
+                                style="width: 200px">{{element.createTime | date : 'yyyy-MM-dd'}}</td>
+                        </ng-container>
+                        <tr mat-row *matRowDef="let row; columns: displayed['change'];"
+                            (click)="selection['change'].toggle(row)">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageIndex]="change.params.page - 1" (page)="changePage($event)"
+                                   [length]="change.total" [pageSize]="change.params.rows"
+                                   [pageSizeOptions]="[10,20,50]"
+                                   showFirstLastButtons></mat-paginator>
+                </mat-tab>
+                <mat-tab aria-label="risk" label="商标风险">
+                    <table *ngIf="source.risk" mat-table [dataSource]="source.risk" class="mat-elevation-z8">
 
 
-                <!-- Name Column -->
-                <ng-container matColumnDef="title">
-                    <td mat-cell *matCellDef="let element">{{element.content}}</td>
-                </ng-container>
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="title">
+                            <td mat-cell *matCellDef="let element">{{element.content}}</td>
+                        </ng-container>
 
-                <!-- Qualification Column -->
-                <ng-container matColumnDef="date">
-                    <td mat-cell *matCellDef="let element"
-                        style="width: 200px">{{element.createTime | date : 'yyyy-MM-dd'}}</td>
-                </ng-container>
+                        <!-- Qualification Column -->
+                        <ng-container matColumnDef="date">
+                            <td mat-cell *matCellDef="let element"
+                                style="width: 200px">{{element.createTime | date : 'yyyy-MM-dd'}}</td>
+                        </ng-container>
 
-                <tr mat-row *matRowDef="let row; columns: displayed['risk'];"
-                    (click)="selection['risk'].toggle(row)">
-                </tr>
-            </table>
-            <mat-paginator [pageIndex]="risk.params.page - 1" (page)="riskPage($event)"
-                           [length]="risk.total" [pageSize]="risk.params.rows" [pageSizeOptions]="[10,20,50]"
-                           showFirstLastButtons></mat-paginator>
-        </mat-tab>
-    </mat-tab-group>
+                        <tr mat-row *matRowDef="let row; columns: displayed['risk'];"
+                            (click)="selection['risk'].toggle(row)">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageIndex]="risk.params.page - 1" (page)="riskPage($event)"
+                                   [length]="risk.total" [pageSize]="risk.params.rows" [pageSizeOptions]="[10,20,50]"
+                                   showFirstLastButtons></mat-paginator>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
 </div>

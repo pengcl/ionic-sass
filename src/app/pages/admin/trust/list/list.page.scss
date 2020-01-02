@@ -10,19 +10,52 @@ ion-grid {
   mat-form-field {
     width: 90%;
   }
+
   .actions {
     text-align: right;
+
     button {
       margin-left: 8px;
       margin-top: 10px;
     }
   }
 }
+
 .button-row {
   position: absolute;
   right: 16px;
   z-index: 999;
+
   button {
     margin-left: 10px;
   }
+}
+
+mat-tab-group.mat-tab-group{
+  &::ng-deep {
+    .mat-tab-label {
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      border-radius: 4px 4px 0 0;
+      opacity: 0.85;
+      margin-right: 5px;
+      font-weight: 500;
+      color: #000;
+
+      &.mat-tab-label-active {
+        background: #027CFF;
+        opacity: 1;
+        color: #fff;
+      }
+    }
+
+    .mat-ink-bar {
+      background-color: #027CFF;
+    }
+
+  }
+}
+ion-button{
+  width: 110px;
+  height: 32px;
 }

@@ -1,1 +1,19 @@
+.container{
+  background-color: #EFF2F9;
+}
+mat-tab-group.mat-tab-group{
+  &::ng-deep {
+    .mat-tab-label {
+      color: #000;
+      font-weight: 400;
+      &.mat-tab-label-active {
+        color: #027CFF;
+      }
+    }
 
+    .mat-ink-bar {
+      background-color: #027CFF;
+    }
+
+  }
+}

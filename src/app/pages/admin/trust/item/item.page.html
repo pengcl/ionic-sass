@@ -1,6 +1,8 @@
 <mat-card class="profile">
     <div class="position">
-        <a class="link" href="/admin/dashboard"><mat-icon slot="start">home</mat-icon>首页</a>
+        <a class="link" href="/admin/dashboard">
+            <mat-icon slot="start">home</mat-icon>
+            首页</a>
         <span class="divider">></span>
         <a href="/admin/trust/list">知产托管</a>
         <span class="divider">></span>
@@ -17,13 +19,13 @@
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="date">
-                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> 申请公布日</th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> <b>申请公布日</b></th>
                     <td mat-cell *matCellDef="let element">{{element.publicationDate}}</td>
                 </ng-container>
 
                 <!-- Level Column -->
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> 专利名称</th>
+                    <th mat-header-cell *matHeaderCellDef> <b>专利名称</b></th>
                     <td mat-cell *matCellDef="let element">
                         <a *ngIf="element.status" [routerLink]="['/admin/trust/item',element.applicationCode]"
                            class="link" href="javascript:;">{{element.inventionTitle}}</a>
@@ -33,19 +35,19 @@
 
                 <!-- Qualification Column -->
                 <ng-container matColumnDef="no">
-                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> 申请号</th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> <b>申请号</b></th>
                     <td mat-cell *matCellDef="let element">{{element.applicationCode}}</td>
                 </ng-container>
 
                 <!-- Qualification Column -->
                 <ng-container matColumnDef="publishNo">
-                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> 申请公布号</th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> <b>申请公布号</b></th>
                     <td mat-cell *matCellDef="let element">{{element.publicationCode}}</td>
                 </ng-container>
 
                 <!-- Qualification Column -->
                 <ng-container matColumnDef="type">
-                    <th mat-header-cell *matHeaderCellDef style="width: 100px"> 专利类型</th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 100px"> <b>专利类型</b></th>
                     <td mat-cell *matCellDef="let element">{{element.patentType}}</td>
                 </ng-container>
 
@@ -57,48 +59,55 @@
         </mat-card-content>
     </mat-card>
 
-    <mat-tab-group (selectedTabChange)="onTab($event)" style="margin-top: 16px">
-        <mat-tab aria-label="change" label="变更记录">
-            <table *ngIf="source.change" mat-table [dataSource]="source.change" class="mat-elevation-z8">
+    <mat-card style="margin-top: 20px">
+        <mat-card-content>
+            <mat-tab-group (selectedTabChange)="onTab($event)" style="margin-top: 16px">
+                <mat-tab aria-label="change" label="专利变更信息">
+                    <table *ngIf="source.change" mat-table [dataSource]="source.change" class="mat-elevation-z8">
 
-                <!-- Name Column -->
-                <ng-container matColumnDef="title">
-                    <td mat-cell *matCellDef="let element">{{element.content}}</td>
-                </ng-container>
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="title">
+                            <td mat-cell *matCellDef="let element">{{element.content}}</td>
+                        </ng-container>
 
-                <!-- Qualification Column -->
-                <ng-container matColumnDef="date">
-                    <td mat-cell *matCellDef="let element" style="width: 200px">{{element.createTime | date : 'yyyy-MM-dd'}}</td>
-                </ng-container>
-                <tr mat-row *matRowDef="let row; columns: displayed['change'];"
-                    (click)="selection['change'].toggle(row)">
-                </tr>
-            </table>
-            <mat-paginator [pageIndex]="change.params.page - 1" (page)="changePage($event)"
-                           [length]="change.total" [pageSize]="change.params.rows" [pageSizeOptions]="[10,20,50]"
-                           showFirstLastButtons></mat-paginator>
-        </mat-tab>
-        <mat-tab aria-label="risk" label="风险">
-            <table *ngIf="source.risk" mat-table [dataSource]="source.risk" class="mat-elevation-z8">
+                        <!-- Qualification Column -->
+                        <ng-container matColumnDef="date">
+                            <td mat-cell *matCellDef="let element"
+                                style="width: 200px">{{element.createTime | date : 'yyyy-MM-dd'}}</td>
+                        </ng-container>
+                        <tr mat-row *matRowDef="let row; columns: displayed['change'];"
+                            (click)="selection['change'].toggle(row)">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageIndex]="change.params.page - 1" (page)="changePage($event)"
+                                   [length]="change.total" [pageSize]="change.params.rows"
+                                   [pageSizeOptions]="[10,20,50]"
+                                   showFirstLastButtons></mat-paginator>
+                </mat-tab>
+                <mat-tab aria-label="risk" label="专利风险">
+                    <table *ngIf="source.risk" mat-table [dataSource]="source.risk" class="mat-elevation-z8">
 
 
-                <!-- Name Column -->
-                <ng-container matColumnDef="title">
-                    <td mat-cell *matCellDef="let element">{{element.content}}</td>
-                </ng-container>
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="title">
+                            <td mat-cell *matCellDef="let element">{{element.content}}</td>
+                        </ng-container>
 
-                <!-- Qualification Column -->
-                <ng-container matColumnDef="date">
-                    <td mat-cell *matCellDef="let element" style="width: 200px">{{element.createTime | date : 'yyyy-MM-dd'}}</td>
-                </ng-container>
+                        <!-- Qualification Column -->
+                        <ng-container matColumnDef="date">
+                            <td mat-cell *matCellDef="let element"
+                                style="width: 200px">{{element.createTime | date : 'yyyy-MM-dd'}}</td>
+                        </ng-container>
 
-                <tr mat-row *matRowDef="let row; columns: displayed['risk'];"
-                    (click)="selection['risk'].toggle(row)">
-                </tr>
-            </table>
-            <mat-paginator [pageIndex]="risk.params.page - 1" (page)="riskPage($event)"
-                           [length]="risk.total" [pageSize]="risk.params.rows" [pageSizeOptions]="[10,20,50]"
-                           showFirstLastButtons></mat-paginator>
-        </mat-tab>
-    </mat-tab-group>
+                        <tr mat-row *matRowDef="let row; columns: displayed['risk'];"
+                            (click)="selection['risk'].toggle(row)">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageIndex]="risk.params.page - 1" (page)="riskPage($event)"
+                                   [length]="risk.total" [pageSize]="risk.params.rows" [pageSizeOptions]="[10,20,50]"
+                                   showFirstLastButtons></mat-paginator>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
 </div>

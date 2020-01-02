@@ -40,13 +40,13 @@
 
         <!-- Position Column -->
         <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef style="width: 80px"> 索引.</th>
+            <th mat-header-cell *matHeaderCellDef style="width: 80px"> <b>序号</b></th>
             <td mat-cell *matCellDef="let element;let i = index"> {{i + 1}} </td>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> 企业名称</th>
+            <th mat-header-cell *matHeaderCellDef> <b>企业名称</b></th>
             <td mat-cell *matCellDef="let element">
                 <a [routerLink]="['/admin/project/item',element.id]" class="link"
                    href="javascript:;">{{element.companyName}}</a>
@@ -55,7 +55,7 @@
 
         <!-- Weight Column -->
         <ng-container matColumnDef="time">
-            <th mat-header-cell *matHeaderCellDef style="width: 200px"> 添加时间</th>
+            <th mat-header-cell *matHeaderCellDef style="width: 200px"> <b>添加时间</b></th>
             <td mat-cell *matCellDef="let element">
                 <a [routerLink]="['/admin/employee/list']"
                    [queryParams]="{supplier:'',type:'',project:element.id}"
@@ -65,12 +65,11 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef style="width: 250px"> 操作</th>
+            <th mat-header-cell *matHeaderCellDef style="width: 250px"> <b>操作</b></th>
             <td mat-cell *matCellDef="let element">
-                <ion-button (click)="delete(element.id,element.companyName)" size="small" color="light">
-                    <ion-icon name="trash"></ion-icon>
+                <a (click)="delete(element.id,element.companyName)" style="color: #FF8913">
                     删除
-                </ion-button>
+                </a>
             </td>
         </ng-container>
 
