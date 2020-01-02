@@ -12,8 +12,8 @@
 </mat-card>
 <div class="container">
     <div class="button-row">
-        <button mat-raised-button (click)="trusts(1)" color="primary">托管</button>
-        <button mat-raised-button (click)="trusts(0)" color="warn">取消</button>
+        <ion-button  (click)="trusts(1)" color="primary">托管</ion-button>
+        <ion-button  (click)="trusts(0)" color="danger">取消</ion-button>
     </div>
     <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="onTab($event)">
         <mat-tab aria-label="trademark" label="商标">
@@ -44,7 +44,7 @@
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef style="width: 250px"> 名称</th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 250px"> <b>商标名称</b></th>
                     <td mat-cell *matCellDef="let element">
                         <a [routerLink]="['/admin/trust/detail',element.brandName]"
                            class="link" href="javascript:;">{{element.brandName}}</a>
@@ -53,7 +53,7 @@
 
                 <!-- Level Column -->
                 <ng-container matColumnDef="logo">
-                    <th mat-header-cell *matHeaderCellDef style="width: 250px"> 商标</th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 250px"> <b>商标</b></th>
                     <td mat-cell *matCellDef="let element">
                         <img *ngIf="element.imageUrl" style="height: 36px" [src]="element.imageUrl">
                     </td>
@@ -61,13 +61,13 @@
 
                 <!-- Qualification Column -->
                 <ng-container matColumnDef="types">
-                    <th mat-header-cell *matHeaderCellDef> 包含分类</th>
+                    <th mat-header-cell *matHeaderCellDef> <b>包含分类</b></th>
                     <td mat-cell *matCellDef="let element">{{element.type}}</td>
                 </ng-container>
 
                 <!-- Used Column -->
                 <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef style="width: 80px"> 托管</th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 80px"> <b>托管</b></th>
                     <td class="actions" mat-cell *matCellDef="let element">
                         <mat-slide-toggle (click)="trust('trademark',element);$event.stopPropagation()"
                                           [checked]="!!element.status"></mat-slide-toggle>
@@ -111,13 +111,13 @@
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="date">
-                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> 申请公布日</th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> <b>申请公布日</b></th>
                     <td mat-cell *matCellDef="let element">{{element.publicationDate}}</td>
                 </ng-container>
 
                 <!-- Level Column -->
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> 专利名称</th>
+                    <th mat-header-cell *matHeaderCellDef> <b>专利名称</b></th>
                     <td mat-cell *matCellDef="let element">
                         <a *ngIf="element.status" [routerLink]="['/admin/trust/item',element.applicationCode]"
                            class="link" href="javascript:;">{{element.inventionTitle}}</a>
@@ -127,25 +127,25 @@
 
                 <!-- Qualification Column -->
                 <ng-container matColumnDef="no">
-                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> 申请号</th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> <b>申请号</b></th>
                     <td mat-cell *matCellDef="let element">{{element.applicationCode}}</td>
                 </ng-container>
 
                 <!-- Qualification Column -->
                 <ng-container matColumnDef="publishNo">
-                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> 申请公布号</th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 150px"> <b>申请公布号</b></th>
                     <td mat-cell *matCellDef="let element">{{element.publicationCode}}</td>
                 </ng-container>
 
                 <!-- Qualification Column -->
                 <ng-container matColumnDef="type">
-                    <th mat-header-cell *matHeaderCellDef style="width: 100px"> 专利类型</th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 100px"> <b>专利类型</b></th>
                     <td mat-cell *matCellDef="let element">{{element.patentType}}</td>
                 </ng-container>
 
                 <!-- Used Column -->
                 <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef style="width: 80px"> 托管</th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 80px"> <b>托管</b></th>
                     <td class="actions" mat-cell *matCellDef="let element">
                         <mat-slide-toggle (click)="trust('patent',element);$event.stopPropagation()"
                                           [checked]="!!element.status"></mat-slide-toggle>

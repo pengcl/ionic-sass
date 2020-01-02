@@ -24,15 +24,13 @@
             <mat-tab aria-label="0" label="发票"></mat-tab>
             <mat-tab aria-label="2" label="证书"></mat-tab>
             <mat-tab aria-label="1" label="合同"></mat-tab>
-            <mat-tab aria-label="3" label="做件"></mat-tab>
+            <mat-tab aria-label="3" label="作件"></mat-tab>
         </mat-tab-group>
         <div class="row-buttons">
-            <ion-button [routerLink]="['/admin/box/upload']" mat-raised-button color="primary">
-                <ion-icon name="md-cloud-upload"></ion-icon>
+            <ion-button [routerLink]="['/admin/box/upload']" color="primary">
                 上传
             </ion-button>
-            <ion-button mat-raised-button color="danger">
-                <ion-icon name="md-trash"></ion-icon>
+            <ion-button color="light" style="margin-left: 10px">
                 删除
             </ion-button>
         </div>
@@ -83,11 +81,10 @@
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef style="width: 200px"> 操作</th>
                 <td class="actions" mat-cell *matCellDef="let element">
-                    <ion-button (click)="preDownload(element.id)" [download]="'1.docx'" size="small" color="light"
-                                [href]="FILE_PREFIX_URL + element.fileId">
-                        <ion-icon name="md-download"></ion-icon>
+                    <a (click)="preDownload(element.id)" [download]="'1.docx'"
+                                [href]="FILE_PREFIX_URL + element.fileId" style="color: #027CFF">
                         下载
-                    </ion-button>
+                    </a>
                 </td>
             </ng-container>
 

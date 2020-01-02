@@ -87,6 +87,7 @@ ion-row {
         p {
           font-size: 14px;
           margin-bottom: 5px;
+          margin-top: 28px;
         }
       }
       &.box_label{
@@ -97,5 +98,29 @@ ion-row {
         }
       }
     }
+  }
+}
+
+.deposit_label{
+  height: 126px;
+}
+.checkout{
+  width: 450px;
+  height: 150px;
+  background-color: #F4F7FF;
+  margin: 50px auto;
+  display: block;
+  cursor: pointer;
+  h3{
+    vertical-align: middle;
+    text-align: center;
+    padding-top: 55px;
+    color: #027CFF;
+    font-weight: 400;
+  }
+  img{
+    position: absolute;
+    right: 40px;
+    top: 50px;
   }
 }

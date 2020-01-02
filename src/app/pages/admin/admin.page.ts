@@ -3,6 +3,7 @@ import {DialogService} from '../../@core/modules/dialog';
 import {AuthService} from '../auth/auth.service';
 import {CompanyService} from './company/company.service';
 import {AccountService} from './account/account.service';
+import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
 
 @Component({
     selector: 'app-admin',
@@ -14,6 +15,8 @@ export class AdminPage {
     company = this.companySvc.currentCompany;
     balance = 0;
     show = true;
+    config: PerfectScrollbarConfigInterface = {
+    };
 
     constructor(private dialogSvc: DialogService,
                 private authSvc: AuthService,

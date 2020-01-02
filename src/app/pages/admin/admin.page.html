@@ -1,6 +1,8 @@
 
 <mat-sidenav-container class="example-container">
+
     <mat-sidenav mode="side" opened>
+        <perfect-scrollbar style="width: 100%; height: 100%;" [config]="config">
         <img src="/assets/images/logo_2.png" height="38" width="146" style="display: block;margin: 25px auto"/>
         <div class="user">
             <ion-avatar>
@@ -10,7 +12,7 @@
             <ion-list>
                 <ion-item routerLink="/admin/company/list" detail lines="none">
                     <ion-label>
-                        <p>当前组织名称</p>
+                        <p class="organization">当前组织名称</p>
                         <h3><a (click)="$event.stopPropagation()" [routerLink]="['/admin/company/item',company.id]" href="javascript:;">{{company.companyName}}</a></h3>
                     </ion-label>
                 </ion-item>
@@ -100,7 +102,9 @@
                 </mat-accordion>
             </ng-container>
         </mat-list>
+        </perfect-scrollbar>
     </mat-sidenav>
+
     <mat-sidenav-content>
         <app-header></app-header>
         <div style="background: #fff;width: 100%;height: 56px"></div>

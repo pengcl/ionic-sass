@@ -16,7 +16,6 @@
             <mat-horizontal-stepper labelPosition="bottom" [selectedIndex]="order.index" linear #stepper>
                 <mat-step [stepControl]="firstForm">
                     <form [formGroup]="firstForm">
-                        <ng-template matStepperIcon><img src="/assets/images/checkout/brand.png"></ng-template>
                         <ng-template matStepLabel><b>填写商标信息</b></ng-template>
                         <ion-grid>
                             <ion-row>
@@ -90,7 +89,7 @@
                         </ion-grid>
                         <div>
                             <button [disabled]="this.firstForm.invalid" (click)="first()" mat-raised-button
-                                    color="primary" matStepperNext>下一步
+                                    color="primary" matStepperNext style="background: #027CFF;">下一步
                             </button>
                         </div>
                     </form>
@@ -228,7 +227,7 @@
                     <div class="step-actions" style="margin-top: 20px;">
                         <button [disabled]="this.firstForm.invalid" mat-raised-button matStepperPrevious>上一步</button>
                         <button [disabled]="!selection['type'].hasValue()" (click)="second()" mat-raised-button
-                                color="primary" matStepperNext>下一步
+                                color="primary" matStepperNext style="background: #027CFF;margin-left: 20px">下一步
                         </button>
                     </div>
                 </mat-step>
@@ -245,7 +244,7 @@
                                             企业
                                         </mat-button-toggle>
                                         <mat-button-toggle [value]="0">
-                                            个人
+                                            个体工商户
                                         </mat-button-toggle>
                                     </mat-button-toggle-group>
                                 </ion-col>
@@ -494,7 +493,7 @@
                     <div class="step-actions" style="margin-top: 20px;">
                         <button mat-raised-button matStepperPrevious>上一步</button>
                         <button [disabled]="thirdForm.invalid" (click)="third()" mat-raised-button
-                                color="primary" matStepperNext>下一步
+                                color="primary" matStepperNext style="background: #027CFF;margin-left: 20px">下一步
                         </button>
                     </div>
                 </mat-step>
@@ -693,7 +692,7 @@
                     <div class="step-actions" style="margin-top: 20px;">
                         <button mat-raised-button matStepperPrevious>上一步</button>
                         <button [disabled]="thirdForm.invalid" (click)="fourth()" mat-raised-button
-                                color="primary" matStepperNext>下一步
+                                color="primary" matStepperNext style="background: #027CFF;margin-left: 20px">提交订单
                         </button>
                     </div>
                 </mat-step>
@@ -764,7 +763,7 @@
                         </ion-row>
                     </ion-grid>
                     <div class="step-actions" style="margin-top: 20px;">
-                        <button (click)="fifth(stepper)" color="primary" mat-raised-button>确认支付</button>
+                        <button (click)="fifth(stepper)" color="primary" mat-raised-button style="background: #027CFF;">确认支付</button>
                         <!--<button (click)="reset(stepper)" mat-raised-button color="primary">再来一单</button>-->
                     </div>
                 </mat-step>
@@ -784,7 +783,7 @@
                         </ion-item>
                     </ion-list>
                     <div class="step-actions" style="margin-top: 20px;">
-                        <button (click)="home()" color="primary" mat-raised-button>返回首页</button>
+                        <button (click)="home()" color="primary" mat-raised-button style="background: #027CFF;">返回首页</button>
                         <!--<button (click)="reset(stepper)" mat-raised-button color="primary">再来一单</button>-->
                     </div>
                 </mat-step>

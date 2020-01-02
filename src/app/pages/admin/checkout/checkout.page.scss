@@ -107,7 +107,7 @@
         &:nth-child(11) {
           .mat-step-icon {
             &:after {
-              background-image: url("/assets/images/checkout/brand.png");
+              background-image: url("/assets/images/checkout/success _on.png");
             }
           }
         }
@@ -253,5 +253,17 @@ h5 {
 
   &.disabled {
     opacity: 0.5;
+  }
+}
+button{
+  width: 160px;
+  height: 40px;
+}
+mat-button-toggle-group{
+  &::ng-deep{
+    .mat-button-toggle-checked{
+      background-color: #027CFF;
+      color: #fff;
+    }
   }
 }
