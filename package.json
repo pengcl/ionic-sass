@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "sudo ng serve --disable-host-check --proxy-config proxy.conf.json --port 80",
-    "build": "ng build",
+    "build": "ng build --prod --aot --build-optimizer",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
