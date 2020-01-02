@@ -16,6 +16,7 @@
             <mat-horizontal-stepper labelPosition="bottom" [selectedIndex]="order.index" linear #stepper>
                 <mat-step [stepControl]="firstForm">
                     <form [formGroup]="firstForm">
+                        <ng-template matStepperIcon><img src="/assets/images/checkout/brand.png"></ng-template>
                         <ng-template matStepLabel><b>填写商标信息</b></ng-template>
                         <ion-grid>
                             <ion-row>
@@ -697,7 +698,7 @@
                     </div>
                 </mat-step>
                 <mat-step>
-                    <ng-template matStepLabel><b>订单提交成功</b></ng-template>
+                    <ng-template matStepLabel><b>支付交官费用</b></ng-template>
                     <ion-list>
                         <ion-item lines="none">
                             <ion-thumbnail slot="start" style="width: 72px;height: 72px">
@@ -712,54 +713,56 @@
                         </ion-item>
                     </ion-list>
                     <mat-divider></mat-divider>
-                    <h3>选择支付方式</h3>
+                    <div class="additional">
+                        <h3>余额支付</h3>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="3">
+                                    <div (click)="setAdditionalPay('zct',0,account.zct === 0 || payType === 'OFFLINE_PAY')"
+                                         class="{{additionalPayTypes[0] === 'zct' ? 'curr' : ''}} pay-box {{account.zct === 0 || payType === 'OFFLINE_PAY' ? 'disabled' : ''}}">
+                                        <img src="/assets/images/paymode/zct.png">
+                                        <span>知产通</span>
+                                        <ion-text color="danger">（余额：￥{{account.zct}}）</ion-text>
+                                    </div>
+                                </ion-col>
+                                <ion-col size="3">
+                                    <div (click)="setAdditionalPay('qb',1,account.qb === 0 || payType === 'OFFLINE_PAY')"
+                                         class="{{additionalPayTypes[1] === 'qb' ? 'curr' : ''}} pay-box {{account.qb === 0 || payType === 'OFFLINE_PAY' ? 'disabled' : ''}}">
+                                        <img src="/assets/images/paymode/qb.png">
+                                        <span>钱包</span>
+                                        <ion-text color="danger">（余额：￥{{account.qb}}）</ion-text>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </div>
+                    <h3>其它支付</h3>
                     <ion-grid>
                         <ion-row>
                             <ion-col size="2">
-                                <div (click)="setPay('wxpay')"
-                                     class="{{payType === 'wxpay' ? 'curr' : ''}} pay-box">
-                                    <ion-icon name="logo-python"></ion-icon>
+                                <div (click)="setPay('wxpay',account.amount >= order.amount)"
+                                     class="{{payType === 'wxpay' ? 'curr' : ''}} pay-box {{account.amount >= order.amount ? 'disabled' : ''}}">
+                                    <img src="/assets/images/paymode/wx.png">
                                     <span>微信支付</span>
                                 </div>
                             </ion-col>
                             <ion-col size="2">
-                                <div (click)="setPay('alipay')"
-                                     class="{{payType === 'alipay' ? 'curr' : ''}} pay-box disabled">
-                                    <ion-icon name="logo-python"></ion-icon>
+                                <div (click)="setPay('alipay',true)"
+                                     class="{{payType === 'alipay' ? 'curr' : ''}} pay-box disabled {{account.amount >= order.amount ? 'disabled' : ''}}">
+                                    <img src="/assets/images/paymode/alipay.png">
                                     <span>支付宝支付</span>
                                 </div>
                             </ion-col>
                             <ion-col size="2">
-                                <div (click)="setPay('OFFLINE_PAY')"
-                                     class="{{payType === 'OFFLINE_PAY' ? 'curr' : ''}} pay-box">
-                                    <ion-icon name="logo-python"></ion-icon>
+                                <div (click)="setPay('OFFLINE_PAY',account.amount >= order.amount)"
+                                     class="{{payType === 'OFFLINE_PAY' ? 'curr' : ''}} pay-box {{account.amount >= order.amount ? 'disabled' : ''}}">
+                                    <img src="/assets/images/paymode/underline.png">
                                     <span>线下支付</span>
                                 </div>
                             </ion-col>
                             <ion-col size="2"></ion-col>
                         </ion-row>
                     </ion-grid>
-                    <div *ngIf="payType !== 'OFFLINE_PAY'" class="additional">
-                        <h3>使用余额</h3>
-                        <ion-grid>
-                            <ion-row>
-                                <ion-col size="2">
-                                    <div (click)="setAdditionalPay('zct',0)"
-                                         class="{{additionalPayTypes[0] === 'zct' ? 'curr' : ''}} pay-box">
-                                        <ion-icon name="logo-python"></ion-icon>
-                                        <span>知产通</span>
-                                    </div>
-                                </ion-col>
-                                <ion-col size="2">
-                                    <div (click)="setAdditionalPay('qb',1)"
-                                         class="{{additionalPayTypes[1] === 'qb' ? 'curr' : ''}} pay-box">
-                                        <ion-icon name="logo-python"></ion-icon>
-                                        <span>钱包</span>
-                                    </div>
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
-                    </div>
                     <div class="step-actions" style="margin-top: 20px;">
                         <button (click)="fifth(stepper)" color="primary" mat-raised-button>确认支付</button>
                         <!--<button (click)="reset(stepper)" mat-raised-button color="primary">再来一单</button>-->
@@ -781,7 +784,7 @@
                         </ion-item>
                     </ion-list>
                     <div class="step-actions" style="margin-top: 20px;">
-                        <button (click)="fifth()" color="primary" mat-raised-button>返回首页</button>
+                        <button (click)="home()" color="primary" mat-raised-button>返回首页</button>
                         <!--<button (click)="reset(stepper)" mat-raised-button color="primary">再来一单</button>-->
                     </div>
                 </mat-step>

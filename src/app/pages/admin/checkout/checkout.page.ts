@@ -20,6 +20,7 @@ import {OrderService} from '../order/order.service';
 import {MatDialog} from '@angular/material';
 import {interval as observableInterval} from 'rxjs';
 import {AdminCheckoutCodeComponent} from './code/code.component';
+import {AccountService} from '../account/account.service';
 
 declare interface Order {
     index: any;
@@ -142,6 +143,12 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
     additionalPayTypes = ['', ''];
 
     interval;
+    account = {
+        amount: 0,
+        total: 0,
+        zct: 0,
+        qb: 0
+    };
 
     constructor(private formBuilder: FormBuilder,
                 private router: Router,
@@ -158,13 +165,11 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
                 private addressSvc: AddressService,
                 private checkoutSvc: CheckoutService,
                 private planSvc: PlanService,
+                private accountSvc: AccountService,
                 private orderSvc: OrderService) {
     }
 
     ngOnInit() {
-        this.selection.type.changed.subscribe(value => {
-            console.log(value);
-        });
         this.firstForm = this.formBuilder.group({
             custId: [this.company.id, Validators.required],
             brandRegType: [0, Validators.required],
@@ -176,9 +181,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
             selfId: ['', Validators.required],
             brandTypes: ['', Validators.required],
             brandNames: ['', Validators.required]
-        });
-        this.secondForm.valueChanges.subscribe(res => {
-            console.log(res);
         });
         this.setFormValue('secondForm');
 
@@ -204,7 +206,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         });
 
         this.thirdForm.get('custType').valueChanges.subscribe(res => {
-            console.log(res);
             if (res) {
                 this.thirdForm.get('idCard').setValidators(null);
                 this.thirdForm.get('cardFileId').disable();
@@ -239,6 +240,21 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         this.setFormValue('fourthForm');
         this.industrySvc.list('order').subscribe((res) => {
             this.industries = res;
+        });
+
+        this.accountSvc.zct(this.company.id).subscribe(res => {
+            if (res) {
+                this.account.zct = res.account.balance;
+            } else {
+                this.account.zct = 0;
+            }
+        });
+        this.accountSvc.qb(this.company.id).subscribe(res => {
+            if (res) {
+                this.account.qb = res.account.balance;
+            } else {
+                this.account.qb = 0;
+            }
         });
     }
 
@@ -301,7 +317,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         });
         this.checkoutSvc.getTypes(ids).subscribe(res => {
             res = res ? res : [];
-            console.log(res);
             this.source.type = new MatTableDataSource<any>(res);
             this.selection.type = new SelectionModel<any>(true, []);
             this.source.type.data.forEach(row => this.selection.type.select(row));
@@ -402,7 +417,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         }
 
         this.checkoutSvc.fourth(this.fourthForm.value).subscribe(res => {
-            console.log(res);
             if (res) {
                 this.order.no = res;
                 this.order.index = 4;
@@ -413,7 +427,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
     }
 
     home() {
-        console.log('home');
         this.router.navigate(['/admin/dashboard']);
 
     }
@@ -458,7 +471,10 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         return `${this.selection[target].isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
     }
 
-    setPay(type) {
+    setPay(type, disabled) {
+        if (disabled) {
+            return false;
+        }
         this.payType = type;
         if (type === 'OFFLINE_PAY') {
             this.additionalPayTypes = ['', ''];
@@ -470,7 +486,11 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         if (this.payType !== 'OFFLINE_PAY') {
             this.additionalPayTypes.forEach(item => {
                 if (item) {
-                    payTypes = payTypes + 'item';
+                    if (payTypes) {
+                        payTypes = payTypes + ',' + item;
+                    } else {
+                        payTypes = payTypes + item;
+                    }
                 }
             });
         }
@@ -505,19 +525,37 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         };
         if (this.payType !== 'OFFLINE_PAY') {
             this.checkoutSvc.order(body).subscribe(res => {
-                console.log(res);
-                this.codeDialog(res.payCode, stepper);
+                if (res) {
+                    if (res.payCode) {
+                        this.codeDialog(res.payCode, stepper);
+                    } else {
+                        this.order.index = 5;
+                        this.storageSvc.set('order', JSON.stringify(this.order));
+                        stepper.next();
+                    }
+                }
             });
         } else {
-            console.log('haha');
             this.order.index = 5;
             this.storageSvc.set('order', JSON.stringify(this.order));
             stepper.next();
         }
     }
 
-    setAdditionalPay(type, index) {
+    setAdditionalPay(type, index, disabled) {
+        if (disabled) {
+            return false;
+        }
         this.additionalPayTypes[index] === type ? this.additionalPayTypes[index] = '' : this.additionalPayTypes[index] = type;
+        this.account.amount = 0;
+        this.additionalPayTypes.forEach(item => {
+            if (item) {
+                this.account.amount = this.account.amount + this.account[item];
+            }
+        });
+        if (this.account.amount >= this.order.amount) {
+            this.payType = '';
+        }
     }
 
     download(id) {

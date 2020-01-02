@@ -23,6 +23,96 @@
     .mat-horizontal-content-container {
       padding: 24px;
     }
+
+    .mat-horizontal-stepper-header-container {
+      .mat-stepper-horizontal-line {
+        top: 64px !important;
+      }
+
+      mat-step-header {
+        &:after, &:before {
+          top: 64px !important;
+          width: calc(50% - 40px) !important;
+        }
+
+        .mat-step-icon {
+          width: 80px;
+          height: 80px;
+          background: #fff;
+          border: 1px solid #ededed;
+          &:after {
+            position: absolute;
+            content: '';
+            width: 24px;
+            height: 24px;
+            background-size: cover;
+            background-position: center;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+          }
+          .mat-step-icon-content {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--ion-color-medium);
+            text-align: center;
+            line-height: 24px;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+          &.mat-step-icon-selected {
+            border: 1px solid var(--ion-color-primary);
+            .mat-step-icon-content {
+              background: var(--ion-color-primary);
+            }
+          }
+        }
+        &:nth-child(1) {
+          .mat-step-icon {
+            &:after {
+              background-image: url("/assets/images/checkout/brand.png");
+            }
+          }
+        }
+        &:nth-child(3) {
+          .mat-step-icon {
+            &:after {
+              background-image: url("/assets/images/checkout/register_on.png");
+            }
+          }
+        }
+        &:nth-child(5) {
+          .mat-step-icon {
+            &:after {
+              background-image: url("/assets/images/checkout/applicant_on.png");
+            }
+          }
+        }
+        &:nth-child(7) {
+          .mat-step-icon {
+            &:after {
+              background-image: url("/assets/images/checkout/confirm_on.png");
+            }
+          }
+        }
+        &:nth-child(9) {
+          .mat-step-icon {
+            &:after {
+              background-image: url("/assets/images/checkout/pay_on.png");
+            }
+          }
+        }
+        &:nth-child(11) {
+          .mat-step-icon {
+            &:after {
+              background-image: url("/assets/images/checkout/brand.png");
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -138,25 +228,30 @@ h5 {
   border: 2px solid #EDEDED;
   cursor: pointer;
 
-  ion-icon, span {
+  img, span, ion-text {
     display: inline-block;
     vertical-align: middle;
   }
 
-  ion-icon {
-    font-size: 32px;
+  img {
+    width: 32px;
+    height: 32px;
     margin: 10px 15px 10px 20px;
   }
 
-  span {
+  span, ion-text {
     font-weight: bold;
   }
 
-  &:hover {
-    border: 2px solid #000;
+  &.curr {
+    border: 2px solid #961522;
+
+    span {
+      color: #961522;
+    }
   }
 
-  &.curr {
-    border: 2px solid #3880ff;
+  &.disabled {
+    opacity: 0.5;
   }
 }
