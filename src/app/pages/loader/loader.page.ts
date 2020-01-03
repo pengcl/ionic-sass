@@ -29,6 +29,8 @@ export class LoaderPage implements OnInit {
         if (!this.token) {
             this.router.navigate(['/auth']);
         } else {
+            console.log(this.token);
+            this.authSvc.updateLoginStatus(this.token);
             if (!this.user) {
                 this.authSvc.get().subscribe(user => {
                     this.storage.set('user', JSON.stringify(user));
