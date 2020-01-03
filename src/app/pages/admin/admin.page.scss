@@ -4,12 +4,19 @@ mat-sidenav-container {
   left: 0;
   right: 0;
   bottom: 0;
-
+  &::ng-deep {
+    .mat-drawer-side {
+      border-right: 0;
+    }
+  }
   mat-sidenav {
     width: 250px;
     background: #027CFF;
     color: #fff;
     &::ng-deep{
+      .mat-drawer-side{
+        border-right: 0;
+      }
       .mat-drawer-inner-container{
         /*&::-webkit-scrollbar{
           width:0;
@@ -33,7 +40,7 @@ mat-sidenav-container {
           &.active, &:hover {
             //background-image: linear-gradient(to right, #027CFF, #fff);
             position: relative;
-            background: #fff;
+            background-color: #fff;
             color: #027CFF;
           }
         }
