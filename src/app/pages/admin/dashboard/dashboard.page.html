@@ -244,11 +244,14 @@
                         <mat-card-title>自助智能服务</mat-card-title>
                     </mat-card-header>
                     <mat-card-content style="height: 220px;position: relative">
-                        <!--<app-empty title="自助下单" (confirm)="checkout($event)"></app-empty>-->
-                        <div class="checkout" routerLink="/admin/checkout">
-                            <h3>商标自助智能申请</h3>
-                            <img src="/assets/images/go.png" height="38" width="38"/>
-                        </div>
+                        <ion-grid>
+                            <ion-row>
+                                <div class="checkout" routerLink="/admin/checkout">
+                                    <h3>商标自助智能申请</h3>
+                                    <img src="/assets/images/go.png" height="38" width="38"/>
+                                </div>
+                            </ion-row>
+                        </ion-grid>
                     </mat-card-content>
                 </mat-card>
             </ion-col>
