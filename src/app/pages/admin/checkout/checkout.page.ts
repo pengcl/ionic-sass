@@ -287,6 +287,7 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         this.order.amount = 0;
         this.order.total = 0;
         this.setSource();
+        console.log(e.value);
         if (e.value) {
             this.checkoutSvc.getAllTypes().subscribe(res => {
                 this.source.type = new MatTableDataSource<any>(res);
@@ -295,6 +296,8 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
                     this.setPrice();
                 }
             });
+        } else {
+            this.setIndustries();
         }
     }
 
@@ -315,13 +318,20 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
                 ids = item.id;
             }
         });
-        this.checkoutSvc.getTypes(ids).subscribe(res => {
-            res = res ? res : [];
-            this.source.type = new MatTableDataSource<any>(res);
+        if (ids) {
+            this.checkoutSvc.getTypes(ids).subscribe(res => {
+                res = res ? res : [];
+                this.source.type = new MatTableDataSource<any>(res);
+                this.selection.type = new SelectionModel<any>(true, []);
+                this.source.type.data.forEach(row => this.selection.type.select(row));
+                this.setPrice();
+            });
+        } else {
+            this.source.type = new MatTableDataSource<any>([]);
             this.selection.type = new SelectionModel<any>(true, []);
             this.source.type.data.forEach(row => this.selection.type.select(row));
             this.setPrice();
-        });
+        }
         // this.form.get('industryIds').setValue(ids);
     }
 
