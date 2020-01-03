@@ -94,9 +94,12 @@ ion-list {
     .mat-expansion-panel:first-of-type {
       border-radius: 0;
     }
+    .mat-expansion-panel-spacing {
+      margin: 0;
+    }
   }
 
-  mat-expansion-panel {
+  mat-expansion-panel{
     background: #027CFF;
     box-shadow: none;
 
