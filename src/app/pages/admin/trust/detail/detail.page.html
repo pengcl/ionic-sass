@@ -5,7 +5,7 @@
             首页</a>
         <span class="divider">></span>
         <a href="/admin/trust/list">知产托管</a>
-        <span class="divider">></span>
+        <span class="divider" *ngIf="data?.brandName">></span>
         <span>{{data?.brandName}}</span>
     </div>
     <mat-card-header>

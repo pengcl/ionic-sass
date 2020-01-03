@@ -63,7 +63,6 @@ export class CheckoutService {
     getAllTypes(): Observable<any> {
         return this.http.get(this.PREFIX_URL + 'getBrandTypes')
             .pipe(observableMargeMap((res: any) => {
-                console.log(res);
                 res.result.sort((a, b) => {
                     return parseInt(a.code, 10) - parseInt(b.code, 10);
                 });

@@ -26,7 +26,6 @@ export class AdminPage {
             this.company = res;
         });
         accountSvc.balance(this.company.id).subscribe(res => {
-            console.log(res);
             this.balance = res;
         });
     }

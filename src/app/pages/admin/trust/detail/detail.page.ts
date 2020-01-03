@@ -68,14 +68,11 @@ export class AdminTrustDetailPage {
                 private trustSvc: TrustService,
                 private router: Router) {
         this.checkoutSvc.getAllTypes().subscribe(res => {
-            console.log(res);
             trustSvc.trademark(this.company.id, this.id).subscribe(data => {
-                console.log(data);
                 if (data.brandName) {
                     res.forEach(item => {
                         data.type.split(',').forEach(dataItem => {
                             if (item.code === dataItem) {
-                                console.log('selected');
                                 item.type = 'selected';
                             }
                         });
