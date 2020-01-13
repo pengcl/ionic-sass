@@ -3,6 +3,11 @@ import {ActivatedRoute, Params} from '@angular/router';
 
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
+
+import {fromEvent} from 'rxjs';
+import {ajax} from 'rxjs/ajax';
+import {map, filter, debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+
 import {AuthService} from '../../../auth/auth.service';
 import {CompanyService} from '../../company/company.service';
 import {TrustService} from '../trust.service';

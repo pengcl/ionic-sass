@@ -12,7 +12,7 @@ export class OrderService {
     }
 
     list(body): Observable<any> {
-        return this.http.get(this.PREFIX_URL + 'searchOrder', {params: body})
+        return this.http.get(this.PREFIX_URL + 'searchSaaSOrder', {params: body})
             .pipe(observableMargeMap((res: any) => {
                 return resultProcess(res);
             }));

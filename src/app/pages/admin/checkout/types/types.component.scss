@@ -1,0 +1,62 @@
+ion-grid {
+  margin: 0 -10px;
+}
+
+mat-button-toggle-group {
+  margin-bottom: 15px;
+}
+mat-form-field {
+  display: block;
+  width: 100%;
+}
+ion-list {
+  background: #ededed;
+  border-radius: 4px;
+
+  ion-item {
+    --background: transparent;
+    font-size: 12px;
+    margin-left: 10px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+
+    &.selected {
+      --background: #fff
+    }
+  }
+}
+.tips {
+  font-size: 16px;
+  margin-bottom: 16px;
+  span {
+    font-size: 12px;
+    color: #999;
+    margin-left: 16px;
+  }
+}
+mat-expansion-panel {
+  mat-expansion-panel-header {
+    mat-panel-title {
+      flex: 1;
+    }
+    mat-panel-description {
+      flex: unset;
+    }
+  }
+  &::ng-deep {
+    .mat-expansion-panel-body {
+
+      .chip-list {
+        mat-label {
+          display: block;
+          margin: 20px 0;
+        }
+
+        mat-divider {
+          margin-top: 20px;
+          border-top-style: dashed;
+        }
+      }
+    }
+  }
+}

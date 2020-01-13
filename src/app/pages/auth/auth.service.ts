@@ -49,7 +49,7 @@ export class AuthService {
 
     token(token?) {
         if (token) {
-            this.storage.set('token', JSON.stringify(token));
+            this.storage.set('token', token);
         } else if (token === null) {
             this.storage.remove('token');
         } else {

@@ -1,0 +1,72 @@
+<ion-grid>
+    <ion-row>
+        <ion-col size="12">
+            <mat-button-toggle-group (change)="typeChange($event)" [value]="data.type" name="fontStyle"
+                                     aria-label="Font Style">
+                <mat-button-toggle color="primary" [value]="0">智能推荐</mat-button-toggle>
+                <mat-button-toggle color="primary" [value]="1">自主选择</mat-button-toggle>
+                <mat-button-toggle color="primary" [value]="2">全类保护</mat-button-toggle>
+            </mat-button-toggle-group>
+        </ion-col>
+        <ion-col size="12">
+            <mat-form-field *ngIf="data.type === 0">
+                <mat-label>选择行业</mat-label>
+                <mat-chip-list #chipList>
+                    <mat-chip *ngFor="let industry of data.industries"
+                              (removed)="remove(industry)">
+                        {{industry.industryName}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <input [matChipInputFor]="chipList" (click)="presentModal()" matInput
+                           required readonly>
+                </mat-chip-list>
+                <button (click)="presentModal()" mat-button matSuffix mat-icon-button>
+                    <ion-icon name="arrow-down"></ion-icon>
+                </button>
+            </mat-form-field>
+        </ion-col>
+        <ion-col size="12">
+            <div class="tips">我们为您推荐以下商品/服务项目<span>因商标注册存在盲期，以下群组的通过率检索结果可能存在偏差，仅供参考！ </span></div>
+        </ion-col>
+        <ion-col size="3">
+            <ion-list>
+                <ion-list-header>推荐类别</ion-list-header>
+                <ion-item (click)="selected(item)" [ngClass]="{'selected' : item.selected}"
+                          *ngFor="let item of data.types;let i = index"
+                          [lines]="'none'">
+                    <ion-label>{{item.n}}</ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-col>
+        <ion-col size="9">
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let item of data.items" [expanded]="item.expanded"
+                                     (opened)="item.expanded = true" (closed)="item.expanded = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{item.n}}<span>已为您检索到{{item.children.length}}条近似商标</span>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            <span>已选择{{item.count}}项</span>￥{{item.total}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-divider [inset]="true"></mat-divider>
+                    <div *ngFor="let children of item.children;let i = index" class="chip-list">
+                        <mat-label>{{children.n}}</mat-label>
+                        <mat-chip-list multiple>
+                            <mat-chip color="primary" (click)="selectedItem(item,children,chip,$event)"
+                                      [selected]="chip.selected"
+                                      *ngFor="let chip of children.children.slice(0,children.expanded ? children.children.length : 10)">
+                                {{chip.n}}
+                            </mat-chip>
+                            <mat-chip (click)="children.expanded = !children.expanded" color="accent" selected>
+                                {{children.expanded ? '收起' : '更多'}}
+                            </mat-chip>
+                        </mat-chip-list>
+                        <mat-divider *ngIf="i !== item.children.length - 1" [inset]="true" class="dashed"></mat-divider>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </ion-col>
+    </ion-row>
+</ion-grid>

@@ -1,9 +1,8 @@
 <mat-card class="profile">
     <div class="position">
-        <a class="link" href="/admin/dashboard">
+        <a routerLink="/admin/dashboard" href="javascript:;" class="link">
             <mat-icon slot="start">home</mat-icon>
             首页</a>
-        <span class="divider">></span>
         <span>竞争对手监控</span>
     </div>
     <mat-card-header>
@@ -48,8 +47,7 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> <b>企业名称</b></th>
             <td mat-cell *matCellDef="let element">
-                <a [routerLink]="['/admin/project/item',element.id]" class="link"
-                   href="javascript:;">{{element.companyName}}</a>
+                {{element.companyName}}
             </td>
         </ng-container>
 
@@ -57,9 +55,7 @@
         <ng-container matColumnDef="time">
             <th mat-header-cell *matHeaderCellDef style="width: 200px"> <b>添加时间</b></th>
             <td mat-cell *matCellDef="let element">
-                <a [routerLink]="['/admin/employee/list']"
-                   [queryParams]="{supplier:'',type:'',project:element.id}"
-                   class="link" href="javascript:;">{{element.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}</a>
+                {{element.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}
             </td>
         </ng-container>
 

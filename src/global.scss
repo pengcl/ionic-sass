@@ -244,6 +244,7 @@ form {
 mat-card.profile {
   border-radius: 0;
   background: #EFF2F9;
+
   [mat-card-avatar] {
     width: 72px;
     height: 72px;
@@ -367,6 +368,50 @@ mat-card.profile {
 
   button {
     margin-right: 10px;
+  }
+}
+
+.position {
+  font-size: 0;
+  overflow: visible;
+
+  a, span {
+    display: inline-block;
+    font-size: 12px;
+    padding: 5px 15px 5px 25px;
+    background: #fff;
+    border: 1px solid #ccc;
+    position: relative;
+    overflow: visible;
+    line-height: 16px;
+    box-sizing: border-box;
+
+    &:after {
+      width: 18px;
+      height: 18px;
+      position: absolute;
+      content: '';
+      background: #fff;
+      right: -1px;
+      top: 50%;
+      border-width: 0 1px 1px 0;
+      border-style: solid;
+      border-color: #ccc;
+      font-size: 14px;
+      z-index: 2;
+      transform: translate3d(50%, -50%, 0) rotate(-45deg);
+    }
+  }
+
+  a:first-child {
+    padding-left: 41px;
+    border-radius: 4px 0 0 4px;
+    mat-icon {
+      position: absolute;
+      top: 50%;
+      left: 25px;
+      margin-top: -8px;
+    }
   }
 }
 

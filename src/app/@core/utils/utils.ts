@@ -45,26 +45,43 @@ export function resultProcess(res) {
     }
 }
 
-export function listToTree(list) {
-    const copyList = list.slice(0);
+function getList(p?) {
+    if (p) {
+    } else {
+
+    }
+}
+
+export function listToTree(data, options?) {
+    options = options || {};
+    const ID_KEY = options.idKey || 'i';
+    const PARENT_KEY = options.parentKey || 'p';
+    const CHILDREN_KEY = options.childrenKey || 'children';
+
     const tree = [];
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < copyList.length; i++) {
-        // 找出每一项的父节点，并将其作为父节点的children
-        // tslint:disable-next-line:prefer-for-of
-        for (let j = 0; j < copyList.length; j++) {
-            if (copyList[i].parentId === copyList[j].id) {
-                if (copyList[j].children === undefined) {
-                    copyList[j].children = [];
-                }
-                copyList[j].children.push(copyList[i]);
-            }
-        }
-        // 把根节点提取出来，parentId为null的就是根节点
-        if (!copyList[i].parentId || copyList[i].parentId === '0') {
-            tree.push(copyList[i]);
+    const childrenOf = {};
+    let item;
+    let id;
+    let parentId;
+
+    for (let i = 0, length = data.length; i < length; i++) {
+        item = data[i];
+        id = item[ID_KEY];
+        parentId = item[PARENT_KEY] || 0;
+        // every item may have children
+        childrenOf[id] = childrenOf[id] || [];
+        // init its children
+        item[CHILDREN_KEY] = childrenOf[id];
+        if (parentId !== 0) {
+            // init its parent's children object
+            childrenOf[parentId] = childrenOf[parentId] || [];
+            // push it into its parent's children object
+            childrenOf[parentId].push(item);
+        } else {
+            tree.push(item);
         }
     }
+
     return tree;
 }
 

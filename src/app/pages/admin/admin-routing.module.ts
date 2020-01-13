@@ -18,6 +18,16 @@ const routes: Routes = [
                 loadChildren: () =>
                     import('./dashboard/dashboard.module').then(m => m.AdminDashboardPageModule)
             },
+            {
+                path: 'order/list',
+                loadChildren: () =>
+                    import('./order/list/list.module').then(m => m.AdminOrderListPageModule)
+            },
+            {
+                path: 'order/checkout/:id',
+                loadChildren: () =>
+                    import('./order/checkout/checkout.module').then(m => m.AdminOrderCheckoutPageModule)
+            },
             {// 主体例表
                 path: 'company/list',
                 canActivate: [CompanyGuard],

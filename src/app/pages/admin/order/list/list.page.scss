@@ -1,0 +1,47 @@
+td {
+  .detail {
+    padding: 10px 0;
+
+    p {
+      margin: 0;
+
+      &.no {
+        font-size: 12px;
+        color: #999;
+      }
+
+      &.name {
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--ion-color-primary);
+
+        span {
+          color: #666;
+          font-size: 12px;
+        }
+      }
+
+      &.desc {
+        color: #666;
+      }
+
+      &.time {
+        color: #999;
+        font-size: 12px;
+      }
+    }
+  }
+  &.actions {
+    a {
+      margin: 0 10px;
+      display: inline-block;
+      color: var(--ion-color-primary);
+      &:first-child {
+        margin-left: 0;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

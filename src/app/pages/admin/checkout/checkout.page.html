@@ -3,7 +3,6 @@
         <a routerLink="/admin/dashboard" class="link">
             <mat-icon slot="start">home</mat-icon>
             首页</a>
-        <span class="divider">></span>
         <span>商标自助智能申请</span>
     </div>
     <mat-card-header>
@@ -41,14 +40,41 @@
                                 <ion-col size="6">
                                     <div class="mat-radio-content">
                                         <label>商标图标：</label>
-                                        <mat-radio-group [value]="1" required>
-                                            <mat-radio-button class="example-margin" value="1" checked>手动上传
+                                        <mat-radio-group [(ngModel)]="generateType"
+                                                         (change)="change($event)"
+                                                         [ngModelOptions]="{standalone:true}" required>
+                                            <mat-radio-button class="example-margin" [value]="0">自动生成
                                             </mat-radio-button>
+                                            <mat-radio-button class="example-margin" [value]="1">手动上传</mat-radio-button>
                                         </mat-radio-group>
                                     </div>
                                 </ion-col>
                                 <ion-col size="6"></ion-col>
-                                <ion-col size="6">
+                                <ion-col *ngIf="generateType === 0" size="6">
+                                    <mat-form-field class="uploader">
+                                        <mat-label>自动生成商标图样</mat-label>
+                                        <input type="text" formControlName="brandLogoId" matInput placeholder="生成商标图样"
+                                               style="display: none" required>
+                                        <div class="weui-uploader">
+                                            <div class="weui-uploader__hd">
+                                                <div class="weui-uploader__info"></div>
+                                            </div>
+                                            <div class="weui-uploader__bd">
+                                                <div class="weui-uploader__input-box"
+                                                     [ngClass]="{'uploaded' : firstForm.get('brandLogoId').valid}"
+                                                     [ngStyle]="{'backgroundImage':'url(' + FILE_PREFIX_URL + order.generateId + ')'}">
+                                                    <div *ngIf="!order.generateId"
+                                                         class="weui-uploader__input-box-text">
+                                                        <ion-icon name="cloud-upload"></ion-icon>
+                                                        <h3>暂无图片</h3>
+                                                        <p>权大师平台默认以“宋体字样自左向右排列”递交官方</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-form-field>
+                                </ion-col>
+                                <ion-col *ngIf="generateType === 1" size="6">
                                     <mat-form-field class="uploader">
                                         <mat-label>上传商标图样</mat-label>
                                         <input type="text" formControlName="brandLogoId" matInput placeholder="请上传商标图样"
@@ -59,15 +85,15 @@
                                             </div>
                                             <div class="weui-uploader__bd">
                                                 <div class="weui-uploader__input-box"
-                                                     [ngClass]="{'uploaded' : firstForm.get('brandLogoId').valid}"
-                                                     [ngStyle]="{'backgroundImage':'url(' + FILE_PREFIX_URL + firstForm.get('brandLogoId').value + ')'}">
-                                                    <div *ngIf="firstForm.get('brandLogoId').invalid"
+                                                     [ngClass]="{'uploaded' : order.uploadId}"
+                                                     [ngStyle]="{'backgroundImage':'url(' + FILE_PREFIX_URL + order.uploadId + ')'}">
+                                                    <div *ngIf="!order.uploadId"
                                                          class="weui-uploader__input-box-text">
                                                         <ion-icon name="cloud-upload"></ion-icon>
                                                         <h3>请选择上传文件</h3>
                                                         <p>可上传图片、文档类型文件</p>
                                                     </div>
-                                                    <div *ngIf="firstForm.get('brandLogoId').valid"
+                                                    <div *ngIf="order.uploadId"
                                                          class="weui-uploader__input-box-text">
                                                         <ion-icon name="cloud-upload"></ion-icon>
                                                         <h3>重新上传</h3>
@@ -145,88 +171,11 @@
                             (click)="selection['base'].toggle(row)">
                         </tr>
                     </table>
-                    <form [formGroup]="secondForm" style="margin-top: 20px;">
-                        <ion-grid>
-                            <ion-row>
-                                <ion-col size="12">
-                                    <div class="mat-radio-content">
-                                        <label>商标类型：</label>
-                                        <mat-radio-group (change)="typeChange($event)">
-                                            <mat-radio-button class="example-margin" [value]="0" [checked]="type === 0">
-                                                智能推荐
-                                            </mat-radio-button>
-                                            <mat-radio-button class="example-margin" [value]="1" [checked]="type === 1">
-                                                自主选择
-                                            </mat-radio-button>
-                                            <mat-radio-button class="example-margin" [value]="2" [checked]="type === 2">
-                                                全类保护
-                                            </mat-radio-button>
-                                        </mat-radio-group>
-                                    </div>
-                                </ion-col>
-                                <ion-col size="6">
-                                    <mat-form-field *ngIf="type === 0">
-                                        <mat-label>选择行业</mat-label>
-                                        <mat-chip-list #chipList>
-                                            <mat-chip *ngFor="let industry of selectedIndustries"
-                                                      (removed)="remove(industry)">
-                                                {{industry.industryName}}
-                                                <mat-icon matChipRemove>cancel</mat-icon>
-                                            </mat-chip>
-                                            <input [matChipInputFor]="chipList" (click)="presentModal()" matInput
-                                                   required readonly>
-                                        </mat-chip-list>
-                                        <button (click)="presentModal()" mat-button matSuffix mat-icon-button>
-                                            <ion-icon name="arrow-down"></ion-icon>
-                                        </button>
-                                        <!--<mat-error *ngIf="form.get('industryIds').hasError('required')">
-                                            所属行业是 <strong>必填</strong> 项
-                                        </mat-error>-->
-                                    </mat-form-field>
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
-                        <!--<mat-form-field>
-                            <input matInput placeholder="Address" formControlName="secondCtrl" required>
-                        </mat-form-field>-->
-                    </form>
-                    <table *ngIf="source.type" mat-table [dataSource]="source.type"
-                           style="background: #fafafa;border-radius: 5px">
-
-                        <!-- Checkbox Column -->
-                        <ng-container matColumnDef="select">
-                            <th mat-header-cell *matHeaderCellDef style="width: 50px">
-                                <mat-checkbox (change)="$event ? masterToggle('type') : null;setPrice()"
-                                              [checked]="selection['type'].hasValue() && isAllSelected('type')"
-                                              [indeterminate]="selection['type'].hasValue() && !isAllSelected('type')"
-                                              [aria-label]="checkboxLabel('type')">
-                                </mat-checkbox>
-                            </th>
-                            <td mat-cell *matCellDef="let row">
-                                <mat-checkbox (click)="$event.stopPropagation()"
-                                              (change)="$event ? selection['type'].toggle(row) : null;setPrice()"
-                                              [checked]="selection['type'].isSelected(row)"
-                                              [aria-label]="checkboxLabel('type',row)">
-                                </mat-checkbox>
-                            </td>
-                        </ng-container>
-
-                        <!-- Level Column -->
-                        <ng-container matColumnDef="name">
-                            <th mat-header-cell *matHeaderCellDef> 商标名称</th>
-                            <td mat-cell *matCellDef="let element">
-                                <span>{{element.name}}</span>
-                            </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="displayed['type']"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayed['type'];"
-                            (click)="selection['type'].toggle(row);setPrice()">
-                        </tr>
-                    </table>
+                    <app-admin-checkout-types (change)="typesChange($event)" [data]="order.data"
+                                              [name]="order?.firstForm?.brandName"></app-admin-checkout-types>
                     <div class="step-actions" style="margin-top: 20px;">
                         <button [disabled]="this.firstForm.invalid" mat-raised-button matStepperPrevious>上一步</button>
-                        <button [disabled]="!selection['type'].hasValue()" (click)="second()" mat-raised-button
+                        <button [disabled]="secondForm.invalid" (click)="second()" mat-raised-button
                                 color="primary" matStepperNext style="background: #027CFF;margin-left: 20px">下一步
                         </button>
                     </div>
@@ -763,7 +712,9 @@
                         </ion-row>
                     </ion-grid>
                     <div class="step-actions" style="margin-top: 20px;">
-                        <button (click)="fifth(stepper)" color="primary" mat-raised-button style="background: #027CFF;">确认支付</button>
+                        <button (click)="fifth(stepper)" color="primary" mat-raised-button style="background: #027CFF;">
+                            确认支付
+                        </button>
                         <!--<button (click)="reset(stepper)" mat-raised-button color="primary">再来一单</button>-->
                     </div>
                 </mat-step>
@@ -783,7 +734,8 @@
                         </ion-item>
                     </ion-list>
                     <div class="step-actions" style="margin-top: 20px;">
-                        <button (click)="home()" color="primary" mat-raised-button style="background: #027CFF;">返回首页</button>
+                        <button (click)="home()" color="primary" mat-raised-button style="background: #027CFF;">返回首页
+                        </button>
                         <!--<button (click)="reset(stepper)" mat-raised-button color="primary">再来一单</button>-->
                     </div>
                 </mat-step>

@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {SharedModule} from '../../../@shared/shared.module';
 import {AdminCheckoutPage} from './checkout.page';
 import {AdminCheckoutCodeComponent} from './code/code.component';
+import {AdminCheckoutTypesComponent} from './types/types.component';
 
 
 @NgModule({
@@ -10,7 +11,7 @@ import {AdminCheckoutCodeComponent} from './code/code.component';
         SharedModule,
         RouterModule.forChild([{path: '', component: AdminCheckoutPage}])
     ],
-    declarations: [AdminCheckoutPage, AdminCheckoutCodeComponent],
+    declarations: [AdminCheckoutPage, AdminCheckoutCodeComponent, AdminCheckoutTypesComponent],
     entryComponents: [AdminCheckoutCodeComponent]
 })
 export class AdminCheckoutPageModule {

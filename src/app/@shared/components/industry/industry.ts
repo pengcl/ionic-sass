@@ -23,9 +23,7 @@ export class IndustryComponent {
         this.items = this.navParams.data.items;
         this.type = this.navParams.data.type ? this.navParams.data.type : '';
         industrySvc.list(this.type).subscribe(res => {
-            console.log(res);
-            this.industries = listToTree(res);
-            console.log(this.industries);
+            this.industries = listToTree(res, {idKey: 'id', parentKey: 'parentId', childrenKey: 'children'});
         });
         this.getSelected();
     }

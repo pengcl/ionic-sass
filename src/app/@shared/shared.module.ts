@@ -33,7 +33,8 @@ import {
     MatNativeDateModule,
     MatStepperModule,
     MatRadioModule,
-    MatPaginatorIntl
+    MatPaginatorIntl,
+    MatExpansionModule
 } from '@angular/material';
 
 const MATERIAL_PART = [
@@ -63,7 +64,8 @@ const MATERIAL_PART = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatStepperModule,
-    MatRadioModule
+    MatRadioModule,
+    MatExpansionModule
 ];
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
@@ -72,7 +74,7 @@ const CDK_PART = [DragDropModule];
 
 import {UploaderModule} from './modules/uploader';
 import {NgCircleProgressModule} from 'ng-circle-progress';
-import { NgxQRCodeModule } from 'ngx-qrcode2';
+import {NgxQRCodeModule} from 'ngx-qrcode2';
 import {Paginator} from './paginator';
 import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
 
@@ -111,7 +113,7 @@ import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
         NgxQRCodeModule,
         NgCircleProgressModule,
         ...COMPONENTS,
-        ...PIPES,
+        ...PIPES
     ],
     declarations: [...COMPONENTS, ...ENTRY_COMPONENTS, ...PIPES],
     entryComponents: [ENTRY_COMPONENTS],

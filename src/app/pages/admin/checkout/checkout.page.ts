@@ -7,20 +7,19 @@ import {ModalController} from '@ionic/angular';
 import {StorageService} from '../../../@core/services/storage.service';
 import {AuthService} from '../../auth/auth.service';
 import {IndustryService} from '../../../@shared/components/industry/industry.service';
-import {IndustryComponent} from '../../../@shared/components/industry/industry';
 import {CompanyService} from '../company/company.service';
 import {CheckoutService} from './checkout.service';
 import {Uploader, UploaderOptions} from '../../../@shared/modules/uploader';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
 import {AddressService} from '../../../@core/services/address.service';
-import {getIndex} from '../../../@core/utils/utils';
 import {PlanService} from '../plan/plan.service';
 import {OrderService} from '../order/order.service';
 import {MatDialog} from '@angular/material';
 import {interval as observableInterval} from 'rxjs';
 import {AdminCheckoutCodeComponent} from './code/code.component';
 import {AccountService} from '../account/account.service';
+import {debounceTime, distinctUntilChanged, filter} from 'rxjs/operators';
 
 declare interface Order {
     index: any;
@@ -28,6 +27,9 @@ declare interface Order {
     count: number;
     amount: number;
     total: number;
+    generateId: string;
+    uploadId: string;
+    data: { type: number, industries: any[], types: any[], items: any[] };
     no?: string;
     id?: any;
     firstForm?: any;
@@ -49,7 +51,10 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         price: 300,
         count: 0,
         amount: 0,
-        total: 0
+        total: 0,
+        generateId: '',
+        uploadId: '',
+        data: {type: 0, industries: [], types: [], items: []}
     };
     firstForm: FormGroup;
     secondForm: FormGroup;
@@ -65,7 +70,8 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
                 key: this.token, type: 'cust_cert', dir: 'cust_cert'
             },
             onUploadSuccess: (file, res) => {
-                this.firstForm.get('brandLogoId').setValue(JSON.parse(res).result);
+                this.order.uploadId = JSON.parse(res).result;
+                this.firstForm.get('brandLogoId').setValue(this.order.uploadId);
             }
         } as UploaderOptions),
         licenseFileId: new Uploader({
@@ -128,10 +134,8 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         type: new SelectionModel<any>(true, [])
     };
 
-    industries = [];
-    selectedIndustries = [];
     type = 0;
-
+    generateType = 0;
     provinces = [];
     cities = [];
     districts = [];
@@ -179,10 +183,21 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         this.setFormValue('firstForm');
         this.secondForm = this.formBuilder.group({
             selfId: ['', Validators.required],
+            protectType: [0, Validators.required],
             brandTypes: ['', Validators.required],
             brandNames: ['', Validators.required]
         });
         this.setFormValue('secondForm');
+
+        this.firstForm.get('brandName').valueChanges.pipe(
+            filter(text => text.length > 1),
+            debounceTime(1000),
+            distinctUntilChanged()).subscribe(value => {
+            this.checkoutSvc.generate(value).subscribe(res => {
+                this.order.generateId = res;
+                this.firstForm.get('brandLogoId').setValue(this.order.generateId);
+            });
+        });
 
         this.thirdForm = this.formBuilder.group({
             selfId: ['', Validators.required],
@@ -238,9 +253,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
             remark: ['']
         });
         this.setFormValue('fourthForm');
-        this.industrySvc.list('order').subscribe((res) => {
-            this.industries = res;
-        });
 
         this.accountSvc.zct(this.company.id).subscribe(res => {
             if (res) {
@@ -258,81 +270,70 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         });
     }
 
-    async presentModal() {
-        const modal = await this.modalController.create({
-            showBackdrop: true,
-            component: IndustryComponent,
-            componentProps: {items: this.selectedIndustries, type: 'order'}
-        });
-        await modal.present();
-        const {data} = await modal.onDidDismiss(); // 获取关闭传回的值
-        // this.form.get('industryIds').markAsTouched();
-        this.selectedIndustries = data;
-        this.setIndustries();
-    }
-
-    remove(item) {
-        const index = getIndex(this.selectedIndustries, 'id', item.id);
-        if (index >= 0) {
-            this.selectedIndustries.splice(index, 1);
+    change(e) {
+        if (e.value === 0) {
+            this.firstForm.get('brandLogoId').setValue(this.order.generateId);
+        } else {
+            this.firstForm.get('brandLogoId').setValue(this.order.uploadId);
         }
-        this.setIndustries();
     }
 
-    typeChange(e) {
-        this.type = e.value;
-        this.selection.type = new SelectionModel<any>(true, []);
-        this.order.price = 300;
+    typesChange(e) {
         this.order.count = 0;
         this.order.amount = 0;
         this.order.total = 0;
-        this.setSource();
-        console.log(e.value);
-        if (e.value) {
-            this.checkoutSvc.getAllTypes().subscribe(res => {
-                this.source.type = new MatTableDataSource<any>(res);
-                if (e.value === 2) {
-                    this.source.type.data.forEach(row => this.selection.type.select(row));
-                    this.setPrice();
-                }
-            });
-        } else {
-            this.setIndustries();
-        }
-    }
-
-    setPrice() {
-        this.order.count = this.selection.type.selected.length;
-        this.order.amount = this.selection.type.selected.length * this.order.price;
-        this.order.total = this.order.amount;
+        e.items.forEach(type => {
+            const count = typeof type.count === 'number' ? type.count : 0;
+            const total = typeof type.total === 'number' ? type.total : 0;
+            this.order.count = this.order.count + count;
+            this.order.amount = this.order.amount + total;
+            this.order.total = this.order.amount;
+        });
+        this.secondForm.get('protectType').setValue(e.type);
         this.storageSvc.set('order', JSON.stringify(this.order));
         this.setSource();
+        this.setIds(e.items);
     }
 
-    setIndustries() {
+    setIds(items) {
         let ids = '';
-        this.selectedIndustries.forEach(item => {
-            if (ids) {
-                ids = ids + ',' + item.id;
-            } else {
-                ids = item.id;
+        let names = '';
+        items.forEach(root => {
+            if (root.selected) {
+                if (ids) {
+                    ids = ids + ',' + root.i;
+                    names = names + ',' + root.n;
+                } else {
+                    ids = root.i;
+                    names = root.n;
+                }
             }
-        });
-        if (ids) {
-            this.checkoutSvc.getTypes(ids).subscribe(res => {
-                res = res ? res : [];
-                this.source.type = new MatTableDataSource<any>(res);
-                this.selection.type = new SelectionModel<any>(true, []);
-                this.source.type.data.forEach(row => this.selection.type.select(row));
-                this.setPrice();
+            root.children.forEach(parent => {
+                if (parent.selected) {
+                    if (ids) {
+                        ids = ids + ',' + parent.i;
+                        names = names + ',' + parent.n;
+                    } else {
+                        ids = parent.i;
+                        names = parent.n;
+                    }
+                }
+                parent.children.forEach((chip, i) => {
+                    if (chip.selected) {
+                        if (ids) {
+                            ids = ids + ',' + chip.i;
+                            names = names + ',' + chip.n;
+                        } else {
+                            ids = chip.i;
+                            names = chip.n;
+                        }
+                    }
+                });
             });
-        } else {
-            this.source.type = new MatTableDataSource<any>([]);
-            this.selection.type = new SelectionModel<any>(true, []);
-            this.source.type.data.forEach(row => this.selection.type.select(row));
-            this.setPrice();
-        }
-        // this.form.get('industryIds').setValue(ids);
+        });
+        this.secondForm.get('brandTypes').setValue(ids);
+        this.secondForm.get('brandNames').setValue(names);
+        console.log(this.secondForm.value);
     }
 
     setFormValue(formName) {
@@ -345,7 +346,25 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
             if (formName === 'firstForm') {
                 this.setSource();
             }
+            if (formName === 'thirdForm') {
+                this.setProxyId();
+            }
         }
+    }
+
+    setProxyId() {
+        this.checkoutSvc.getProxyId({
+            custName: this.thirdForm.get('companyName').value,
+            brandName: this.firstForm.get('brandName').value,
+            address: this.thirdForm.get('province').value +
+                this.thirdForm.get('city').value +
+                this.thirdForm.get('area').value +
+                this.thirdForm.get('address').value,
+            zipCode: this.thirdForm.get('zipCode').value
+        }).subscribe(res => {
+            console.log(res);
+            this.proxyId = res;
+        });
     }
 
     setSource() {
@@ -363,7 +382,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         if (this.firstForm.invalid) {
             return false;
         }
-
         this.checkoutSvc.first(this.firstForm.value).subscribe(res => {
             if (res) {
                 this.order.secondForm = {};
@@ -378,16 +396,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
     }
 
     second() {
-        this.secondForm.get('brandTypes').setValue('');
-        this.selection.type.selected.forEach(item => {
-            if (this.secondForm.get('brandTypes').value) {
-                this.secondForm.get('brandTypes').setValue(this.secondForm.get('brandTypes').value + ',' + item.id);
-                this.secondForm.get('brandNames').setValue(this.secondForm.get('brandNames').value + ',' + item.name);
-            } else {
-                this.secondForm.get('brandTypes').setValue(item.id);
-                this.secondForm.get('brandNames').setValue(item.name);
-            }
-        });
         if (this.secondForm.invalid) {
             return false;
         }
@@ -439,12 +447,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
     home() {
         this.router.navigate(['/admin/dashboard']);
 
-    }
-
-    reset(stepper) {
-        this.order = {index: 0, price: 300, count: 0, amount: 0, total: 0};
-        stepper.reset();
-        this.ngOnInit();
     }
 
     getProvinces() {

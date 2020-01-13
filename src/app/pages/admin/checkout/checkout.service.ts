@@ -76,4 +76,18 @@ export class CheckoutService {
                 return resultProcess(res);
             }));
     }
+
+    getProxyId(body: { custName: string, brandName: string, address: string, zipCode: string }): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'createBrandEntrustWord', body)
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
+
+    generate(name): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'createBrandImage', {brandName: name})
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
 }
