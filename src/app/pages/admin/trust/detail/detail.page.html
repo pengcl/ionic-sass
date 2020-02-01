@@ -45,9 +45,9 @@
                             <ul class="brand-list">
                                 <li *ngFor="let item of types">
                                     <div class="item-box">
-                                        <div class="code">{{item.code}}</div>
+                                        <div class="code">{{item.c}}</div>
                                         <ion-button [color]="item.type | color"
-                                                    size="small">{{item.name.split('——')[1]}}</ion-button>
+                                                    size="small">{{item.n.split('——')[1]}}</ion-button>
                                     </div>
                                 </li>
                             </ul>
@@ -57,7 +57,7 @@
             </ion-grid>
         </mat-card-content>
     </mat-card>
-    <mat-card style="margin-top: 20px" *ngIf="!!data?.brandName">
+    <mat-card style="margin-top: 20px;padding: 0" *ngIf="!!data?.brandName">
         <mat-card-content>
             <mat-tab-group (selectedTabChange)="onTab($event)" style="margin-top: 16px" >
                 <mat-tab aria-label="change" label="商标变更信息">

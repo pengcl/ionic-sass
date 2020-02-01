@@ -24,6 +24,11 @@ const routes: Routes = [
                     import('./order/list/list.module').then(m => m.AdminOrderListPageModule)
             },
             {
+                path: 'order/item/:id',
+                loadChildren: () =>
+                    import('./order/item/item.module').then(m => m.AdminOrderItemPageModule)
+            },
+            {
                 path: 'order/checkout/:id',
                 loadChildren: () =>
                     import('./order/checkout/checkout.module').then(m => m.AdminOrderCheckoutPageModule)

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {CompanyService} from '../company/company.service';
 import {MonitorService} from '../monitor/monitor.service';
@@ -22,6 +22,7 @@ export class AdminDashboardPage {
     boxStatus;
 
     constructor(private router: Router,
+                @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
                 private companySvc: CompanyService,
                 private monitorSvc: MonitorService,
                 private planSvc: PlanService,
@@ -62,6 +63,10 @@ export class AdminDashboardPage {
 
     plan(e) {
         this.router.navigate(['/admin/plan/list']);
+    }
+
+    preDownload(id) {
+        this.planSvc.preDownload(id, 1).subscribe();
     }
 
 }

@@ -122,7 +122,7 @@
                 </mat-step>
                 <mat-step [stepControl]="secondForm">
                     <ng-template matStepLabel><b>注册类别选择</b></ng-template>
-                    <table *ngIf="source.base" mat-table [dataSource]="source.base"
+                    <table *ngIf="source?.base" mat-table [dataSource]="source?.base"
                            style="background: #fafafa;border-radius: 5px">
 
                         <!-- Name Column -->
@@ -319,7 +319,6 @@
                                                             class="weui-uploader__input"
                                                             type="file"
                                                             accept="image/*"
-                                                            multiple
                                                             [weui-uploader-file]="uploader.licenseFileId"
                                                     />
                                                 </div>
@@ -510,7 +509,7 @@
                                                     *ngFor="let item of secondForm.get('brandNames').value.split(',')">
                                                 {{item}}
                                             </mat-chip>
-                                            <input [matChipInputFor]="typeList" (click)="presentModal()" matInput
+                                            <input [matChipInputFor]="typeList" matInput
                                                    required readonly>
                                         </mat-chip-list>
                                         <!--<mat-error *ngIf="form.get('industryIds').hasError('required')">
@@ -645,7 +644,7 @@
                         </button>
                     </div>
                 </mat-step>
-                <mat-step>
+                <mat-step [stepControl]="fifthForm">
                     <ng-template matStepLabel><b>支付交官费用</b></ng-template>
                     <ion-list>
                         <ion-item lines="none">

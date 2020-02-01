@@ -21,12 +21,13 @@ import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdap
             useClass: MomentDateAdapter,
             deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
         },
-        {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
-    ],
+        {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
+    ]
 })
 export class AdminCompanyQualificationPage implements OnInit {
     id = this.route.snapshot.params.id;
     type = '0';
+    reportType = 1;
     data;
     formGroup: FormGroup;
     form: FormGroup = new FormGroup({});
@@ -37,11 +38,13 @@ export class AdminCompanyQualificationPage implements OnInit {
         for (let i = 0; i < 10; i++) {
             years.push({
                 label: this.year - i + '年',
-                value: this.year - i
+                value: this.year - i + ''
             });
         }
+        console.log(years);
         return years;
     })();
+    loading = false;
 
     constructor(private title: Title,
                 private route: ActivatedRoute,
@@ -107,9 +110,9 @@ export class AdminCompanyQualificationPage implements OnInit {
     }
 
     create(id, isFull) {
-        this.loadingSvc.show('方案生成中...', 0).then();
         this.qualificationSvc.create(id, isFull).subscribe(res => {
             this.loadingSvc.hide();
+            this.loading = false;
             if (res) {
                 this.dialogSvc.show({content: '成功生成方案' + res.name, cancel: '', confirm: '我知道了'}).subscribe(() => {
                     this.router.navigate(['/admin/plan/list'], {queryParams: {company: this.id}});
@@ -121,14 +124,17 @@ export class AdminCompanyQualificationPage implements OnInit {
     submit(isFull) {
         const conditions = this.getConditions();
         this.formGroup.get('conditions').setValue(conditions);
-        if (this.form.invalid || this.formGroup.invalid) {
+        if (this.form.invalid || this.formGroup.invalid || this.loading) {
             return false;
         }
         this.loadingSvc.show('提交中...', 0).then();
+        this.loading = true;
         this.qualificationSvc.add(this.formGroup.value).subscribe(res => {
-            this.loadingSvc.hide();
             if (res) {
                 this.create(res, isFull);
+            } else {
+                this.loadingSvc.hide();
+                this.loading = false;
             }
         });
     }

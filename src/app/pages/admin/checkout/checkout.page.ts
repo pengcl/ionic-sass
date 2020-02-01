@@ -36,6 +36,7 @@ declare interface Order {
     secondForm?: any;
     thirdForm?: any;
     fourthForm?: any;
+    fifthForm?: any;
 }
 
 @Component({
@@ -60,12 +61,11 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
     secondForm: FormGroup;
     thirdForm: FormGroup;
     fourthForm: FormGroup;
-
+    fifthForm: FormGroup;
     uploader = {
         brandLogoId: new Uploader({
             url: this.PREFIX_URL + 'uploadFile',
             auto: true,
-            limit: 1,
             params: {
                 key: this.token, type: 'cust_cert', dir: 'cust_cert'
             },
@@ -77,18 +77,17 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         licenseFileId: new Uploader({
             url: this.PREFIX_URL + 'uploadFile',
             auto: true,
-            limit: 1,
             params: {
                 key: this.token, type: 'cust_cert', dir: 'cust_cert'
             },
             onUploadSuccess: (file, res) => {
+                console.log(res);
                 this.thirdForm.get('licenseFileId').setValue(JSON.parse(res).result);
             }
         } as UploaderOptions),
         proxyFileId: new Uploader({
             url: this.PREFIX_URL + 'uploadFile',
             auto: true,
-            limit: 1,
             params: {
                 key: this.token, type: 'cust_cert', dir: 'cust_cert'
             },
@@ -99,7 +98,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         priorityFileId: new Uploader({
             url: this.PREFIX_URL + 'uploadFile',
             auto: true,
-            limit: 1,
             params: {
                 key: this.token, type: 'cust_cert', dir: 'cust_cert'
             },
@@ -110,7 +108,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         cardFileId: new Uploader({
             url: this.PREFIX_URL + 'uploadFile',
             auto: true,
-            limit: 1,
             params: {
                 key: this.token, type: 'cust_cert', dir: 'cust_cert'
             },
@@ -253,6 +250,10 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
             remark: ['']
         });
         this.setFormValue('fourthForm');
+        this.fifthForm = this.formBuilder.group({
+            paid: [false, Validators.requiredTrue]
+        });
+        this.setFormValue('fifthForm');
 
         this.accountSvc.zct(this.company.id).subscribe(res => {
             if (res) {
@@ -279,11 +280,12 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
     }
 
     typesChange(e) {
+        console.log(e);
         this.order.count = 0;
         this.order.amount = 0;
         this.order.total = 0;
         e.items.forEach(type => {
-            const count = typeof type.count === 'number' ? type.count : 0;
+            const count = typeof type.priceCount === 'number' ? type.priceCount : 0;
             const total = typeof type.total === 'number' ? type.total : 0;
             this.order.count = this.order.count + count;
             this.order.amount = this.order.amount + total;
@@ -292,7 +294,9 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         this.secondForm.get('protectType').setValue(e.type);
         this.storageSvc.set('order', JSON.stringify(this.order));
         this.setSource();
-        this.setIds(e.items);
+        if (this.order.count > 0) {
+            this.setIds(e.items);
+        }
     }
 
     setIds(items) {
@@ -518,7 +522,7 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         this.interval = observableInterval(1000).subscribe(() => {
             this.orderSvc.item(this.order.no).subscribe(res => {
                 if (res.order.status > 2) {
-                    console.log('支付成功');
+                    this.fifthForm.get('paid').setValue(true);
                     this.order.index = 5;
                     this.storageSvc.set('order', JSON.stringify(this.order));
                     this.interval.unsubscribe();
@@ -541,6 +545,7 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
                     if (res.payCode) {
                         this.codeDialog(res.payCode, stepper);
                     } else {
+                        this.fifthForm.get('paid').setValue(true);
                         this.order.index = 5;
                         this.storageSvc.set('order', JSON.stringify(this.order));
                         stepper.next();
@@ -548,6 +553,7 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
                 }
             });
         } else {
+            this.fifthForm.get('paid').setValue(true);
             this.order.index = 5;
             this.storageSvc.set('order', JSON.stringify(this.order));
             stepper.next();

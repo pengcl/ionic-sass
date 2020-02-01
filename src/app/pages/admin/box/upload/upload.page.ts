@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LocationStrategy} from '@angular/common';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {DialogService} from '../../../../@core/modules/dialog';
@@ -19,7 +19,6 @@ export class AdminBoxUploadPage {
     uploader = new Uploader({
         url: this.PREFIX_URL + 'uploadFile',
         auto: true,
-        limit: 1,
         params: {
             key: this.token, type: 'cust_cert', dir: 'cust_cert'
         },
@@ -31,12 +30,13 @@ export class AdminBoxUploadPage {
     form = new FormGroup({
         custId: new FormControl(this.company.id, [Validators.required]),
         fileId: new FormControl('', [Validators.required]),
-        fileField: new FormControl('', [Validators.required]),
-        fileType: new FormControl('', [Validators.required])
+        fileField: new FormControl(this.route.snapshot.queryParams.fileField, [Validators.required]),
+        fileType: new FormControl(this.route.snapshot.queryParams.fileType, [Validators.required])
     });
     loading = false;
 
     constructor(private route: ActivatedRoute,
+                private router: Router,
                 private location: LocationStrategy,
                 @Inject('PREFIX_URL') private PREFIX_URL,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
@@ -44,6 +44,7 @@ export class AdminBoxUploadPage {
                 private authSvc: AuthService,
                 private companySvc: CompanyService,
                 private boxSvc: BoxService) {
+        console.log(this.form.value);
     }
 
     submit() {
@@ -54,7 +55,7 @@ export class AdminBoxUploadPage {
         this.boxSvc.add(this.form.value).subscribe(res => {
             this.loading = false;
             if (res) {
-                this.dialogSvc.show({content: '上传成功', confirm: '返回上一页', cancel: '我知道了'}).subscribe((status) => {
+                this.dialogSvc.show({content: '上传成功', confirm: '返回上一页', cancel: '继续上传'}).subscribe((status) => {
                     if (status.value) {
                         this.back();
                     }
@@ -64,6 +65,8 @@ export class AdminBoxUploadPage {
     }
 
     back() {
-        this.location.back();
+        this.router.navigate(['/admin/box/list'], {
+            queryParams: {fileField: this.form.get('fileField').value, fileType: this.form.get('fileType').value}
+        });
     }
 }

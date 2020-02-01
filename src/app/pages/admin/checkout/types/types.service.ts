@@ -37,7 +37,10 @@ export class TypesService {
     }
 
     risk(name): Observable<any> {
-        return this.http.get('https://so.huijuyun.com/register/risk/brand/reject?keyword=' + name);
+        return this.http.get(this.PREFIX_URL + 'getBrandWarns', {params: {brandName: name}})
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
     }
 
     item(id): Observable<any> {

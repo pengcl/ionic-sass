@@ -1,3 +1,10 @@
+ion-grid {
+  --ion-grid-padding: 0;
+
+  ion-col {
+    --ion-grid-column-padding: 0;
+  }
+}
 td {
   .detail {
     padding: 10px 0;
@@ -43,5 +50,11 @@ td {
         margin-right: 0;
       }
     }
+  }
+}
+
+.search-form {
+  mat-form-field {
+    width: 90%;
   }
 }

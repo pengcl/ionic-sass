@@ -37,6 +37,7 @@ export class AdminTrustItemPage {
         params: {
             custId: this.company.id,
             businessType: 1,
+            businessCode: this.id,
             type: 0,
             page: 1,
             rows: 10
@@ -48,6 +49,7 @@ export class AdminTrustItemPage {
         params: {
             custId: this.company.id,
             businessType: 1,
+            businessCode: this.id,
             type: 1,
             page: 1,
             rows: 10

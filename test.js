@@ -1,1 +1,1 @@
-console.log(parseInt((0 / 10).toString(), 10));
+console.log((new Date()).getFullYear());

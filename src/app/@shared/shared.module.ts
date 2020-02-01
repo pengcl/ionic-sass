@@ -77,6 +77,8 @@ import {NgCircleProgressModule} from 'ng-circle-progress';
 import {NgxQRCodeModule} from 'ngx-qrcode2';
 import {Paginator} from './paginator';
 import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
+import {AdminCheckoutCodeComponent} from '../pages/admin/checkout/code/code.component';
+import {CountUpModule} from 'ngx-countup';
 
 @NgModule({
     imports: [
@@ -90,6 +92,7 @@ import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
         CDK_PART,
         UploaderModule,
         NgxQRCodeModule,
+        CountUpModule,
         NgCircleProgressModule.forRoot({
             // set defaults here
             radius: 100,
@@ -111,12 +114,13 @@ import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
         CDK_PART,
         UploaderModule,
         NgxQRCodeModule,
+        CountUpModule,
         NgCircleProgressModule,
         ...COMPONENTS,
         ...PIPES
     ],
-    declarations: [...COMPONENTS, ...ENTRY_COMPONENTS, ...PIPES],
-    entryComponents: [ENTRY_COMPONENTS],
+    declarations: [AdminCheckoutCodeComponent, ...COMPONENTS, ...ENTRY_COMPONENTS, ...PIPES],
+    entryComponents: [AdminCheckoutCodeComponent, ...ENTRY_COMPONENTS],
     providers: [{provide: MatPaginatorIntl, useValue: Paginator()}]
 })
 export class SharedModule {

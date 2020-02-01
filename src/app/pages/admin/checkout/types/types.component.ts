@@ -16,7 +16,6 @@ export class AdminCheckoutTypesComponent implements OnInit, OnChanges {
     @Output() change = new EventEmitter<any>();
 
     constructor(private modalController: ModalController, private industrySvc: IndustryService, private typesSvc: TypesService) {
-        console.log(this.data);
         this.getTypes();
     }
 
@@ -25,39 +24,51 @@ export class AdminCheckoutTypesComponent implements OnInit, OnChanges {
             this.setIndustries();
         } else {
             this.typesSvc.list().subscribe(res => {
-                this.data.types = listToTree(res);
-                if (this.data.type === 1) {
-                    this.data.items.forEach(root => {
-                        root.count = 0;
-                        root.total = 0;
-                        root.children.forEach(parent => {
-                            parent.count = 0;
-                            parent.total = 0;
-                        });
+                const types = listToTree(res);
+                this.typesSvc.risk(this.name).subscribe(risks => {
+                    types.forEach(item => {
+                        const index = getIndex(risks, 'type', parseInt(item.c, 10) > 9 ?
+                            '' + parseInt(item.c, 10) : '0' + parseInt(item.c, 10));
+                        const risk = risks[index];
+                        item.score = risk.score;
+                        item.riskCount = risk.count;
+                        item.grade = risk.grade;
                     });
-                    this.selected(this.data.types[0]);
-                    // 设置展开项
-                    this.data.items[0].expanded = true;
-                    this.change.emit(this.data);
-                } else {
-                    this.data.items = this.data.types;
-                    // 设置展开项
-                    this.data.items[0].expanded = true;
-                    this.data.items.forEach(root => {
-                        root.count = 0;
-                        root.total = 0;
-                        root.children.forEach(parent => {
-                            parent.count = 0;
-                            parent.total = 0;
-                            parent.children.forEach((chip, i) => {
-                                if (i === 0) {
-                                    this.selectedItem(root, parent, chip);
-                                }
+                    this.data.types = types;
+                    if (this.data.type === 1) {
+                        this.data.items = [];
+                        this.selected(this.data.types[0]);
+                        this.data.items.forEach(root => {
+                            root.count = 0;
+                            root.total = 0;
+                            root.children.forEach(parent => {
+                                parent.count = 0;
+                                parent.total = 0;
                             });
                         });
-                    });
-                    this.change.emit(this.data);
-                }
+                        // 设置展开项
+                        this.data.items[0].expanded = true;
+                        this.change.emit(this.data);
+                    } else {
+                        this.data.items = this.data.types;
+                        // 设置展开项
+                        this.data.items[0].expanded = true;
+                        this.data.items.forEach(root => {
+                            root.count = 0;
+                            root.total = 0;
+                            root.children.forEach(parent => {
+                                parent.count = 0;
+                                parent.total = 0;
+                                parent.children.forEach((chip, i) => {
+                                    if (i === 0) {
+                                        this.selectedItem(root, parent, chip);
+                                    }
+                                });
+                            });
+                        });
+                        this.change.emit(this.data);
+                    }
+                });
             });
         }
     }
@@ -105,22 +116,36 @@ export class AdminCheckoutTypesComponent implements OnInit, OnChanges {
             this.typesSvc.getTypes(ids).subscribe(res => {
                 res = res ? res : [];
                 this.data.items = [];
-                this.data.types = listToTree(res);
-                this.data.items = this.data.types;
-                // 设置展开项
-                this.data.items[0].expanded = true;
-                this.data.items.forEach(root => {
-                    root.count = 0;
-                    root.total = 0;
-                    root.children.forEach(parent => {
-                        parent.count = 0;
-                        parent.total = 0;
-                        parent.children.forEach(chip => {
-                            this.selectedItem(root, parent, chip);
+                const types = listToTree(res);
+                this.typesSvc.risk(this.name).subscribe(risks => {
+                    types.forEach(item => {
+                        const index = getIndex(risks, 'type', parseInt(item.c, 10) > 9 ?
+                            '' + parseInt(item.c, 10) : '0' + parseInt(item.c, 10));
+                        const risk = risks[index];
+                        item.score = risk.score;
+                        item.riskCount = risk.count;
+                        item.grade = risk.grade;
+                    });
+                    this.data.types = types;
+                    types.forEach(item => {
+                        this.selected(item);
+                    });
+                    // 设置展开项
+                    this.data.items[0].expanded = true;
+                    this.data.items.forEach(root => {
+                        root.count = 0;
+                        root.total = 0;
+                        root.children.forEach(parent => {
+                            parent.count = 0;
+                            parent.total = 0;
+                            parent.children.forEach(chip => {
+                                this.selectedItem(root, parent, chip);
+                            });
                         });
                     });
+                    console.log(this.data);
+                    this.change.emit(this.data);
                 });
-                this.change.emit(this.data);
                 // this.setPrice();
             });
         } else {
@@ -139,7 +164,14 @@ export class AdminCheckoutTypesComponent implements OnInit, OnChanges {
 
     selected(item) {
         const index = getIndex(this.data.items, 'i', item.i);
-        this.data.items.splice(index, 1);
+        if (index >= 0) {
+            item.selected = false;
+            this.data.items.splice(index, 1);
+        } else {
+            item.selected = true;
+            this.data.items.push(item);
+        }
+        this.change.emit(this.data);
     }
 
     selectedItem(root, parent, self, e?) {
@@ -156,6 +188,8 @@ export class AdminCheckoutTypesComponent implements OnInit, OnChanges {
             root.count = root.count - 1;
             parent.count = parent.count + 1;
         }
+        root.priceCount = root.count % 10 > 0 ?
+            parseInt((root.count / 10 + 1).toString(), 10) : parseInt((root.count / 10).toString(), 10);
         root.total = root.count % 10 > 0 ?
             parseInt((root.count / 10 + 1).toString(), 10) * 300 :
             parseInt((root.count / 10).toString(), 10) * 300;
@@ -170,5 +204,21 @@ export class AdminCheckoutTypesComponent implements OnInit, OnChanges {
         if (e) {
             this.change.emit(this.data);
         }
+    }
+
+    del(arr, item, e) {
+        e.stopPropagation();
+        const itemsIndex = getIndex(arr, 'c', item.c);
+        arr.splice(itemsIndex, 1);
+        const typesIndex = getIndex(this.data.types, 'c', item.c);
+        this.data.types[typesIndex].selected = false;
+        this.change.emit(this.data);
+    }
+
+    groupDel(arr, item, e) {
+        e.stopPropagation();
+        const itemsIndex = getIndex(arr, 'c', item.c);
+        arr.splice(itemsIndex, 1);
+        this.change.emit(this.data);
     }
 }

@@ -1,7 +1,22 @@
+ion-grid {
+  --ion-grid-padding: 0;
+
+  ion-col {
+    --ion-grid-column-padding: 0;
+  }
+}
 form {
 
-
+  mat-radio-group {
+    margin: 10px !important;
+    display: block;
+    mat-radio-button {
+      margin-right: 10px;
+    }
+  }
   mat-form-field {
-    width: 100%;
+    display: block;
+    margin: 8px;
+    width: unset;
   }
 }

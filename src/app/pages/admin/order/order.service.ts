@@ -23,4 +23,10 @@ export class OrderService {
             return resultProcess(res);
         }));
     }
+
+    saas(id): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'saasOrderInfo&id=' + id).pipe(observableMargeMap((res: any) => {
+            return resultProcess(res);
+        }));
+    }
 }

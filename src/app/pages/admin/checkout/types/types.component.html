@@ -44,15 +44,19 @@
                                      (opened)="item.expanded = true" (closed)="item.expanded = false">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            {{item.n}}<span>已为您检索到{{item.children.length}}条近似商标</span>
+                            <span class="name">{{item.n}}</span><span class="count">(共选{{item.count}}项)</span><span
+                                class="risk-count">已为您检索到{{item.riskCount}}条近似商标</span><span
+                                class="score {{item.score | score}}">{{item.grade}}</span>
                         </mat-panel-title>
                         <mat-panel-description>
-                            <span>已选择{{item.count}}项</span>￥{{item.total}}
+                            ￥{{item.total}}
                         </mat-panel-description>
+                        <ion-icon (click)="del(data.items,item,$event)" name="ios-trash"></ion-icon>
                     </mat-expansion-panel-header>
                     <mat-divider [inset]="true"></mat-divider>
                     <div *ngFor="let children of item.children;let i = index" class="chip-list">
-                        <mat-label>{{children.n}}</mat-label>
+                        <mat-label>{{children.n}} <span class="link" style="float: right" (click)="groupDel(item.children,children,$event)">删除</span>
+                        </mat-label>
                         <mat-chip-list multiple>
                             <mat-chip color="primary" (click)="selectedItem(item,children,chip,$event)"
                                       [selected]="chip.selected"

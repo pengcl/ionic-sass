@@ -59,7 +59,6 @@ export class AdminCompanyItemPage implements OnInit {
         A: new Uploader({
             url: this.PREFIX_URL + 'uploadFile',
             auto: true,
-            limit: 1,
             params: {
                 key: this.token, type: 'cust_cert', dir: 'cust_cert'
             },
@@ -71,7 +70,6 @@ export class AdminCompanyItemPage implements OnInit {
         B: new Uploader({
             url: this.PREFIX_URL + 'uploadFile',
             auto: true,
-            limit: 1,
             params: {
                 key: this.token, type: 'cust_cert', dir: 'cust_cert'
             },
@@ -86,6 +84,7 @@ export class AdminCompanyItemPage implements OnInit {
     provinces = [];
     cities = [];
     districts = [];
+    loading = false;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -104,7 +103,6 @@ export class AdminCompanyItemPage implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.company);
         this.getProvinces();
         this.form.get('companyName').valueChanges.pipe(
             filter(text => text.length > 1),
@@ -225,17 +223,18 @@ export class AdminCompanyItemPage implements OnInit {
 
     submit() {
         if (this.submitted) {
-            console.log('submit');
             this.router.navigate(['/admin/company/qualification', this.form.get('custId').value],
                 {queryParams: {type: 0}});
             return false;
         }
-        if (this.form.invalid) {
+        if (this.form.invalid || this.loading) {
             return false;
         }
         this.loadingSvc.show('提交中...', 0).then();
+        this.loading = true;
         this.companySvc.update(this.form.value).subscribe(res => {
             this.loadingSvc.hide();
+            this.loading = false;
             if (res) {
                 this.form.get('custId').setValue(res.busCust.id);
                 this.submitted = true;

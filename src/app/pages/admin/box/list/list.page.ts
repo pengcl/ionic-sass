@@ -21,13 +21,14 @@ export class AdminBoxListPage {
         custId: this.company.id,
         page: 1,
         rows: 10,
-        fileField: 0,
-        fileType: ''
+        fileField: this.route.snapshot.queryParams.fileField,
+        fileType: this.route.snapshot.queryParams.fileType
     };
 
     displayedColumns: string[] = ['select', 'name', 'type', 'date', 'actions'];
     dataSource;
     selection = new SelectionModel<any>(true, []);
+    selectedIndex = this.route.snapshot.queryParams.fileType ? this.route.snapshot.queryParams.fileType + 1 : 0;
 
     constructor(private route: ActivatedRoute,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
@@ -48,6 +49,13 @@ export class AdminBoxListPage {
     onTab(target, e) {
         this.params[target] = e.tab.ariaLabel;
         this.getData();
+        if (target === 'fileType') {
+            if (e.tab.ariaLabel === '') {
+                this.selectedIndex = 0;
+            } else {
+                this.selectedIndex = parseInt(e.tab.ariaLabel, 10) + 1;
+            }
+        }
     }
 
     page(e) {

@@ -330,3 +330,25 @@ export class ColorPipe implements PipeTransform {
         return colorName;
     }
 }
+
+@Pipe({
+    name: 'score',
+    pure: false
+})
+// not being finished
+@Injectable()
+export class ScorePipe implements PipeTransform {
+    transform(score): any {
+        let color = '';
+        if (score < 50) {
+            color = 'success';
+        }
+        if (score >= 50 && score < 70) {
+            color = 'warning';
+        }
+        if (score >= 70) {
+            color = 'danger';
+        }
+        return color;
+    }
+}

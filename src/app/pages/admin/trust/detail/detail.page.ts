@@ -38,6 +38,7 @@ export class AdminTrustDetailPage {
         params: {
             custId: this.company.id,
             businessType: 0,
+            businessCode: this.id,
             type: 0,
             page: 1,
             rows: 10
@@ -49,6 +50,7 @@ export class AdminTrustDetailPage {
         params: {
             custId: this.company.id,
             businessType: 0,
+            businessCode: this.id,
             type: 1,
             page: 1,
             rows: 10
@@ -72,14 +74,14 @@ export class AdminTrustDetailPage {
                 if (data.brandName) {
                     res.forEach(item => {
                         data.type.split(',').forEach(dataItem => {
-                            if (item.code === dataItem) {
+                            if (item.c === dataItem) {
                                 item.type = 'selected';
                             }
                         });
                     });
                     res.forEach(item => {
                         data.applyTypeCodes.split(',').forEach(dataItem => {
-                            if (item.code === dataItem) {
+                            if (item.c === dataItem) {
                                 console.log('suggest');
                                 item.type = 'suggest';
                             }
@@ -88,7 +90,7 @@ export class AdminTrustDetailPage {
 
                     res.forEach(item => {
                         data.otherRegisteredTypeCodes.split(',').forEach(dataItem => {
-                            if (item.code === dataItem) {
+                            if (item.c === dataItem) {
                                 console.log('used');
                                 item.type = 'used';
                             }
@@ -99,11 +101,10 @@ export class AdminTrustDetailPage {
                 this.data = data;
                 this.types = res;
                 res.forEach(item => {
-                    item.code = parseInt(item.code, 10);
-                    item.code = item.code < 10 ? '0' + item.code : item.code;
+                    item.c = item.c < 10 ? '0' + item.c : item.c;
                 });
                 this.types.sort((a, b) => {
-                    return a.code - b.code;
+                    return a.c - b.c;
                 });
             });
         });

@@ -10,7 +10,7 @@
     </mat-card-header>
 </mat-card>
 <div class="container">
-    <mat-tab-group (selectedTabChange)="onTab('fileField',$event)" class="main-tab">
+    <mat-tab-group (selectedTabChange)="onTab('fileField',$event)" [(selectedIndex)]="params.fileField" class="main-tab">
         <mat-tab aria-label="0" label="商标"></mat-tab>
         <mat-tab aria-label="1" label="专利"></mat-tab>
         <mat-tab aria-label="2" label="版权"></mat-tab>
@@ -18,15 +18,16 @@
         <mat-tab aria-label="4" label="商业秘密"></mat-tab>
     </mat-tab-group>
     <div class="content">
-        <mat-tab-group (selectedTabChange)="onTab('fileType',$event)" class="sub-tab" style="width: 100%">
+        <mat-tab-group (selectedTabChange)="onTab('fileType',$event)" [(selectedIndex)]="selectedIndex" class="sub-tab" style="width: 100%">
             <mat-tab aria-label="" label="全部"></mat-tab>
             <mat-tab aria-label="0" label="发票"></mat-tab>
-            <mat-tab aria-label="2" label="证书"></mat-tab>
             <mat-tab aria-label="1" label="合同"></mat-tab>
+            <mat-tab aria-label="2" label="证书"></mat-tab>
             <mat-tab aria-label="3" label="作件"></mat-tab>
         </mat-tab-group>
         <div class="row-buttons">
-            <ion-button [routerLink]="['/admin/box/upload']" color="primary">
+            <ion-button [routerLink]="['/admin/box/upload']"
+                        [queryParams]="{fileField:params.fileField,fileType:params.fileType}" color="primary">
                 上传
             </ion-button>
             <ion-button color="light" style="margin-left: 10px">
@@ -81,7 +82,7 @@
                 <th mat-header-cell *matHeaderCellDef style="width: 200px"> 操作</th>
                 <td class="actions" mat-cell *matCellDef="let element">
                     <a (click)="preDownload(element.id)" [download]="'1.docx'"
-                                [href]="FILE_PREFIX_URL + element.fileId" style="color: #027CFF">
+                       [href]="FILE_PREFIX_URL + element.fileId" style="color: #027CFF">
                         下载
                     </a>
                 </td>
@@ -92,6 +93,7 @@
                 (click)="selection.toggle(row)">
             </tr>
         </table>
-        <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)" [pageSizeOptions]="[10,20,50]" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)"
+                       [pageSizeOptions]="[10,20,50]" showFirstLastButtons></mat-paginator>
     </div>
 </div>

@@ -1,10 +1,12 @@
 import {Component, Inject, OnInit, OnDestroy} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Router, ActivatedRoute} from '@angular/router';
+import {LocationStrategy} from '@angular/common';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {ModalService} from '../../../../@core/services/modal.service';
 import {ModalController} from '@ionic/angular';
 import {StorageService} from '../../../../@core/services/storage.service';
+import {DialogService} from '../../../../@core/modules/dialog';
 import {AuthService} from '../../../auth/auth.service';
 import {IndustryService} from '../../../../@shared/components/industry/industry.service';
 import {CompanyService} from '../../company/company.service';
@@ -80,10 +82,12 @@ export class AdminOrderCheckoutPage implements OnInit, OnDestroy {
     constructor(private formBuilder: FormBuilder,
                 private router: Router,
                 private route: ActivatedRoute,
+                private location: LocationStrategy,
                 private sanitizer: DomSanitizer,
                 @Inject('PREFIX_URL') public PREFIX_URL,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
                 public dialog: MatDialog,
+                private dialogSvc: DialogService,
                 private modalSvc: ModalService,
                 private modalController: ModalController,
                 private storageSvc: StorageService,
@@ -191,6 +195,9 @@ export class AdminOrderCheckoutPage implements OnInit, OnDestroy {
                     this.storageSvc.set('order', JSON.stringify(this.order));
                     this.interval.unsubscribe();
                     this.dialog.closeAll();
+                    this.dialogSvc.show({content: '您已成功支付', confirm: '我知道了', cancel: ''}).subscribe(() => {
+                        this.location.back();
+                    });
                 }
             });
         });
@@ -209,6 +216,9 @@ export class AdminOrderCheckoutPage implements OnInit, OnDestroy {
                         this.codeDialog(res.payCode);
                     } else {
                         // this.storageSvc.set('order', JSON.stringify(this.order));
+                        this.dialogSvc.show({content: '您已成功支付', confirm: '我知道了', cancel: ''}).subscribe(() => {
+                            this.location.back();
+                        });
                     }
                 }
             });

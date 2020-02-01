@@ -14,7 +14,8 @@ import {
     UserStatusPipe,
     ProjectStatusPipe,
     TableLabelPipe,
-    ColorPipe
+    ColorPipe,
+    ScorePipe
 } from './pipes.pipe';
 
 export const PIPES_DECLARATIONS = [
@@ -33,5 +34,6 @@ export const PIPES_DECLARATIONS = [
     UserStatusPipe,
     ProjectStatusPipe,
     TableLabelPipe,
-    ColorPipe
+    ColorPipe,
+    ScorePipe
 ];

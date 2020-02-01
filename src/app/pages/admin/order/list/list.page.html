@@ -10,11 +10,31 @@
     </mat-card-header>
 </mat-card>
 <div class="container">
+    <ion-grid class="search-form">
+        <ion-row>
+            <ion-col size="4">
+                <mat-form-field>
+                    <mat-select name="dateRange" [(ngModel)]="params.dateRange" (ngModelChange)="change()" placeholder="下单日期">
+                        <mat-option *ngFor="let dateRange of dateRanges" [value]="dateRange.value">
+                            {{dateRange.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ion-col>
+            <ion-col size="4">
+                <form [formGroup]="form">
+                    <mat-form-field>
+                        <input formControlName="orderNo" matInput placeholder="订单号/商品名称/商标名称" autocomplete="off">
+                    </mat-form-field>
+                </form>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
     <table *ngIf="dataSource" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
         <!-- logo Column -->
         <ng-container matColumnDef="logo">
-            <th mat-header-cell *matHeaderCellDef> <b></b></th>
+            <th mat-header-cell *matHeaderCellDef><b></b></th>
             <td mat-cell *matCellDef="let element">
                 <ion-thumbnail>
                     <ion-img [src]="FILE_PREFIX_URL + element.brandLogoId"></ion-img>
@@ -24,10 +44,12 @@
 
         <!-- name Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> <b>订单详情</b></th>
+            <th mat-header-cell *matHeaderCellDef><b>订单详情</b></th>
             <td mat-cell *matCellDef="let element">
                 <div class="detail">
-                    <p class="name"><span>[{{element.goodsName}}] </span> <a [routerLink]="['/admin/order/checkout',element.orderNo]" href="javascript:;">{{element.brandName}}</a></p>
+                    <p class="name"><span>[{{element.goodsName}}] </span> <a
+                            [routerLink]="['/admin/order/item',element.orderNo]"
+                            href="javascript:;">{{element.brandName}}</a></p>
                     <p class="no">订单号：{{element.orderNo}}</p>
                     <p class="time">下单时间：{{element.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}</p>
                 </div>
@@ -36,7 +58,7 @@
 
         <!-- price Column -->
         <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef> <b>单价</b></th>
+            <th mat-header-cell *matHeaderCellDef><b>单价</b></th>
             <td mat-cell *matCellDef="let element">
                 ￥{{element.price}}
             </td>
@@ -44,7 +66,7 @@
 
         <!-- count Column -->
         <ng-container matColumnDef="count">
-            <th mat-header-cell *matHeaderCellDef> <b>数量</b></th>
+            <th mat-header-cell *matHeaderCellDef><b>数量</b></th>
             <td mat-cell *matCellDef="let element">
                 {{element.count}}
             </td>
@@ -52,7 +74,7 @@
 
         <!-- total Column -->
         <ng-container matColumnDef="total">
-            <th mat-header-cell *matHeaderCellDef> <b>金额</b></th>
+            <th mat-header-cell *matHeaderCellDef><b>金额</b></th>
             <td mat-cell *matCellDef="let element">
                 ￥{{element.totalAmount}}
             </td>
@@ -60,7 +82,7 @@
 
         <!-- company Column -->
         <ng-container matColumnDef="company">
-            <th mat-header-cell *matHeaderCellDef> <b>企业主体</b></th>
+            <th mat-header-cell *matHeaderCellDef><b>企业主体</b></th>
             <td mat-cell *matCellDef="let element">
                 {{element.custName}}
             </td>
@@ -68,7 +90,7 @@
 
         <!-- status Column -->
         <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef> <b>订单状态</b></th>
+            <th mat-header-cell *matHeaderCellDef><b>订单状态</b></th>
             <td mat-cell *matCellDef="let element">
                 <span *ngIf="element.status === 0">订单已取消</span>
                 <span *ngIf="element.status === 1">订单待确认</span>
@@ -85,10 +107,11 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef style="width: 250px"> <b>操作</b></th>
+            <th mat-header-cell *matHeaderCellDef style="width: 250px"><b>操作</b></th>
             <td class="actions" mat-cell *matCellDef="let element">
-                <a [routerLink]="['/admin/order/checkout',element.orderNo]" href="javascript:;">详情</a>
-                <a [routerLink]="['/admin/order/checkout',element.orderNo]" *ngIf="element.status === 1" href="javascript:;">去支付</a>
+                <a [routerLink]="['/admin/order/item',element.orderNo]" href="javascript:;">详情</a>
+                <a [routerLink]="['/admin/order/checkout',element.orderNo]" *ngIf="element.status === 1"
+                   href="javascript:;">去支付</a>
                 <a *ngIf="element.status === 4 || element.status === 5" ng-click="return(order.id)" href="javascript:;">申请退款</a>
                 <a *ngIf="element.attchFileId" ng-click="openFile(order.attchFileId)" href="javascript:;">查看合同</a>
                 <a *ngIf="element.receiptFileId" ng-click="openFile(order.receiptFileId)" href="javascript:;">查看发票</a>
@@ -100,5 +123,6 @@
             (click)="selection.toggle(row)">
         </tr>
     </table>
-    <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)" [pageSizeOptions]="[10,20,50]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)"
+                   [pageSizeOptions]="[10,20,50]" showFirstLastButtons></mat-paginator>
 </div>
