@@ -1,49 +1,16 @@
 mat-sidenav-container {
   position: absolute;
-  top:0;
+  top: 80px;
   left: 0;
   right: 0;
   bottom: 0;
-  &::ng-deep {
-    .mat-drawer-side {
-      border-right: 0;
-    }
-  }
+
   mat-sidenav {
-    background: #027CFF;
-    color: #fff;
-    &::ng-deep{
-      .mat-drawer-side{
-        border-right: 0;
-      }
-      .mat-drawer-inner-container{
-        /*&::-webkit-scrollbar{
-          width:0;
-        }
-        -ms-overflow-style:none;
-        overflow:-moz-scrollbars-none;*/
-      }
-    }
+    width: 200px;
+    background: #333951;
+
     mat-list {
-
-      h3{
-        /*&.active {
-          //background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
-          background: rgba(0, 0, 0, .12);
-          position: relative;
-        }*/
-        outline: none;
-        cursor: pointer;
-        color: #fff;
-        &[routerLink] {
-          &.active, &:hover {
-            //background-image: linear-gradient(to right, #027CFF, #fff);
-            position: relative;
-            background-color: #fff;
-            color: #027CFF;
-          }
-        }
-
+      h3 {
         mat-icon {
           font-size: 16px;
           width: 16px;
@@ -52,7 +19,20 @@ mat-sidenav-container {
         }
       }
 
+      mat-list-item {
+        font-size: 12px;
+        padding-left: 26px;
+        height: 32px;
+        color: #666;
+        box-sizing: border-box;
+        cursor: pointer;
+        outline: unset;
 
+        &.active {
+          background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
+          position: relative;
+        }
+      }
     }
 
   }
@@ -73,15 +53,15 @@ ion-avatar {
 }
 
 ion-list {
-  background: #027CFF;
 
-  ion-item{
+  ion-item {
     --background: #027CFF;
     --color: #fff;
     --background-hover: #fff;
     --color-hover: #027CFF;
-    &:hover,&.active{
-      .organization{
+
+    &:hover, &.active {
+      .organization {
         color: #027CFF;
       }
     }
@@ -100,19 +80,21 @@ ion-list {
     .mat-expansion-panel:first-of-type {
       border-radius: 0;
     }
+
     .mat-expansion-panel-spacing {
       margin: 0;
     }
   }
 
-  mat-expansion-panel{
-    background: #027CFF;
+  mat-expansion-panel {
     box-shadow: none;
+    background: none;
 
     mat-expansion-panel-header {
       padding: 0;
-      &::ng-deep{
-        .mat-expansion-indicator{
+
+      &::ng-deep {
+        .mat-expansion-indicator {
           display: none;
         }
       }
@@ -135,8 +117,6 @@ ion-list {
       &.active, &:hover {
         //background-image: linear-gradient(to right, #fff, rgba(0, 0, 0, .12));
         position: relative;
-        background: #fff;
-        color: #027CFF;
       }
     }
 
@@ -150,13 +130,6 @@ ion-list {
           padding-left: 10px
         }
       }
-    }
-  }
-}
-perfect-scrollbar{
-  &::ng-deep{
-    .ps__rail-y{
-      display: none;
     }
   }
 }

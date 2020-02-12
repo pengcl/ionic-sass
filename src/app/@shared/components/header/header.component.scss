@@ -4,15 +4,20 @@
   left: 0;
   right: 0;
   bottom: auto;
-  height: 56px;
+  height: 80px;
   z-index: 2;
 }
 mat-toolbar {
-  height: 56px;
-  background: #fff;
-  span{
-    font-size: 16px;
-    font-weight: 600;
+  height: 80px;
+  background: #212844;
+  .logo {
+    width: 168px;
+    margin-right: 16px;
+    img {
+      display: block;
+      width: 100px;
+      margin: 0 auto;
+    }
   }
 }
 .fill-remaining-space {

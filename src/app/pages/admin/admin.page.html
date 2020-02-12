@@ -1,36 +1,7 @@
-
-<mat-sidenav-container class="example-container">
+<app-header></app-header>
+<mat-sidenav-container>
 
     <mat-sidenav mode="side" opened>
-        <perfect-scrollbar style="width: 100%; height: 100%;" [config]="config">
-        <img src="/assets/images/logo_2.png" height="38" width="146" style="display: block;margin: 25px auto"/>
-        <div class="user">
-            <ion-avatar>
-                <img src="/assets/images/admin.png">
-            </ion-avatar>
-            <p class="user-name">{{user.name}}</p>
-            <ion-list>
-                <ion-item routerLink="/admin/company/list" detail lines="none">
-                    <ion-label>
-                        <p class="organization">当前组织名称</p>
-                        <h3><a (click)="$event.stopPropagation()" [routerLink]="['/admin/company/item',company.id]" href="javascript:;">{{company.companyName}}</a></h3>
-                    </ion-label>
-                </ion-item>
-                <ion-item lines="none">
-                    <ion-label>
-                        <p>当前账户余额（含知产通）</p>
-                        <h3 [innerHTML]="balance | rmb"></h3>
-                    </ion-label>
-                </ion-item>
-                <!--<ion-item lines="none" detail>
-                    <ion-label>
-                        <p>我的身份</p>
-                        <h3>组织管理员</h3>
-                    </ion-label>
-                    <ion-note>更换身份</ion-note>
-                </ion-item>-->
-            </ion-list>
-        </div>
         <mat-list>
             <h3 routerLink="/admin/dashboard" routerLinkActive="active" mat-subheader class="index">
                 <mat-icon mat-list-icon>cloud</mat-icon>
@@ -98,14 +69,11 @@
                 订单
             </h3>
         </mat-list>
-        </perfect-scrollbar>
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <app-header></app-header>
-        <div style="background: #fff;width: 100%;height: 56px"></div>
         <router-outlet (change)="routeChange($event)"></router-outlet>
-        <ion-fab class="fav-fab" *ngIf="show" horizontal="right" vertical="bottom" slot="fixed" cdkDrag>
+        <!--<ion-fab class="fav-fab" *ngIf="show" horizontal="right" vertical="bottom" slot="fixed" cdkDrag>
             <ion-fab-button>
                 <ion-icon name="ios-share"></ion-icon>
             </ion-fab-button>
@@ -129,6 +97,6 @@
                     首页
                 </ion-fab-button>
             </ion-fab-list>
-        </ion-fab>
+        </ion-fab>-->
     </mat-sidenav-content>
 </mat-sidenav-container>
