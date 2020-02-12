@@ -16,7 +16,7 @@
     </div>
     <mat-tab-group [selectedIndex]="selectedIndex" (selectedTabChange)="onTab($event)">
         <mat-tab aria-label="trademark" label="商标">
-            <table *ngIf="source.trademark" mat-table [dataSource]="source.trademark" class="mat-elevation-z8">
+            <table *ngIf="source.trademark" mat-table [dataSource]="source.trademark">
                 <!-- Checkbox Column -->
                 <ng-container matColumnDef="select">
                     <th mat-header-cell *matHeaderCellDef style="width: 50px">
@@ -83,7 +83,7 @@
                            showFirstLastButtons></mat-paginator>
         </mat-tab>
         <mat-tab aria-label="patent" label="专利">
-            <table *ngIf="source.patent" mat-table [dataSource]="source.patent" class="mat-elevation-z8">
+            <table *ngIf="source.patent" mat-table [dataSource]="source.patent">
                 <!-- Checkbox Column -->
                 <ng-container matColumnDef="select">
                     <th mat-header-cell *matHeaderCellDef style="width: 50px">

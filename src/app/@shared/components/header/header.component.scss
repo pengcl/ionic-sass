@@ -75,7 +75,7 @@ mat-toolbar {
             padding: 15px;
 
             .left-radius {
-              background: #EFF2F9;
+              background: rgba(246, 247, 249, 1);
               position: absolute;
               left: 0;
               bottom: 0;
@@ -96,7 +96,7 @@ mat-toolbar {
             }
 
             .right-radius {
-              background: #EFF2F9;
+              background: #F6F7F9;
               position: absolute;
               right: 0;
               bottom: 0;
@@ -129,7 +129,7 @@ mat-toolbar {
             }
 
             .mat-tab-label-content {
-              background: #EFF2F9;
+              background: #F6F7F9;
               color: #000;
             }
           }

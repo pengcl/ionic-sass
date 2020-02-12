@@ -61,7 +61,7 @@
         <mat-card-content>
             <mat-tab-group (selectedTabChange)="onTab($event)" style="margin-top: 16px" >
                 <mat-tab aria-label="change" label="商标变更信息">
-                    <table *ngIf="source.change" mat-table [dataSource]="source.change" class="mat-elevation-z8">
+                    <table *ngIf="source.change" mat-table [dataSource]="source.change">
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="title">
@@ -83,7 +83,7 @@
                                    showFirstLastButtons></mat-paginator>
                 </mat-tab>
                 <mat-tab aria-label="risk" label="商标风险">
-                    <table *ngIf="source.risk" mat-table [dataSource]="source.risk" class="mat-elevation-z8">
+                    <table *ngIf="source.risk" mat-table [dataSource]="source.risk">
 
 
                         <!-- Name Column -->
