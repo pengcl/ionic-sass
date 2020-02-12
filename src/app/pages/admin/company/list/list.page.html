@@ -13,9 +13,8 @@
     <ion-grid>
         <ion-row>
             <ion-col size="6">
-                <mat-form-field class="example-full-width" style="width: 100%">
-                    <mat-label>搜索公司主体</mat-label>
-                    <input [(ngModel)]="params.companyName" type="text" matInput autocomplete="off">
+                <mat-form-field appearance="outline" style="width: 100%">
+                    <input [(ngModel)]="params.companyName" type="text" placeholder="搜索公司主体" matInput autocomplete="off">
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
             </ion-col>

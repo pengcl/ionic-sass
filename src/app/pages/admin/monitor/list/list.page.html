@@ -10,13 +10,9 @@
     </mat-card-header>
 </mat-card>
 <div class="container">
-    <mat-form-field class="example-full-width">
-        <mat-label>请输入您需要监控的竞争对手名称</mat-label>
-        <input [(ngModel)]="name" type="text" matInput autocomplete="off">
-        <button (click)="add()" mat-button matSuffix>
-            <mat-icon matSuffix>mode_edit</mat-icon>
-            添加
-        </button>
+    <mat-form-field appearance="outline">
+        <input [(ngModel)]="name" type="text" placeholder="请输入您需要监控的竞争对手名称" matInput autocomplete="off">
+        <span (click)="add()" mat-button matSuffix>添加</span>
     </mat-form-field>
     <table *ngIf="dataSource" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <!-- Checkbox Column -->

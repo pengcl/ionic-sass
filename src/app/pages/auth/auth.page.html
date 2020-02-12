@@ -8,13 +8,11 @@
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="form" class="auth-form">
-      <mat-form-field>
-        <mat-label>手机号</mat-label>
-        <input type="number" matInput formControlName="loginid">
+      <mat-form-field appearance="outline">
+        <input type="number" matInput placeholder="手机号" formControlName="loginid">
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>验证码</mat-label>
-        <input formControlName="validCode" matInput placeholder="请输入验证码">
+      <mat-form-field appearance="outline">
+        <input formControlName="validCode" matInput placeholder="验证码">
 
         <button mat-button matSuffix id="sendValidCode" class="valid-code" (click)="sendValidCode()">
           {{activeText}}

@@ -1,4 +1,4 @@
-:host{
+:host {
   position: absolute;
   top: 0;
   left: 0;
@@ -7,19 +7,138 @@
   height: 80px;
   z-index: 2;
 }
+
 mat-toolbar {
   height: 80px;
   background: #212844;
+  color: #fff;
+
   .logo {
     width: 168px;
     margin-right: 16px;
+
     img {
       display: block;
       width: 100px;
       margin: 0 auto;
     }
   }
+
+  mat-icon {
+    color: #fff;
+    font-size: 40px;
+    margin-right: 15px;
+    width: 40px;
+    height: 40px;
+  }
+
+  button {
+    font-size: 40px;
+
+    span {
+      font-size: 20px;
+    }
+  }
 }
+
 .fill-remaining-space {
   flex: 1 1 auto;
+
+  &::ng-deep {
+    mat-tab-group {
+      margin-top: 20px;
+
+      &::ng-deep {
+        .mat-tab-header {
+          border-bottom: none;
+        }
+
+        .mat-ink-bar {
+          display: none;
+        }
+
+        .mat-tab-label, .mat-tab-link {
+          color: #fff;
+          display: block;
+          height: 60px;
+          opacity: 1;
+          padding: 0 15px;
+          position: relative;
+
+          .mat-tab-label-content {
+            font-size: 16px;
+            text-align: left;
+            display: block;
+            height: 100%;
+            border-radius: 10px 10px 0 0;
+            line-height: 30px;
+            padding: 15px;
+
+            .left-radius {
+              background: #EFF2F9;
+              position: absolute;
+              left: 0;
+              bottom: 0;
+              width: 15px;
+              height: 15px;
+              display: none;
+
+              &:before {
+                content: '';
+                position: absolute;
+                width: 15px;
+                height: 15px;
+                background: #212844;
+                left: 0;
+                bottom: 0;
+                border-radius: 0 0 10px 0;
+              }
+            }
+
+            .right-radius {
+              background: #EFF2F9;
+              position: absolute;
+              right: 0;
+              bottom: 0;
+              width: 15px;
+              height: 15px;
+              display: none;
+
+              &:before {
+                content: '';
+                position: absolute;
+                width: 15px;
+                height: 15px;
+                background: #212844;
+                right: 0;
+                bottom: 0;
+                border-radius: 0 0 0 10px;
+              }
+            }
+
+            mat-icon {
+              width: 20px;
+              height: 20px;
+              font-size: 20px;
+            }
+          }
+
+          &.mat-tab-label-active {
+            .left-radius, .right-radius {
+              display: block;
+            }
+
+            .mat-tab-label-content {
+              background: #EFF2F9;
+              color: #000;
+            }
+          }
+        }
+      }
+    }
+
+    .mat-tab-body-wrapper {
+      display: none;
+    }
+  }
 }

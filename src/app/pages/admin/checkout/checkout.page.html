@@ -52,8 +52,7 @@
                                 <ion-col size="6"></ion-col>
                                 <ion-col *ngIf="generateType === 0" size="6">
                                     <mat-form-field class="uploader">
-                                        <mat-label>自动生成商标图样</mat-label>
-                                        <input type="text" formControlName="brandLogoId" matInput placeholder="生成商标图样"
+                                        <input type="text" formControlName="brandLogoId" matInput placeholder="自动生成商标图样"
                                                style="display: none" required>
                                         <div class="weui-uploader">
                                             <div class="weui-uploader__hd">
@@ -200,39 +199,33 @@
                                 <ion-col size="6">
                                     <h5>订单联系人</h5>
                                     <mat-form-field appearance="outline">
-                                        <mat-label>客户联系人</mat-label>
-                                        <input formControlName="name" matInput required>
+                                        <input formControlName="name" matInput placeholder="客户联系人" required>
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="6">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>公司名称</mat-label>
-                                        <input formControlName="companyName" matInput required>
+                                        <input formControlName="companyName" matInput placeholder="公司名称" required>
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="6">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>身份证号</mat-label>
-                                        <input formControlName="idCard" matInput
+                                        <input formControlName="idCard" matInput placeholder="身份证号"
                                                [required]="thirdForm.get('custType').value === 0">
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="6">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>统一社会信用代码</mat-label>
-                                        <input formControlName="creditNumber" matInput required>
+                                        <input formControlName="creditNumber" matInput placeholder="统一社会信用代码" required>
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="6">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>联系电话</mat-label>
-                                        <input formControlName="mobile" matInput required>
+                                        <input formControlName="mobile" placeholder="联系电话" matInput required>
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="2">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>营业执照所在省</mat-label>
-                                        <mat-select formControlName="province" required>
+                                        <mat-select formControlName="province" placeholder="营业执照所在省" required>
                                             <mat-option *ngFor="let item of provinces" [value]="item.name">
                                                 {{item.name}}
                                             </mat-option>
@@ -241,8 +234,7 @@
                                 </ion-col>
                                 <ion-col size="2">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>市</mat-label>
-                                        <mat-select formControlName="city" required>
+                                        <mat-select formControlName="city" placeholder="市" required>
                                             <mat-option *ngFor="let item of cities" [value]="item.name">
                                                 {{item.name}}
                                             </mat-option>
@@ -251,8 +243,7 @@
                                 </ion-col>
                                 <ion-col size="2">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>区</mat-label>
-                                        <mat-select formControlName="area" required>
+                                        <mat-select formControlName="area" placeholder="区" required>
                                             <mat-option *ngFor="let item of districts" [value]="item.name">
                                                 {{item.name}}
                                             </mat-option>
@@ -261,26 +252,22 @@
                                 </ion-col>
                                 <ion-col size="6">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>电子邮箱</mat-label>
-                                        <input formControlName="email" matInput required>
+                                        <input formControlName="email" matInput placeholder="电子邮箱" required>
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="6">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>邮政编码</mat-label>
-                                        <input formControlName="zipCode" matInput required>
+                                        <input formControlName="zipCode" matInput placeholder="邮政编码" required>
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="6">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>座机号码</mat-label>
-                                        <input formControlName="telephone" matInput>
+                                        <input formControlName="telephone" placeholder="座机号码" matInput>
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="6">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>营业执照详情地址</mat-label>
-                                        <input formControlName="address" matInput required>
+                                        <input formControlName="address" matInput placeholder="营业执照详情地址" required>
                                     </mat-form-field>
                                 </ion-col>
                             </ion-row>
@@ -630,8 +617,7 @@
                             <ion-row>
                                 <ion-col size="12">
                                     <mat-form-field appearance="outline">
-                                        <mat-label>备注</mat-label>
-                                        <textarea matInput formControlName="remark"></textarea>
+                                        <textarea matInput formControlName="remark" placeholder="备注"></textarea>
                                     </mat-form-field>
                                 </ion-col>
                             </ion-row>

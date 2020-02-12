@@ -16,8 +16,7 @@
             <ion-row>
                 <ion-col size="6">
                     <mat-form-field appearance="outline">
-                        <mat-label>企业名称</mat-label>
-                        <input type="text" formControlName="companyName" matInput placeholder="请填写企业完整名称" required>
+                        <input type="text" formControlName="companyName" matInput placeholder="企业名称" required>
                         <mat-error
                                 *ngIf="form.get('companyName').hasError('maxLength') && !form.get('companyName').hasError('required')">
                             企业名称必须小于 <strong>32位</strong>
@@ -33,8 +32,7 @@
                 </ion-col>
                 <ion-col size="6">
                     <mat-form-field appearance="outline">
-                        <mat-label>统一社会信用代码</mat-label>
-                        <input type="text" formControlName="creditNumber" matInput placeholder="请填写统一社会信用代码" required>
+                        <input type="text" formControlName="creditNumber" matInput placeholder="统一社会信用代码" required>
                         <span (click)="getNumber()" mat-button matSuffix>获取</span>
                         <mat-error
                                 *ngIf="form.get('creditNumber').hasError('maxLength') && !form.get('creditNumber').hasError('required')">
@@ -51,8 +49,7 @@
                 </ion-col>
                 <ion-col size="4">
                     <mat-form-field appearance="outline">
-                        <mat-label>省</mat-label>
-                        <mat-select formControlName="province" required>
+                        <mat-select formControlName="province" placeholder="省" required>
                             <mat-option *ngFor="let item of provinces" [value]="item.name">
                                 {{item.name}}
                             </mat-option>
@@ -61,8 +58,7 @@
                 </ion-col>
                 <ion-col size="4">
                     <mat-form-field appearance="outline">
-                        <mat-label>市</mat-label>
-                        <mat-select formControlName="city" required>
+                        <mat-select formControlName="city" placeholder="市" required>
                             <mat-option *ngFor="let item of cities" [value]="item.name">
                                 {{item.name}}
                             </mat-option>
@@ -71,8 +67,7 @@
                 </ion-col>
                 <ion-col size="4">
                     <mat-form-field appearance="outline">
-                        <mat-label>区</mat-label>
-                        <mat-select formControlName="area" required>
+                        <mat-select formControlName="area" placeholder="区" required>
                             <mat-option *ngFor="let item of districts" [value]="item.name">
                                 {{item.name}}
                             </mat-option>
@@ -81,14 +76,13 @@
                 </ion-col>
                 <ion-col size="12">
                     <mat-form-field appearance="outline">
-                        <mat-label>详细地址</mat-label>
-                        <input formControlName="address" matInput placeholder="请输入企业详细地址" required>
+                        <input formControlName="address" matInput placeholder="详细地址" required>
                     </mat-form-field>
                 </ion-col>
                 <ion-col size="6">
                     <mat-form-field appearance="outline">
                         <mat-label>所属行业</mat-label>
-                        <input style="display: none" formControlName="industryIds" matInput
+                        <input style="display: none" formControlName="industryIds" placeholder="所属行业" matInput
                                required>
                         <mat-chip-list #chipList required>
                             <mat-chip *ngFor="let industry of selectedIndustries" (removed)="remove(industry)">
@@ -108,8 +102,7 @@
                 </ion-col>
                 <ion-col size="6">
                     <mat-form-field appearance="outline">
-                        <mat-label>联系人</mat-label>
-                        <input type="text" formControlName="name" matInput placeholder="请填写企业联系人姓名" required>
+                        <input type="text" formControlName="name" matInput placeholder="联系人" required>
                         <mat-error
                                 *ngIf="form.get('name').hasError('pattern') && !form.get('name').hasError('required')">
                             联系人必须是 <strong>中文</strong>
@@ -121,8 +114,7 @@
                 </ion-col>
                 <ion-col size="6">
                     <mat-form-field appearance="outline">
-                        <mat-label>联系电话</mat-label>
-                        <input type="text" formControlName="mobile" matInput placeholder="请填写企业联系人电话" required>
+                        <input type="text" formControlName="mobile" matInput placeholder="联系电话" required>
                         <mat-error
                                 *ngIf="form.get('mobile').hasError('pattern') && !form.get('mobile').hasError('required')">
                             请输入 <strong>正确</strong> 的联系电话
@@ -134,8 +126,7 @@
                 </ion-col>
                 <ion-col size="6">
                     <mat-form-field appearance="outline">
-                        <mat-label>邮箱</mat-label>
-                        <input matInput formControlName="email" [errorStateMatcher]="matcher">
+                        <input matInput formControlName="email" placeholder="邮箱" [errorStateMatcher]="matcher">
                         <!--<mat-hint>Errors appear instantly!</mat-hint>-->
                         <mat-error
                                 *ngIf="form.get('email').hasError('email') && !form.get('email').hasError('required')">
@@ -214,9 +205,8 @@
                 </ion-col>
                 <ion-col size="12">
                     <mat-form-field appearance="outline">
-                        <mat-label>备注</mat-label>
                         <textarea formControlName="remark" matInput
-                                  placeholder="若有其他关于企业的详细情况可在此处记录，以便我们更好地服务客户..."></textarea>
+                                  placeholder="备注"></textarea>
                     </mat-form-field>
                 </ion-col>
                 <ion-col size="12">

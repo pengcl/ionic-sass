@@ -4,28 +4,31 @@ import {AuthService} from '../../../pages/auth/auth.service';
 import {NotifyComponent} from '../notify/notify.component';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  title = 'SMP';
-  user = this.authSvc.currentUser;
+    title = 'SMP';
+    user = this.authSvc.currentUser;
+    tabs = [
+        {name: '', url: ''}
+    ];
 
-  constructor(private popoverController: PopoverController,
-              private authSvc: AuthService) {
-  }
+    constructor(private popoverController: PopoverController,
+                private authSvc: AuthService) {
+    }
 
-  async presentPopover(e: any) {
-    const popover = await this.popoverController.create({
-      component: NotifyComponent,
-      event: e,
-      translucent: true
-    });
-    return await popover.present();
-  }
+    async presentPopover(e: any) {
+        const popover = await this.popoverController.create({
+            component: NotifyComponent,
+            event: e,
+            translucent: true
+        });
+        return await popover.present();
+    }
 
-  logout() {
-    this.authSvc.logout();
-  }
+    logout() {
+        this.authSvc.logout();
+    }
 }
