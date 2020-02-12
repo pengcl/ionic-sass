@@ -5,27 +5,11 @@
 
     <!-- This fills the remaining space of the current row -->
     <div class="fill-remaining-space">
-        <mat-tab-group>
-            <mat-tab>
+        <mat-tab-group [selectedIndex]="selectedIndex">
+            <mat-tab (select)="selected(tab)" *ngFor="let tab of tabs">
                 <ng-template mat-tab-label>
                     <span class="left-radius"></span>
-                    First
-                    <span class="right-radius"></span>
-                    <!--<mat-icon class="example-tab-icon" matSuffix>thumb_up</mat-icon>-->
-                </ng-template>
-            </mat-tab>
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    <span class="left-radius"></span>
-                    Second
-                    <span class="right-radius"></span>
-                    <!--<mat-icon class="example-tab-icon" matSuffix>thumb_up</mat-icon>-->
-                </ng-template>
-            </mat-tab>
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    <span class="left-radius"></span>
-                    Third
+                    {{tab.name}}
                     <span class="right-radius"></span>
                     <!--<mat-icon class="example-tab-icon" matSuffix>thumb_up</mat-icon>-->
                 </ng-template>
