@@ -5,16 +5,27 @@
 
     <!-- This fills the remaining space of the current row -->
     <div class="fill-remaining-space">
-        <mat-tab-group [selectedIndex]="selectedIndex">
-            <mat-tab (select)="selected(tab)" *ngFor="let tab of tabs">
+        <!--<mat-tab-group [selectedIndex]="selectedIndex">
+            <mat-tab (click)="selected(tab)" *ngFor="let tab of tabs;let i = index">
                 <ng-template mat-tab-label>
                     <span class="left-radius"></span>
                     {{tab.name}}
+                    <span (click)="remove(i,selectedIndex)" class="close">×</span>
                     <span class="right-radius"></span>
-                    <!--<mat-icon class="example-tab-icon" matSuffix>thumb_up</mat-icon>-->
+                    &lt;!&ndash;<mat-icon class="example-tab-icon" matSuffix>thumb_up</mat-icon>&ndash;&gt;
                 </ng-template>
             </mat-tab>
-        </mat-tab-group>
+        </mat-tab-group>-->
+        <nav mat-tab-nav-bar>
+            <a mat-tab-link (click)="selected(tab)" [active]="path === tab.path" *ngFor="let tab of tabs;let i = index">
+                <span class="mat-tab-label-content">
+                    <span class="left-radius"></span>
+                    {{tab.name}}
+                    <span (click)="remove(i,$event)" *ngIf="i !== 0" class="close">×</span>
+                    <span class="right-radius"></span>
+                </span>
+            </a>
+        </nav>
     </div>
     <div (click)="toasterShow($event)" class="header-message">
         <img src="/assets/images/header/message.png">

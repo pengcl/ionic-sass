@@ -50,6 +50,11 @@ mat-toolbar {
     border-left: 1px solid #fff;
     border-radius: 0;
     padding: 0 16px 0 30px;
+    width: 180px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     span {
       font-size: 20px;
@@ -61,13 +66,11 @@ mat-toolbar {
   flex: 1 1 auto;
 
   &::ng-deep {
-    mat-tab-group {
+    nav {
       margin-top: 20px;
+      border-bottom: none;
 
       &::ng-deep {
-        .mat-tab-header {
-          border-bottom: none;
-        }
 
         .mat-ink-bar {
           display: none;
@@ -78,9 +81,11 @@ mat-toolbar {
           display: block;
           height: 60px;
           opacity: 1;
-          padding: 0 15px;
+          padding: 0 15px 0 15px;
           position: relative;
-
+          min-width: unset;
+          width: 180px;
+          position: relative;
           .mat-tab-label-content {
             font-size: 16px;
             text-align: left;
@@ -88,7 +93,15 @@ mat-toolbar {
             height: 100%;
             border-radius: 10px 10px 0 0;
             line-height: 30px;
-            padding: 15px;
+            padding: 15px 45px 15px 15px;
+
+            .close {
+              position: absolute;
+              right: 15px;
+              width: 30px;
+              height: 30px;
+              text-align: center;
+            }
 
             .left-radius {
               background: rgba(246, 247, 249, 1);

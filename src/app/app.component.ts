@@ -27,7 +27,9 @@ export class AppComponent {
                 return route.data;
             })
         ).subscribe(data => {
-            this.tabSvc.set({name: data.name, path: this.router.url});
+            if (this.router.url !== '/auth' && this.router.url !== '/loader') {
+                this.tabSvc.set({name: data.name, path: this.router.url});
+            }
         });
     }
 }

@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {PopoverController} from '@ionic/angular';
 import {ToastController} from '@ionic/angular';
 import {AuthService} from '../../../pages/auth/auth.service';
 import {TabService} from './tab.service';
 import {NotifyComponent} from '../notify/notify.component';
 import {getIndex} from '../../../@core/utils/utils';
+import {filter, map, mergeMap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-header',
@@ -17,18 +18,21 @@ export class HeaderComponent {
     user = this.authSvc.currentUser;
     tabs = [];
     path;
-    selectedIndex = 1;
 
     constructor(private route: ActivatedRoute,
+                private router: Router,
                 private popoverController: PopoverController,
                 private toastController: ToastController,
                 private authSvc: AuthService,
                 private tabSvc: TabService) {
         this.tabSvc.get().subscribe(tabs => {
             this.tabs = tabs;
-            this.selectedIndex = getIndex(tabs, 'selected', true);
         });
-
+        router.events.pipe(
+            // tap(o => console.log(o))
+            filter(event => event instanceof NavigationEnd)).subscribe(() => {
+            this.path = this.router.url;
+        });
     }
 
     async presentPopover(e: any) {
@@ -42,6 +46,13 @@ export class HeaderComponent {
 
     selected(tab) {
         console.log(tab);
+        this.router.navigateByUrl(tab.path);
+    }
+
+    remove(index, e) {
+        e.preventDefault();
+        this.tabSvc.remove(index, this.path);
+        return false;
     }
 
     async toasterShow(e: any) {
