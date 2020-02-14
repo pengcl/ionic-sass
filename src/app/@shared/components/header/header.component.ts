@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {LocationStrategy} from '@angular/common';
 import {PopoverController} from '@ionic/angular';
+import {ToastController} from '@ionic/angular';
 import {AuthService} from '../../../pages/auth/auth.service';
 import {TabService} from './tab.service';
 import {NotifyComponent} from '../notify/notify.component';
@@ -21,6 +21,7 @@ export class HeaderComponent {
 
     constructor(private route: ActivatedRoute,
                 private popoverController: PopoverController,
+                private toastController: ToastController,
                 private authSvc: AuthService,
                 private tabSvc: TabService) {
         this.tabSvc.get().subscribe(tabs => {
@@ -41,6 +42,15 @@ export class HeaderComponent {
 
     selected(tab) {
         console.log(tab);
+    }
+
+    async toasterShow(e: any) {
+        const toaster = await this.toastController.create({
+            position: 'middle',
+            message: '功能即将开放,敬请期待',
+            duration: 2000
+        });
+        return await toaster.present();
     }
 
     logout() {

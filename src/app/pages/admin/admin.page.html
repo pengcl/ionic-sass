@@ -3,8 +3,10 @@
 
     <mat-sidenav mode="side" opened>
         <mat-list>
-            <h3 routerLink="/admin/dashboard" routerLinkActive="active" mat-subheader class="index">
-                <mat-icon mat-list-icon>cloud</mat-icon>
+            <h3 routerLink="/admin/dashboard" routerLinkActive="active" mat-subheader>
+                <span class="mat-list-icon">
+                    <img src="/assets/images/side/1.png">
+                </span>
                 首页
             </h3>
             <ng-container>
@@ -13,8 +15,34 @@
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 <h3 mat-subheader>
-                                    <mat-icon mat-list-icon>thumb_up</mat-icon>
-                                    托管
+                                    <span class="mat-list-icon">
+                                        <img src="/assets/images/side/2.png">
+                                    </span>
+                                    企业信息管理
+                                </h3>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-list-item [routerLink]="['/admin/company/list']"
+                                       routerLinkActive="active">
+                            <p mat-line>企业主体管理</p>
+                        </mat-list-item>
+                        <mat-list-item [routerLink]="['/admin/company/item',company.id]"
+                                       routerLinkActive="active">
+                            <p mat-line>企业资质</p>
+                        </mat-list-item>
+                        <mat-list-item [routerLink]="['/admin/company/item',company.id]"
+                                       routerLinkActive="active">
+                            <p mat-line>匹配政策</p>
+                        </mat-list-item>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <h3 mat-subheader>
+                                    <span class="mat-list-icon">
+                                        <img src="/assets/images/side/3.png">
+                                    </span>
+                                    知产托管
                                 </h3>
                             </mat-panel-title>
                         </mat-expansion-panel-header>
@@ -30,9 +58,23 @@
                     <mat-expansion-panel>
                         <mat-expansion-panel-header>
                             <mat-panel-title>
+                                <h3 routerLink="/admin/monitor/list" routerLinkActive="active" mat-subheader>
+                                    <span class="mat-list-icon">
+                                        <img src="/assets/images/side/4.png">
+                                    </span>
+                                    风险监控
+                                </h3>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
                                 <h3 mat-subheader>
-                                    <mat-icon mat-list-icon>card_travel</mat-icon>
-                                    保险箱
+                                    <span class="mat-list-icon">
+                                        <img src="/assets/images/side/5.png">
+                                    </span>
+                                    知产保险箱
                                 </h3>
                             </mat-panel-title>
                         </mat-expansion-panel-header>
@@ -47,8 +89,31 @@
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 <h3 mat-subheader>
-                                    <mat-icon mat-list-icon>supervisor_account</mat-icon>
-                                    报告
+                                    <span class="mat-list-icon">
+                                        <img src="/assets/images/side/6.png">
+                                    </span>
+                                    知产智能服务
+                                </h3>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-list-item routerLink="/admin/plan/list" routerLinkActive="active">
+                            <p mat-line>商标自助智能注册</p>
+                        </mat-list-item>
+                        <mat-list-item routerLink="/admin/risk/list" routerLinkActive="active">
+                            <p mat-line>专利快捷提交</p>
+                        </mat-list-item>
+                        <mat-list-item routerLink="/admin/monitor/list" routerLinkActive="active">
+                            <p mat-line>版权智能存证登记</p>
+                        </mat-list-item>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <h3 mat-subheader>
+                                    <span class="mat-list-icon">
+                                        <img src="/assets/images/side/7.png">
+                                    </span>
+                                    报告中心
                                 </h3>
                             </mat-panel-title>
                         </mat-expansion-panel-header>
@@ -64,10 +129,10 @@
                     </mat-expansion-panel>
                 </mat-accordion>
             </ng-container>
-            <h3 routerLink="/admin/order/list" routerLinkActive="active" mat-subheader class="index">
+            <!--<h3 routerLink="/admin/order/list" routerLinkActive="active" mat-subheader class="index">
                 <mat-icon mat-list-icon>assignment</mat-icon>
                 订单
-            </h3>
+            </h3>-->
         </mat-list>
     </mat-sidenav>
 

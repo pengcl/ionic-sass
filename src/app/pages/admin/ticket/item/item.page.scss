@@ -1,0 +1,62 @@
+.container {
+  background-color: #fff;
+}
+
+.log-content {
+  border: 1px solid #DCE5EB;
+}
+
+ul.log-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    overflow: hidden;
+    padding: 20px 0 20px 60px;
+    position: relative;
+    line-height: 15px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 100%;
+      left: 37px;
+      top: 0;
+      background: #2C9EF7;
+    }
+
+    &:after {
+      width: 15px;
+      height: 15px;
+      box-sizing: border-box;
+      border-radius: 100%;
+      content: '';
+      position: absolute;
+      left: 30px;
+      top: 20px;
+      background: #fff;
+      border: 3px solid #2C9EF7;
+    }
+
+    &:first-child {
+      &:before {
+        top: 20px;
+      }
+    }
+
+    &:last-child {
+      &:before {
+        height: 30px;
+      }
+    }
+
+    p {
+      margin: 0;
+      span {
+        margin-right: 20px;
+      }
+    }
+  }
+}

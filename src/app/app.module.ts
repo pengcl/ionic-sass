@@ -13,6 +13,7 @@ import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScroll
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
+
 @NgModule({
     declarations: [
         AppComponent

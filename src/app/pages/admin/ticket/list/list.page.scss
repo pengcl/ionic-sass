@@ -1,0 +1,14 @@
+mat-form-field {
+  &::ng-deep {
+    .mat-form-field-wrapper {
+      padding-bottom: 0 !important;
+    }
+  }
+}
+
+ion-col.search-label {
+  line-height: 40px;
+  text-align: right;
+  font-size: 14px;
+  color: #5F717D;
+}
