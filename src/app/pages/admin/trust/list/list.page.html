@@ -68,7 +68,7 @@
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef style="width: 80px"> <b>托管</b></th>
                     <td class="actions" mat-cell *matCellDef="let element">
-                        <mat-slide-toggle (click)="trust('trademark',element);$event.stopPropagation()"
+                        <mat-slide-toggle color="primary" (click)="trust('trademark',element);$event.stopPropagation()"
                                           [checked]="!!element.status"></mat-slide-toggle>
                     </td>
                 </ng-container>
@@ -146,7 +146,7 @@
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef style="width: 80px"> <b>托管</b></th>
                     <td class="actions" mat-cell *matCellDef="let element">
-                        <mat-slide-toggle (click)="trust('patent',element);$event.stopPropagation()"
+                        <mat-slide-toggle color="primary" (click)="trust('patent',element);$event.stopPropagation()"
                                           [checked]="!!element.status"></mat-slide-toggle>
                     </td>
                 </ng-container>

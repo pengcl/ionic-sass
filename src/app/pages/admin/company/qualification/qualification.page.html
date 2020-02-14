@@ -56,7 +56,7 @@
                 <ion-col *ngFor="let condition of conditions" size="6">
                     <mat-form-field *ngIf="condition.fieldType === '0001' && ((reportType === 1 && !!condition.required) || reportType === 2)" appearance="outline">
                         <input style="display: none" [formControlName]="condition.conditionId" [placeholder]="condition.conditionName + (!!condition.required ? '*' : '')" matInput>
-                        <mat-slide-toggle [formControlName]="condition.conditionId"
+                        <mat-slide-toggle color="primary" [formControlName]="condition.conditionId"
                                           matInput></mat-slide-toggle>
                     </mat-form-field>
                     <mat-form-field *ngIf="condition.fieldType === '0002' && ((reportType === 1 && !!condition.required) || reportType === 2)" appearance="outline">
