@@ -1,7 +1,340 @@
 <div class="container">
     <ion-grid>
         <ion-row>
+            <ion-col size="12">
+                <mat-card>
+                    <div class="company">
+                        <div class="company_left"></div>
+                        <div class="company_right"><p>{{company?.companyName}}</p></div>
+                        <img src="/assets/images/dashboard/setting.png" alt="" (click)="to_company()">
+                    </div>
+                </mat-card>
+            </ion-col>
             <ion-col size="4">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>企业资质</mat-card-title>
+                        <mat-card-subtitle class="link" [routerLink]="['/admin/company/item',company ? company.id : 0]">
+                            <img src="/assets/images/dashboard/edit.png">
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-list>
+                            <ion-list-header>信息填写完成度</ion-list-header>
+
+                            <ion-item>
+                                <span slot="start" class="start">基础信息</span>
+                                <ion-progress-bar value="0.8" color="primary"></ion-progress-bar>
+                                <span slot="end" class="end">80%</span>
+                            </ion-item>
+
+                            <ion-item>
+                                <span slot="start" class="start">经营信息</span>
+                                <ion-progress-bar value="0.6" color="primary"></ion-progress-bar>
+                                <span slot="end" class="end">60%</span>
+                            </ion-item>
+
+                            <ion-item>
+                                <span slot="start" class="start">研发相关信息</span>
+                                <ion-progress-bar value="0.5" color="warning"></ion-progress-bar>
+                                <span slot="end" class="end">50%</span>
+                            </ion-item>
+
+                            <ion-item>
+                                <span slot="start" class="start">知识产权信息</span>
+                                <ion-progress-bar value="1" color="success"></ion-progress-bar>
+                                <span slot="end" class="end">100%</span>
+                            </ion-item>
+
+                            <ion-item>
+                                <span slot="start" class="start">员工信息</span>
+                                <ion-progress-bar value="0.7" color="primary"></ion-progress-bar>
+                                <span slot="end" class="end">70%</span>
+                            </ion-item>
+
+                            <ion-item>
+                                <span slot="start" class="start">其他</span>
+                                <ion-progress-bar value="0.1" color="danger"></ion-progress-bar>
+                                <span slot="end" class="end">10%</span>
+                            </ion-item>
+
+                        </ion-list>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="8">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>匹配政策补贴</mat-card-title>
+                        <mat-card-subtitle class="link" (click)="presentLoading()">
+                            <img src="/assets/images/dashboard/menu.png">
+                        </mat-card-subtitle>
+                        <mat-card-content>
+                            <div echarts [options]="subsidyOption" class="main-chart"
+                                 style="width: 500px;height: 350px;margin-top: 20px"></div>
+                        </mat-card-content>
+                    </mat-card-header>
+                </mat-card>
+            </ion-col>
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>华海政策库</mat-card-title>
+                        <mat-card-subtitle class="link" (click)="presentLoading()">
+                            <img src="/assets/images/dashboard/menu.png">
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <form [formGroup]="form">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col size="2">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select formControlName="province" placeholder="省" required>
+                                                <mat-option *ngFor="let item of provinces" [value]="item.name">
+                                                    {{item.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col size="2">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select formControlName="city" placeholder="市" required>
+                                                <mat-option *ngFor="let item of cities" [value]="item.name">
+                                                    {{item.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </ion-col>
+                                    <ion-col size="2">
+                                        <mat-form-field appearance="outline">
+                                            <mat-select formControlName="area" placeholder="区" required>
+                                                <mat-option *ngFor="let item of districts" [value]="item.name">
+                                                    {{item.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </form>
+                        <div class="hot">
+                            <div class="hot_img">
+                                <img src="/assets/images/dashboard/hot.png">
+                            </div>
+                            <div class="hot_left">
+                                <p style="text-align: center;font-size: 32px;color: #fff;font-weight: bold">20,000</p>
+                                <p style="text-align: center;color: #fff;margin-top: -20px">华海政策库已收录政策</p>
+                            </div>
+                            <div class="hot_right">
+                                <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px">国家高新技术企业认定</p>
+                                <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">预计补贴金额<span style="font-weight: 700;color: #2C9EF7;">35</span>万元</p>
+                                <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">预计所需时间<span style="font-weight: 700;color: #2C9EF7;">2</span>个月</p>
+                            </div>
+                            <div class="hot_right"></div>
+                            <div class="hot_right"></div>
+                        </div>
+                        <div class="hot">
+                            <div class="hot_img" style="top: 263px">
+                                <img src="/assets/images/dashboard/new.png">
+                            </div>
+                            <div class="hot_left" style="background-color: rgba(13, 215, 141, 1);">
+                                <p style="text-align: center;font-size: 32px;color: #fff;font-weight: bold">500</p>
+                                <p style="text-align: center;color: #fff;margin-top: -25px">今天更新政策</p>
+                                <p style="text-align: center;color: #fff;margin-top: -13px">2020-02-14 12:00</p>
+                            </div>
+                            <div class="hot_right">
+                                <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px">国家高新技术企业认定</p>
+                                <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">预计补贴金额<span style="font-weight: 700;color: #2C9EF7;">35</span>万元</p>
+                                <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">预计所需时间<span style="font-weight: 700;color: #2C9EF7;">2</span>个月</p>
+                            </div>
+                            <div class="hot_right"></div>
+                            <div class="hot_right"></div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="4">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>知产保障</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-list>
+                            <ion-item>
+                                <img src="/assets/images/dashboard/box.png" slot="start" style="width: 30px;height: 30px">
+                                <span>知产保险箱</span>
+                                <img src="/assets/images/dashboard/to.png" slot="end" style="width: 25px;height: 25px;cursor: pointer" (click)="toBox()">
+                            </ion-item>
+
+                            <ion-item>
+                                <img src="/assets/images/dashboard/brand.png" slot="start" style="width: 30px;height: 30px">
+                                <span>商标智能年费监控</span>
+                                <ion-toggle color="primary" slot="end"></ion-toggle>
+                            </ion-item>
+
+                            <ion-item>
+                                <img src="/assets/images/dashboard/p.png" slot="start" style="width: 30px;height: 30px">
+                                <span>专利智能续费</span>
+                                <ion-toggle color="primary" slot="end"></ion-toggle>
+                            </ion-item>
+
+                            <ion-item>
+                                <img src="/assets/images/dashboard/copyright.png" slot="start" style="width: 30px;height: 30px">
+                                <span>版权顾问</span>
+                                <ion-toggle color="primary" slot="end"></ion-toggle>
+                            </ion-item>
+                        </ion-list>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="8">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>知产智能服务</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-row class="service" style="margin: 44px auto;">
+                            <ion-col size="4">
+                                <ion-tab-button (click)="toCheckout()">
+                                    <img src="/assets/images/dashboard/rocket.png">
+                                    <ion-label>商标自助智能注册</ion-label>
+                                </ion-tab-button>
+                            </ion-col>
+
+                            <ion-col size="4">
+                                <ion-tab-button (click)="presentLoading()">
+                                    <img src="/assets/images/dashboard/plane.png">
+                                    <ion-label>专利快捷提交</ion-label>
+                                </ion-tab-button>
+                            </ion-col>
+
+                            <ion-col size="4">
+                                <ion-tab-button (click)="presentLoading()">
+                                    <img src="/assets/images/dashboard/e.png">
+                                    <ion-label>版权智能存证登记</ion-label>
+                                </ion-tab-button>
+                            </ion-col>
+                        </ion-row>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>我的工单</mat-card-title>
+                        <mat-card-subtitle class="link">
+                            <img src="/assets/images/dashboard/menu.png">
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-row>
+                            <ion-col size="4">
+                                <ion-list class="my_work">
+                                    <ion-list-header>工单统计</ion-list-header>
+                                    <ion-item>
+                                        <div class="work">
+                                            <div class="work_left">
+                                                    <img src="/assets/images/dashboard/clock.png">
+                                            </div>
+                                            <div class="work_right">
+                                                <span>10</span>
+                                                <p>进行中工单</p>
+                                            </div>
+                                        </div>
+                                    </ion-item>
+
+                                    <ion-item>
+                                        <div class="work">
+                                            <div class="work_left" style="background-color: rgba(254, 174, 77, 1)">
+                                                <img src="/assets/images/dashboard/alarm.png">
+                                            </div>
+                                            <div class="work_right" style="background-color:rgba(255, 102, 51, 1)">
+                                                <span>10</span>
+                                                <p>异常工单</p>
+                                                <img src="/assets/images/dashboard/to_work.png" style="position: absolute;width: 20px;height: 20px;top: 20px;right: 30px">
+                                            </div>
+                                        </div>
+                                    </ion-item>
+
+                                    <ion-item>
+                                        <div class="work">
+                                            <div class="work_left" style="background-color: rgba(13, 215, 141, 1)">
+                                                <img src="/assets/images/dashboard/check.png">
+                                            </div>
+                                            <div class="work_right" style="background-color: rgba(51, 153, 153, 1)">
+                                                <span>100</span>
+                                                <p>已完成工单(近3月)</p>
+                                            </div>
+                                        </div>
+                                    </ion-item>
+                                </ion-list>
+                            </ion-col>
+                            <ion-col size="8">
+                                <ion-list>
+                                    <ion-list-header>关注工单</ion-list-header>
+
+                                </ion-list>
+                            </ion-col>
+                        </ion-row>
+
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>知识产权</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-row>
+                            <ion-col size="4">
+                                <div class="brand">
+                                    <img src="/assets/images/dashboard/p.png">
+                                    <div class="brand_list">
+                                        <p class="brand_num">1,500</p>
+                                        <p class="brand_name">商标</p>
+                                    </div>
+                                </div>
+                                <div echarts [options]="brandOption" class="main-chart"
+                                     style="width: 500px;height: 350px;margin-top: 20px"></div>
+                                <div echarts [options]="signInOption" class="main-chart"
+                                     style="width: 500px;height: 350px;margin-top: 20px"></div>
+                            </ion-col>
+                            <ion-col size="4">
+                                <div class="brand">
+                                    <img src="/assets/images/dashboard/p.png">
+                                    <div class="brand_list">
+                                        <p class="brand_num">1,500</p>
+                                        <p class="brand_name">专利</p>
+                                    </div>
+                                </div>
+
+                            </ion-col>
+                            <ion-col size="4">
+                                <div class="brand">
+                                    <img src="/assets/images/dashboard/p.png">
+                                    <div class="brand_list">
+                                        <p class="brand_num">1,500</p>
+                                        <p class="brand_name">版权</p>
+                                    </div>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>竞争对手监控</mat-card-title>
+                        <mat-card-subtitle class="link">
+                            <img src="/assets/images/dashboard/setting.png">
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                </mat-card>
+            </ion-col>
+            <!--<ion-col size="4">
                 <mat-card>
                     <mat-card-header>
                         <mat-card-title>企业资质与政策匹配</mat-card-title>
@@ -33,7 +366,7 @@
                                 <ion-col size="8">
                                     <ion-list>
                                         <ion-item class="statistic" lines="none"
-                                                  style="--padding-start:0;--padding-end: 5px;margin: 0">
+                                                  style="&#45;&#45;padding-start:0;&#45;&#45;padding-end: 5px;margin: 0">
                                             <ion-label>
                                                 <h3><span [countUp]="matchingStatus?.totalSubsidyAmtEnd"
                                                           [options]="{duration:3}">0</span></h3>
@@ -44,7 +377,7 @@
                                 </ion-col>
                                 <ion-col size="4">
                                     <ion-list>
-                                        <ion-item class="statistic" lines="none" style="--padding-start:5px;margin: 0">
+                                        <ion-item class="statistic" lines="none" style="&#45;&#45;padding-start:5px;margin: 0">
                                             <ion-label>
                                                 <h3><span [countUp]="matchingStatus?.policyCount"
                                                           [options]="{duration:3}">10000</span></h3>
@@ -214,7 +547,7 @@
                 <mat-card class="auto-height">
                     <mat-card-header>
                         <mat-card-title>报告中心</mat-card-title>
-                        <!--<mat-card-subtitle routerLink="/admin/plan/list">查看更多</mat-card-subtitle>-->
+                        &lt;!&ndash;<mat-card-subtitle routerLink="/admin/plan/list">查看更多</mat-card-subtitle>&ndash;&gt;
                     </mat-card-header>
                     <mat-card-content>
                         <app-empty *ngIf="plans && risks && plans.length < 1 && risks.length < 1" title="生成报告"
@@ -290,7 +623,7 @@
                         </ion-list>
                     </mat-card-content>
                 </mat-card>
-            </ion-col>
+            </ion-col>-->
         </ion-row>
     </ion-grid>
 </div>

@@ -79,6 +79,7 @@ import {Paginator} from './paginator';
 import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
 import {AdminCheckoutCodeComponent} from '../pages/admin/checkout/code/code.component';
 import {CountUpModule} from 'ngx-countup';
+import {NgxEchartsModule} from 'ngx-echarts';
 
 @NgModule({
     imports: [
@@ -93,6 +94,7 @@ import {CountUpModule} from 'ngx-countup';
         UploaderModule,
         NgxQRCodeModule,
         CountUpModule,
+        NgxEchartsModule,
         NgCircleProgressModule.forRoot({
             // set defaults here
             radius: 100,
@@ -115,6 +117,7 @@ import {CountUpModule} from 'ngx-countup';
         UploaderModule,
         NgxQRCodeModule,
         CountUpModule,
+        NgxEchartsModule,
         NgCircleProgressModule,
         ...COMPONENTS,
         ...PIPES
