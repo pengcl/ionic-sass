@@ -332,6 +332,31 @@ export class ColorPipe implements PipeTransform {
 }
 
 @Pipe({
+    name: 'progress',
+    pure: false
+})
+// not being finished
+@Injectable()
+export class ProgressPipe implements PipeTransform {
+    transform(value): any {
+        let colorName = 'primary';
+        if (value <= 0.2) {
+            colorName = 'danger';
+        }
+        if (value > 0.2 && value <= 0.5) {
+            colorName = 'warning';
+        }
+        if (value > 0.5 && value < 1) {
+            colorName = 'primary';
+        }
+        if (value === 1) {
+            colorName = 'success';
+        }
+        return colorName;
+    }
+}
+
+@Pipe({
     name: 'score',
     pure: false
 })

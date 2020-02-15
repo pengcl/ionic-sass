@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://120.25.198.225:8888",
+    "target": "http://wisp.ai-fox.net",
     "secure": false,
     "pathRewrite": {
       "^/api/": ""

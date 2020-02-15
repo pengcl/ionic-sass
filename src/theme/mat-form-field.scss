@@ -26,6 +26,10 @@ mat-form-field {
     font-size: 13px;
   }
 
+  .mat-select-value {
+    font-size: 13px;
+  }
+
   .mat-form-field-suffix {
     font-size: 13px;
     top: unset !important;
@@ -38,5 +42,18 @@ mat-form-field {
   .mat-select {
     line-height: 20px;
     height: 20px;
+  }
+
+  mat-radio-group {
+    mat-radio-button {
+      margin-right: 20px;
+      .mat-radio-label {
+        font-size: 13px;
+      }
+    }
+  }
+
+  label {
+    font-size: 13px;
   }
 }

@@ -7,6 +7,7 @@ import {LoadingService} from '../../../../@core/services/loading.service';
 import {DialogService} from '../../../../@core/modules/dialog';
 import {AuthService} from '../../../auth/auth.service';
 import {QualificationService} from './qualification.service';
+import {DictService} from '../../../../@core/services/dict.service';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 
@@ -45,6 +46,15 @@ export class AdminCompanyQualificationPage implements OnInit {
         return years;
     })();
     loading = false;
+    required = {
+        num: 0,
+        list: []
+    };
+    optional = {
+        num: 0,
+        list: []
+    };
+    dict = {};
 
     constructor(private title: Title,
                 private route: ActivatedRoute,
@@ -55,12 +65,13 @@ export class AdminCompanyQualificationPage implements OnInit {
                 private loadingSvc: LoadingService,
                 private dialogSvc: DialogService,
                 private authSvc: AuthService,
+                private dictSvc: DictService,
                 private qualificationSvc: QualificationService) {
         this.formGroup = new FormGroup({
             id: new FormControl('', []),
             demension: new FormControl(this.type, [Validators.required]),
             custId: new FormControl(this.id, [Validators.required]),
-            uniqueKey: new FormControl(this.type === '0' ? (new Date()).getFullYear() : '', [Validators.required]),
+            uniqueKey: new FormControl(this.type === '0' ? this.year : '', [Validators.required]),
             conditions: new FormControl('', [Validators.required])
         });
     }
@@ -71,6 +82,12 @@ export class AdminCompanyQualificationPage implements OnInit {
                 this.form.setControl(condition.conditionId, new FormControl(!!parseInt(condition.conditionVal, 10),
                     []));
             } else {
+                if (condition.fieldType === '0002') {
+                    this.dictSvc.get('condition_' + condition.conditionId).subscribe(res => {
+                        this.dict[condition.conditionId] = res.result;
+                        console.log(res.result);
+                    });
+                }
                 this.form.setControl(condition.conditionId, new FormControl(condition.conditionVal,
                     [!!condition.required ? Validators.required : Validators.nullValidator]));
             }
@@ -85,14 +102,37 @@ export class AdminCompanyQualificationPage implements OnInit {
                 this.formGroup.get('uniqueKey').setValue(res[0].uniqueKey);
                 this.conditions = res[0].conditions;
                 this.setupForm(res[0].conditions);
+                this.getData(res[0].conditions);
             } else {
                 this.qualificationSvc.item(this.type, this.id).subscribe(result => {
                     this.conditions = result.conditions;
                     this.setupForm(result.conditions);
+                    this.getData(result.conditions);
                 });
             }
-            console.log(this.conditions);
         });
+    }
+
+    getData(conditions) {
+        const required = {
+            num: 0,
+            list: []
+        };
+        const optional = {
+            num: 0,
+            list: []
+        };
+        conditions.forEach(item => {
+            if (!!item.required) {
+                required.num = required.num + 1;
+                required.list.push(item);
+            } else {
+                optional.num = optional.num + 1;
+                optional.list.push(item);
+            }
+        });
+        this.required = required;
+        this.optional = optional;
     }
 
     getConditions() {

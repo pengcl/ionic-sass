@@ -4,21 +4,36 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
 import {CompanyService} from '../../company/company.service';
 import {PlanService} from '../plan.service';
+import {DatePipe} from '@angular/common';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material';
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 
 @Component({
     selector: 'app-admin-plan-list',
     templateUrl: './list.page.html',
-    styleUrls: ['./list.page.scss']
+    styleUrls: ['./list.page.scss'],
+    providers: [DatePipe,
+        {provide: MAT_DATE_LOCALE, useValue: 'zh_CN'},
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+        },
+        {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
+    ]
 })
 export class AdminPlanListPage {
     id = this.route.snapshot.queryParams.company ? this.route.snapshot.queryParams.company : this.companySvc.currentCompany.id;
 
-    displayedColumns: string[] = ['name', 'time', 'actions'];
+    displayedColumns: string[] = ['name', 'type', 'time', 'actions'];
     dataSource;
     selection = new SelectionModel<any>(true, []);
     total = 0;
     params = {
         id: this.id,
+        type: '',
+        beginDate: '',
+        endDate: '',
         demension: '0',
         page: 1,
         rows: 10
@@ -26,16 +41,29 @@ export class AdminPlanListPage {
 
     constructor(private route: ActivatedRoute,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
+                private datePipe: DatePipe,
                 private companySvc: CompanyService,
                 private planSvc: PlanService) {
         this.getData();
     }
 
     getData() {
-        this.planSvc.list(this.params).subscribe(res => {
+        const params = JSON.parse(JSON.stringify(this.params));
+        if (params.beginDate) {
+            params.beginDate = this.datePipe.transform(this.params.beginDate, 'yyyy-MM-dd');
+        }
+        if (params.endDate) {
+            params.endDate = this.datePipe.transform(this.params.endDate, 'yyyy-MM-dd');
+        }
+        this.planSvc.list(params).subscribe(res => {
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });
+    }
+
+    change() {
+        this.params.page = 1;
+        this.getData();
     }
 
     preDownload(id) {
