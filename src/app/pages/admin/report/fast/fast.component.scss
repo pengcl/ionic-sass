@@ -1,0 +1,133 @@
+.container {
+  background: rgba(246, 247, 249, 1);
+  padding: 0;
+
+  mat-card {
+    margin: 10px;
+
+    &:not([class*=mat-elevation-z]) {
+      box-shadow: none;
+    }
+
+    mat-card-header {
+
+      mat-card-title {
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      mat-card-subtitle {
+        top: 16px;
+        right: 16px;
+        position: absolute;
+        margin: 0;
+        img{
+          width: 30px;
+          height: 30px;
+        }
+      }
+
+      &::ng-deep {
+        .mat-card-header-text {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+.policy{
+  display: flex;
+  flex-direction: column;
+  .policy_small{
+    width: 330px;
+    height: 100px;
+    background: inherit;
+    background-color: rgba(44, 158, 247, 1);
+    border: none;
+    border-radius: 4px;
+    margin: 20px;
+  }
+}
+
+.right{
+  display: flex;
+  flex-direction: row;
+  .right_head{
+    height: 40px;
+    background: inherit;
+    background-color: #F6F7F9;
+    border: none;
+  }
+}
+
+.suggest{
+  display: flex;
+  flex-direction: column;
+  .suggest_small{
+    width: 97%;
+    height: 100px;
+    background: inherit;
+    background-color: #F6F7F9;
+    border: none;
+    border-radius: 4px;
+    margin: 20px;
+  }
+}
+.hot{
+  display: flex;
+  flex-direction: row;
+  margin: 15px auto;
+
+  .hot_left{
+    width: 200px;
+    height: 180px;
+    background: inherit;
+    background-color: rgba(44, 158, 247, 1);
+    border: none;
+    border-radius: 4px;
+    margin: 0 5px;
+  }
+
+}
+.work{
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #DCE5EB;
+  .work_left{
+    width: 20%;
+    height: 60px;
+    background: inherit;
+    background-color: #F6F7F9;
+    border-radius: 4px 0 0 4px;
+  }
+  .work_right{
+    width: 80%;
+    height: 60px;
+    background: inherit;
+    background-color: #fff;
+    border-radius: 0 4px 4px 0;
+    table {
+      &::ng-deep {
+        tbody tr td {
+          border-bottom-width: 1px !important;
+        }
+      }
+    }
+    span{
+      display: inline-block;
+      padding:10px 40px;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 32px;
+    }
+    p{
+      display: inline-block;
+      position: absolute;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+  }
+}
