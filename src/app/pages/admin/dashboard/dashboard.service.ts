@@ -18,6 +18,41 @@ export class DashboardService {
             }));
     }
 
+    completions(id): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getCredIntactSurvey&custId=' + id)
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
+
+    subsidies(id): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getSubsidyAmtSurvey&custId=' + id)
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
+
+    copies(id): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getCopyRightChart&custId=' + id)
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
+
+    patents(id): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getPatentChart&custId=' + id)
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
+
+    brands(id): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getBrandChart&custId=' + id)
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
+
     matchingStatus(id): Observable<any> {
         return this.http.get(this.PREFIX_URL + 'getCredSurvey&custId=' + id)
             .pipe(observableMargeMap((res: any) => {

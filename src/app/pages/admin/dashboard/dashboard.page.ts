@@ -9,6 +9,9 @@ import * as echarts from 'echarts';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AddressService} from '../../../@core/services/address.service';
 import {LoadingController} from '@ionic/angular';
+import {TicketService} from '../ticket/ticket.service';
+import {SelectionModel} from '@angular/cdk/collections';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
     selector: 'app-admin-dashboard',
@@ -16,159 +19,10 @@ import {LoadingController} from '@ionic/angular';
     styleUrls: ['./dashboard.page.scss']
 })
 export class AdminDashboardPage {
-    subsidyOption = {
-        color: ['#3bcec6'],
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
-            }
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: {
-            type: 'value',
-            boundaryGap: [0, 0.01]
-        },
-        yAxis: {
-            type: 'category',
-            data: ['科创宝培育可获得', '快速培育可获得']
-        },
-        series: [
-            {
-                type: 'bar',
-                data: [380, 120],
-                itemStyle: {
-                    normal: {
-                        color: function(params) {
-                            var colorList = ['rgba(13, 215, 141, 1)', 'rgba(254, 174, 77, 1)'];
-                            return colorList[params.dataIndex];
-                        }
-                    },
-                    emphasis: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }
-        ]
-    };
+    subsidyOption;
     brandOption = {
-        legend: {
-            data: ['邮件营销', '联盟广告', '视频广告', '百度', '谷歌', '必应', '其他']
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: [
-            {
-                type: 'category',
-                data: ['周一', '周二', '周三', '周四', '周五']
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value'
-            }
-        ],
-        series: [
-            {
-                name: '邮件营销',
-                type: 'bar',
-                stack: '广告',
-                data: [120, 132, 101, 134, 90]
-            },
-            {
-                name: '联盟广告',
-                type: 'bar',
-                stack: '广告',
-                data: [220, 182, 191, 234, 290]
-            },
-            {
-                name: '视频广告',
-                type: 'bar',
-                stack: '广告',
-                data: [150, 232, 201, 154, 190]
-            },
-            {
-                name: '百度',
-                type: 'bar',
-                barWidth: 5,
-                stack: '搜索引擎',
-                data: [620, 732, 701, 734, 1090, 1130, 1120]
-            },
-            {
-                name: '谷歌',
-                type: 'bar',
-                stack: '搜索引擎',
-                data: [120, 132, 101, 134, 290, 230, 220]
-            },
-            {
-                name: '必应',
-                type: 'bar',
-                stack: '搜索引擎',
-                data: [60, 72, 71, 74, 190, 130, 110]
-            },
-            {
-                name: '其他',
-                type: 'bar',
-                stack: '搜索引擎',
-                data: [62, 82, 91, 84, 109, 110, 120]
-            }
-        ]
-    };
-    signInOption = {
-        color: ['#6dd8da', '#b6a2de', '#58afed'],
-        tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-        },
-        legend: {
-            orient: 'horizontal',
-            x: 'center',
-            bottom: 10,
-            data: ['直接访问', '邮件营销', '联盟广告']
-        },
-        series: [
-            {
-                name: '访问来源',
-                type: 'pie',
-                center: ['50%', '45%'], // 饼图定位
-                radius: ['50%', '70%'],
-                avoidLabelOverlap: false,
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '30',
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                labelLine: {
-                    normal: {
-                        show: false
-                    }
-                },
-                data: [
-                    {value: 335, name: '直接访问'},
-                    {value: 310, name: '邮件营销'},
-                    {value: 234, name: '联盟广告'}
-                ]
-            }
-        ]
+        pie: null,
+        line: null
     };
     company = this.companySvc.currentCompany;
     matchingStatus;
@@ -194,6 +48,18 @@ export class AdminDashboardPage {
     };
 
     dateTime = new Date();
+    completions;
+    ticket = {
+        ing: 0,
+        error: 0,
+        end: 0,
+        displayedColumns: ['content', 'status', 'progress', 'actions'],
+        dataSource: null,
+        selection: new SelectionModel<any>(true, [])
+    };
+    displayedColumns: string[] = ['name', 'time', 'actions'];
+    dataSource;
+    selection = new SelectionModel<any>(true, []);
 
     constructor(private router: Router,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
@@ -201,6 +67,7 @@ export class AdminDashboardPage {
                 private monitorSvc: MonitorService,
                 private planSvc: PlanService,
                 private riskSvc: RiskService,
+                private ticketSvc: TicketService,
                 private dashboardSvc: DashboardService,
                 private addressSvc: AddressService,
                 private loadingController: LoadingController) {
@@ -211,7 +78,6 @@ export class AdminDashboardPage {
             this.trustStatus = res;
         });
         dashboardSvc.boxStatus(this.company.id).subscribe(res => {
-            console.log(res);
             this.boxStatus = res;
         });
         monitorSvc.list({custId: this.company.id}).subscribe(res => {
@@ -238,10 +104,160 @@ export class AdminDashboardPage {
         this.form.get('city').setValue(this.company.city);
         this.form.get('area').setValue(this.company.area);
         this.dashboardSvc.policies(this.form.value).subscribe(res => {
-            console.log(res);
             this.policy.total = res.totalCount;
             this.policy.update = res.updateCount;
             this.policy.list = res.list;
+        });
+
+        this.dashboardSvc.completions(this.company.id).subscribe(res => {
+            res.forEach(item => {
+                item.value = Math.round(item.editCount * 100 / item.totalCount) / 100;
+                item.rate = (item.value * 100).toFixed(0);
+            });
+            this.completions = res;
+        });
+
+        this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
+            this.subsidyOption = {
+                color: ['#3bcec6'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value',
+                    boundaryGap: [0, 0.01]
+                },
+                yAxis: {
+                    type: 'category',
+                    data: ['科创宝培育可获得', '快速培育可获得', '目前已获得']
+                },
+                series: [
+                    {
+                        type: 'bar',
+                        data: [res.keChuangBaoAmt, res.quickAmt, res.hasBeenAmt],
+                        itemStyle: {
+                            normal: {
+                                color: (params) => {
+                                    const colorList = ['rgba(13, 215, 141, 1)', 'rgba(254, 174, 77, 1)'];
+                                    return colorList[params.dataIndex];
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+        });
+        this.ticketSvc.statistics(this.company.id).subscribe(res => {
+            this.ticket.ing = res.serviceCount;
+            this.ticket.error = res.errCount;
+            this.ticket.end = res.finishedCount;
+            this.ticket.dataSource = new MatTableDataSource<any>(res.list);
+        });
+        this.dashboardSvc.copies(this.company.id).subscribe(res => {
+        });
+        this.dashboardSvc.brands(this.company.id).subscribe(res => {
+            console.log(res);
+            const pieLabels = [];
+            const pieData = [];
+            res.pieCharts.forEach(item => {
+                pieLabels.push(item.typeName);
+                pieData.push({
+                    name: item.typeName,
+                    value: item.dataCount
+                });
+            });
+            this.brandOption.pie = {
+                color: ['#3a9cfd', '#3a9aca', '#3e9793', '#389868'],
+                legend: {
+                    bottom: 10,
+                    data: pieLabels
+                },
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['40%', '55%'],
+                        label: {
+                            position: 'inner',
+                            formatter: '{d}%'
+                            // shadowBlur:3,
+                            // shadowOffsetX: 2,
+                            // shadowOffsetY: 2,
+                            // shadowColor: '#999',
+                            // padding: [0, 7],
+                        },
+                        data: pieData
+                    }
+                ]
+            };
+            const years = [];
+            const series = [
+                {
+                    name: '已注册',
+                    type: 'bar',
+                    stack: '1',
+                    data: [320, 302, 301]
+                },
+                {
+                    name: '申请中',
+                    type: 'bar',
+                    stack: '1',
+                    data: [320, 302, 301]
+                },
+                {
+                    name: '无效',
+                    type: 'bar',
+                    stack: '1',
+                    data: [320, 302, 301]
+                }
+            ];
+            res.histograms.forEach(item => {
+                years.push(item.applyYear);
+                series[0].data.push(item.registerCount);
+                series[1].data.push(item.applyCount);
+                series[2].data.push(item.invalidCount);
+            });
+            this.brandOption.line = {
+                color: ['#ff5257', '#27d78f', '#36a0f4'],
+                legend: {
+                    bottom: 10,
+                    data: ['已注册', '申请中', '无效'],
+                    width: 6,
+                    height: 6,
+                    borderRadius: 3
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+
+                    type: 'category',
+                    data: years
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series
+            };
+        });
+        this.dashboardSvc.patents(this.company.id).subscribe(res => {
         });
     }
 

@@ -22,13 +22,13 @@
                         <ion-list>
                             <ion-list-header>信息填写完成度</ion-list-header>
 
-                            <ion-item>
-                                <span slot="start" class="start">基础信息</span>
-                                <ion-progress-bar value="0.8" color="primary"></ion-progress-bar>
-                                <span slot="end" class="end">80%</span>
+                            <ion-item *ngFor="let item of completions">
+                                <span slot="start" class="start">{{item.typeName}}</span>
+                                <ion-progress-bar [value]="item.value" color="primary"></ion-progress-bar>
+                                <span slot="end" class="end">{{item.rate}}%</span>
                             </ion-item>
 
-                            <ion-item>
+                            <!--<ion-item>
                                 <span slot="start" class="start">经营信息</span>
                                 <ion-progress-bar value="0.6" color="primary"></ion-progress-bar>
                                 <span slot="end" class="end">60%</span>
@@ -56,7 +56,7 @@
                                 <span slot="start" class="start">其他</span>
                                 <ion-progress-bar value="0.1" color="danger"></ion-progress-bar>
                                 <span slot="end" class="end">10%</span>
-                            </ion-item>
+                            </ion-item>-->
 
                         </ion-list>
                     </mat-card-content>
@@ -88,7 +88,7 @@
                         <form [formGroup]="form">
                             <ion-grid>
                                 <ion-row>
-                                    <ion-col size="2">
+                                    <ion-col size="2" style="margin-right: 10px">
                                         <mat-form-field appearance="outline">
                                             <mat-select formControlName="province" placeholder="省" required>
                                                 <mat-option *ngFor="let item of provinces" [value]="item.name">
@@ -97,7 +97,7 @@
                                             </mat-select>
                                         </mat-form-field>
                                     </ion-col>
-                                    <ion-col size="2">
+                                    <ion-col size="2" style="margin-right: 10px">
                                         <mat-form-field appearance="outline">
                                             <mat-select formControlName="city" placeholder="市" required>
                                                 <mat-option *ngFor="let item of cities" [value]="item.name">
@@ -142,7 +142,7 @@
                                 <p style="text-align: center;color: #fff;margin-top: -13px">{{dateTime | date : 'yyyy-MM-dd HH:mm'}}</p>
                             </div>
                             <div *ngFor="let item of policy.list.slice(3,6)" class="hot_right">
-                                <div class="hot_img" style="top: 267px">
+                                <div class="hot_img">
                                     <img src="/assets/images/dashboard/new.png">
                                 </div>
                                 <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
@@ -238,25 +238,25 @@
                             <ion-col size="4">
                                 <ion-list class="my_work">
                                     <ion-list-header>工单统计</ion-list-header>
-                                    <ion-item>
+                                    <ion-item style="margin-top: 0" lines="none">
                                         <div class="work">
                                             <div class="work_left">
                                                 <img src="/assets/images/dashboard/clock.png">
                                             </div>
                                             <div class="work_right">
-                                                <span>10</span>
+                                                <span>{{ticket.ing}}</span>
                                                 <p>进行中工单</p>
                                             </div>
                                         </div>
                                     </ion-item>
 
-                                    <ion-item>
+                                    <ion-item lines="none">
                                         <div class="work">
                                             <div class="work_left" style="background-color: rgba(254, 174, 77, 1)">
                                                 <img src="/assets/images/dashboard/alarm.png">
                                             </div>
                                             <div class="work_right" style="background-color:rgba(255, 102, 51, 1)">
-                                                <span>10</span>
+                                                <span>{{ticket.error}}</span>
                                                 <p>异常工单</p>
                                                 <img src="/assets/images/dashboard/to_work.png"
                                                      style="position: absolute;width: 20px;height: 20px;top: 20px;right: 30px">
@@ -264,13 +264,13 @@
                                         </div>
                                     </ion-item>
 
-                                    <ion-item>
+                                    <ion-item lines="none">
                                         <div class="work">
                                             <div class="work_left" style="background-color: rgba(13, 215, 141, 1)">
                                                 <img src="/assets/images/dashboard/check.png">
                                             </div>
                                             <div class="work_right" style="background-color: rgba(51, 153, 153, 1)">
-                                                <span>100</span>
+                                                <span>{{ticket.end}}</span>
                                                 <p>已完成工单(近3月)</p>
                                             </div>
                                         </div>
@@ -280,7 +280,47 @@
                             <ion-col size="8">
                                 <ion-list>
                                     <ion-list-header>关注工单</ion-list-header>
+                                    <table *ngIf="ticket.dataSource" mat-table [dataSource]="ticket.dataSource">
 
+                                        <!-- Position Column -->
+                                        <ng-container matColumnDef="content">
+                                            <th mat-header-cell *matHeaderCellDef style="width: 200px;text-align: left;height: 60px"><b>工单内容</b></th>
+                                            <td mat-cell *matCellDef="let element" style="text-align: left;border-bottom-width: 1px !important;"> {{element.serviceName}} </td>
+                                        </ng-container>
+
+                                        <!-- Name Column -->
+                                        <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef style="width: 120px"> <b>流程节点</b></th>
+                                            <td mat-cell *matCellDef="let element" style="border-bottom-width: 1px !important;height: 50px">
+                                                {{element.workSatusName}}
+                                            </td>
+                                        </ng-container>
+
+                                        <!-- Weight Column -->
+                                        <ng-container matColumnDef="progress">
+                                            <th mat-header-cell *matHeaderCellDef> <b>进度</b></th>
+                                            <td mat-cell *matCellDef="let element" style="border-bottom-width: 1px !important;height: 50px">
+                                                <div style="display: flex;align-items: center;padding: 0 20px">
+                                                    <ion-progress-bar [value]="element.workSatusRate / 100" color="primary"></ion-progress-bar>
+                                                    <span style="margin-left: 10px">{{element.workSatusRate}}%</span>
+                                                </div>
+                                            </td>
+                                        </ng-container>
+
+                                        <!-- Symbol Column -->
+                                        <ng-container matColumnDef="actions">
+                                            <th mat-header-cell *matHeaderCellDef style="width: 120px"> <b>操作</b></th>
+                                            <td mat-cell *matCellDef="let element" style="border-bottom-width: 1px !important;height: 50px">
+                                                <a (click)="preDownload(element.id)" [download]="'1.docx'" [href]="FILE_PREFIX_URL + element.fileId" style="color: #027CFF">
+                                                    下载
+                                                </a>
+                                            </td>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="ticket.displayedColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: ticket.displayedColumns;">
+                                        </tr>
+                                    </table>
                                 </ion-list>
                             </ion-col>
                         </ion-row>
@@ -297,16 +337,14 @@
                         <ion-row>
                             <ion-col size="4">
                                 <div class="brand">
-                                    <img src="/assets/images/dashboard/brand.png">
+                                    <img src="/assets/images/dashboard/p.png">
                                     <div class="brand_list">
                                         <p class="brand_num">1,500</p>
                                         <p class="brand_name">商标</p>
                                     </div>
                                 </div>
-                                <div echarts [options]="brandOption" class="main-chart"
-                                     style="width: 500px;height: 350px;margin-top: 20px"></div>
-                                <div echarts [options]="signInOption" class="main-chart"
-                                     style="width: 500px;height: 350px;margin-top: 20px"></div>
+                                <div *ngIf="brandOption.pie" echarts [options]="brandOption.pie" style="width: 200px;height: 300px" class="main-chart"></div>
+                                <div *ngIf="brandOption.line" echarts [options]="brandOption.line" style="width: 200px;height: 300px" class="main-chart"></div>
                             </ion-col>
                             <ion-col size="4">
                                 <div class="brand">
@@ -320,7 +358,7 @@
                             </ion-col>
                             <ion-col size="4">
                                 <div class="brand">
-                                    <img src="/assets/images/dashboard/copyright.png">
+                                    <img src="/assets/images/dashboard/p.png">
                                     <div class="brand_list">
                                         <p class="brand_num">1,500</p>
                                         <p class="brand_name">版权</p>
