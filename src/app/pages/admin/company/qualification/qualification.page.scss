@@ -7,6 +7,12 @@ ion-grid {
 }
 
 form {
+  margin-top: 40px;
+
+  h3 {
+    margin-bottom: 50px;
+  }
+
   mat-radio-button.mat-radio-button.mat-accent.mat-radio-checked {
     &::ng-deep {
       .mat-radio-outer-circle {
@@ -21,8 +27,51 @@ form {
 
   mat-form-field {
     display: block;
-    margin: 8px;
     width: unset;
+  }
+
+  &.form-s {
+    mat-form-field {
+      width: 200px;
+      margin-left: 55%;
+
+      label {
+        position: absolute;
+        right: 250px;
+        white-space: nowrap;
+      }
+
+      &::ng-deep {
+        .mat-form-field-subscript-wrapper {
+          position: absolute;
+          margin-top: 0;
+          top: 0;
+          left: 220px;
+        }
+      }
+    }
+  }
+
+  &.form-c {
+    mat-form-field {
+      width: 320px;
+      margin-bottom: 50px;
+
+      label {
+        position: absolute;
+        top: -30px;
+        white-space: nowrap;
+      }
+
+      &::ng-deep {
+        .mat-form-field-subscript-wrapper {
+          position: absolute;
+          margin-top: 0;
+          top: 0;
+          left: 220px;
+        }
+      }
+    }
   }
 }
 
@@ -117,13 +166,13 @@ mat-tab-group.sub-tab {
 }
 
 
-  ion-button{
-    margin: 60px auto 40px;
-    display: block;
-    width: 113px;
-    height: 48px;
-    --background:rgba(44, 158, 247, 1) !important;
-  }
+ion-button {
+  margin: 60px auto 40px;
+  display: block;
+  width: 113px;
+  height: 48px;
+  --background: rgba(44, 158, 247, 1) !important;
+}
 
 mat-card {
   margin: 10px;
@@ -132,8 +181,8 @@ mat-card {
     box-shadow: none;
   }
 
-  mat-card-content{
-    img{
+  mat-card-content {
+    img {
       width: 30px;
       height: 30px;
       position: absolute;
@@ -142,53 +191,156 @@ mat-card {
     }
   }
 }
-.container {
-  background: rgba(246, 247, 249, 1);
-}
 
-.form-container{
-  p{
+.form-container {
+  p {
     font-weight: 700;
     font-style: normal;
     font-size: 20px;
     color: #21333F;
     margin: 30px 10px;
   }
-  .list{
+
+  .list {
     color: #21333F;
     font-size: 14px;
     font-weight: 400;
     font-style: normal;
     margin-left: 40px;
-    .list_name{
+
+    .list_name {
       margin: 15px auto;
     }
-    .list_total{
+
+    .list_total {
       width: 100%;
       display: flex;
       flex-direction: row;
-      .list_small{
+
+      .list_small {
         width: 30%;
         border-right: 1px solid #dce5eb;
-          label{
-            display: block;
-            margin: 15px auto;
-            em {
-              color: #FF0000;
-              font-style: normal;
-              font-size: 12px;
-            }
-            .example-margin {
-              margin: 0 40px;
-            }
-            select{
-              width: 320px;
-              height: 40px;
-              border: 1px solid rgba(204, 204, 204, 1);
-              border-radius: 4px;
-            }
+
+        label {
+          display: block;
+          margin: 15px auto;
+
+          em {
+            color: #FF0000;
+            font-style: normal;
+            font-size: 12px;
           }
 
+          .example-margin {
+            margin: 0 40px;
+          }
+
+          select {
+            width: 320px;
+            height: 40px;
+            border: 1px solid rgba(204, 204, 204, 1);
+            border-radius: 4px;
+          }
+        }
+
+      }
+    }
+  }
+}
+
+mat-form-field {
+  label {
+    em {
+      color: #FD5451;
+      font-style: normal;
+    }
+  }
+
+  &::ng-deep {
+    .mat-form-field-outline {
+      .mat-form-field-outline-end, .mat-form-field-outline-start, .mat-form-field-outline-gap {
+        border-width: 1px !important;
+      }
+    }
+
+    .mat-form-field-infix {
+
+      input {
+        font-size: 14px;
+      }
+    }
+
+    .mat-select-placeholder {
+      font-size: 14px;
+    }
+
+    .mat-select-value {
+      font-size: 14px;
+    }
+
+    .mat-form-field-suffix {
+      font-size: 14px;
+
+    }
+  }
+
+
+  mat-radio-group {
+    mat-radio-button {
+      .mat-radio-label {
+        font-size: 14px;
+      }
+    }
+
+    &.type {
+      mat-radio-button {
+        margin: 0 10px;
+      }
+    }
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  &.nl {
+    &::ng-deep {
+      .mat-form-field-outline-start, .mat-form-field-outline-gap, .mat-form-field-outline-end {
+        border: none !important;
+      }
+    }
+  }
+}
+
+mat-radio-group {
+
+  &.type {
+    mat-radio-button {
+      margin: 0 10px;
+      padding: 15px 0;
+
+      &.mat-radio-checked {
+        position: relative;
+        color: #2C9EF7;
+        &:after {
+          content: '';
+          position: absolute;
+          left: 1em;
+          right: 1em;
+          bottom: 0;
+          height: 4px;
+          top: auto;
+          background: #2C9EF7;
+        }
+      }
+
+      &::ng-deep {
+        .mat-radio-container {
+          display: none;
+        }
+        .mat-radio-label-content {
+          padding-left: 0;
+        }
       }
     }
   }
