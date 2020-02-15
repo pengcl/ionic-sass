@@ -25,6 +25,9 @@
 @import '~@angular/material/theming';
 @import "theme/mat-form-field";
 @import "theme/mat-table";
+@import "theme/mat-button";
+@import "theme/variables";
+@import "theme/mat-slide-toggle";
 
 html, body {
   height: 100%;
@@ -244,6 +247,24 @@ form {
   height: 100%;
   opacity: 0;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.primary {
+  color: #0073CD;
+}
+.success {
+  color: #0DD78D;
+}
+
+.danger, .error {
+  color: #FD5451;
+}
+
+.warn {
+  color: #FEAE4D;
+}
+
+.disabled {
+  color: #EEF2F5;
 }
 
 mat-card.profile {

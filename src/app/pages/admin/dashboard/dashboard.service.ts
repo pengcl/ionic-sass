@@ -11,6 +11,13 @@ export class DashboardService {
                 private http: HttpClient) {
     }
 
+    policies(body): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'getPolicyDepository', body)
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
+
     matchingStatus(id): Observable<any> {
         return this.http.get(this.PREFIX_URL + 'getCredSurvey&custId=' + id)
             .pipe(observableMargeMap((res: any) => {

@@ -178,13 +178,22 @@ export class AdminDashboardPage {
     trustStatus;
     boxStatus;
     form: FormGroup = new FormGroup({
-        province: new FormControl('', [Validators.required]),
-        area: new FormControl('', [Validators.required]),
-        city: new FormControl('', [Validators.required])
+        custId: new FormControl(this.company.id, [Validators.required]),
+        province: new FormControl('', []),
+        area: new FormControl('', []),
+        city: new FormControl('', [])
     });
     provinces = [];
     cities = [];
     districts = [];
+
+    policy = {
+        total: 0,
+        update: 0,
+        list: []
+    };
+
+    dateTime = new Date();
 
     constructor(private router: Router,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
@@ -224,6 +233,15 @@ export class AdminDashboardPage {
         this.form.get('city').valueChanges.subscribe(res => {
             this.districts = [];
             this.getDistricts();
+        });
+        this.form.get('province').setValue(this.company.province);
+        this.form.get('city').setValue(this.company.city);
+        this.form.get('area').setValue(this.company.area);
+        this.dashboardSvc.policies(this.form.value).subscribe(res => {
+            console.log(res);
+            this.policy.total = res.totalCount;
+            this.policy.update = res.updateCount;
+            this.policy.list = res.list;
         });
     }
 
@@ -267,7 +285,7 @@ export class AdminDashboardPage {
         this.router.navigate(['admin/box/list']);
     }
 
-    toCheckout(){
+    toCheckout() {
         this.router.navigate(['admin/checkout']);
     }
 

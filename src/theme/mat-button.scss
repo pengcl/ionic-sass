@@ -1,0 +1,25 @@
+.mat-raised-button {
+  line-height: 40px !important;
+  box-shadow: none !important;
+  padding: 0 24px !important;
+  &.mat-primary {
+    background-color: #2C9EF7 !important;
+    &:hover {
+      background-color: #6BBBF9 !important;
+    }
+  }
+  &[disabled] {
+    background-color: #DCE5EC !important;
+    color: #fff !important;
+    &:hover {
+      background-color: #DCE5EC !important;
+      color: #fff !important;
+    }
+  }
+}
+
+ion-button {
+  height: 40px !important;
+  --background-activated: #3880ff !important;
+  --box-shadow: none !important;
+}

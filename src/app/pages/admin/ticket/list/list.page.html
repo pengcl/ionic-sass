@@ -1,0 +1,158 @@
+<mat-card class="profile">
+    <div class="position">
+        <a routerLink="/admin/dashboard" href="javascript:;" class="link">
+            <mat-icon slot="start">home</mat-icon>
+            首页</a>
+        <span>我的工单</span>
+    </div>
+    <mat-card-header>
+        <mat-card-title>我的工单</mat-card-title>
+    </mat-card-header>
+</mat-card>
+<div class="container">
+    <form>
+        <ion-grid style="margin: 0 -10px">
+            <ion-row>
+                <ion-col size="4">
+                    <mat-form-field appearance="outline">
+                        <input type="text" name="workOrderNo" [(ngModel)]="params.workOrderNo" matInput
+                               placeholder="请输入工单编号关键字">
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="8">
+                    <button (click)="search()" mat-raised-button color="primary">搜索</button>
+                </ion-col>
+                <ion-col size="2">
+                    <mat-form-field appearance="outline">
+                        <mat-select name="workType" [(ngModel)]="params.workType" placeholder="工单类型">
+                            <mat-option *ngFor="let item of types" [value]="item.dictValue">
+                                {{item.dictName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="2">
+                    <mat-form-field appearance="outline">
+                        <mat-select name="workStatus" [(ngModel)]="params.workStatus" placeholder="工单状态">
+                            <mat-option *ngFor="let item of statuses" [value]="item.value">
+                                {{item.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="1" class="search-label">开始时间</ion-col>
+                <ion-col size="2">
+                    <mat-form-field appearance="outline">
+                        <input name="createDateBegin" [(ngModel)]="params.createDateBegin" placeholder="请选择日期" matInput
+                               [matDatepicker]="startPicker">
+                        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startPicker></mat-datepicker>
+                    </mat-form-field>
+                </ion-col>
+                <ion-col size="1" class="search-label">更新时间</ion-col>
+                <ion-col size="2">
+                    <mat-form-field appearance="outline">
+                        <input name="updateDateBegin" [(ngModel)]="params.updateDateBegin" placeholder="请选择日期" matInput
+                               [matDatepicker]="updatePicker">
+                        <mat-datepicker-toggle matSuffix [for]="updatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #updatePicker></mat-datepicker>
+                    </mat-form-field>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+
+    <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef style="width: 50px">
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()"
+                              [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)"
+                              [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef><b>工单编号</b></th>
+            <td mat-cell *matCellDef="let element"> {{element.workOrderNo}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef><b>工单类型</b></th>
+            <td mat-cell *matCellDef="let element">
+                {{element.workTypeName}}
+            </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="ticketStatus">
+            <th mat-header-cell *matHeaderCellDef><b>工单状态</b></th>
+            <td mat-cell *matCellDef="let element"
+                [ngClass]="{'warn':element.workStatus === '0',
+                'primary':element.workStatus === '1',
+                'danger':element.workStatus === '2',
+                'disabled':element.workStatus === '3',
+                'success':element.workStatus === '4'}">
+                {{element.workSatusName}}
+            </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="startTime">
+            <th mat-header-cell *matHeaderCellDef><b>开始时间</b></th>
+            <td mat-cell *matCellDef="let element">
+                {{element.createTime}}
+            </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="serviceStatus">
+            <th mat-header-cell *matHeaderCellDef><b>服务状态</b></th>
+            <td mat-cell *matCellDef="let element">
+                {{element.serviceStatusName}}
+            </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="updateTime">
+            <th mat-header-cell *matHeaderCellDef><b>更新时间</b></th>
+            <td mat-cell *matCellDef="let element">
+                {{element.updateTime}}
+            </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="admin">
+            <th mat-header-cell *matHeaderCellDef><b>当前负责人</b></th>
+            <td mat-cell *matCellDef="let element">
+                {{element.admin}}
+            </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef><b>操作</b></th>
+            <td mat-cell *matCellDef="let element">
+                <span [routerLink]="['/admin/ticket/item',element.id]">查看</span>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            (click)="selection.toggle(row)">
+        </tr>
+    </table>
+    <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)"
+                   [pageSizeOptions]="[10,20,50]" showFirstLastButtons></mat-paginator>
+</div>

@@ -1,0 +1,98 @@
+<mat-card class="profile">
+    <div class="position">
+        <a routerLink="/admin/dashboard" href="javascript:;" class="link">
+            <mat-icon slot="start">home</mat-icon>
+            首页</a>
+        <a href="/admin/trust/list">知产托管</a>
+        <span>{{data?.inventionTitle}}</span>
+    </div>
+    <mat-card-header>
+        <mat-card-title>{{data?.inventionTitle}}</mat-card-title>
+    </mat-card-header>
+</mat-card>
+<div class="container">
+    <h3>工单信息</h3>
+    <table *ngIf="source.info" mat-table [dataSource]="source.info">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef><b>工单编号</b></th>
+            <td mat-cell *matCellDef="let element"> {{element.no}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef><b>工单类型</b></th>
+            <td mat-cell *matCellDef="let element">
+                {{element.type}}
+            </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef><b>工单状态</b></th>
+            <td mat-cell *matCellDef="let element"
+                [ngClass]="{'warn':element.status === '0',
+                'primary':element.status === '1',
+                'danger':element.status === '2',
+                'disabled':element.status === '3',
+                'success':element.status === '4'}">
+                {{element.status}}
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayed.info"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayed.info;"></tr>
+    </table>
+</div>
+<div class="container">
+    <h3>工单状态流转</h3>
+    <div class="log-content">
+        <ul class="log-list">
+            <li *ngFor="let item of source.logs">
+                <p><span>{{item.statusName}}</span><span>{{item.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}</span></p>
+                <p>{{item.createByName}}</p>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <h3>相关文件</h3>
+    <table *ngIf="source.files" mat-table [dataSource]="source.files">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef><b>文件名称</b></th>
+            <td mat-cell *matCellDef="let element"> {{element.no}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef><b>文件类型</b></th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.type === 'SER_OFFI_FILE'">官文文件</span>
+                <span *ngIf="element.type === 'CUST_FILE'">客户文件</span>
+                <span *ngIf="element.type === 'SER_FILE'">服务文件</span>
+            </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef><b>上传时间</b></th>
+            <td mat-cell *matCellDef="let element">
+                {{element.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}
+            </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef><b>操作</b></th>
+            <td mat-cell *matCellDef="let element">
+                <span [routerLink]="['/admin/ticket/item',element.id]">查看</span>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayed.files"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayed.files;"></tr>
+    </table>
+</div>

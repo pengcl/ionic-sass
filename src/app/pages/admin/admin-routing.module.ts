@@ -46,7 +46,7 @@ const routes: Routes = [
             },
             {// 主体详情
                 path: 'company/item/:id',
-                data: {name: '添加/修改主体'},
+                data: {name: '企业资质'},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./company/item/item.module').then(m => m.AdminCompanyItemPageModule)
@@ -107,19 +107,33 @@ const routes: Routes = [
                 loadChildren: () =>
                     import('./trust/detail/detail.module').then(m => m.AdminTrustDetailPageModule)
             },
-            {// 保险箱
+            {// 我的知产
                 path: 'box/list',
                 data: {name: '我的知产'},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./box/list/list.module').then(m => m.AdminBoxListPageModule)
             },
-            {// 保险箱
+            {// 添加知产
                 path: 'box/upload',
                 data: {name: '添加知产'},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./box/upload/upload.module').then(m => m.AdminBoxUploadPageModule)
+            },
+            {// 工单列表
+                path: 'ticket/list',
+                data: {name: '我的工单'},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./ticket/list/list.module').then(m => m.AdminTicketListPageModule)
+            },
+            {// 工单详情
+                path: 'ticket/item/:id',
+                data: {name: '工单详情'},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./ticket/item/item.module').then(m => m.AdminTicketItemPageModule)
             }
         ]
     }
