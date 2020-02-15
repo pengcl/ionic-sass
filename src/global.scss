@@ -248,9 +248,11 @@ form {
   opacity: 0;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
 .primary {
   color: #0073CD;
 }
+
 .success {
   color: #0DD78D;
 }
@@ -447,3 +449,23 @@ mat-card.profile {
   }
 }
 
+.actions-icon {
+  display: inline-block;
+
+  img {
+    display: block;
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.top-menu {
+  width: 180px;
+  min-width: unset;
+  max-width: unset;
+  margin-top: 20px;
+
+  .mat-menu-item {
+    text-align: center;
+  }
+}

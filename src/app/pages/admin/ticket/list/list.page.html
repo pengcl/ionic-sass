@@ -144,7 +144,9 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef><b>操作</b></th>
             <td mat-cell *matCellDef="let element">
-                <span [routerLink]="['/admin/ticket/item',element.id]">查看</span>
+                <a class="actions-icon" [routerLink]="['/admin/ticket/item',element.id]">
+                    <img src="/assets/images/view.png">
+                </a>
             </td>
         </ng-container>
 

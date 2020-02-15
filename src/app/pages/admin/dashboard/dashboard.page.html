@@ -311,8 +311,8 @@
                                         <ng-container matColumnDef="actions">
                                             <th mat-header-cell *matHeaderCellDef style="width: 120px"> <b>操作</b></th>
                                             <td mat-cell *matCellDef="let element" style="border-bottom-width: 1px !important;height: 50px">
-                                                <a (click)="preDownload(element.id)" [download]="'1.docx'" [href]="FILE_PREFIX_URL + element.fileId" style="color: #027CFF">
-                                                    下载
+                                                <a class="actions-icon" [routerLink]="['/admin/ticket/item',element.id]">
+                                                    <img src="/assets/images/view.png">
                                                 </a>
                                             </td>
                                         </ng-container>
@@ -339,31 +339,58 @@
                                 <div class="brand">
                                     <img src="/assets/images/dashboard/p.png">
                                     <div class="brand_list">
-                                        <p class="brand_num">1,500</p>
+                                        <p class="brand_num">{{brandOption.count}}</p>
                                         <p class="brand_name">商标</p>
                                     </div>
                                 </div>
-                                <div *ngIf="brandOption.pie" echarts [options]="brandOption.pie" style="width: 200px;height: 300px" class="main-chart"></div>
-                                <div *ngIf="brandOption.line" echarts [options]="brandOption.line" style="width: 200px;height: 300px" class="main-chart"></div>
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col size="6">
+                                            <div *ngIf="brandOption.pie" echarts [options]="brandOption.pie" style="width: 200px;height: 300px" class="main-chart"></div>
+                                        </ion-col>
+                                        <ion-col size="6">
+                                            <div *ngIf="brandOption.line" echarts [options]="brandOption.line" style="width: 200px;height: 300px" class="main-chart"></div>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
                             </ion-col>
                             <ion-col size="4">
                                 <div class="brand">
                                     <img src="/assets/images/dashboard/p.png">
                                     <div class="brand_list">
-                                        <p class="brand_num">1,500</p>
+                                        <p class="brand_num">{{patentOption.count}}</p>
                                         <p class="brand_name">专利</p>
                                     </div>
                                 </div>
-
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col size="6">
+                                            <div *ngIf="patentOption.pie" echarts [options]="patentOption.pie" style="width: 200px;height: 300px" class="main-chart"></div>
+                                        </ion-col>
+                                        <ion-col size="6">
+                                            <div *ngIf="patentOption.line" echarts [options]="patentOption.line" style="width: 200px;height: 300px" class="main-chart"></div>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
                             </ion-col>
                             <ion-col size="4">
                                 <div class="brand">
                                     <img src="/assets/images/dashboard/p.png">
                                     <div class="brand_list">
-                                        <p class="brand_num">1,500</p>
+                                        <p class="brand_num">{{copyOption.count}}</p>
                                         <p class="brand_name">版权</p>
                                     </div>
                                 </div>
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col size="6">
+                                            <div *ngIf="copyOption.pie" echarts [options]="copyOption.pie" style="width: 200px;height: 300px" class="main-chart"></div>
+                                        </ion-col>
+                                        <ion-col size="6">
+                                            <div *ngIf="copyOption.line" echarts [options]="copyOption.line" style="width: 200px;height: 300px" class="main-chart"></div>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
                             </ion-col>
                         </ion-row>
                     </mat-card-content>
@@ -374,9 +401,45 @@
                     <mat-card-header>
                         <mat-card-title>竞争对手监控</mat-card-title>
                         <mat-card-subtitle class="link">
-                            <img src="/assets/images/dashboard/setting.png">
+                            <img routerLink="/admin/monitor/list" src="/assets/images/dashboard/setting.png">
                         </mat-card-subtitle>
                     </mat-card-header>
+                    <mat-card-content>
+                        <table *ngIf="monitorDataSource" mat-table [dataSource]="monitorDataSource">
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef> <b>目标企业</b></th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.companyName}}
+                                </td>
+                            </ng-container>
+
+                            <!-- Weight Column -->
+                            <ng-container matColumnDef="time">
+                                <th mat-header-cell *matHeaderCellDef style="width: 200px"> <b>添加时间</b></th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}
+                                </td>
+                            </ng-container>
+
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef style="width: 250px"> <b>状态</b></th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="monitor">
+                                        <span style="margin-right: 10px;">监控中</span>
+                                        <span class="circles">
+                                            <img src="/assets/images/circle.png">
+                                        </span>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="monitorDisplayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: monitorDisplayedColumns;"></tr>
+                        </table>
+                    </mat-card-content>
                 </mat-card>
             </ion-col>
             <!--<ion-col size="4">

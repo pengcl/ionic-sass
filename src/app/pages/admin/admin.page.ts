@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {LoadingController} from '@ionic/angular';
 import {DialogService} from '../../@core/modules/dialog';
 import {AuthService} from '../auth/auth.service';
 import {CompanyService} from './company/company.service';
@@ -15,10 +16,10 @@ export class AdminPage {
     company = this.companySvc.currentCompany;
     balance = 0;
     show = true;
-    config: PerfectScrollbarConfigInterface = {
-    };
+    config: PerfectScrollbarConfigInterface = {};
 
-    constructor(private dialogSvc: DialogService,
+    constructor(private loadingController: LoadingController,
+                private dialogSvc: DialogService,
                 private authSvc: AuthService,
                 private accountSvc: AccountService,
                 private companySvc: CompanyService) {
@@ -30,8 +31,13 @@ export class AdminPage {
         });
     }
 
-    routeChange(e) {
-        console.log(e);
+    async presentLoading() {
+        const loading = await this.loadingController.create({
+            message: '功能即将开发，敬请期待',
+            duration: 1000
+        });
+        await loading.present();
+        await loading.onDidDismiss();
     }
 
 }
