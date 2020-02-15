@@ -11,7 +11,7 @@
     </mat-card-header>
 </mat-card>
 <div class="container">
-    <form [formGroup]="formGroup" novalidate>
+    <!--<form [formGroup]="formGroup" novalidate>
         <ion-grid>
             <ion-row>
                 <ion-col size="12">
@@ -94,7 +94,277 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-    </form>
+    </form>-->
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-content>
+                        <img src="/assets/images/qualification.png" alt="">
+                        <mat-tab-group class="sub-tab">
+                            <mat-tab label="生成智能快捷匹配报告">
+                                <div class="form" style="width: 500px;height:auto;margin: 70px auto 0">
+                                    <div class="example-container">
+                                        <form class="example-container">
+                                            <div>
+                                                <label class="label_left">企业名称</label>
+                                                <label class="label_right">深圳中科华海科技有限公司</label>
+                                            </div>
+                                            <div>
+                                                <label class="label_left"><em>*</em>是否有研发支出专账</label>
+                                                <label class="label_right">
+                                                    <mat-radio-group>
+                                                        <mat-radio-button value="after">是</mat-radio-button>
+                                                        <mat-radio-button class="example-margin" value="before">否
+                                                        </mat-radio-button>
+                                                    </mat-radio-group>
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="label_left"><em>*</em>是否为国家高新技术企业</label>
+                                                <label class="label_right">
+                                                    <mat-radio-group>
+                                                        <mat-radio-button class="example-margin" value="after">是
+                                                        </mat-radio-button>
+                                                        <mat-radio-button class="example-margin" value="before">否
+                                                        </mat-radio-button>
+                                                    </mat-radio-group>
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="label_left"><em>*</em>企业总人数</label>
+                                                <label class="label_right">
+                                                    <select>
+                                                        <option>10-50人</option>
+                                                        <option>50-100人</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="label_left"><em>*</em>研发团队人数</label>
+                                                <label class="label_right">
+                                                    <select>
+                                                        <option>10人以下</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="label_left"><em>*</em>个税申缴人数</label>
+                                                <label class="label_right">
+                                                    <select>
+                                                        <option>10-50人</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="label_left"><em>*</em>研发设备总价值（万元）</label>
+                                                <label class="label_right">
+                                                    <select>
+                                                        <option>100-200人</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                            <div class="row-buttons">
+                                                <ion-button mat-raised-button color="primary">生成报告</ion-button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="生成智能精准匹配报告">
+                                <form>
+                                    <div class="form-container">
+                                        <p>必填资质（6/6）</p>
+                                        <div class="list">
+                                            <div class="list_name">
+                                                <label>企业名称</label>
+                                                <label style="margin-left: 10px">深圳中科华海科技有限公司</label>
+                                            </div>
+                                            <div class="list_total">
+                                                <div class="list_small">
+                                                    <div style="margin-bottom: 40px">
+                                                        <label><em>*</em>是否有研发支出专账</label>
+                                                        <label>
+                                                            <mat-radio-group>
+                                                                <mat-radio-button value="yes">是
+                                                                </mat-radio-button>
+                                                                <mat-radio-button value="no" class="example-margin">否
+                                                                </mat-radio-button>
+                                                            </mat-radio-group>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label><em>*</em>企业总人数</label>
+                                                        <label>
+                                                            <select>
+                                                                <option>
+                                                                    10-50人
+                                                                </option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="list_small" style="margin-left: 40px">
+                                                    <div style="margin-bottom: 40px">
+                                                        <label><em>*</em>是否为国家高新技术企业</label>
+                                                        <label>
+                                                            <mat-radio-group>
+                                                                <mat-radio-button value="yes">是
+                                                                </mat-radio-button>
+                                                                <mat-radio-button value="no" class="example-margin">否
+                                                                </mat-radio-button>
+                                                            </mat-radio-group>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label><em>*</em>研发团队人数</label>
+                                                        <label>
+                                                            <select>
+                                                                <option>
+                                                                    10-50人
+                                                                </option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="list_small" style="border-right: none;margin-left: 40px">
+                                                    <div style="margin-bottom: 20px">
+                                                        <label><em>*</em>研发设备总价值（万元）</label>
+                                                        <label>
+                                                            <select>
+                                                                <option>
+                                                                    100-200
+                                                                </option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label><em>*</em>个税申缴人数</label>
+                                                            <label>
+                                                                <select>
+                                                                    <option>
+                                                                        10-50人
+                                                                    </option>
+                                                                </select>
+                                                            </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-container">
+                                        <p>选填资质（2/6）</p>
+                                        <div class="list">
+                                            <div class="list_name">
+                                                <label>企业基础信息</label>
+                                            </div>
+                                            <div class="list_total">
+                                                <div class="list_small">
+                                                    <div>
+                                                        <label>企业成立时间</label>
+                                                        <label>
+                                                            <mat-form-field>
+                                                                <input matInput [matDatepicker]="picker">
+                                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                                <mat-datepicker #picker></mat-datepicker>
+                                                            </mat-form-field>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="list_small" style="margin-left: 40px">
+                                                    <div>
+                                                        <label>是否有产学研合作</label>
+                                                        <label>
+                                                            <mat-radio-group>
+                                                                <mat-radio-button value="yes">是
+                                                                </mat-radio-button>
+                                                                <mat-radio-button value="no" class="example-margin">否
+                                                                </mat-radio-button>
+                                                            </mat-radio-group>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="list_small" style="border-right: none;margin-left: 40px">
+                                                    <div>
+                                                        <label>是否园区企业</label>
+                                                        <label>
+                                                            <mat-radio-group>
+                                                                <mat-radio-button value="yes">是
+                                                                </mat-radio-button>
+                                                                <mat-radio-button value="no" class="example-margin">否
+                                                                </mat-radio-button>
+                                                            </mat-radio-group>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list" style="margin-top: 30px">
+                                            <div class="list_name">
+                                                <label>企业知识产权信息</label>
+                                            </div>
+                                            <div class="list_total">
+                                                <div class="list_small">
+                                                    <div>
+                                                        <label>商标数量</label>
+                                                        <label>
+                                                            <select>
+                                                                <option>
+                                                                    10-50
+                                                                </option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="list_small" style="margin-left: 40px">
+                                                    <div>
+                                                        <label>发明专利数量</label>
+                                                        <label>
+                                                            <select>
+                                                                <option>
+                                                                    请选择数量范围
+                                                                </option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="list_small" style="border-right: none;margin-left: 40px">
+                                                    <div>
+                                                        <label>版权数量</label>
+                                                        <label>
+                                                            <select>
+                                                                <option>
+                                                                    请选择数量范围
+                                                                </option>
+                                                            </select>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row-buttons">
+                                        <ion-button mat-raised-button color="primary">生成报告</ion-button>
+                                    </div>
+                                </form>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>历史生成报告</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content></mat-card-content>
+                </mat-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
 </div>
 <!--<ion-footer>
     <ion-toolbar>
