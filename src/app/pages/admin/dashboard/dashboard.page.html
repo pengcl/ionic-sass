@@ -343,10 +343,8 @@
                                         <p class="brand_name">商标</p>
                                     </div>
                                 </div>
-                                <div echarts [options]="brandOption" class="main-chart"
-                                     style="width: 500px;height: 350px;margin-top: 20px"></div>
-                                <div echarts [options]="signInOption" class="main-chart"
-                                     style="width: 500px;height: 350px;margin-top: 20px"></div>
+                                <div *ngIf="brandOption.pie" echarts [options]="brandOption.pie" style="width: 200px;height: 300px" class="main-chart"></div>
+                                <div *ngIf="brandOption.line" echarts [options]="brandOption.line" style="width: 200px;height: 300px" class="main-chart"></div>
                             </ion-col>
                             <ion-col size="4">
                                 <div class="brand">

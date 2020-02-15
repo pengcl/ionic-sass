@@ -21,116 +21,8 @@ import {MatTableDataSource} from '@angular/material';
 export class AdminDashboardPage {
     subsidyOption;
     brandOption = {
-        legend: {
-            data: ['邮件营销', '联盟广告', '视频广告', '百度', '谷歌', '必应', '其他']
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: [
-            {
-                type: 'category',
-                data: ['周一', '周二', '周三', '周四', '周五']
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value'
-            }
-        ],
-        series: [
-            {
-                name: '邮件营销',
-                type: 'bar',
-                stack: '广告',
-                data: [120, 132, 101, 134, 90]
-            },
-            {
-                name: '联盟广告',
-                type: 'bar',
-                stack: '广告',
-                data: [220, 182, 191, 234, 290]
-            },
-            {
-                name: '视频广告',
-                type: 'bar',
-                stack: '广告',
-                data: [150, 232, 201, 154, 190]
-            },
-            {
-                name: '百度',
-                type: 'bar',
-                barWidth: 5,
-                stack: '搜索引擎',
-                data: [620, 732, 701, 734, 1090, 1130, 1120]
-            },
-            {
-                name: '谷歌',
-                type: 'bar',
-                stack: '搜索引擎',
-                data: [120, 132, 101, 134, 290, 230, 220]
-            },
-            {
-                name: '必应',
-                type: 'bar',
-                stack: '搜索引擎',
-                data: [60, 72, 71, 74, 190, 130, 110]
-            },
-            {
-                name: '其他',
-                type: 'bar',
-                stack: '搜索引擎',
-                data: [62, 82, 91, 84, 109, 110, 120]
-            }
-        ]
-    };
-    signInOption = {
-        color: ['#6dd8da', '#b6a2de', '#58afed'],
-        tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-        },
-        legend: {
-            orient: 'horizontal',
-            x: 'center',
-            bottom: 10,
-            data: ['直接访问', '邮件营销', '联盟广告']
-        },
-        series: [
-            {
-                name: '访问来源',
-                type: 'pie',
-                center: ['50%', '45%'], // 饼图定位
-                radius: ['50%', '70%'],
-                avoidLabelOverlap: false,
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '30',
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                labelLine: {
-                    normal: {
-                        show: false
-                    }
-                },
-                data: [
-                    {value: 335, name: '直接访问'},
-                    {value: 310, name: '邮件营销'},
-                    {value: 234, name: '联盟广告'}
-                ]
-            }
-        ]
+        pie: null,
+        line: null
     };
     company = this.companySvc.currentCompany;
     matchingStatus;
@@ -276,7 +168,96 @@ export class AdminDashboardPage {
             this.ticket.dataSource = new MatTableDataSource<any>(res.list);
         });
         this.dashboardSvc.copies(this.company.id).subscribe(res => {
+        });
+        this.dashboardSvc.brands(this.company.id).subscribe(res => {
             console.log(res);
+            const pieLabels = [];
+            const pieData = [];
+            res.pieCharts.forEach(item => {
+                pieLabels.push(item.typeName);
+                pieData.push({
+                    name: item.typeName,
+                    value: item.dataCount
+                });
+            });
+            this.brandOption.pie = {
+                color: ['#3a9cfd', '#3a9aca', '#3e9793', '#389868'],
+                legend: {
+                    bottom: 10,
+                    data: pieLabels
+                },
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['40%', '55%'],
+                        label: {
+                            position: 'inner',
+                            formatter: '{d}%'
+                            // shadowBlur:3,
+                            // shadowOffsetX: 2,
+                            // shadowOffsetY: 2,
+                            // shadowColor: '#999',
+                            // padding: [0, 7],
+                        },
+                        data: pieData
+                    }
+                ]
+            };
+            const years = [];
+            const series = [
+                {
+                    name: '已注册',
+                    type: 'bar',
+                    stack: '1',
+                    data: [320, 302, 301]
+                },
+                {
+                    name: '申请中',
+                    type: 'bar',
+                    stack: '1',
+                    data: [320, 302, 301]
+                },
+                {
+                    name: '无效',
+                    type: 'bar',
+                    stack: '1',
+                    data: [320, 302, 301]
+                }
+            ];
+            res.histograms.forEach(item => {
+                years.push(item.applyYear);
+                series[0].data.push(item.registerCount);
+                series[1].data.push(item.applyCount);
+                series[2].data.push(item.invalidCount);
+            });
+            this.brandOption.line = {
+                color: ['#ff5257', '#27d78f', '#36a0f4'],
+                legend: {
+                    bottom: 10,
+                    data: ['已注册', '申请中', '无效'],
+                    width: 6,
+                    height: 6,
+                    borderRadius: 3
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+
+                    type: 'category',
+                    data: years
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series
+            };
+        });
+        this.dashboardSvc.patents(this.company.id).subscribe(res => {
         });
     }
 

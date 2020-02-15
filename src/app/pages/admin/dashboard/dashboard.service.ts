@@ -39,6 +39,20 @@ export class DashboardService {
             }));
     }
 
+    patents(id): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getPatentChart&custId=' + id)
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
+
+    brands(id): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getBrandChart&custId=' + id)
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
+
     matchingStatus(id): Observable<any> {
         return this.http.get(this.PREFIX_URL + 'getCredSurvey&custId=' + id)
             .pipe(observableMargeMap((res: any) => {
