@@ -134,6 +134,20 @@ const routes: Routes = [
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./ticket/item/item.module').then(m => m.AdminTicketItemPageModule)
+            },
+            {// 报告详细（快捷）
+                path: 'report/fast',
+                data: {name: '报告详细（快捷）'},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./report/fast/fast.module').then(m => m.AdminReportFastPageModule)
+            },
+            {// 报告详细（精准）
+                path: 'report/precise',
+                data: {name: '报告详细（精准）'},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./report/precise/precise.module').then(m => m.AdminReportPrecisePageModule)
             }
         ]
     }

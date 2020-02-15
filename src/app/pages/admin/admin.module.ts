@@ -5,6 +5,7 @@ import {AdminPage} from './admin.page';
 import {AdminRoutingModule} from './admin-routing.module';
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 
+
 @NgModule({
     imports: [
         SharedModule,
