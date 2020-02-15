@@ -30,7 +30,7 @@
                                        routerLinkActive="active">
                             <p mat-line>企业资质</p>
                         </mat-list-item>
-                        <mat-list-item [routerLink]="['/admin/company/item',company.id]"
+                        <mat-list-item (click)="presentLoading()"
                                        routerLinkActive="active">
                             <p mat-line>匹配政策</p>
                         </mat-list-item>
@@ -99,10 +99,10 @@
                         <mat-list-item routerLink="/admin/plan/list" routerLinkActive="active">
                             <p mat-line>商标自助智能注册</p>
                         </mat-list-item>
-                        <mat-list-item routerLink="/admin/risk/list" routerLinkActive="active">
+                        <mat-list-item (click)="presentLoading()" routerLinkActive="active">
                             <p mat-line>专利快捷提交</p>
                         </mat-list-item>
-                        <mat-list-item routerLink="/admin/monitor/list" routerLinkActive="active">
+                        <mat-list-item (click)="presentLoading()" routerLinkActive="active">
                             <p mat-line>版权智能存证登记</p>
                         </mat-list-item>
                     </mat-expansion-panel>
@@ -123,9 +123,6 @@
                         <mat-list-item routerLink="/admin/risk/list" routerLinkActive="active">
                             <p mat-line>知产风险报告</p>
                         </mat-list-item>
-                        <mat-list-item routerLink="/admin/monitor/list" routerLinkActive="active">
-                            <p mat-line>竞争对手监控</p>
-                        </mat-list-item>
                     </mat-expansion-panel>
                 </mat-accordion>
             </ng-container>
@@ -137,7 +134,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <router-outlet (change)="routeChange($event)"></router-outlet>
+        <router-outlet></router-outlet>
         <!--<ion-fab class="fav-fab" *ngIf="show" horizontal="right" vertical="bottom" slot="fixed" cdkDrag>
             <ion-fab-button>
                 <ion-icon name="ios-share"></ion-icon>

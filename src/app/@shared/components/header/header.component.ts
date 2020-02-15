@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {PopoverController} from '@ionic/angular';
 import {ToastController} from '@ionic/angular';
+import {LoadingController} from '@ionic/angular';
 import {AuthService} from '../../../pages/auth/auth.service';
 import {TabService} from './tab.service';
 import {NotifyComponent} from '../notify/notify.component';
@@ -23,6 +24,7 @@ export class HeaderComponent {
                 private router: Router,
                 private popoverController: PopoverController,
                 private toastController: ToastController,
+                private loadingController: LoadingController,
                 private authSvc: AuthService,
                 private tabSvc: TabService) {
         this.tabSvc.get().subscribe(tabs => {
@@ -62,6 +64,15 @@ export class HeaderComponent {
             duration: 2000
         });
         return await toaster.present();
+    }
+
+    async presentLoading() {
+        const loading = await this.loadingController.create({
+            message: '功能即将开发，敬请期待',
+            duration: 1000
+        });
+        await loading.present();
+        await loading.onDidDismiss();
     }
 
     logout() {

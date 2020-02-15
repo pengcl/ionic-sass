@@ -405,7 +405,13 @@ ion-row {
     }
   }
 }
-
+.monitor {
+  text-align: center;
+  span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
 .circles {
   width: 24px;
   height: 24px;

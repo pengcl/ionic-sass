@@ -21,6 +21,17 @@ import {MatTableDataSource} from '@angular/material';
 export class AdminDashboardPage {
     subsidyOption;
     brandOption = {
+        count: 0,
+        pie: null,
+        line: null
+    };
+    copyOption = {
+        count: 0,
+        pie: null,
+        line: null
+    };
+    patentOption = {
+        count: 0,
         pie: null,
         line: null
     };
@@ -60,6 +71,9 @@ export class AdminDashboardPage {
     displayedColumns: string[] = ['name', 'time', 'actions'];
     dataSource;
     selection = new SelectionModel<any>(true, []);
+
+    monitorDisplayedColumns: string[] = ['name', 'time', 'actions'];
+    monitorDataSource;
 
     constructor(private router: Router,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
@@ -168,9 +182,134 @@ export class AdminDashboardPage {
             this.ticket.dataSource = new MatTableDataSource<any>(res.list);
         });
         this.dashboardSvc.copies(this.company.id).subscribe(res => {
+            this.copyOption.count = res.totalCount;
+            const pieLabels = [];
+            const pieData = [];
+            res.pieCharts.forEach(item => {
+                pieLabels.push(item.typeName);
+                pieData.push({
+                    name: item.typeName,
+                    value: item.dataCount
+                });
+            });
+            this.copyOption.pie = {
+                color: ['#3a9cfd', '#3a9aca', '#3e9793', '#389868'],
+                legend: {
+                    bottom: 10,
+                    data: pieLabels,
+                    itemWidth: 8,
+                    itemHeight: 8,
+                    textStyle: {
+                        fontSize: 10
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['67%', '70%'],
+                        data: [{name: '1', value: '1'}],
+                        hoverOffset: 0,
+                        label: {
+                            show: false
+                        }
+                    },
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['40%', '65%'],
+                        label: {
+                            position: 'inner',
+                            formatter: '{d}%'
+                            // shadowBlur:3,
+                            // shadowOffsetX: 2,
+                            // shadowOffsetY: 2,
+                            // shadowColor: '#999',
+                            // padding: [0, 7],
+                        },
+                        itemStyle: {
+                            borderWidth: 2,
+                            borderType: 'solid',
+                            borderColor: '#fff'
+                        },
+                        data: pieData,
+                        hoverOffset: 0
+                    },
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['35%', '38%'],
+                        data: [{name: '1', value: '1'}],
+                        hoverOffset: 0,
+                        label: {
+                            show: false
+                        }
+                    }
+                ]
+            };
+            const years = [];
+            const series = [
+                {
+                    name: '已注册',
+                    type: 'bar',
+                    stack: '1',
+                    data: [320, 302, 301]
+                },
+                {
+                    name: '申请中',
+                    type: 'bar',
+                    stack: '1',
+                    data: [320, 302, 301]
+                },
+                {
+                    name: '无效',
+                    type: 'bar',
+                    stack: '1',
+                    data: [320, 302, 301]
+                }
+            ];
+            res.histograms.forEach(item => {
+                years.push(item.applyYear);
+                series[0].data.push(item.registerCount);
+                series[1].data.push(item.applyCount);
+                series[2].data.push(item.invalidCount);
+            });
+            this.copyOption.line = {
+                color: ['#ff5257', '#27d78f', '#36a0f4'],
+                legend: {
+                    bottom: 0,
+                    data: ['已注册', '申请中', '无效'],
+                    itemWidth: 8,
+                    itemHeight: 8,
+                    textStyle: {
+                        fontSize: 10
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                xAxis: {
+
+                    type: 'category',
+                    data: years
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series
+            };
         });
         this.dashboardSvc.brands(this.company.id).subscribe(res => {
-            console.log(res);
+            this.brandOption.count = res.totalCount;
             const pieLabels = [];
             const pieData = [];
             res.pieCharts.forEach(item => {
@@ -184,13 +323,34 @@ export class AdminDashboardPage {
                 color: ['#3a9cfd', '#3a9aca', '#3e9793', '#389868'],
                 legend: {
                     bottom: 10,
-                    data: pieLabels
+                    data: pieLabels,
+                    itemWidth: 8,
+                    itemHeight: 8,
+                    textStyle: {
+                        fontSize: 10
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    containLabel: true
                 },
                 series: [
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['40%', '55%'],
+                        radius: ['67%', '70%'],
+                        data: [{name: '1', value: '1'}],
+                        hoverOffset: 0,
+                        label: {
+                            show: false
+                        }
+                    },
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['40%', '65%'],
                         label: {
                             position: 'inner',
                             formatter: '{d}%'
@@ -200,7 +360,23 @@ export class AdminDashboardPage {
                             // shadowColor: '#999',
                             // padding: [0, 7],
                         },
-                        data: pieData
+                        data: pieData,
+                        itemStyle: {
+                            borderWidth: 2,
+                            borderType: 'solid',
+                            borderColor: '#fff'
+                        },
+                        hoverOffset: 0
+                    },
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['35%', '38%'],
+                        data: [{name: '1', value: '1'}],
+                        hoverOffset: 0,
+                        label: {
+                            show: false
+                        }
                     }
                 ]
             };
@@ -234,16 +410,18 @@ export class AdminDashboardPage {
             this.brandOption.line = {
                 color: ['#ff5257', '#27d78f', '#36a0f4'],
                 legend: {
-                    bottom: 10,
+                    bottom: 0,
                     data: ['已注册', '申请中', '无效'],
-                    width: 6,
-                    height: 6,
-                    borderRadius: 3
+                    itemWidth: 8,
+                    itemHeight: 8,
+                    textStyle: {
+                        fontSize: 10
+                    }
                 },
                 grid: {
                     left: '3%',
                     right: '4%',
-                    bottom: '3%',
+                    bottom: '10%',
                     containLabel: true
                 },
                 xAxis: {
@@ -258,6 +436,136 @@ export class AdminDashboardPage {
             };
         });
         this.dashboardSvc.patents(this.company.id).subscribe(res => {
+            this.patentOption.count = res.totalCount;
+            const pieLabels = [];
+            const pieData = [];
+            res.pieCharts.forEach(item => {
+                pieLabels.push(item.typeName);
+                pieData.push({
+                    name: item.typeName,
+                    value: item.dataCount
+                });
+            });
+            this.patentOption.pie = {
+                color: ['#3a9cfd', '#3a9aca', '#3e9793', '#389868'],
+                legend: {
+                    bottom: 10,
+                    data: pieLabels,
+                    itemWidth: 8,
+                    itemHeight: 8,
+                    textStyle: {
+                        fontSize: 10
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['67%', '70%'],
+                        data: [{name: '1', value: '1'}],
+                        hoverOffset: 0,
+                        label: {
+                            show: false
+                        }
+                    },
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['40%', '65%'],
+                        label: {
+                            position: 'inner',
+                            formatter: '{d}%'
+                            // shadowBlur:3,
+                            // shadowOffsetX: 2,
+                            // shadowOffsetY: 2,
+                            // shadowColor: '#999',
+                            // padding: [0, 7],
+                        },
+                        data: pieData,
+                        itemStyle: {
+                            borderWidth: 2,
+                            borderType: 'solid',
+                            borderColor: '#fff'
+                        },
+                        hoverOffset: 0
+                    },
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['35%', '38%'],
+                        data: [{name: '1', value: '1'}],
+                        hoverOffset: 0,
+                        label: {
+                            show: false
+                        }
+                    }
+                ]
+            };
+            const years = [];
+            const series = [
+                {
+                    name: '已注册',
+                    type: 'bar',
+                    stack: '1',
+                    data: [320, 302, 301]
+                },
+                {
+                    name: '申请中',
+                    type: 'bar',
+                    stack: '1',
+                    data: [320, 302, 301]
+                },
+                {
+                    name: '无效',
+                    type: 'bar',
+                    stack: '1',
+                    data: [320, 302, 301]
+                }
+            ];
+            res.histograms.forEach(item => {
+                years.push(item.applyYear);
+                series[0].data.push(item.registerCount);
+                series[1].data.push(item.applyCount);
+                series[2].data.push(item.invalidCount);
+            });
+            this.patentOption.line = {
+                color: ['#ff5257', '#27d78f', '#36a0f4'],
+                legend: {
+                    bottom: 0,
+                    data: ['已注册', '申请中', '无效'],
+                    itemWidth: 8,
+                    itemHeight: 8,
+                    textStyle: {
+                        fontSize: 10
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                xAxis: {
+
+                    type: 'category',
+                    data: years
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series
+            };
+        });
+
+        monitorSvc.list({custId: this.company.id}).subscribe(res => {
+            console.log(res);
+            this.monitorDataSource = new MatTableDataSource<any>(res.list);
         });
     }
 

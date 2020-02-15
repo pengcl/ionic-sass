@@ -36,6 +36,7 @@ mat-toolbar {
     width: 25px;
     height: 25px;
     position: relative;
+    cursor: pointer;
 
     img {
       display: block;
@@ -86,6 +87,7 @@ mat-toolbar {
           min-width: unset;
           width: 180px;
           position: relative;
+
           .mat-tab-label-content {
             font-size: 16px;
             text-align: left;

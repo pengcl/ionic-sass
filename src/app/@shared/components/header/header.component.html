@@ -27,17 +27,17 @@
             </a>
         </nav>
     </div>
-    <div (click)="toasterShow($event)" class="header-message">
+    <div (click)="presentLoading()" class="header-message">
         <img src="/assets/images/header/message.png">
     </div>
     <button mat-button [matMenuTriggerFor]="menu">
         <mat-icon aria-hidden="false" aria-label="Example home icon">account_circle</mat-icon>
         <span>哈哈</span>
     </button>
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item>我的账户</button>
-        <button mat-menu-item>我的订单</button>
-        <button mat-menu-item>我的工单</button>
+    <mat-menu [classList]="'top-menu'" #menu="matMenu">
+        <button (click)="presentLoading()" mat-menu-item>我的账户</button>
+        <button routerLink="/admin/order/list" mat-menu-item>我的订单</button>
+        <button routerLink="/admin/ticket/list" mat-menu-item>我的工单</button>
         <mat-divider></mat-divider>
         <button (click)="logout()" mat-menu-item>退出</button>
     </mat-menu>
