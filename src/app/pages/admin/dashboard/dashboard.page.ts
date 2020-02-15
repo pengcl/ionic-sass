@@ -9,6 +9,9 @@ import * as echarts from 'echarts';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AddressService} from '../../../@core/services/address.service';
 import {LoadingController} from '@ionic/angular';
+import {TicketService} from '../ticket/ticket.service';
+import {SelectionModel} from '@angular/cdk/collections';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
     selector: 'app-admin-dashboard',
@@ -16,48 +19,7 @@ import {LoadingController} from '@ionic/angular';
     styleUrls: ['./dashboard.page.scss']
 })
 export class AdminDashboardPage {
-    subsidyOption = {
-        color: ['#3bcec6'],
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
-            }
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: {
-            type: 'value',
-            boundaryGap: [0, 0.01]
-        },
-        yAxis: {
-            type: 'category',
-            data: ['科创宝培育可获得', '快速培育可获得']
-        },
-        series: [
-            {
-                type: 'bar',
-                data: [380, 120],
-                itemStyle: {
-                    normal: {
-                        color: function(params) {
-                            var colorList = ['rgba(13, 215, 141, 1)', 'rgba(254, 174, 77, 1)'];
-                            return colorList[params.dataIndex];
-                        }
-                    },
-                    emphasis: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }
-        ]
-    };
+    subsidyOption;
     brandOption = {
         legend: {
             data: ['邮件营销', '联盟广告', '视频广告', '百度', '谷歌', '必应', '其他']
@@ -194,6 +156,18 @@ export class AdminDashboardPage {
     };
 
     dateTime = new Date();
+    completions;
+    ticket = {
+        ing: 0,
+        error: 0,
+        end: 0,
+        displayedColumns: ['content', 'status', 'progress', 'actions'],
+        dataSource: null,
+        selection: new SelectionModel<any>(true, [])
+    };
+    displayedColumns: string[] = ['name', 'time', 'actions'];
+    dataSource;
+    selection = new SelectionModel<any>(true, []);
 
     constructor(private router: Router,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
@@ -201,6 +175,7 @@ export class AdminDashboardPage {
                 private monitorSvc: MonitorService,
                 private planSvc: PlanService,
                 private riskSvc: RiskService,
+                private ticketSvc: TicketService,
                 private dashboardSvc: DashboardService,
                 private addressSvc: AddressService,
                 private loadingController: LoadingController) {
@@ -211,7 +186,6 @@ export class AdminDashboardPage {
             this.trustStatus = res;
         });
         dashboardSvc.boxStatus(this.company.id).subscribe(res => {
-            console.log(res);
             this.boxStatus = res;
         });
         monitorSvc.list({custId: this.company.id}).subscribe(res => {
@@ -238,10 +212,71 @@ export class AdminDashboardPage {
         this.form.get('city').setValue(this.company.city);
         this.form.get('area').setValue(this.company.area);
         this.dashboardSvc.policies(this.form.value).subscribe(res => {
-            console.log(res);
             this.policy.total = res.totalCount;
             this.policy.update = res.updateCount;
             this.policy.list = res.list;
+        });
+
+        this.dashboardSvc.completions(this.company.id).subscribe(res => {
+            res.forEach(item => {
+                item.value = Math.round(item.editCount * 100 / item.totalCount) / 100;
+                item.rate = (item.value * 100).toFixed(0);
+            });
+            this.completions = res;
+        });
+
+        this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
+            this.subsidyOption = {
+                color: ['#3bcec6'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value',
+                    boundaryGap: [0, 0.01]
+                },
+                yAxis: {
+                    type: 'category',
+                    data: ['科创宝培育可获得', '快速培育可获得', '目前已获得']
+                },
+                series: [
+                    {
+                        type: 'bar',
+                        data: [res.keChuangBaoAmt, res.quickAmt, res.hasBeenAmt],
+                        itemStyle: {
+                            normal: {
+                                color: (params) => {
+                                    const colorList = ['rgba(13, 215, 141, 1)', 'rgba(254, 174, 77, 1)'];
+                                    return colorList[params.dataIndex];
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+        });
+        this.ticketSvc.statistics(this.company.id).subscribe(res => {
+            this.ticket.ing = res.serviceCount;
+            this.ticket.error = res.errCount;
+            this.ticket.end = res.finishedCount;
+            this.ticket.dataSource = new MatTableDataSource<any>(res.list);
+        });
+        this.dashboardSvc.copies(this.company.id).subscribe(res => {
+            console.log(res);
         });
     }
 
