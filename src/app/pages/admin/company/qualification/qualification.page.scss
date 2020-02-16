@@ -165,13 +165,13 @@ mat-tab-group.sub-tab {
   }
 }
 
-
-ion-button {
-  margin: 60px auto 40px;
-  display: block;
-  width: 113px;
-  height: 48px;
-  --background: rgba(44, 158, 247, 1) !important;
+.row-buttons {
+  button {
+    margin: 60px auto 40px;
+    display: block;
+    width: 113px;
+    height: 48px;
+  }
 }
 
 mat-card {

@@ -8,8 +8,10 @@ import {DialogService} from '../../../../@core/modules/dialog';
 import {AuthService} from '../../../auth/auth.service';
 import {QualificationService} from './qualification.service';
 import {DictService} from '../../../../@core/services/dict.service';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatTableDataSource} from '@angular/material';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {SelectionModel} from '@angular/cdk/collections';
+import {PlanService} from '../../plan/plan.service';
 
 @Component({
     selector: 'app-admin-company-qualification',
@@ -56,6 +58,18 @@ export class AdminCompanyQualificationPage implements OnInit {
     };
     dict = {};
 
+    displayedColumns: string[] = ['name', 'type', 'time', 'actions'];
+    dataSource;
+    selection = new SelectionModel<any>(true, []);
+    params = {
+        id: this.id,
+        type: '',
+        beginDate: '',
+        endDate: '',
+        demension: '0',
+        page: 1,
+        rows: 3
+    };
     constructor(private title: Title,
                 private route: ActivatedRoute,
                 private router: Router,
@@ -66,6 +80,7 @@ export class AdminCompanyQualificationPage implements OnInit {
                 private dialogSvc: DialogService,
                 private authSvc: AuthService,
                 private dictSvc: DictService,
+                private planSvc: PlanService,
                 private qualificationSvc: QualificationService) {
         this.formGroup = new FormGroup({
             id: new FormControl('', []),
@@ -73,6 +88,10 @@ export class AdminCompanyQualificationPage implements OnInit {
             custId: new FormControl(this.id, [Validators.required]),
             uniqueKey: new FormControl(this.type === '0' ? this.year : '', [Validators.required]),
             conditions: new FormControl('', [Validators.required])
+        });
+
+        planSvc.list(this.params).subscribe(res => {
+            this.dataSource = new MatTableDataSource<any>(res.list);
         });
     }
 
