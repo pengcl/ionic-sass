@@ -15,7 +15,8 @@
             <ion-row>
                 <ion-col size="2">
                     <mat-form-field appearance="outline">
-                        <mat-select name="type" [(ngModel)]="params.type" (ngModelChange)="change()" placeholder="请选择报告类型">
+                        <mat-select name="type" [(ngModel)]="params.type" (ngModelChange)="change()"
+                                    placeholder="请选择报告类型">
                             <mat-option [value]="''">
                                 全部
                             </mat-option>
@@ -31,7 +32,8 @@
                 <ion-col size="1" class="search-label">生成时间</ion-col>
                 <ion-col size="2">
                     <mat-form-field appearance="outline">
-                        <input name="beginDate" [(ngModel)]="params.beginDate" (ngModelChange)="change()" placeholder="请选择日期" matInput
+                        <input name="beginDate" [(ngModel)]="params.beginDate" (ngModelChange)="change()"
+                               placeholder="请选择日期" matInput
                                [matDatepicker]="startPicker">
                         <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                         <mat-datepicker #startPicker></mat-datepicker>
@@ -40,7 +42,8 @@
                 <ion-col size="1" class="search-label">至</ion-col>
                 <ion-col size="2">
                     <mat-form-field appearance="outline">
-                        <input name="endDate" [(ngModel)]="params.endDate" (ngModelChange)="change()" placeholder="请选择日期" matInput
+                        <input name="endDate" [(ngModel)]="params.endDate" (ngModelChange)="change()"
+                               placeholder="请选择日期" matInput
                                [matDatepicker]="endPicker">
                         <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
                         <mat-datepicker dataformatas="" #endPicker></mat-datepicker>
@@ -76,7 +79,7 @@
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> <b>报告名称</b></th>
+            <th mat-header-cell *matHeaderCellDef><b>报告名称</b></th>
             <td mat-cell *matCellDef="let element">
                 {{element.name}}
             </td>
@@ -84,7 +87,7 @@
 
         <!-- Name Column -->
         <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef> <b>报告类型</b></th>
+            <th mat-header-cell *matHeaderCellDef><b>报告类型</b></th>
             <td mat-cell *matCellDef="let element">
                 {{element.type === 0 ? '快捷匹配' : '精准匹配'}}
             </td>
@@ -92,7 +95,7 @@
 
         <!-- Weight Column -->
         <ng-container matColumnDef="time">
-            <th mat-header-cell *matHeaderCellDef style="width: 200px"> <b>生成日期</b></th>
+            <th mat-header-cell *matHeaderCellDef style="width: 200px"><b>生成日期</b></th>
             <td mat-cell *matCellDef="let element">
                 {{element.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}
             </td>
@@ -100,13 +103,13 @@
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef style="width: 250px"> <b>操作</b></th>
+            <th mat-header-cell *matHeaderCellDef style="width: 250px"><b>操作</b></th>
             <td mat-cell *matCellDef="let element">
                 <a class="actions-icon" [routerLink]="['/admin/plan/item',element.id]">
                     <img src="/assets/images/view.png">
                 </a>
                 <a class="actions-icon" (click)="preDownload(element.id)" download
-                            [href]="FILE_PREFIX_URL + element.fileId">
+                   [href]="FILE_PREFIX_URL + element.fileId">
                     <img src="/assets/images/download.png">
                 </a>
             </td>
@@ -117,5 +120,6 @@
             (click)="selection.toggle(row)">
         </tr>
     </table>
-  <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)" [pageSizeOptions]="[10,20,50]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)"
+                   [pageSizeOptions]="[10,20,50]" showFirstLastButtons></mat-paginator>
 </div>

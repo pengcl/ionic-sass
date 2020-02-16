@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, Inject, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 
 import {SelectionModel} from '@angular/cdk/collections';
@@ -48,6 +48,7 @@ export class AdminTicketListPage {
     selection = new SelectionModel<any>(true, []);
 
     constructor(private route: ActivatedRoute,
+                @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
                 private authSvc: AuthService,
                 private companySvc: CompanyService,
                 private ticketSvc: TicketService) {
@@ -91,6 +92,7 @@ export class AdminTicketListPage {
     export() {
         this.ticketSvc.export(this.params).subscribe(res => {
             console.log(res);
+            window.location.href = this.FILE_PREFIX_URL + res;
         });
     }
 
