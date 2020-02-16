@@ -59,6 +59,13 @@
       background-color: #F6F7F9;
       border: none;
   }
+  .right_content{
+    margin:20px;
+    line-height: 22px;
+    text-indent: 25px;
+    color: #87949d;
+    font-size: 14px;
+  }
 }
 
 .suggest{
@@ -96,15 +103,18 @@
   border: 1px solid #DCE5EB;
   .work_left{
     width: 20%;
-    height: 60px;
+    height: 80px;
     background: inherit;
     background-color: #F6F7F9;
     border-radius: 4px 0 0 4px;
   }
   .work_right{
     width: 80%;
-    height: 60px;
+    height: 80px;
     background: inherit;
+    font-size:14px ;
+    padding: 10px;
+    color: #afb8be;
     background-color: #fff;
     border-radius: 0 4px 4px 0;
     table {
@@ -130,4 +140,152 @@
       margin-top: 20px;
     }
   }
+}
+
+.content{
+  background: #fff;
+  width: 100%;
+  color: #aaa;
+  margin-top: 10px;
+  table.kc{
+    background: #fff;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0 10px;
+    thead {
+      border-top:1px solid #DCE5EB;
+      background: #F6F7F9;
+      tr {
+        th {
+          font-weight: normal;
+          color: #898989;
+          padding: 15px 10px;
+          &.user{
+            width: 25%;
+            text-align: center;
+          }
+          &.grade {
+            width: 25%;
+            text-align: center;
+          }
+          &.consumption {
+            width: 25%;
+            text-align: center;
+          }
+          &.date {
+            width: 25%;
+            text-align: center;
+          }
+        }
+      }
+    }
+    tbody {
+      padding: 15px 10px;
+      border-bottom:1px solid #DCE5EB;
+      tr {
+        td {
+          font-weight: normal;
+          color: #666;
+          padding: 15px 10px;
+          position: relative;
+          &.user{
+            width: 25%;
+            text-align: center;
+          }
+          &.grade {
+            width: 25%;
+            text-align: center;
+          }
+          &.consumption {
+            width: 25%;
+            text-align: center;
+          }
+          &.date {
+            width: 25%;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  table.zc{
+    background: #fff;
+    width: 100%;
+    font-size: 12px;
+    line-height: 1;
+    thead {
+      border-top:1px solid #DCE5EB;
+      background: #F6F7F9;
+      tr {
+        th {
+          font-weight: normal;
+          color: #898989;
+          padding: 15px 2px;
+          &.user{
+            width: 39%;
+            text-align: center;
+          }
+          &.grade {
+            width: 12%;
+            text-align: center;
+          }
+          &.consumption {
+            width: 12%;
+            text-align: center;
+          }
+          &.date {
+            width: 12%;
+            text-align: center;
+          }
+          &.name {
+            width: 15%;
+            text-align: center;
+          }
+          &.sex {
+            width: 15%;
+            text-align: center;
+          }
+        }
+      }
+    }
+    tbody {
+      padding: 15px 10px;
+      border-bottom:1px solid #DCE5EB;
+      tr {
+        td {
+          font-weight: normal;
+          color: #666;
+          padding: 15px 2px;
+          position: relative;
+          &.user{
+            width: 39%;
+            text-align: center;
+          }
+          &.grade {
+            width: 12%;
+            text-align: center;
+          }
+          &.consumption {
+            width: 12%;
+            text-align: center;
+          }
+          &.date {
+            width: 12%;
+            text-align: center;
+          }
+          &.name {
+            width: 15%;
+            text-align: center;
+          }
+          &.sex {
+            width: 15%;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
 }
