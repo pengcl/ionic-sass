@@ -12,6 +12,8 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatTableDataSource} from
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {SelectionModel} from '@angular/cdk/collections';
 import {PlanService} from '../../plan/plan.service';
+import {CompanyService} from '../company.service';
+import {getIndex} from '../../../../@core/utils/utils';
 
 @Component({
     selector: 'app-admin-company-qualification',
@@ -44,7 +46,6 @@ export class AdminCompanyQualificationPage implements OnInit {
                 value: this.year - i + ''
             });
         }
-        console.log(years);
         return years;
     })();
     loading = false;
@@ -70,6 +71,8 @@ export class AdminCompanyQualificationPage implements OnInit {
         page: 1,
         rows: 3
     };
+    company;
+
     constructor(private title: Title,
                 private route: ActivatedRoute,
                 private router: Router,
@@ -81,6 +84,7 @@ export class AdminCompanyQualificationPage implements OnInit {
                 private authSvc: AuthService,
                 private dictSvc: DictService,
                 private planSvc: PlanService,
+                private companySvc: CompanyService,
                 private qualificationSvc: QualificationService) {
         this.formGroup = new FormGroup({
             id: new FormControl('', []),
@@ -104,7 +108,6 @@ export class AdminCompanyQualificationPage implements OnInit {
                 if (condition.fieldType === '0002') {
                     this.dictSvc.get('condition_' + condition.conditionId).subscribe(res => {
                         this.dict[condition.conditionId] = res.result;
-                        console.log(res.result);
                     });
                 }
                 this.form.setControl(condition.conditionId, new FormControl(condition.conditionVal,
@@ -115,6 +118,9 @@ export class AdminCompanyQualificationPage implements OnInit {
 
     ngOnInit() {
         this.title.setTitle(this.type === '0' ? '企业资质信息' : this.type === '1' ? '项目' : '员工');
+        this.companySvc.get(this.id).subscribe(res => {
+            this.company = res.busCust;
+        });
         this.qualificationSvc.list(this.id, this.type).subscribe(res => {
             if (res[0]) {
                 this.formGroup.get('id').setValue(res[0].credId);
@@ -141,13 +147,32 @@ export class AdminCompanyQualificationPage implements OnInit {
             num: 0,
             list: []
         };
+        const group = [];
         conditions.forEach(item => {
             if (!!item.required) {
                 required.num = required.num + 1;
                 required.list.push(item);
             } else {
                 optional.num = optional.num + 1;
-                optional.list.push(item);
+                if (group.length === 0) {
+                    group.push({
+                        _id: item.typeId,
+                        _name: item.typeName,
+                        list: [item]
+                    });
+                } else {
+                    const index = getIndex(group, '_id', item.typeId);
+                    if (index >= 0) {
+                        group[index].list.push(item);
+                    } else {
+                        group.push({
+                            _id: item.typeId,
+                            _name: item.typeName,
+                            list: [item]
+                        });
+                    }
+                }
+                optional.list = group;
             }
         });
         this.required = required;
@@ -196,6 +221,10 @@ export class AdminCompanyQualificationPage implements OnInit {
                 this.loading = false;
             }
         });
+    }
+
+    preDownload(id) {
+        this.planSvc.preDownload(id, 1).subscribe();
     }
 
     back() {

@@ -88,6 +88,12 @@ export class AdminTicketListPage {
         this.getData();
     }
 
+    export() {
+        this.ticketSvc.export(this.params).subscribe(res => {
+            console.log(res);
+        });
+    }
+
     /** Whether the number of selected elements matches the total number of rows. */
     isAllSelected() {
         const numSelected = this.selection.selected.length;
