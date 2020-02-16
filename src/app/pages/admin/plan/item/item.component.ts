@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {DashboardService} from '../../dashboard/dashboard.service';
 import {CompanyService} from '../../company/company.service';
+import {PlanService} from '../plan.service';
+import {SelectionModel} from '@angular/cdk/collections';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
     selector: 'app-admin-plan-item',
@@ -8,29 +12,43 @@ import {CompanyService} from '../../company/company.service';
     styleUrls: ['./item.component.scss']
 })
 export class AdminPlanItemPage implements OnInit {
-    brandOption = {
-        count: 0,
+    id = this.route.snapshot.params.id;
+    option = {
         pie: null,
         line: null
     };
-    subsidyOption;
     company = this.companySvc.currentCompany;
+    data;
+    displayedColumns: string[] = ['select', 'name', 'money', 'time'];
+    dataSource;
+    selection = new SelectionModel<any>(true, []);
 
-    constructor(private dashboardSvc: DashboardService,
-                private companySvc: CompanyService) {
-        this.dashboardSvc.brands(this.company.id).subscribe(res => {
-            this.brandOption.count = res.totalCount;
-            const pieLabels = [];
-            const pieData = [];
-            res.pieCharts.forEach(item => {
-                pieLabels.push(item.typeName);
-                pieData.push({
-                    name: item.typeName,
-                    value: item.dataCount
-                });
-            });
-            this.brandOption.pie = {
-                color: ['#3a9cfd', '#3a9aca', '#3e9793', '#389868'],
+    constructor(private route: ActivatedRoute,
+                private dashboardSvc: DashboardService,
+                private companySvc: CompanyService,
+                private planSvc: PlanService) {
+        planSvc.item(this.id).subscribe(res => {
+            console.log(res);
+            this.data = res;
+            this.dataSource = new MatTableDataSource<any>(res.policys);
+            this.dataSource.data.forEach(row => this.selection.select(row));
+            const pieLabels = ['版权数量', '商标数量', '专利数量'];
+            const pieData = [
+                {
+                    name: '版权数量',
+                    value: res.softwareCopyRight + res.productCopyRight
+                },
+                {
+                    name: '商标数量',
+                    value: res.brandCount
+                },
+                {
+                    name: '专利数量',
+                    value: res.patentCount
+                }
+            ];
+            this.option.pie = {
+                color: ['#3a9cfd', '#3a9aca', '#389868'],
                 legend: {
                     bottom: 10,
                     data: pieLabels,
@@ -64,11 +82,6 @@ export class AdminPlanItemPage implements OnInit {
                         label: {
                             position: 'inner',
                             formatter: '{d}%'
-                            // shadowBlur:3,
-                            // shadowOffsetX: 2,
-                            // shadowOffsetY: 2,
-                            // shadowColor: '#999',
-                            // padding: [0, 7],
                         },
                         data: pieData,
                         itemStyle: {
@@ -90,70 +103,9 @@ export class AdminPlanItemPage implements OnInit {
                     }
                 ]
             };
-            const years = [];
-            const series = [
-                {
-                    name: '已注册',
-                    type: 'bar',
-                    stack: '1',
-                    data: [320, 302, 301]
-                },
-                {
-                    name: '申请中',
-                    type: 'bar',
-                    stack: '1',
-                    data: [320, 302, 301]
-                },
-                {
-                    name: '无效',
-                    type: 'bar',
-                    stack: '1',
-                    data: [320, 302, 301]
-                }
-            ];
-            res.histograms.forEach(item => {
-                years.push(item.applyYear);
-                series[0].data.push(item.registerCount);
-                series[1].data.push(item.applyCount);
-                series[2].data.push(item.invalidCount);
-            });
-            this.brandOption.line = {
-                color: ['#ff5257', '#27d78f', '#36a0f4'],
-                legend: {
-                    bottom: 0,
-                    data: ['已注册', '申请中', '无效'],
-                    itemWidth: 8,
-                    itemHeight: 8,
-                    textStyle: {
-                        fontSize: 10
-                    }
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '10%',
-                    containLabel: true
-                },
-                xAxis: {
 
-                    type: 'category',
-                    data: years
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series
-            };
-        });
-        this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
-            this.subsidyOption = {
+            this.option.line = {
                 color: ['#3bcec6'],
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                },
                 grid: {
                     left: '3%',
                     right: '4%',
@@ -166,12 +118,12 @@ export class AdminPlanItemPage implements OnInit {
                 },
                 yAxis: {
                     type: 'category',
-                    data: ['研究生学历人数', '企业研发团队人数', '个税申请人数', '现有员工人数']
+                    data: ['现有员工数', '个税申缴人数', '企业研发团队人数', '企业研究生以上学历人数']
                 },
                 series: [
                     {
                         type: 'bar',
-                        data: [res.keChuangBaoAmt, res.quickAmt, res.hasBeenAmt],
+                        data: [res.employeeCount, res.taxPayableCount, res.rndCount, res.graduatesCount],
                         itemStyle: {
                             normal: {
                                 color: (params) => {
@@ -194,5 +146,36 @@ export class AdminPlanItemPage implements OnInit {
     ngOnInit() {
     }
 
+    /** Gets the total cost of all transactions. */
+    getTotalCost() {
+        console.log(this.selection.selected);
+        let cost = 0;
+        this.selection.selected.forEach(item => {
+            cost = cost + item.subsidyAmtEnd;
+        });
+        return cost;
+    }
+
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dataSource.data.length;
+        return numSelected === numRows;
+    }
+
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    masterToggle() {
+        this.isAllSelected() ?
+            this.selection.clear() :
+            this.dataSource.data.forEach(row => this.selection.select(row));
+    }
+
+    /** The label for the checkbox on the passed row */
+    checkboxLabel(row?: any): string {
+        if (!row) {
+            return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+        }
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    }
 
 }

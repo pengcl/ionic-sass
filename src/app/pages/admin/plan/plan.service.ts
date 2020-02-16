@@ -19,7 +19,7 @@ export class PlanService {
     }
 
     item(id): Observable<any> {
-        return this.http.get(this.PREFIX_URL + 'getPlanList', {params: {id}})
+        return this.http.get(this.PREFIX_URL + 'getPlanParams', {params: {id}})
             .pipe(observableMargeMap((res: any) => {
                 return resultProcess(res);
             }));
