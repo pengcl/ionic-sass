@@ -18,14 +18,31 @@
   }
 }
 
-ion-button.ion-color-primary {
-  height: 40px !important;
-  --background-activated: #6BBBF9 !important;
-  --box-shadow: none !important;
-  background: #2C9EF7 !important;
-  --background-focused: #6BBBF9 !important;
-  --background-hover: #6BBBF9 !important;
-  &[disabled] {
-    background: #DCE5EC !important;
+ion-button{
+  &.ion-color-primary {
+    height: 40px !important;
+    --background-activated: #6BBBF9 !important;
+    --box-shadow: none !important;
+    --background-focused: #6BBBF9 !important;
+    --background-hover: #6BBBF9 !important;
+
+    button {
+
+    }
+
+    &[disabled] {
+      background: #DCE5EC !important;
+    }
+  }
+  &.ion-color-danger {
+    height: 40px !important;
+    --box-shadow: none !important;
+    button {
+
+    }
+
+    &[disabled] {
+      background: #DCE5EC !important;
+    }
   }
 }
