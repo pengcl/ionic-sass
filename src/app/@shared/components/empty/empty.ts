@@ -10,6 +10,7 @@ export class EmptyComponent {
     @Input() title = '没有记录';
     @Input() desc = '';
     @Output() confirm = new EventEmitter<any>();
+    @Output() confirmText = '';
 
     constructor() {
     }

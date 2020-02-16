@@ -2,5 +2,5 @@
     <ion-icon [name]="icon"></ion-icon>
     <h3 *ngIf="title">{{title}}</h3>
     <p *ngIf="desc">{{desc}}</p>
-    <ion-button (click)="onClick()" color="success">添加</ion-button>
+    <ion-button *ngIf="confirmText" (click)="onClick()" color="success">{{confirmText}}</ion-button>
 </div>

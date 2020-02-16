@@ -42,6 +42,7 @@ export class AdminTicketItemPage {
                 this.source.info = new MatTableDataSource<any>([{no: res.workOrderNo, type: res.workTypeName, status: res.workStatusName}]);
                 this.source.logs = res.workOrderLogs;
                 this.source.files = new MatTableDataSource<any>(res.workOrderAttchs);
+                console.log(this.source.files);
             });
         });
     }
