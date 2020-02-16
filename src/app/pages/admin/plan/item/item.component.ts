@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DashboardService} from '../../dashboard/dashboard.service';
 import {CompanyService} from '../../company/company.service';
@@ -24,6 +24,7 @@ export class AdminPlanItemPage implements OnInit {
     selection = new SelectionModel<any>(true, []);
 
     constructor(private route: ActivatedRoute,
+                @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
                 private dashboardSvc: DashboardService,
                 private companySvc: CompanyService,
                 private planSvc: PlanService) {
@@ -144,6 +145,15 @@ export class AdminPlanItemPage implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    preDownload() {
+        this.planSvc.preDownload(this.id, 1).subscribe();
+    }
+
+    download() {
+        this.preDownload();
+        window.location.href = this.FILE_PREFIX_URL + this.data.fileId;
     }
 
     /** Gets the total cost of all transactions. */

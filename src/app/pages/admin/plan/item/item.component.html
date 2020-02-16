@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container {{data?.type === 0 ? 's' : 'c'}}">
     <ion-grid *ngIf="data">
         <ion-row>
             <ion-col size="12">
@@ -684,5 +684,5 @@
 
 </div>
 <div class="row-buttons" style="background-color: rgba(33, 40, 68, 1);margin: 0">
-    <ion-button color="primary" style="margin: 20px 50%;">下载报告</ion-button>
+    <ion-button (click)="download()" color="primary" style="margin: 20px 50%;">下载报告</ion-button>
 </div>

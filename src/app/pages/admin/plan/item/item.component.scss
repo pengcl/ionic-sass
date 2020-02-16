@@ -2,6 +2,12 @@
   background: rgba(246, 247, 249, 1);
   padding: 0;
 
+  &.s {
+    .suggest {
+      display: none;
+    }
+  }
+
   mat-card {
     margin: 10px;
 
@@ -21,7 +27,8 @@
         right: 16px;
         position: absolute;
         margin: 0;
-        img{
+
+        img {
           width: 30px;
           height: 30px;
         }
@@ -36,10 +43,11 @@
   }
 }
 
-.policy{
+.policy {
   display: flex;
   flex-direction: column;
-  .policy_small{
+
+  .policy_small {
     width: 330px;
     height: 100px;
     background: inherit;
@@ -50,17 +58,19 @@
   }
 }
 
-.right{
+.right {
   display: flex;
   flex-direction: row;
-  .right_head{
-      height: 40px;
-      background: inherit;
-      background-color: #F6F7F9;
-      border: none;
+
+  .right_head {
+    height: 40px;
+    background: inherit;
+    background-color: #F6F7F9;
+    border: none;
   }
-  .right_content{
-    margin:20px;
+
+  .right_content {
+    margin: 20px;
     line-height: 22px;
     text-indent: 25px;
     color: #87949d;
@@ -68,10 +78,11 @@
   }
 }
 
-.suggest{
+.suggest {
   display: flex;
   flex-direction: column;
-  .suggest_small{
+
+  .suggest_small {
     width: 97%;
     height: 100px;
     background: inherit;
@@ -81,12 +92,13 @@
     margin: 20px;
   }
 }
-.hot{
+
+.hot {
   display: flex;
   flex-direction: row;
   margin: 15px auto;
 
-  .hot_left{
+  .hot_left {
     width: 200px;
     height: 180px;
     background: inherit;
@@ -97,26 +109,30 @@
   }
 
 }
-.work{
+
+.work {
   display: flex;
   flex-direction: row;
   border: 1px solid #DCE5EB;
-  .work_left{
+
+  .work_left {
     width: 20%;
     height: 80px;
     background: inherit;
     background-color: #F6F7F9;
     border-radius: 4px 0 0 4px;
   }
-  .work_right{
+
+  .work_right {
     width: 80%;
     height: 80px;
     background: inherit;
-    font-size:14px ;
+    font-size: 14px;
     padding: 10px;
     color: #afb8be;
     background-color: #fff;
     border-radius: 0 4px 4px 0;
+
     table {
       &::ng-deep {
         tbody tr td {
@@ -124,14 +140,16 @@
         }
       }
     }
-    span{
+
+    span {
       display: inline-block;
-      padding:10px 40px;
+      padding: 10px 40px;
       color: #ffffff;
       font-weight: bold;
       font-size: 32px;
     }
-    p{
+
+    p {
       display: inline-block;
       position: absolute;
       color: #ffffff;
@@ -142,37 +160,44 @@
   }
 }
 
-.content{
+.content {
   background: #fff;
   width: 100%;
   color: #aaa;
   margin-top: 10px;
-  table.kc{
+
+  table.kc {
     background: #fff;
     width: 100%;
     font-size: 14px;
     line-height: 1;
     padding: 0 10px;
+
     thead {
-      border-top:1px solid #DCE5EB;
+      border-top: 1px solid #DCE5EB;
       background: #F6F7F9;
+
       tr {
         th {
           font-weight: normal;
           color: #898989;
           padding: 15px 10px;
-          &.user{
+
+          &.user {
             width: 25%;
             text-align: center;
           }
+
           &.grade {
             width: 25%;
             text-align: center;
           }
+
           &.consumption {
             width: 25%;
             text-align: center;
           }
+
           &.date {
             width: 25%;
             text-align: center;
@@ -180,27 +205,33 @@
         }
       }
     }
+
     tbody {
       padding: 15px 10px;
-      border-bottom:1px solid #DCE5EB;
+      border-bottom: 1px solid #DCE5EB;
+
       tr {
         td {
           font-weight: normal;
           color: #666;
           padding: 15px 10px;
           position: relative;
-          &.user{
+
+          &.user {
             width: 25%;
             text-align: center;
           }
+
           &.grade {
             width: 25%;
             text-align: center;
           }
+
           &.consumption {
             width: 25%;
             text-align: center;
           }
+
           &.date {
             width: 25%;
             text-align: center;
@@ -210,39 +241,47 @@
     }
   }
 
-  table.zc{
+  table.zc {
     background: #fff;
     width: 100%;
     font-size: 12px;
     line-height: 1;
+
     thead {
-      border-top:1px solid #DCE5EB;
+      border-top: 1px solid #DCE5EB;
       background: #F6F7F9;
+
       tr {
         th {
           font-weight: normal;
           color: #898989;
           padding: 15px 2px;
-          &.user{
+
+          &.user {
             width: 39%;
             text-align: center;
           }
+
           &.grade {
             width: 12%;
             text-align: center;
           }
+
           &.consumption {
             width: 12%;
             text-align: center;
           }
+
           &.date {
             width: 12%;
             text-align: center;
           }
+
           &.name {
             width: 15%;
             text-align: center;
           }
+
           &.sex {
             width: 15%;
             text-align: center;
@@ -250,35 +289,43 @@
         }
       }
     }
+
     tbody {
       padding: 15px 10px;
-      border-bottom:1px solid #DCE5EB;
+      border-bottom: 1px solid #DCE5EB;
+
       tr {
         td {
           font-weight: normal;
           color: #666;
           padding: 15px 2px;
           position: relative;
-          &.user{
+
+          &.user {
             width: 39%;
             text-align: center;
           }
+
           &.grade {
             width: 12%;
             text-align: center;
           }
+
           &.consumption {
             width: 12%;
             text-align: center;
           }
+
           &.date {
             width: 12%;
             text-align: center;
           }
+
           &.name {
             width: 15%;
             text-align: center;
           }
+
           &.sex {
             width: 15%;
             text-align: center;
