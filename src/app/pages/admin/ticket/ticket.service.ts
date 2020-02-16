@@ -39,6 +39,13 @@ export class TicketService {
             }));
     }
 
+    export(body): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'exportWorkOrder', body)
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
+
     item(id): Observable<any> {
         return this.http.get(this.PREFIX_URL + 'workOrderInfo', {params: {id}})
             .pipe(observableMargeMap((res: any) => {

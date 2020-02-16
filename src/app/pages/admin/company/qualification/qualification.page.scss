@@ -31,7 +31,22 @@ form {
   }
 
   &.form-s {
-    mat-form-field {
+    .value {
+      width: 200px;
+      margin-left: 55%;
+      position: relative;
+      font-size: 14px;
+      margin-bottom: 30px;
+      display: block;
+
+      .label {
+        position: absolute;
+        right: 250px;
+        white-space: nowrap;
+        margin-right: 0.75em;
+      }
+    }
+    mat-form-field, {
       width: 200px;
       margin-left: 55%;
 
@@ -53,6 +68,15 @@ form {
   }
 
   &.form-c {
+    .value {
+      font-size: 14px;
+      display: block;
+      margin-bottom: 60px;
+      padding-left: 15px;
+      .label {
+        margin-right: 20px;
+      }
+    }
     mat-form-field {
       width: 320px;
       margin-bottom: 50px;
@@ -165,13 +189,13 @@ mat-tab-group.sub-tab {
   }
 }
 
-
-ion-button {
-  margin: 60px auto 40px;
-  display: block;
-  width: 113px;
-  height: 48px;
-  --background: rgba(44, 158, 247, 1) !important;
+.row-buttons {
+  button {
+    margin: 60px auto 40px;
+    display: block;
+    width: 113px;
+    height: 48px;
+  }
 }
 
 mat-card {
@@ -322,6 +346,7 @@ mat-radio-group {
       &.mat-radio-checked {
         position: relative;
         color: #2C9EF7;
+
         &:after {
           content: '';
           position: absolute;
@@ -338,6 +363,7 @@ mat-radio-group {
         .mat-radio-container {
           display: none;
         }
+
         .mat-radio-label-content {
           padding-left: 0;
         }

@@ -18,8 +18,31 @@
   }
 }
 
-ion-button {
-  height: 40px !important;
-  --background-activated: #3880ff !important;
-  --box-shadow: none !important;
+ion-button{
+  &.ion-color-primary {
+    height: 40px !important;
+    --background-activated: #6BBBF9 !important;
+    --box-shadow: none !important;
+    --background-focused: #6BBBF9 !important;
+    --background-hover: #6BBBF9 !important;
+
+    button {
+
+    }
+
+    &[disabled] {
+      background: #DCE5EC !important;
+    }
+  }
+  &.ion-color-danger {
+    height: 40px !important;
+    --box-shadow: none !important;
+    button {
+
+    }
+
+    &[disabled] {
+      background: #DCE5EC !important;
+    }
+  }
 }

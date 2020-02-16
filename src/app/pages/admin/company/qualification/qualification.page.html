@@ -57,6 +57,9 @@
                 <ion-col *ngIf="reportType === 2" size="12">
                     <h3>必填资质（{{required.num}} / {{required.num + optional.num}}）</h3>
                 </ion-col>
+                <ion-col [size]="12">
+                    <span class="value"><span class="label">企业名称</span>{{company?.companyName}}</span>
+                </ion-col>
                 <ion-col *ngFor="let condition of required.list" [size]="reportType === 1 ? 12 : 4">
                     <mat-form-field class="nl"
                                     *ngIf="condition.fieldType === '0001' && ((reportType === 1 && !!condition.required) || reportType === 2)"
@@ -73,12 +76,12 @@
                             *ngIf="condition.fieldType === '0002' && dict[condition.conditionId] && ((reportType === 1 && !!condition.required) || reportType === 2)"
                             appearance="outline">
                         <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
-                        <input *ngIf="dict[condition.conditionId].length < 1" [formControlName]="condition.conditionId"
+                        <input *ngIf="dict[condition.conditionId].length < 1" [placeholder]="'请输入' + condition.conditionName" [formControlName]="condition.conditionId"
                                matInput
                                pattern="(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)"
                                [maxlength]="12" [required]="!!condition.required">
                         <mat-select *ngIf="dict[condition.conditionId].length > 0"
-                                    [formControlName]="condition.conditionId" [placeholder]="condition.conditionName"
+                                    [formControlName]="condition.conditionId" [placeholder]="'请选择'"
                                     [required]="!!condition.required">
                             <mat-option *ngFor="let item of dict[condition.conditionId]" [value]="item.dictValue">
                                 {{item.dictName}}
@@ -100,7 +103,7 @@
                             *ngIf="condition.fieldType === '0003' && ((reportType === 1 && !!condition.required) || reportType === 2)"
                             appearance="outline">
                         <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
-                        <input [formControlName]="condition.conditionId" matInput [matDatepicker]="picker"
+                        <input [formControlName]="condition.conditionId" matInput placeholder="请选择" [matDatepicker]="picker"
                                [required]="!!condition.required">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
@@ -113,60 +116,136 @@
                 <ion-col size="12">
                     <h3>选填资质（{{optional.num}} / {{required.num + optional.num}}）</h3>
                 </ion-col>
-                <ion-col *ngFor="let condition of optional.list" [size]="4">
-                    <mat-form-field class="nl"
-                                    *ngIf="condition.fieldType === '0001'"
-                                    appearance="outline">
-                        <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
-                        <input style="display: none" [formControlName]="condition.conditionId" matInput>
-                        <mat-radio-group [formControlName]="condition.conditionId">
-                            <mat-radio-button [value]="true">是</mat-radio-button>
-                            <mat-radio-button [value]="false">否</mat-radio-button>
-                        </mat-radio-group>
-                    </mat-form-field>
-                    <mat-form-field
-                            *ngIf="condition.fieldType === '0002'"
-                            appearance="outline">
-                        <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
-                        <input *ngIf="dict[condition.conditionId].length < 1" [formControlName]="condition.conditionId"
-                               matInput
-                               pattern="(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)"
-                               [maxlength]="12" [required]="!!condition.required">
-                        <mat-select *ngIf="dict[condition.conditionId].length > 0"
-                                    [formControlName]="condition.conditionId" [placeholder]="condition.conditionName"
-                                    [required]="!!condition.required">
-                            <mat-option *ngFor="let item of dict[condition.conditionId]" [value]="item.dictValue">
-                                {{item.dictName}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error
-                                *ngIf="form.get(condition.conditionId + '').hasError('pattern') && !form.get(condition.conditionId + '').hasError('required')">
-                            {{condition.conditionName}}必须是 <strong>数字</strong>
-                        </mat-error>
-                        <mat-error
-                                *ngIf="form.get(condition.conditionId + '').hasError('maxlength') && !form.get(condition.conditionId + '').hasError('required')">
-                            {{condition.conditionName}}的长度不能大于 <strong>12</strong>
-                        </mat-error>
-                        <mat-error *ngIf="form.get(condition.conditionId + '').hasError('required')">
-                            {{condition.conditionName}}是 <strong>必填</strong> 项
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field
-                            *ngIf="condition.fieldType === '0003'"
-                            appearance="outline">
-                        <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
-                        <input [formControlName]="condition.conditionId" matInput [matDatepicker]="picker"
-                               [required]="!!condition.required">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                </ion-col>
+                <ng-container *ngFor="let item of optional.list">
+                    <ion-col [size]="12">
+                        <span class="value">{{item._name}}</span>
+                    </ion-col>
+                    <ion-col *ngFor="let condition of item.list" [size]="4">
+                        <mat-form-field class="nl"
+                                        *ngIf="condition.fieldType === '0001'"
+                                        appearance="outline">
+                            <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
+                            <input style="display: none" [formControlName]="condition.conditionId" matInput>
+                            <mat-radio-group [formControlName]="condition.conditionId">
+                                <mat-radio-button [value]="true">是</mat-radio-button>
+                                <mat-radio-button [value]="false">否</mat-radio-button>
+                            </mat-radio-group>
+                        </mat-form-field>
+                        <mat-form-field
+                                *ngIf="condition.fieldType === '0002'"
+                                appearance="outline">
+                            <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
+                            <input *ngIf="dict[condition.conditionId].length < 1" [placeholder]="'请输入' + condition.conditionName" [formControlName]="condition.conditionId"
+                                   matInput
+                                   pattern="(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)"
+                                   [maxlength]="12" [required]="!!condition.required">
+                            <mat-select *ngIf="dict[condition.conditionId].length > 0"
+                                        [formControlName]="condition.conditionId" [placeholder]="'请选择'"
+                                        [required]="!!condition.required">
+                                <mat-option *ngFor="let item of dict[condition.conditionId]" [value]="item.dictValue">
+                                    {{item.dictName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error
+                                    *ngIf="form.get(condition.conditionId + '').hasError('pattern') && !form.get(condition.conditionId + '').hasError('required')">
+                                {{condition.conditionName}}必须是 <strong>数字</strong>
+                            </mat-error>
+                            <mat-error
+                                    *ngIf="form.get(condition.conditionId + '').hasError('maxlength') && !form.get(condition.conditionId + '').hasError('required')">
+                                {{condition.conditionName}}的长度不能大于 <strong>12</strong>
+                            </mat-error>
+                            <mat-error *ngIf="form.get(condition.conditionId + '').hasError('required')">
+                                {{condition.conditionName}}是 <strong>必填</strong> 项
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field
+                                *ngIf="condition.fieldType === '0003'"
+                                appearance="outline">
+                            <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
+                            <input [formControlName]="condition.conditionId" placeholder="请选择" matInput [matDatepicker]="picker"
+                                   [required]="!!condition.required">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </ion-col>
+                </ng-container>
             </ion-row>
         </ion-grid>
         <div class="row-buttons">
-            <ion-button [disabled]="form.invalid" (click)="submit(reportType === 2)" mat-raised-button color="primary">
+            <button [disabled]="form.invalid" (click)="submit(reportType === 2)" mat-raised-button color="primary">
                 生成报告
-            </ion-button>
+            </button>
         </div>
     </form>
+</div>
+
+<div class="container">
+    <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef style="width: 50px">
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()"
+                              [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)"
+                              [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> 索引.</th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> <b>报告名称</b></th>
+            <td mat-cell *matCellDef="let element">
+                {{element.name}}
+            </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef> <b>报告类型</b></th>
+            <td mat-cell *matCellDef="let element">
+                {{element.type === 0 ? '快捷匹配' : '精准匹配'}}
+            </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef style="width: 200px"> <b>生成日期</b></th>
+            <td mat-cell *matCellDef="let element">
+                {{element.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}
+            </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef style="width: 250px"> <b>操作</b></th>
+            <td mat-cell *matCellDef="let element">
+                <a class="actions-icon" [routerLink]="['/admin/plan/item',element.id]">
+                    <img src="/assets/images/view.png">
+                </a>
+                <a class="actions-icon" (click)="preDownload(element.id)" download
+                   [href]="FILE_PREFIX_URL + element.fileId">
+                    <img src="/assets/images/download.png">
+                </a>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            (click)="selection.toggle(row)">
+        </tr>
+    </table>
 </div>
