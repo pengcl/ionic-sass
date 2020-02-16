@@ -3,11 +3,11 @@ import {DashboardService} from '../../dashboard/dashboard.service';
 import {CompanyService} from '../../company/company.service';
 
 @Component({
-    selector: 'app-precise',
-    templateUrl: './precise.component.html',
-    styleUrls: ['./precise.component.scss']
+    selector: 'app-admin-plan-item',
+    templateUrl: './item.component.html',
+    styleUrls: ['./item.component.scss']
 })
-export class AdminReportPrecisePage implements OnInit {
+export class AdminPlanItemPage implements OnInit {
     brandOption = {
         count: 0,
         pie: null,

@@ -16,6 +16,7 @@
             <ion-row>
                 <ion-col size="6">
                     <mat-form-field appearance="outline">
+                        <mat-label>企业名称</mat-label>
                         <input type="text" formControlName="companyName" matInput placeholder="企业名称" required>
                         <mat-error
                                 *ngIf="form.get('companyName').hasError('maxLength') && !form.get('companyName').hasError('required')">
@@ -32,6 +33,7 @@
                 </ion-col>
                 <ion-col size="6">
                     <mat-form-field appearance="outline">
+                        <mat-label>统一社会信用代码</mat-label>
                         <input type="text" formControlName="creditNumber" matInput placeholder="统一社会信用代码" required>
                         <span (click)="getNumber()" mat-button matSuffix>获取</span>
                         <mat-error
@@ -49,6 +51,7 @@
                 </ion-col>
                 <ion-col size="4">
                     <mat-form-field appearance="outline">
+                        <mat-label>省</mat-label>
                         <mat-select formControlName="province" placeholder="省" required>
                             <mat-option *ngFor="let item of provinces" [value]="item.name">
                                 {{item.name}}
@@ -58,6 +61,7 @@
                 </ion-col>
                 <ion-col size="4">
                     <mat-form-field appearance="outline">
+                        <mat-label>市</mat-label>
                         <mat-select formControlName="city" placeholder="市" required>
                             <mat-option *ngFor="let item of cities" [value]="item.name">
                                 {{item.name}}
@@ -67,6 +71,7 @@
                 </ion-col>
                 <ion-col size="4">
                     <mat-form-field appearance="outline">
+                        <mat-label>区</mat-label>
                         <mat-select formControlName="area" placeholder="区" required>
                             <mat-option *ngFor="let item of districts" [value]="item.name">
                                 {{item.name}}
@@ -76,6 +81,7 @@
                 </ion-col>
                 <ion-col size="12">
                     <mat-form-field appearance="outline">
+                        <mat-label>详细地址</mat-label>
                         <input formControlName="address" matInput placeholder="详细地址" required>
                     </mat-form-field>
                 </ion-col>
@@ -102,6 +108,7 @@
                 </ion-col>
                 <ion-col size="6">
                     <mat-form-field appearance="outline">
+                        <mat-label>联系人</mat-label>
                         <input type="text" formControlName="name" matInput placeholder="联系人" required>
                         <mat-error
                                 *ngIf="form.get('name').hasError('pattern') && !form.get('name').hasError('required')">
@@ -114,6 +121,7 @@
                 </ion-col>
                 <ion-col size="6">
                     <mat-form-field appearance="outline">
+                        <mat-label>联系电话</mat-label>
                         <input type="text" formControlName="mobile" matInput placeholder="联系电话" required>
                         <mat-error
                                 *ngIf="form.get('mobile').hasError('pattern') && !form.get('mobile').hasError('required')">
@@ -126,6 +134,7 @@
                 </ion-col>
                 <ion-col size="6">
                     <mat-form-field appearance="outline">
+                        <mat-label>邮箱</mat-label>
                         <input matInput formControlName="email" placeholder="邮箱" [errorStateMatcher]="matcher">
                         <!--<mat-hint>Errors appear instantly!</mat-hint>-->
                         <mat-error
@@ -205,13 +214,14 @@
                 </ion-col>
                 <ion-col size="12">
                     <mat-form-field appearance="outline">
+                        <mat-label>备注</mat-label>
                         <textarea formControlName="remark" matInput
                                   placeholder="备注"></textarea>
                     </mat-form-field>
                 </ion-col>
                 <ion-col size="12">
                     <div class="row-buttons">
-                        <ion-button (click)="submit()" color="primary">
+                        <ion-button [disabled]="form.invalid" (click)="submit()" color="primary">
                             <span *ngIf="id === '0'">
                                 <span [routerLink]="['/admin/company/qualification',form.get('custId').value]"
                                       *ngIf="submitted">生成报告</span>

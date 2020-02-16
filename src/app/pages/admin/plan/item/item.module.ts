@@ -1,15 +1,15 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {SharedModule} from '../../../../@shared/shared.module';
-import {AdminReportFastPage} from './fast.component';
+import {AdminPlanItemPage} from './item.component';
 
 
 @NgModule({
   imports: [
     SharedModule,
-    RouterModule.forChild([{path: '', component: AdminReportFastPage}])
+    RouterModule.forChild([{path: '', component: AdminPlanItemPage}])
   ],
-  declarations: [AdminReportFastPage]
+  declarations: [AdminPlanItemPage]
 })
-export class AdminReportFastPageModule {
+export class AdminPlanItemPageModule {
 }

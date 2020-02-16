@@ -227,14 +227,12 @@ export class AdminCompanyItemPage implements OnInit {
                 {queryParams: {type: 0}});
             return false;
         }
-        if (this.form.invalid || this.loading) {
+        if (this.form.invalid) {
             return false;
         }
         this.loadingSvc.show('提交中...', 0).then();
-        this.loading = true;
         this.companySvc.update(this.form.value).subscribe(res => {
             this.loadingSvc.hide();
-            this.loading = false;
             if (res) {
                 this.form.get('custId').setValue(res.busCust.id);
                 this.submitted = true;

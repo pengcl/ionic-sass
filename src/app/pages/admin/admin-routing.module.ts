@@ -72,6 +72,13 @@ const routes: Routes = [
                 loadChildren: () =>
                     import('./plan/list/list.module').then(m => m.AdminPlanListPageModule)
             },
+            {// 体检报告列表
+                path: 'plan/item/:id',
+                data: {name: '企业体检报告'},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./plan/item/item.module').then(m => m.AdminPlanItemPageModule)
+            },
             {// 风险报告列表
                 path: 'risk/list',
                 data: {name: '企业风险报告'},
@@ -134,20 +141,6 @@ const routes: Routes = [
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./ticket/item/item.module').then(m => m.AdminTicketItemPageModule)
-            },
-            {// 报告详细（快捷）
-                path: 'report/fast',
-                data: {name: '报告详细（快捷）'},
-                canActivate: [CompanyGuard],
-                loadChildren: () =>
-                    import('./report/fast/fast.module').then(m => m.AdminReportFastPageModule)
-            },
-            {// 报告详细（精准）
-                path: 'report/precise',
-                data: {name: '报告详细（精准）'},
-                canActivate: [CompanyGuard],
-                loadChildren: () =>
-                    import('./report/precise/precise.module').then(m => m.AdminReportPrecisePageModule)
             }
         ]
     }
