@@ -24,7 +24,7 @@
                 </ion-col>
                 <ion-col size="2">
                     <mat-form-field appearance="outline">
-                        <mat-select name="workType" [(ngModel)]="params.workType" placeholder="工单类型">
+                        <mat-select name="workType" [(ngModel)]="params.workType" (ngModelChange)="getData()" placeholder="工单类型">
                             <mat-option *ngFor="let item of types" [value]="item.dictValue">
                                 {{item.dictName}}
                             </mat-option>
@@ -33,7 +33,7 @@
                 </ion-col>
                 <ion-col size="2">
                     <mat-form-field appearance="outline">
-                        <mat-select name="workStatus" [(ngModel)]="params.workStatus" placeholder="工单状态">
+                        <mat-select name="workStatus" [(ngModel)]="params.workStatus" (ngModelChange)="getData()" placeholder="工单状态">
                             <mat-option *ngFor="let item of statuses" [value]="item.value">
                                 {{item.name}}
                             </mat-option>
@@ -43,7 +43,7 @@
                 <ion-col size="1" class="search-label">开始时间</ion-col>
                 <ion-col size="2">
                     <mat-form-field appearance="outline">
-                        <input name="createDateBegin" [(ngModel)]="params.createDateBegin" placeholder="请选择日期" matInput
+                        <input name="createDateBegin" [(ngModel)]="params.createDateBegin" (ngModelChange)="getData()" placeholder="请选择日期" matInput
                                [matDatepicker]="startPicker">
                         <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                         <mat-datepicker #startPicker></mat-datepicker>
@@ -52,7 +52,7 @@
                 <ion-col size="1" class="search-label">更新时间</ion-col>
                 <ion-col size="2">
                     <mat-form-field appearance="outline">
-                        <input name="updateDateBegin" [(ngModel)]="params.updateDateBegin" placeholder="请选择日期" matInput
+                        <input name="updateDateBegin" [(ngModel)]="params.updateDateBegin" (ngModelChange)="getData()" placeholder="请选择日期" matInput
                                [matDatepicker]="updatePicker">
                         <mat-datepicker-toggle matSuffix [for]="updatePicker"></mat-datepicker-toggle>
                         <mat-datepicker #updatePicker></mat-datepicker>
@@ -104,7 +104,7 @@
                 'danger':element.workStatus === '2',
                 'disabled':element.workStatus === '3',
                 'success':element.workStatus === '4'}">
-                {{element.workSatusName}}
+                {{element.workStatusWebName}}
             </td>
         </ng-container>
 
@@ -112,7 +112,7 @@
         <ng-container matColumnDef="startTime">
             <th mat-header-cell *matHeaderCellDef><b>开始时间</b></th>
             <td mat-cell *matCellDef="let element">
-                {{element.createTime}}
+                {{element.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}
             </td>
         </ng-container>
 
@@ -120,7 +120,7 @@
         <ng-container matColumnDef="serviceStatus">
             <th mat-header-cell *matHeaderCellDef><b>服务状态</b></th>
             <td mat-cell *matCellDef="let element">
-                {{element.workStatusWebName}}
+                {{element.serviceStatusName}}
             </td>
         </ng-container>
 

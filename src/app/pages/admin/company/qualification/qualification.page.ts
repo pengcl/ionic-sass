@@ -135,16 +135,21 @@ export class AdminCompanyQualificationPage implements OnInit {
                     this.getData(result.conditions);
                 });
             }
+            this.form.valueChanges.subscribe(() => {
+                console.log(this.form);
+            });
         });
     }
 
     getData(conditions) {
         const required = {
             num: 0,
+            valueNum: 0,
             list: []
         };
         const optional = {
             num: 0,
+            valueNum: 0,
             list: []
         };
         const group = [];
@@ -221,6 +226,11 @@ export class AdminCompanyQualificationPage implements OnInit {
                 this.loading = false;
             }
         });
+    }
+
+    remark(content, e) {
+        e.preventDefault();
+        console.log(content);
     }
 
     preDownload(id) {

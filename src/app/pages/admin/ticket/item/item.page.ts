@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {SelectionModel} from '@angular/cdk/collections';
@@ -33,6 +33,7 @@ export class AdminTicketItemPage {
     };
 
     constructor(private route: ActivatedRoute,
+                @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
                 private authSvc: AuthService,
                 private companySvc: CompanyService,
                 private ticketSvc: TicketService) {
@@ -45,6 +46,10 @@ export class AdminTicketItemPage {
                 console.log(this.source.files);
             });
         });
+    }
+
+    view(id) {
+        window.location.href = this.FILE_PREFIX_URL + id;
     }
 
 }

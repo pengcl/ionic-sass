@@ -34,7 +34,8 @@ import {
     MatStepperModule,
     MatRadioModule,
     MatPaginatorIntl,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTooltipModule
 } from '@angular/material';
 
 const MATERIAL_PART = [
@@ -65,7 +66,8 @@ const MATERIAL_PART = [
     MatNativeDateModule,
     MatStepperModule,
     MatRadioModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTooltipModule
 ];
 
 import {DragDropModule} from '@angular/cdk/drag-drop';

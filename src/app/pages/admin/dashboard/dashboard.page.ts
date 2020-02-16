@@ -44,9 +44,9 @@ export class AdminDashboardPage {
     boxStatus;
     form: FormGroup = new FormGroup({
         custId: new FormControl(this.company.id, [Validators.required]),
-        province: new FormControl('', []),
-        area: new FormControl('', []),
-        city: new FormControl('', [])
+        province: new FormControl('', [Validators.required]),
+        area: new FormControl('', [Validators.required]),
+        city: new FormControl('', [Validators.required])
     });
     provinces = [];
     cities = [];
@@ -74,6 +74,11 @@ export class AdminDashboardPage {
 
     monitorDisplayedColumns: string[] = ['name', 'time', 'actions'];
     monitorDataSource;
+    guarantee = {
+        one: false,
+        two: false,
+        three: false
+    };
 
     constructor(private router: Router,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
@@ -114,15 +119,24 @@ export class AdminDashboardPage {
             this.districts = [];
             this.getDistricts();
         });
+        this.form.get('area').valueChanges.subscribe(() => {
+            const body = {
+                custId: this.form.get('custId').value,
+                province: this.form.get('province').value,
+                area: this.form.get('area').value,
+                city: this.form.get('city').value
+            };
+            console.log(body);
+            this.dashboardSvc.policies(body).subscribe(res => {
+                this.policy.total = res.totalCount;
+                this.policy.update = res.updateCount;
+                this.policy.list = res.list;
+            });
+        });
+
         this.form.get('province').setValue(this.company.province);
         this.form.get('city').setValue(this.company.city);
         this.form.get('area').setValue(this.company.area);
-        this.dashboardSvc.policies(this.form.value).subscribe(res => {
-            this.policy.total = res.totalCount;
-            this.policy.update = res.updateCount;
-            this.policy.list = res.list;
-        });
-
         this.dashboardSvc.completions(this.company.id).subscribe(res => {
             res.forEach(item => {
                 item.value = Math.round(item.editCount * 100 / item.totalCount) / 100;
@@ -152,12 +166,12 @@ export class AdminDashboardPage {
                 },
                 yAxis: {
                     type: 'category',
-                    data: ['科创宝培育可获得', '快速培育可获得', '目前已获得']
+                    data: ['科创宝培育可获得', '快速培育可获得']
                 },
                 series: [
                     {
                         type: 'bar',
-                        data: [res.keChuangBaoAmt, res.quickAmt, res.hasBeenAmt],
+                        data: [res.keChuangBaoAmt, res.quickAmt],
                         itemStyle: {
                             normal: {
                                 color: (params) => {
@@ -564,7 +578,6 @@ export class AdminDashboardPage {
         });
 
         monitorSvc.list({custId: this.company.id}).subscribe(res => {
-            console.log(res);
             this.monitorDataSource = new MatTableDataSource<any>(res.list);
         });
     }
@@ -613,12 +626,16 @@ export class AdminDashboardPage {
         this.router.navigate(['admin/checkout']);
     }
 
-    async presentLoading() {
+    async presentLoading(target?) {
         const loading = await this.loadingController.create({
             message: '功能即将开发，敬请期待',
             duration: 1000
         });
         await loading.present();
-        await loading.onDidDismiss();
+        await loading.onDidDismiss().then(() => {
+            if (target) {
+                this.guarantee[target] = false;
+            }
+        });
     }
 }

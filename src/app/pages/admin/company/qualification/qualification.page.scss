@@ -28,6 +28,16 @@ form {
   mat-form-field {
     display: block;
     width: unset;
+
+    label {
+      i {
+        display: inline-block;
+        margin-left: 10px;
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+      }
+    }
   }
 
   &.form-s {
@@ -46,6 +56,7 @@ form {
         margin-right: 0.75em;
       }
     }
+
     mat-form-field, {
       width: 200px;
       margin-left: 55%;
@@ -73,10 +84,12 @@ form {
       display: block;
       margin-bottom: 60px;
       padding-left: 15px;
+
       .label {
         margin-right: 20px;
       }
     }
+
     mat-form-field {
       width: 320px;
       margin-bottom: 50px;

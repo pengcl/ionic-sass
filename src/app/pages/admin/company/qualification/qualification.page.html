@@ -64,7 +64,7 @@
                     <mat-form-field class="nl"
                                     *ngIf="condition.fieldType === '0001' && ((reportType === 1 && !!condition.required) || reportType === 2)"
                                     appearance="outline">
-                        <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
+                        <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}<i [matTooltip]="condition.conditionRemark" (click)="remark(condition.conditionRemark,$event)" *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i></label>
                         <input style="display: none" [formControlName]="condition.conditionId" matInput
                                [required]="!!condition.required">
                         <mat-radio-group [formControlName]="condition.conditionId">
@@ -75,7 +75,7 @@
                     <mat-form-field
                             *ngIf="condition.fieldType === '0002' && dict[condition.conditionId] && ((reportType === 1 && !!condition.required) || reportType === 2)"
                             appearance="outline">
-                        <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
+                        <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}<i [matTooltip]="condition.conditionRemark" (click)="remark(condition.conditionRemark,$event)" *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i></label>
                         <input *ngIf="dict[condition.conditionId].length < 1" [placeholder]="'请输入' + condition.conditionName" [formControlName]="condition.conditionId"
                                matInput
                                pattern="(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)"
@@ -102,7 +102,7 @@
                     <mat-form-field
                             *ngIf="condition.fieldType === '0003' && ((reportType === 1 && !!condition.required) || reportType === 2)"
                             appearance="outline">
-                        <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
+                        <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}<i [matTooltip]="condition.conditionRemark" (click)="remark(condition.conditionRemark,$event)" *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i></label>
                         <input [formControlName]="condition.conditionId" matInput placeholder="请选择" [matDatepicker]="picker"
                                [required]="!!condition.required">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -124,7 +124,7 @@
                         <mat-form-field class="nl"
                                         *ngIf="condition.fieldType === '0001'"
                                         appearance="outline">
-                            <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
+                            <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}<i [matTooltip]="condition.conditionRemark" (click)="remark(condition.conditionRemark,$event)" *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i></label>
                             <input style="display: none" [formControlName]="condition.conditionId" matInput>
                             <mat-radio-group [formControlName]="condition.conditionId">
                                 <mat-radio-button [value]="true">是</mat-radio-button>
@@ -134,7 +134,7 @@
                         <mat-form-field
                                 *ngIf="condition.fieldType === '0002'"
                                 appearance="outline">
-                            <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
+                            <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}<i [matTooltip]="condition.conditionRemark" (click)="remark(condition.conditionRemark,$event)" *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i></label>
                             <input *ngIf="dict[condition.conditionId].length < 1" [placeholder]="'请输入' + condition.conditionName" [formControlName]="condition.conditionId"
                                    matInput
                                    pattern="(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)"
@@ -161,7 +161,7 @@
                         <mat-form-field
                                 *ngIf="condition.fieldType === '0003'"
                                 appearance="outline">
-                            <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}</label>
+                            <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}<i [matTooltip]="condition.conditionRemark" (click)="remark(condition.conditionRemark,$event)" *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i></label>
                             <input [formControlName]="condition.conditionId" placeholder="请选择" matInput [matDatepicker]="picker"
                                    [required]="!!condition.required">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

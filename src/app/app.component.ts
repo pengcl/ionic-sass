@@ -23,7 +23,6 @@ export class AppComponent {
                 return route;
             }),
             mergeMap(route => {
-                console.log(route);
                 return route.data;
             })
         ).subscribe(data => {
