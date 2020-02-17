@@ -163,7 +163,7 @@ export class AdminDashboardPage {
                 xAxis: {
                     type: 'value',
                     boundaryGap: [0, 0.01],
-                    name: '万元',
+                    name: '万元'
                 },
                 yAxis: {
                     type: 'category',
@@ -279,21 +279,27 @@ export class AdminDashboardPage {
                     name: '已注册',
                     type: 'bar',
                     stack: '1',
-                    data: [320, 302, 301]
+                    data: [],
+                    barWidth: 14
                 },
                 {
                     name: '申请中',
                     type: 'bar',
                     stack: '1',
-                    data: [320, 302, 301]
+                    data: [],
+                    barWidth: 14
                 },
                 {
                     name: '无效',
                     type: 'bar',
                     stack: '1',
-                    data: [320, 302, 301]
+                    data: [],
+                    barWidth: 14
                 }
             ];
+            res.histograms.sort((a, b) => {
+                return a.applyYear - b.applyYear;
+            });
             res.histograms.forEach(item => {
                 years.push(item.applyYear);
                 series[0].data.push(item.registerCount);
@@ -301,9 +307,9 @@ export class AdminDashboardPage {
                 series[2].data.push(item.invalidCount);
             });
             this.copyOption.line = {
-                color: ['#ff5257', '#27d78f', '#36a0f4'],
+                color: ['#36a0f4', '#27d78f', '#ff5257'],
                 legend: {
-                    bottom: 0,
+                    bottom: 10,
                     data: ['已注册', '申请中', '无效'],
                     itemWidth: 8,
                     itemHeight: 8,
@@ -314,13 +320,17 @@ export class AdminDashboardPage {
                 grid: {
                     left: '3%',
                     right: '4%',
-                    bottom: '10%',
+                    bottom: '15%',
                     containLabel: true
                 },
                 xAxis: {
 
                     type: 'category',
-                    data: years
+                    data: years,
+                    axisTick: {
+                        alignWithLabel: true,
+                        interval: 0
+                    }
                 },
                 yAxis: {
                     type: 'value'
@@ -406,21 +416,27 @@ export class AdminDashboardPage {
                     name: '已注册',
                     type: 'bar',
                     stack: '1',
-                    data: [320, 302, 301]
+                    data: [],
+                    barWidth: 14
                 },
                 {
                     name: '申请中',
                     type: 'bar',
                     stack: '1',
-                    data: [320, 302, 301]
+                    data: [],
+                    barWidth: 14
                 },
                 {
                     name: '无效',
                     type: 'bar',
                     stack: '1',
-                    data: [320, 302, 301]
+                    data: [],
+                    barWidth: 14
                 }
             ];
+            res.histograms.sort((a, b) => {
+                return a.applyYear - b.applyYear;
+            });
             res.histograms.forEach(item => {
                 years.push(item.applyYear);
                 series[0].data.push(item.registerCount);
@@ -430,7 +446,7 @@ export class AdminDashboardPage {
             this.brandOption.line = {
                 color: ['#ff5257', '#27d78f', '#36a0f4'],
                 legend: {
-                    bottom: 0,
+                    bottom: 10,
                     data: ['已注册', '申请中', '无效'],
                     itemWidth: 8,
                     itemHeight: 8,
@@ -441,13 +457,17 @@ export class AdminDashboardPage {
                 grid: {
                     left: '3%',
                     right: '4%',
-                    bottom: '10%',
+                    bottom: '15%',
                     containLabel: true
                 },
                 xAxis: {
 
                     type: 'category',
-                    data: years
+                    data: years,
+                    axisTick: {
+                        alignWithLabel: true,
+                        interval: 0
+                    }
                 },
                 yAxis: {
                     type: 'value'
@@ -533,31 +553,38 @@ export class AdminDashboardPage {
                     name: '已注册',
                     type: 'bar',
                     stack: '1',
-                    data: [320, 302, 301]
+                    data: [],
+                    barWidth: 14
                 },
                 {
                     name: '申请中',
                     type: 'bar',
                     stack: '1',
-                    data: [320, 302, 301]
+                    data: [],
+                    barWidth: 14
                 },
                 {
                     name: '无效',
                     type: 'bar',
                     stack: '1',
-                    data: [320, 302, 301]
+                    data: [],
+                    barWidth: 14
                 }
             ];
+            res.histograms.sort((a, b) => {
+                return a.applyYear - b.applyYear;
+            });
             res.histograms.forEach(item => {
+                console.log(item);
                 years.push(item.applyYear);
-                series[0].data.push(item.registerCount);
-                series[1].data.push(item.applyCount);
-                series[2].data.push(item.invalidCount);
+                series[0].data.push(item.registerCount ? item.registerCount : 0);
+                series[1].data.push(item.applyCount ? item.applyCount : 0);
+                series[2].data.push(item.invalidCount ? item.invalidCount : 0);
             });
             this.patentOption.line = {
                 color: ['#ff5257', '#27d78f', '#36a0f4'],
                 legend: {
-                    bottom: 0,
+                    bottom: 10,
                     data: ['已注册', '申请中', '无效'],
                     itemWidth: 8,
                     itemHeight: 8,
@@ -568,19 +595,24 @@ export class AdminDashboardPage {
                 grid: {
                     left: '3%',
                     right: '4%',
-                    bottom: '10%',
+                    bottom: '15%',
                     containLabel: true
                 },
                 xAxis: {
 
                     type: 'category',
-                    data: years
+                    data: years,
+                    axisTick: {
+                        alignWithLabel: true,
+                        interval: 0
+                    }
                 },
                 yAxis: {
                     type: 'value'
                 },
                 series
             };
+            console.log(series);
         });
 
         monitorSvc.list({custId: this.company.id}).subscribe(res => {
