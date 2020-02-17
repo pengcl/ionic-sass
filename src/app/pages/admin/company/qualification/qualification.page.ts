@@ -130,28 +130,32 @@ export class AdminCompanyQualificationPage implements OnInit {
                 this.conditions = res[0].conditions;
                 this.setupForm(res[0].conditions);
                 this.getData(res[0].conditions);
+                this.form.valueChanges.subscribe(() => {
+                    this.getNum();
+                });
             } else {
                 this.qualificationSvc.item(this.type, this.id).subscribe(result => {
                     this.conditions = result.conditions;
                     this.setupForm(result.conditions);
                     this.getData(result.conditions);
+                    this.form.valueChanges.subscribe(() => {
+                        this.getNum();
+                    });
                 });
             }
-            this.getNum();
-            this.form.valueChanges.subscribe(() => {
-                this.getNum();
-            });
         });
     }
 
     getNum() {
+        this.required.valueNum = 0;
+        this.optional.valueNum = 0;
         this.conditions.forEach(item => {
             if (!!item.required && this.form.get('' + item.conditionId).valid) {
                 this.required.valueNum = this.required.valueNum + 1;
             }
             if (!item.required) {
                 if (item.fieldType === '0001') {
-                    if (this.form.get('' + item.conditionId).value) {
+                    if (typeof this.form.get('' + item.conditionId).value === 'boolean') {
                         this.optional.valueNum = this.optional.valueNum + 1;
                     }
                 } else {
