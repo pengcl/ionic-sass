@@ -55,7 +55,7 @@
         <ion-grid>
             <ion-row>
                 <ion-col *ngIf="reportType === 2" size="12">
-                    <h3>必填资质（{{required.num}} / {{required.num + optional.num}}）</h3>
+                    <h3>必填资质（{{required.valueNum}} / {{required.num}}）</h3>
                 </ion-col>
                 <ion-col [size]="12">
                     <span class="value"><span class="label">企业名称</span>{{company?.companyName}}</span>
@@ -114,7 +114,7 @@
         <ion-grid *ngIf="reportType === 2">
             <ion-row>
                 <ion-col size="12">
-                    <h3>选填资质（{{optional.num}} / {{required.num + optional.num}}）</h3>
+                    <h3>选填资质（{{optional.valueNum}} / {{optional.num}}）</h3>
                 </ion-col>
                 <ng-container *ngFor="let item of optional.list">
                     <ion-col [size]="12">
