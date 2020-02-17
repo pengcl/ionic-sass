@@ -156,13 +156,14 @@ export class AdminDashboardPage {
                 },
                 grid: {
                     left: '3%',
-                    right: '4%',
+                    right: '7%',
                     bottom: '3%',
                     containLabel: true
                 },
                 xAxis: {
                     type: 'value',
-                    boundaryGap: [0, 0.01]
+                    boundaryGap: [0, 0.01],
+                    name: '万元',
                 },
                 yAxis: {
                     type: 'category',
@@ -172,6 +173,11 @@ export class AdminDashboardPage {
                     {
                         type: 'bar',
                         data: [res.keChuangBaoAmt, res.quickAmt],
+                        label: {
+                            show: true,
+                            position: 'right',
+                            color: '#21333F'
+                        },
                         itemStyle: {
                             normal: {
                                 color: (params) => {
