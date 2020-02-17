@@ -444,7 +444,7 @@ export class AdminDashboardPage {
                 series[2].data.push(item.invalidCount);
             });
             this.brandOption.line = {
-                color: ['#ff5257', '#27d78f', '#36a0f4'],
+                color: ['#36a0f4', '#27d78f', '#ff5257'],
                 legend: {
                     bottom: 10,
                     data: ['已注册', '申请中', '无效'],
@@ -582,7 +582,7 @@ export class AdminDashboardPage {
                 series[2].data.push(item.invalidCount ? item.invalidCount : 0);
             });
             this.patentOption.line = {
-                color: ['#ff5257', '#27d78f', '#36a0f4'],
+                color: ['#36a0f4', '#27d78f', '#ff5257'],
                 legend: {
                     bottom: 10,
                     data: ['已注册', '申请中', '无效'],

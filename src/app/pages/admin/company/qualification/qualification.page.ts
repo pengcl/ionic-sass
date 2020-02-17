@@ -51,10 +51,12 @@ export class AdminCompanyQualificationPage implements OnInit {
     loading = false;
     required = {
         num: 0,
+        valueNum: 0,
         list: []
     };
     optional = {
         num: 0,
+        valueNum: 0,
         list: []
     };
     dict = {};
@@ -135,9 +137,21 @@ export class AdminCompanyQualificationPage implements OnInit {
                     this.getData(result.conditions);
                 });
             }
+            this.getNum();
             this.form.valueChanges.subscribe(() => {
-                console.log(this.form);
+                this.getNum();
             });
+        });
+    }
+
+    getNum() {
+        this.conditions.forEach(item => {
+            if (!!item.required && this.form.get('' + item.conditionId).valid) {
+                this.required.valueNum = this.required.valueNum + 1;
+            }
+            if (!item.required && this.form.get('' + item.conditionId).value.toString().length > 0) {
+                this.optional.valueNum = this.optional.valueNum + 1;
+            }
         });
     }
 
