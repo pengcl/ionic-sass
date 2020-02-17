@@ -104,8 +104,9 @@ export class AdminCompanyQualificationPage implements OnInit {
     setupForm(conditions) {
         conditions.forEach(condition => {
             if (condition.fieldType === '0001') {
-                this.form.setControl(condition.conditionId, new FormControl(condition.conditionVal ? true : '',
-                    [!!condition.required ? Validators.required : Validators.nullValidator]));
+                this.form.setControl(condition.conditionId,
+                    new FormControl(condition.conditionVal === '1' ? true : condition.conditionVal === '0' ? false : '',
+                        [!!condition.required ? Validators.required : Validators.nullValidator]));
             } else {
                 if (condition.fieldType === '0002') {
                     this.dictSvc.get('condition_' + condition.conditionId).subscribe(res => {
@@ -130,6 +131,7 @@ export class AdminCompanyQualificationPage implements OnInit {
                 this.conditions = res[0].conditions;
                 this.setupForm(res[0].conditions);
                 this.getData(res[0].conditions);
+                this.getNum();
                 this.form.valueChanges.subscribe(() => {
                     this.getNum();
                 });
@@ -138,6 +140,7 @@ export class AdminCompanyQualificationPage implements OnInit {
                     this.conditions = result.conditions;
                     this.setupForm(result.conditions);
                     this.getData(result.conditions);
+                    this.getNum();
                     this.form.valueChanges.subscribe(() => {
                         this.getNum();
                     });
