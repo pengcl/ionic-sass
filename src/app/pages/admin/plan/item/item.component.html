@@ -8,17 +8,17 @@
                     </mat-card-header>
                     <mat-card-content>
                         <div class="condition" style="display: flex;flex-direction: row">
-                            <div style="border-right: 1px solid #ccc">
+                            <div style="border-right: 1px solid #ccc;width: 20%">
                                 <label>知识产权</label>
                                 <div *ngIf="option.pie" echarts [options]="option.pie"
                                      style="width: 200px;height: 250px" class="main-chart"></div>
                             </div>
-                            <div style="margin:0 40px;border-right: 1px solid #ccc">
+                            <div style="margin:0 40px;border-right: 1px solid #ccc;width: 50%">
                                 <label>人员结构</label>
                                 <div echarts [options]="option.line" class="main-chart"
-                                     style="width: 500px;height: 250px;"></div>
+                                     style="width: 500px;height: 250px;margin: 0 auto"></div>
                             </div>
-                            <div>
+                            <div style="width: 30%">
                                 <label>政策补贴</label>
                                 <div class="policy">
                                     <div class="policy_small">
@@ -104,7 +104,7 @@
                             <div class="suggest_small">
                                 <div style="float: left">
                                     <img src="/assets/images/plan/info.png"
-                                         style="width: 60px;height: 60px;display: block;margin: 20px">
+                                         style="width: 32px;height: 32px;display: block;margin: 30px">
                                 </div>
                                 <div style="float: left">
                                     <p style="font-size: 26px;margin: 30px 5px;color: #B5C4D0">建议一</p>
@@ -121,7 +121,7 @@
                             <div class="suggest_small">
                                 <div style="float: left">
                                     <img src="/assets/images/plan/info.png"
-                                         style="width: 60px;height: 60px;display: block;margin: 20px">
+                                         style="width: 32px;height: 32px;display: block;margin: 30px">
                                 </div>
                                 <div style="float: left">
                                     <p style="font-size: 26px;margin: 30px 5px;color: #B5C4D0">建议二</p>
@@ -237,7 +237,7 @@
                             <div class="suggest_small">
                                 <div style="float: left">
                                     <img src="/assets/images/plan/info.png"
-                                         style="width: 60px;height: 60px;display: block;margin: 20px">
+                                         style="width: 32px;height: 32px;display: block;margin: 30px">
                                 </div>
                                 <div style="float: left">
                                     <p style="font-size: 26px;margin: 30px 5px;color: #B5C4D0">建议一</p>
@@ -252,7 +252,7 @@
                             <div class="suggest_small">
                                 <div style="float: left">
                                     <img src="/assets/images/plan/info.png"
-                                         style="width: 60px;height: 60px;display: block;margin: 20px">
+                                         style="width: 32px;height: 32px;display: block;margin: 30px">
                                 </div>
                                 <div style="float: left">
                                     <p style="font-size: 26px;margin: 30px 5px;color: #B5C4D0">建议二</p>
@@ -267,7 +267,7 @@
                             <div class="suggest_small">
                                 <div style="float: left">
                                     <img src="/assets/images/plan/info.png"
-                                         style="width: 60px;height: 60px;display: block;margin: 20px">
+                                         style="width: 32px;height: 32px;display: block;margin: 30px">
                                 </div>
                                 <div style="float: left">
                                     <p style="font-size: 26px;margin: 30px 5px;color: #B5C4D0">建议三</p>
@@ -282,7 +282,7 @@
                             <div class="suggest_small">
                                 <div style="float: left">
                                     <img src="/assets/images/plan/info.png"
-                                         style="width: 60px;height: 60px;display: block;margin: 20px">
+                                         style="width: 32px;height: 32px;display: block;margin: 30px">
                                 </div>
                                 <div style="float: left">
                                     <p style="font-size: 26px;margin: 30px 5px;color: #B5C4D0">建议四</p>
@@ -311,12 +311,12 @@
                                     <div class="suggest_small" style="height: 150px">
                                         <div style="float: left;">
                                             <img src="/assets/images/plan/info.png"
-                                                 style="width: 60px;height: 60px;display: block;margin:40px 20px">
+                                                 style="width: 32px;height: 32px;display: block;margin:50px 20px">
                                         </div>
                                         <div style="float: left">
-                                            <p style="font-size: 26px;margin: 40px 5px;color: #B5C4D0;">建议一</p>
+                                            <p style="font-size: 26px;margin: 50px 5px;color: #B5C4D0;">建议一</p>
                                         </div>
-                                        <span style="color: #B5C4D0;font-size: 12px;display: block;width: 300px;float: left;margin: 20px">
+                                        <span style="color: #B5C4D0;font-size: 12px;display: block;width: 350px;float: left;margin: 20px 30px">
                                     鉴于个税/社保为项目申报佐证的必备要件，建议继续保持企业员工的个税申报和社保购买，为全体在职员工申报个人所得税及购买社保，尤其是科研人员、高学历人员，要着重个税申报及社保购买；同时加强研发团队建设，壮大团队人数，继续完善人员架构，继吸纳高学历，专业对口（大专以上，网络通信相关专业）的人才；建议企业的研发团队人数占比10%以上，全员本科学历以上为目标。
                                 </span>
                                     </div>
@@ -325,12 +325,12 @@
                                     <div class="suggest_small">
                                         <div style="float: left">
                                             <img src="/assets/images/plan/info.png"
-                                                 style="width: 60px;height: 60px;display: block;margin: 20px">
+                                                 style="width: 32px;height: 32px;display: block;margin: 30px 20px">
                                         </div>
                                         <div style="float: left">
                                             <p style="font-size: 26px;margin: 30px 5px;color: #B5C4D0">建议二</p>
                                         </div>
-                                        <span style="color: #B5C4D0;font-size: 12px;display: block;width: 300px;float: left;margin: 20px">
+                                        <span style="color: #B5C4D0;font-size: 12px;display: block;width: 350px;float: left;margin:30px">
                                     基于目前科技计划专项项目及人才项目对项目负责人，项目成员职称的要求，鼓励并尽可能创造条件让研发人员参与职称评定工作。
                                 </span>
                                     </div>
@@ -451,45 +451,45 @@
                                     </tr>
                                     <tr>
                                         <td class="user">客户需求分析（上门）</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     <tr>
                                         <td class="user">诊断规划报告</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     <tr>
                                         <td class="user">政策监控</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     <tr>
                                         <td class="user">科技政策定期推送与培训</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     <tr>
                                         <td class="user">项目申报专业咨询</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     <tr>
                                         <td class="user">项目培育与申报实施</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     <tr>
                                         <td class="user">项目监理与申报系统维护</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -527,83 +527,83 @@
                                     </tr>
                                     <tr>
                                         <td class="user">免费出具商标近似查询报告、专利基础检索报告</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
-                                        <td class="name">√</td>
-                                        <td class="sex">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="name" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="sex" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     <tr>
                                         <td class="user">商标注册、商标案件、专利申请、版权登记状态智能自动托管</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
-                                        <td class="name">√</td>
-                                        <td class="sex">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="name" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="sex" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     <tr>
                                         <td class="user">企业商标、专利、版权预警监控</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
-                                        <td class="name">√</td>
-                                        <td class="sex">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="name" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="sex" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     <tr>
                                         <td class="user">免费出具年度行业竞争对手商标、专利、版权分析报告</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
-                                        <td class="name">√</td>
-                                        <td class="sex">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="name" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="sex" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     <tr>
                                         <td class="user">免费推送科技、产业等政府项目政策</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
-                                        <td class="name">√</td>
-                                        <td class="sex">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="name" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="sex" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     <tr>
                                         <td class="user">免费定期推送行业最新技术动态信息</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
-                                        <td class="name">√</td>
-                                        <td class="sex">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="name" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="sex" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     <tr>
                                         <td class="user">免费出具年度知识产权精细化规划方案</td>
-                                        <td class="grade">√</td>
-                                        <td class="consumption">√</td>
-                                        <td class="date">√</td>
-                                        <td class="name">√</td>
-                                        <td class="sex">√</td>
+                                        <td class="grade" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="consumption" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="date" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="name" style="font-weight: bold;color: #2C9EF7">√</td>
+                                        <td class="sex" style="font-weight: bold;color: #2C9EF7">√</td>
                                     </tr>
                                     <tr>
                                         <td class="user">免服务费代理企业年度各类国内商标注册、国内商标案件、国内版权登记</td>
                                         <td class="grade">-</td>
                                         <td class="consumption">不超过 100 件</td>
-                                        <td class="date">不限量</td>
-                                        <td class="name">不限量</td>
-                                        <td class="sex">不限量</td>
+                                        <td class="date" style="color: #2C9EF7">不限量</td>
+                                        <td class="name" style="color: #2C9EF7">不限量</td>
+                                        <td class="sex" style="color: #2C9EF7">不限量</td>
                                     </tr>
                                     <tr>
                                         <td class="user">免服务费代理企业年度各类国内专利新申请</td>
                                         <td class="grade">-</td>
                                         <td class="consumption">不超过 10 件</td>
                                         <td class="date">不超过 30 件</td>
-                                        <td class="name">不限量</td>
-                                        <td class="sex">不限量</td>
+                                        <td class="name" style="color: #2C9EF7">不限量</td>
+                                        <td class="sex" style="color: #2C9EF7">不限量</td>
                                     </tr>
                                     <tr>
                                         <td class="user">免国内服务费代理企业海外商标、海外专利、海外公司注册</td>
                                         <td class="grade">-</td>
                                         <td class="consumption">-</td>
                                         <td class="date">30 件</td>
-                                        <td class="name">不限量</td>
-                                        <td class="sex">不限量</td>
+                                        <td class="name" style="color: #2C9EF7">不限量</td>
+                                        <td class="sex" style="color: #2C9EF7">不限量</td>
                                     </tr>
                                     <tr>
                                         <td class="user">免服务费代理企业商标疑难案件</td>
@@ -618,8 +618,8 @@
                                         <td class="grade">-</td>
                                         <td class="consumption">3件</td>
                                         <td class="date">3件</td>
-                                        <td class="name">不限量</td>
-                                        <td class="sex">不限量</td>
+                                        <td class="name" style="color: #2C9EF7">不限量</td>
+                                        <td class="sex" style="color: #2C9EF7">不限量</td>
                                     </tr>
                                     <tr>
                                         <td class="user">免服务费代理企业科技项目申报，规划政府扶持资金</td>
@@ -634,8 +634,8 @@
                                         <td class="grade">-</td>
                                         <td class="consumption">2件</td>
                                         <td class="date">10件</td>
-                                        <td class="name">不限量</td>
-                                        <td class="sex">不限量</td>
+                                        <td class="name" style="color: #2C9EF7">不限量</td>
+                                        <td class="sex" style="color: #2C9EF7">不限量</td>
                                     </tr>
                                     <tr>
                                         <td class="user">免服务费代理企业合同审核</td>
@@ -643,7 +643,7 @@
                                         <td class="consumption">5件</td>
                                         <td class="date">10件（可代草拟）</td>
                                         <td class="name">30件（可代草拟）</td>
-                                        <td class="sex">不限量</td>
+                                        <td class="sex" style="color: #2C9EF7">不限量</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -681,8 +681,9 @@
             </ion-col>
         </ion-row>
     </ion-grid>
+    <!--<div class="row-buttons" style="background-color: rgba(33, 40, 68, 1);margin: 0">
+        <ion-button (click)="download()" color="primary" style="margin: 20px 50%;">下载报告</ion-button>
+    </div>-->
+</div>
 
-</div>
-<div class="row-buttons" style="background-color: rgba(33, 40, 68, 1);margin: 0">
-    <ion-button (click)="download()" color="primary" style="margin: 20px 50%;">下载报告</ion-button>
-</div>
+
