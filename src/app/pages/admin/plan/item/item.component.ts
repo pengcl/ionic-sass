@@ -125,6 +125,11 @@ export class AdminPlanItemPage implements OnInit {
                     {
                         type: 'bar',
                         data: [res.employeeCount, res.taxPayableCount, res.rndCount, res.graduatesCount],
+                        label: {
+                            show: true,
+                            position: 'right',
+                            color: '#21333F'
+                        },
                         itemStyle: {
                             normal: {
                                 color: (params) => {
