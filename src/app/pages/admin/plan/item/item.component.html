@@ -28,7 +28,7 @@
                                         </div>
                                         <div style="float: left">
                                             <p style="font-size: 32px;color: #fff;margin: 20px 5px">{{data.subsidyAmount}}</p>
-                                            <p style="color: #fff;margin-top: -20px">最高可获得补贴及扶持金额</p>
+                                            <p style="color: #fff;margin-top: -20px">最高可获得补贴及扶持金额（万元）</p>
                                         </div>
                                     </div>
                                     <div class="policy_small" style="background: rgba(13, 215, 141, 1)">
@@ -377,7 +377,7 @@
 
                             <!-- Name Column -->
                             <ng-container matColumnDef="money">
-                                <th mat-header-cell *matHeaderCellDef><b>最高获得金额</b></th>
+                                <th mat-header-cell *matHeaderCellDef><b>最高获得金额(万元)</b></th>
                                 <td mat-cell *matCellDef="let element">
                                     {{element.subsidyAmtEnd}}
                                 </td>
@@ -390,7 +390,7 @@
                                 <td mat-cell *matCellDef="let element">
                                     {{element.reportTiming}}个月
                                 </td>
-                                <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency : '人民币 '}} </td>
+                                <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency : '人民币 '}} 万元</td>
                             </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

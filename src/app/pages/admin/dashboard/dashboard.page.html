@@ -175,7 +175,7 @@
                             <ion-item>
                                 <img src="/assets/images/dashboard/brand.png" slot="start"
                                      style="width: 30px;height: 30px">
-                                <span>商标智能年费监控</span>
+                                <span>商标自动续展</span>
                                 <ion-toggle (click)="presentLoading('one')" [(ngModel)]="guarantee.one" color="primary"
                                             slot="end"></ion-toggle>
                             </ion-item>
@@ -284,7 +284,8 @@
                             <ion-col size="8">
                                 <ion-list>
                                     <ion-list-header>关注工单</ion-list-header>
-                                    <table *ngIf="ticket.dataSource" mat-table [dataSource]="ticket.dataSource">
+                                    <app-empty *ngIf="ticket.dataSource?.data.length < 1" title="暂时没有相关数据"></app-empty>
+                                    <table *ngIf="ticket.dataSource?.data.length > 0" mat-table [dataSource]="ticket.dataSource">
 
                                         <!-- Position Column -->
                                         <ng-container matColumnDef="content">
