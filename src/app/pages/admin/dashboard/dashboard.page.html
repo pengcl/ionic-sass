@@ -191,7 +191,7 @@
                                 <img src="/assets/images/dashboard/box.png" slot="start"
                                      style="width: 30px;height: 30px">
                                 <span>知产保险箱
-                                <!--<img src="/assets/images/qualification.png" style="width: 20px;height: 20px;" matTooltip="由中科华海搜集全国范围内的企业相关政策" matTooltipPosition="after">-->
+                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 15px;left: 80px;" matTooltip="通过华海安全云服务保障企业商业秘密" matTooltipPosition="after">
                             </span>
                                 <img src="/assets/images/dashboard/to.png" slot="end"
                                      style="width: 25px;height: 25px;cursor: pointer" (click)="toBox()">
@@ -200,14 +200,18 @@
                             <ion-item style="--border-style:none">
                                 <img src="/assets/images/dashboard/brand.png" slot="start"
                                      style="width: 30px;height: 30px">
-                                <span>商标自动续展</span>
+                                <span>商标自动续展
+                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 15px;left: 90px;" matTooltip="系统监察商标期限和自动完成续费" matTooltipPosition="after">
+                                </span>
                                 <ion-toggle (click)="presentLoading('one')" [(ngModel)]="guarantee.one" color="primary"
                                             slot="end"></ion-toggle>
                             </ion-item>
 
                             <ion-item style="--border-style:none">
                                 <img src="/assets/images/dashboard/p.png" slot="start" style="width: 30px;height: 30px">
-                                <span>专利智能续费</span>
+                                <span>专利智能续费
+                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 15px;left: 90px;" matTooltip="系统监察专利期限和自动完成续费" matTooltipPosition="after">
+                                </span>
                                 <ion-toggle (click)="presentLoading('two')" [(ngModel)]="guarantee.two" color="primary"
                                             slot="end"></ion-toggle>
                             </ion-item>
@@ -215,7 +219,9 @@
                             <ion-item style="--border-style:none">
                                 <img src="/assets/images/dashboard/copyright.png" slot="start"
                                      style="width: 30px;height: 30px">
-                                <span>版权顾问</span>
+                                <span>版权顾问
+                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 15px;left: 60px;" matTooltip="为客户提供版权咨询和解答服务" matTooltipPosition="after">
+                                </span>
                                 <ion-toggle (click)="presentLoading('three')" [(ngModel)]="guarantee.three"
                                             color="primary" slot="end"></ion-toggle>
                             </ion-item>
@@ -233,21 +239,26 @@
                             <ion-col size="4">
                                 <ion-tab-button (click)="toCheckout()">
                                     <img src="/assets/images/dashboard/rocket.png">
-                                    <ion-label>商标自助智能注册</ion-label>
+                                    <ion-label>商标自助智能注册
+                                        <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 100px;left: 210px;" matTooltip="用户通过智能服务自助完成商标注册" matTooltipPosition="after">
+                                    </ion-label>
                                 </ion-tab-button>
                             </ion-col>
 
                             <ion-col size="4">
                                 <ion-tab-button (click)="presentLoading()">
                                     <img src="/assets/images/dashboard/plane.png">
-                                    <ion-label>专利快捷提交</ion-label>
+                                    <ion-label>专利快捷提交
+                                        <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 100px;left: 190px;" matTooltip="用户通过智能服务自助完成专利提交" matTooltipPosition="after">
+                                    </ion-label>
                                 </ion-tab-button>
                             </ion-col>
 
                             <ion-col size="4">
                                 <ion-tab-button (click)="presentLoading()">
                                     <img src="/assets/images/dashboard/e.png">
-                                    <ion-label>版权智能存证登记</ion-label>
+                                    <ion-label>版权智能存证登记
+                                        <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 100px;left: 210px;" matTooltip="用户通过智能系统采集证据完成版权存证" matTooltipPosition="after"></ion-label>
                                 </ion-tab-button>
                             </ion-col>
                         </ion-row>
@@ -266,7 +277,9 @@
                         <ion-row>
                             <ion-col size="4">
                                 <ion-list class="my_work">
-                                    <ion-list-header>工单统计</ion-list-header>
+                                    <ion-list-header>工单统计
+                                        <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 13px;left: 80px;" matTooltip="用户工单概况统计" matTooltipPosition="after">
+                                    </ion-list-header>
                                     <ion-item style="margin-top: 0" lines="none">
                                         <div class="work">
                                             <div class="work_left">
@@ -308,7 +321,9 @@
                             </ion-col>
                             <ion-col size="8">
                                 <ion-list>
-                                    <ion-list-header>关注工单</ion-list-header>
+                                    <ion-list-header>关注工单
+                                        <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 13px;left: 80px;" matTooltip="用户标记关注的工单情况" matTooltipPosition="after">
+                                    </ion-list-header>
                                     <table *ngIf="ticket.dataSource" mat-table [dataSource]="ticket.dataSource">
 
                                         <!-- Position Column -->
@@ -382,11 +397,11 @@
                                 <ion-grid>
                                     <ion-row>
                                         <ion-col size="6">
-                                            <div *ngIf="brandOption.pie" echarts [options]="brandOption.pie"
+                                            <div *ngIf="brandOption.line" echarts [options]="brandOption.line"
                                                  style="width: 200px;height: 300px" class="main-chart"></div>
                                         </ion-col>
                                         <ion-col size="6">
-                                            <div *ngIf="brandOption.line" echarts [options]="brandOption.line"
+                                            <div *ngIf="brandOption.pie" echarts [options]="brandOption.pie"
                                                  style="width: 200px;height: 300px" class="main-chart"></div>
                                         </ion-col>
                                     </ion-row>
@@ -403,11 +418,11 @@
                                 <ion-grid>
                                     <ion-row>
                                         <ion-col size="6">
-                                            <div *ngIf="patentOption.pie" echarts [options]="patentOption.pie"
+                                            <div *ngIf="patentOption.line" echarts [options]="patentOption.line"
                                                  style="width: 200px;height: 300px" class="main-chart"></div>
                                         </ion-col>
                                         <ion-col size="6">
-                                            <div *ngIf="patentOption.line" echarts [options]="patentOption.line"
+                                            <div *ngIf="patentOption.pie" echarts [options]="patentOption.pie"
                                                  style="width: 200px;height: 300px" class="main-chart"></div>
                                         </ion-col>
                                     </ion-row>
@@ -424,11 +439,11 @@
                                 <ion-grid>
                                     <ion-row>
                                         <ion-col size="6">
-                                            <div *ngIf="copyOption.pie" echarts [options]="copyOption.pie"
+                                            <div *ngIf="copyOption.line" echarts [options]="copyOption.line"
                                                  style="width: 200px;height: 300px" class="main-chart"></div>
                                         </ion-col>
                                         <ion-col size="6">
-                                            <div *ngIf="copyOption.line" echarts [options]="copyOption.line"
+                                            <div *ngIf="copyOption.pie" echarts [options]="copyOption.pie"
                                                  style="width: 200px;height: 300px" class="main-chart"></div>
                                         </ion-col>
                                     </ion-row>
@@ -441,7 +456,11 @@
             <ion-col size="12">
                 <mat-card>
                     <mat-card-header>
-                        <mat-card-title>竞争对手监控</mat-card-title>
+                        <mat-card-title>竞争对手监控
+                            <span style="margin-left: 10px" matTooltip="通过智能系统监控企业变化" matTooltipPosition="after">
+                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;">
+                            </span>
+                        </mat-card-title>
                         <mat-card-subtitle class="link">
                             <img routerLink="/admin/monitor/list" src="/assets/images/dashboard/setting.png">
                         </mat-card-subtitle>
