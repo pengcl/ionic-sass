@@ -104,8 +104,8 @@ export class AdminCompanyQualificationPage implements OnInit {
     setupForm(conditions) {
         conditions.forEach(condition => {
             if (condition.fieldType === '0001') {
-                this.form.setControl(condition.conditionId, new FormControl(!!parseInt(condition.conditionVal, 10),
-                    []));
+                this.form.setControl(condition.conditionId, new FormControl(condition.conditionVal ? true : '',
+                    [!!condition.required ? Validators.required : Validators.nullValidator]));
             } else {
                 if (condition.fieldType === '0002') {
                     this.dictSvc.get('condition_' + condition.conditionId).subscribe(res => {
@@ -149,8 +149,16 @@ export class AdminCompanyQualificationPage implements OnInit {
             if (!!item.required && this.form.get('' + item.conditionId).valid) {
                 this.required.valueNum = this.required.valueNum + 1;
             }
-            if (!item.required && this.form.get('' + item.conditionId).value.toString().length > 0) {
-                this.optional.valueNum = this.optional.valueNum + 1;
+            if (!item.required) {
+                if (item.fieldType === '0001') {
+                    if (this.form.get('' + item.conditionId).value) {
+                        this.optional.valueNum = this.optional.valueNum + 1;
+                    }
+                } else {
+                    if (this.form.get('' + item.conditionId).value.toString().length > 0) {
+                        this.optional.valueNum = this.optional.valueNum + 1;
+                    }
+                }
             }
         });
     }
