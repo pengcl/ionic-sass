@@ -65,7 +65,7 @@ export class AdminTrustItemPage {
                 private authSvc: AuthService,
                 private companySvc: CompanyService,
                 private trustSvc: TrustService) {
-        trustSvc.patent(this.id).subscribe(res => {
+        trustSvc.patent(this.id, this.company.id).subscribe(res => {
             this.data = res;
             const row = [{
                 publicationDate: res.publicationDate,
