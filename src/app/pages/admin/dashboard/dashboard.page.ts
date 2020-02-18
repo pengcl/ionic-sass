@@ -172,7 +172,8 @@ export class AdminDashboardPage {
                     xAxis: {
                         type: 'value',
                         boundaryGap: [0, 0.01],
-                        name: '万元'
+                        name: '万元',
+                        fontSize: '14px'
                     },
                     yAxis: {
                         type: 'category',

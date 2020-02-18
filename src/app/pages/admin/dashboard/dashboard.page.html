@@ -18,7 +18,7 @@
                                 <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;">
                             </span>
                         </mat-card-title>
-                        <mat-card-subtitle class="link" [routerLink]="['/admin/company/item',company ? company.id : 0]">
+                        <mat-card-subtitle class="link" [routerLink]="['/admin/company/qualification',company ? company.id : 0]">
                             <img src="/assets/images/dashboard/edit.png">
                         </mat-card-subtitle>
                     </mat-card-header>
@@ -103,63 +103,60 @@
                         </form>
 
 
-                        <div class="hot">
-                            <div class="hot_left">
-                                <p style="text-align: center;font-size: 32px;color: #fff;font-weight: bold">{{policy.total}}</p>
-                                <p style="text-align: center;color: #fff;margin-top: -20px">华海政策库已收录政策</p>
-                            </div>
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col size="4" *ngFor="let item of policy.list.slice(0,3)">
-                                        <div class="hot_right">
-                                            <!--<div class="hot_img">
-                                                <img src="/assets/images/dashboard/hot.png">
-                                            </div>-->
-                                            <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
-                                                {{item.policyName}}</p>
-                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
-                                                预计补贴金额<span
-                                                    style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元
-                                            </p>
-                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
-                                                预计所需时间<span
-                                                    style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月
-                                            </p>
+
+                                    <div class="hot">
+                                        <div class="hot_left">
+                                            <p style="text-align: center;font-size: 32px;color: #fff;font-weight: bold">{{policy.total}}</p>
+                                            <p style="text-align: center;color: #fff;margin-top: -20px">华海政策库已收录政策</p>
                                         </div>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
-                        </div>
+                                        <ion-grid>
+                                        <ion-row>
+                                            <ion-col size="4" *ngFor="let item of policy.list.slice(0,3)">
+                                                <div class="hot_right">
+                                                    <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
+                                                        <img src="/assets/images/dashboard/hot.png">
+                                                    </div>
+                                                    <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
+                                                        {{item.policyName}}</p>
+                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
+                                                        预计补贴金额<span
+                                                            style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元
+                                                    </p>
+                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
+                                                        预计所需时间<span
+                                                            style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月
+                                                    </p>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        </ion-grid>
+                                    </div>
 
 
-                        <div class="hot">
-                            <div class="hot_left" style="background-color: rgba(13, 215, 141, 1);">
-                                <p style="text-align: center;font-size: 32px;color: #fff;font-weight: bold">{{policy.update}}</p>
-                                <p style="text-align: center;color: #fff;margin-top: -25px">今天更新政策</p>
-                                <p style="text-align: center;color: #fff;margin-top: -13px">{{dateTime | date : 'yyyy-MM-dd HH:mm'}}</p>
-                            </div>
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col size="4" *ngFor="let item of policy.list.slice(3,6)">
-                                        <div class="hot_right">
-                                            <!--<div class="hot_img">
-                                                <img src="/assets/images/dashboard/new.png">
-                                            </div>-->
-                                            <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
-                                                {{item.policyName}}</p>
-                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
-                                                预计补贴金额<span
-                                                    style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元
-                                            </p>
-                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
-                                                预计所需时间<span
-                                                    style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月
-                                            </p>
+                                    <div class="hot">
+                                        <div class="hot_left" style="background-color: rgba(13, 215, 141, 1);">
+                                            <p style="text-align: center;font-size: 32px;color: #fff;font-weight: bold">{{policy.update}}</p>
+                                            <p style="text-align: center;color: #fff;margin-top: -25px">今天更新政策</p>
+                                            <p style="text-align: center;color: #fff;margin-top: -13px">{{dateTime | date : 'yyyy-MM-dd HH:mm'}}</p>
                                         </div>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
-                        </div>
+                                        <ion-grid>
+                                        <ion-row>
+                                            <ion-col size="4" *ngFor="let item of policy.list.slice(3,6)">
+                                                <div class="hot_right">
+                                                    <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
+                                                        <img src="/assets/images/dashboard/hot.png">
+                                                    </div>
+                                                    <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
+                                                        {{item.policyName}}</p>
+                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">预计补贴金额<span
+                                                            style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元</p>
+                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">预计所需时间<span
+                                                            style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月</p>
+                                                </div>
+                                            </ion-col>
+                                        </ion-row>
+                                        </ion-grid>
+                                    </div>
                     </mat-card-content>
                 </mat-card>
             </ion-col>
@@ -228,35 +225,30 @@
                     <mat-card-content>
                         <ion-row class="service" style="margin: 44px auto;">
                             <ion-col size="4">
-                                <ion-tab-button (click)="toCheckout()">
-                                    <img src="/assets/images/dashboard/rocket.png">
-                                    <ion-label>商标自助智能注册
-                                        <img src="/assets/images/qualification.png"
-                                             style="width: 20px;height: 20px;position: absolute;top: 100px;left: 210px;"
-                                             matTooltip="用户通过智能服务自助完成商标注册" matTooltipPosition="after">
-                                    </ion-label>
-                                </ion-tab-button>
+                                <div style="margin: 0 auto" (click)="toCheckout()">
+                                    <img src="/assets/images/dashboard/rocket.png" style="width: 70px;height: 70px;display: block;margin: 0 auto">
+                                    <p>商标自助智能注册
+                                        <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 100px;left: 210px;" matTooltip="用户通过智能服务自助完成商标注册" matTooltipPosition="after">
+                                    </p>
+                                </div>
                             </ion-col>
 
                             <ion-col size="4">
-                                <ion-tab-button (click)="presentLoading()">
-                                    <img src="/assets/images/dashboard/plane.png">
-                                    <ion-label>专利快捷提交
-                                        <img src="/assets/images/qualification.png"
-                                             style="width: 20px;height: 20px;position: absolute;top: 100px;left: 190px;"
-                                             matTooltip="用户通过智能服务自助完成专利提交" matTooltipPosition="after">
-                                    </ion-label>
-                                </ion-tab-button>
+                                <div style="margin: 0 auto" (click)="presentLoading()">
+                                    <img src="/assets/images/dashboard/plane.png" style="width: 70px;height: 70px;display: block;margin: 0 auto">
+                                    <p>商标自助智能注册
+                                        <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 100px;left: 210px;" matTooltip="用户通过智能服务自助完成商标注册" matTooltipPosition="after">
+                                    </p>
+                                </div>
                             </ion-col>
 
                             <ion-col size="4">
-                                <ion-tab-button (click)="presentLoading()">
-                                    <img src="/assets/images/dashboard/e.png">
-                                    <ion-label>版权智能存证登记
-                                        <img src="/assets/images/qualification.png"
-                                             style="width: 20px;height: 20px;position: absolute;top: 100px;left: 210px;"
-                                             matTooltip="用户通过智能系统采集证据完成版权存证" matTooltipPosition="after"></ion-label>
-                                </ion-tab-button>
+                                <div style="margin: 0 auto" (click)="presentLoading()">
+                                    <img src="/assets/images/dashboard/e.png" style="width: 70px;height: 70px;display: block;margin: 0 auto">
+                                    <p>商标自助智能注册
+                                        <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 100px;left: 210px;" matTooltip="用户通过智能服务自助完成商标注册" matTooltipPosition="after">
+                                    </p>
+                                </div>
                             </ion-col>
                         </ion-row>
                     </mat-card-content>
@@ -389,9 +381,9 @@
                         <ion-row>
                             <ion-col size="4">
                                 <div class="brand">
-                                    <img src="/assets/images/dashboard/right_r.png">
+                                    <img src="/assets/images/dashboard/right_r.png" [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:0}" style="cursor: pointer">
                                     <div class="brand_list">
-                                        <p class="brand_num">{{brandOption.count}}</p>
+                                        <p class="brand_num" style="cursor: pointer" [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:0}">{{brandOption.count}}</p>
                                         <p class="brand_name">商标</p>
                                     </div>
                                 </div>
@@ -411,9 +403,9 @@
                             </ion-col>
                             <ion-col size="4">
                                 <div class="brand">
-                                    <img src="/assets/images/dashboard/right_p.png">
+                                    <img src="/assets/images/dashboard/right_p.png" [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:1}" style="cursor: pointer">
                                     <div class="brand_list">
-                                        <p class="brand_num">{{patentOption.count}}</p>
+                                        <p class="brand_num" style="cursor: pointer" [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:1}">{{patentOption.count}}</p>
                                         <p class="brand_name">专利</p>
                                     </div>
                                 </div>
