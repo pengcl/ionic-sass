@@ -18,7 +18,7 @@
                                 <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;">
                             </span>
                         </mat-card-title>
-                        <mat-card-subtitle class="link" [routerLink]="['/admin/company/item',company ? company.id : 0]">
+                        <mat-card-subtitle class="link" [routerLink]="['/admin/company/qualification',company ? company.id : 0]">
                             <img src="/assets/images/dashboard/edit.png">
                         </mat-card-subtitle>
                     </mat-card-header>
@@ -47,11 +47,15 @@
                         <mat-card-subtitle class="link" (click)="presentLoading()">
                             <img src="/assets/images/dashboard/menu.png">
                         </mat-card-subtitle>
-                        <mat-card-content>
-                            <div echarts [options]="subsidyOption" class="main-chart"
-                                 style="width: 600px;height: 350px;margin-top: 20px"></div>
-                        </mat-card-content>
                     </mat-card-header>
+                    <mat-card-content>
+                        <ion-row>
+                            <ion-col size="12">
+                                <div echarts [options]="subsidyOption" class="main-chart"
+                                     style="width: 100%;height: 350px;"></div>
+                            </ion-col>
+                        </ion-row>
+                    </mat-card-content>
                 </mat-card>
             </ion-col>
             <ion-col size="12">
@@ -112,9 +116,9 @@
                                         <ion-row>
                                             <ion-col size="4" *ngFor="let item of policy.list.slice(0,3)">
                                                 <div class="hot_right">
-                                                    <!--<div class="hot_img">
+                                                    <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
                                                         <img src="/assets/images/dashboard/hot.png">
-                                                    </div>-->
+                                                    </div>
                                                     <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
                                                         {{item.policyName}}</p>
                                                     <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
@@ -143,9 +147,9 @@
                                         <ion-row>
                                             <ion-col size="4" *ngFor="let item of policy.list.slice(3,6)">
                                                 <div class="hot_right">
-                                                    <!--<div class="hot_img">
-                                                        <img src="/assets/images/dashboard/new.png">
-                                                    </div>-->
+                                                    <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
+                                                        <img src="/assets/images/dashboard/hot.png">
+                                                    </div>
                                                     <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
                                                         {{item.policyName}}</p>
                                                     <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">预计补贴金额<span
@@ -368,9 +372,9 @@
                         <ion-row>
                             <ion-col size="4">
                                 <div class="brand">
-                                    <img src="/assets/images/dashboard/right_r.png">
+                                    <img src="/assets/images/dashboard/right_r.png" [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:0}" style="cursor: pointer">
                                     <div class="brand_list">
-                                        <p class="brand_num">{{brandOption.count}}</p>
+                                        <p class="brand_num" style="cursor: pointer" [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:0}">{{brandOption.count}}</p>
                                         <p class="brand_name">商标</p>
                                     </div>
                                 </div>
@@ -389,9 +393,9 @@
                             </ion-col>
                             <ion-col size="4">
                                 <div class="brand">
-                                    <img src="/assets/images/dashboard/right_p.png">
+                                    <img src="/assets/images/dashboard/right_p.png" [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:1}" style="cursor: pointer">
                                     <div class="brand_list">
-                                        <p class="brand_num">{{patentOption.count}}</p>
+                                        <p class="brand_num" style="cursor: pointer" [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:1}">{{patentOption.count}}</p>
                                         <p class="brand_name">专利</p>
                                     </div>
                                 </div>
