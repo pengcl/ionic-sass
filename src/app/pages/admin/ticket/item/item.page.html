@@ -91,11 +91,11 @@
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef><b>操作</b></th>
                 <td mat-cell *matCellDef="let element">
-                    <a class="actions-icon" href="javascript:;" (click)="view(element.fileIds)">
+                    <a class="actions-icon" [href]="this.FILE_PREFIX_URL + element.fildId" target="_blank">
                         <img src="/assets/images/view.png">
                     </a>
                     <a class="actions-icon" download
-                       [href]="FILE_PREFIX_URL + element.fileId">
+                       [href]="FILE_PREFIX_URL + element.fildId">
                         <img src="/assets/images/download.png">
                     </a>
                 </td>

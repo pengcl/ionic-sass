@@ -39,25 +39,21 @@ export class AdminTicketItemPage {
                 private ticketSvc: TicketService) {
         this.route.queryParams.subscribe(() => {
             ticketSvc.item(this.id).subscribe(res => {
-                console.log(res);
                 this.source.info = new MatTableDataSource<any>([{no: res.workOrderNo, type: res.workTypeName, status: res.workStatusName}]);
                 this.source.logs = res.workOrderLogs;
                 const files = [];
                 res.workOrderAttchs.forEach(item => {
                     item.fileIds.split(',').forEach((id, i) => {
-                        item.fildId = id;
-                        item.name = item.fileNames.split(',')[i];
-                        files.push(item);
+                        console.log(id);
+                        const data = JSON.parse(JSON.stringify(item));
+                        data.fildId = id;
+                        data.name = item.fileNames.split(',')[i];
+                        files.push(data);
                     });
                 });
                 this.source.files = new MatTableDataSource<any>(files);
-                console.log(this.source.files);
             });
         });
-    }
-
-    view(id) {
-        window.location.href = this.FILE_PREFIX_URL + id;
     }
 
 }
