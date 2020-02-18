@@ -96,14 +96,13 @@
         </ng-container>
 
         <!-- Weight Column -->
+        // 正常，冻结，作废，已完成
         <ng-container matColumnDef="ticketStatus">
             <th mat-header-cell *matHeaderCellDef><b>工单状态</b></th>
             <td mat-cell *matCellDef="let element"
-                [ngClass]="{'warn':element.workStatus === '0',
-                'primary':element.workStatus === '1',
-                'danger':element.workStatus === '2',
-                'disabled':element.workStatus === '3',
-                'success':element.workStatus === '4'}">
+                [ngClass]="{'danger':element.workStatusWebName === '冻结',
+                'disabled':element.workStatusWebName === '作废',
+                'success':element.workStatusWebName === '正常'}">
                 {{element.workStatusWebName}}
             </td>
         </ng-container>

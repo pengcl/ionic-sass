@@ -32,8 +32,8 @@ export class TrustService {
             }));
     }
 
-    patent(id): Observable<any> {
-        return this.http.get(this.PREFIX_URL + 'getPatent&applicationCode=' + id)
+    patent(id, custId): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getPatent&applicationCode=' + id + '&custId=' + custId)
             .pipe(observableMargeMap((res: any) => {
                 return resultProcess(res);
             }));

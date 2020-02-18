@@ -42,7 +42,15 @@ export class AdminTicketItemPage {
                 console.log(res);
                 this.source.info = new MatTableDataSource<any>([{no: res.workOrderNo, type: res.workTypeName, status: res.workStatusName}]);
                 this.source.logs = res.workOrderLogs;
-                this.source.files = new MatTableDataSource<any>(res.workOrderAttchs);
+                const files = [];
+                res.workOrderAttchs.forEach(item => {
+                    item.fileIds.split(',').forEach((id, i) => {
+                        item.fildId = id;
+                        item.name = item.fileNames.split(',')[i];
+                        files.push(item);
+                    });
+                });
+                this.source.files = new MatTableDataSource<any>(files);
                 console.log(this.source.files);
             });
         });
