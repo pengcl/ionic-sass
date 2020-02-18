@@ -126,7 +126,6 @@ export class AdminDashboardPage {
                 area: this.form.get('area').value,
                 city: this.form.get('city').value
             };
-            console.log(body);
             this.dashboardSvc.policies(body).subscribe(res => {
                 this.policy.total = res.totalCount;
                 this.policy.update = res.updateCount;
@@ -138,62 +137,73 @@ export class AdminDashboardPage {
         this.form.get('city').setValue(this.company.city);
         this.form.get('area').setValue(this.company.area);
         this.dashboardSvc.completions(this.company.id).subscribe(res => {
+            console.log(res);
+            let total = 0;
             res.forEach(item => {
+                total = total + item.editCount;
                 item.value = Math.round(item.editCount * 100 / item.totalCount) / 100;
                 item.rate = (item.value * 100).toFixed(0);
             });
-            this.completions = res;
+            if (total === 0) {
+                this.completions = [];
+            } else {
+                this.completions = res;
+            }
         });
 
         this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
-            this.subsidyOption = {
-                color: ['#3bcec6'],
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                },
-                grid: {
-                    left: '3%',
-                    right: '7%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'value',
-                    boundaryGap: [0, 0.01],
-                    name: '万元'
-                },
-                yAxis: {
-                    type: 'category',
-                    data: ['科创宝培育可获得', '快速培育可获得']
-                },
-                series: [
-                    {
-                        type: 'bar',
-                        data: [res.keChuangBaoAmt, res.quickAmt],
-                        label: {
-                            show: true,
-                            position: 'right',
-                            color: '#21333F'
-                        },
-                        itemStyle: {
-                            normal: {
-                                color: (params) => {
-                                    const colorList = ['rgba(13, 215, 141, 1)', 'rgba(254, 174, 77, 1)'];
-                                    return colorList[params.dataIndex];
-                                }
+            if (res.keChuangBaoAmt + res.quickAmt === 0) {
+                this.subsidyOption = null;
+            } else {
+                this.subsidyOption = {
+                    color: ['#3bcec6'],
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '5%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'value',
+                        boundaryGap: [0, 0.01],
+                        name: '万元'
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: ['科创宝培育可获得', '快速培育可获得']
+                    },
+                    series: [
+                        {
+                            type: 'bar',
+                            data: [res.keChuangBaoAmt, res.quickAmt],
+                            label: {
+                                show: true,
+                                position: 'right',
+                                color: '#21333F'
                             },
-                            emphasis: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            itemStyle: {
+                                normal: {
+                                    color: (params) => {
+                                        const colorList = ['rgba(13, 215, 141, 1)', 'rgba(254, 174, 77, 1)'];
+                                        return colorList[params.dataIndex];
+                                    }
+                                },
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
                             }
                         }
-                    }
-                ]
-            };
+                    ]
+                };
+            }
         });
         this.ticketSvc.statistics(this.company.id).subscribe(res => {
             this.ticket.ing = res.serviceCount;
@@ -276,7 +286,7 @@ export class AdminDashboardPage {
             const years = [];
             const series = [
                 {
-                    name: '已注册',
+                    name: '无效',
                     type: 'bar',
                     stack: '1',
                     data: [],
@@ -290,7 +300,7 @@ export class AdminDashboardPage {
                     barWidth: 14
                 },
                 {
-                    name: '无效',
+                    name: '已注册',
                     type: 'bar',
                     stack: '1',
                     data: [],
@@ -302,12 +312,12 @@ export class AdminDashboardPage {
             });
             res.histograms.forEach(item => {
                 years.push(item.applyYear);
-                series[0].data.push(item.registerCount);
+                series[0].data.push(item.invalidCount);
                 series[1].data.push(item.applyCount);
-                series[2].data.push(item.invalidCount);
+                series[2].data.push(item.registerCount);
             });
             this.copyOption.line = {
-                color: ['#36a0f4', '#27d78f', '#ff5257'],
+                color: ['#ff5257', '#27d78f', '#36a0f4'],
                 legend: {
                     bottom: 10,
                     data: ['已注册', '申请中', '无效'],
@@ -413,7 +423,7 @@ export class AdminDashboardPage {
             const years = [];
             const series = [
                 {
-                    name: '已注册',
+                    name: '无效',
                     type: 'bar',
                     stack: '1',
                     data: [],
@@ -427,7 +437,7 @@ export class AdminDashboardPage {
                     barWidth: 14
                 },
                 {
-                    name: '无效',
+                    name: '已注册',
                     type: 'bar',
                     stack: '1',
                     data: [],
@@ -439,12 +449,12 @@ export class AdminDashboardPage {
             });
             res.histograms.forEach(item => {
                 years.push(item.applyYear);
-                series[0].data.push(item.registerCount);
+                series[0].data.push(item.invalidCount);
                 series[1].data.push(item.applyCount);
-                series[2].data.push(item.invalidCount);
+                series[2].data.push(item.registerCount);
             });
             this.brandOption.line = {
-                color: ['#36a0f4', '#27d78f', '#ff5257'],
+                color: ['#ff5257', '#27d78f', '#36a0f4'],
                 legend: {
                     bottom: 10,
                     data: ['已注册', '申请中', '无效'],
@@ -550,7 +560,7 @@ export class AdminDashboardPage {
             const years = [];
             const series = [
                 {
-                    name: '已注册',
+                    name: '无效',
                     type: 'bar',
                     stack: '1',
                     data: [],
@@ -564,7 +574,7 @@ export class AdminDashboardPage {
                     barWidth: 14
                 },
                 {
-                    name: '无效',
+                    name: '已注册',
                     type: 'bar',
                     stack: '1',
                     data: [],
@@ -575,14 +585,13 @@ export class AdminDashboardPage {
                 return a.applyYear - b.applyYear;
             });
             res.histograms.forEach(item => {
-                console.log(item);
                 years.push(item.applyYear);
-                series[0].data.push(item.registerCount ? item.registerCount : 0);
+                series[2].data.push(item.registerCount ? item.registerCount : 0);
                 series[1].data.push(item.applyCount ? item.applyCount : 0);
-                series[2].data.push(item.invalidCount ? item.invalidCount : 0);
+                series[0].data.push(item.invalidCount ? item.invalidCount : 0);
             });
             this.patentOption.line = {
-                color: ['#36a0f4', '#27d78f', '#ff5257'],
+                color: ['#ff5257', '#27d78f', '#36a0f4'],
                 legend: {
                     bottom: 10,
                     data: ['已注册', '申请中', '无效'],
@@ -612,7 +621,6 @@ export class AdminDashboardPage {
                 },
                 series
             };
-            console.log(series);
         });
 
         monitorSvc.list({custId: this.company.id}).subscribe(res => {

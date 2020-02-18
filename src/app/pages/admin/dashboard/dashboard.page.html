@@ -23,10 +23,10 @@
                         </mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
-                        <ion-list>
+                        <app-empty [routerLink]="['/admin/company/qualification',company.id]" [icon]="''" *ngIf="completions?.length < 1" [confirmText]="'立即补全资质'"></app-empty>
+                        <ion-list *ngIf="completions?.length > 0">
                             <ion-list-header>信息填写完成度</ion-list-header>
-
-                            <ion-item *ngFor="let item of completions" style="--border-style:none">
+                            <ion-item *ngFor="let item of completions" lines="none">
                                 <span slot="start" class="start">{{item.typeName}}</span>
                                 <ion-progress-bar [value]="item.value"
                                                   [color]="item.value | progress"></ion-progress-bar>
@@ -47,11 +47,12 @@
                         <mat-card-subtitle class="link" (click)="presentLoading()">
                             <img src="/assets/images/dashboard/menu.png">
                         </mat-card-subtitle>
-                        <mat-card-content>
-                            <div echarts [options]="subsidyOption" class="main-chart"
-                                 style="width: 600px;height: 350px;margin-top: 20px"></div>
-                        </mat-card-content>
                     </mat-card-header>
+                    <mat-card-content>
+                        <app-empty *ngIf="subsidyOption === null" title="暂时没有相关数据"></app-empty>
+                        <div *ngIf="subsidyOption" echarts [options]="subsidyOption" class="main-chart subsidy-chart"
+                             style="height: 350px;"></div>
+                    </mat-card-content>
                 </mat-card>
             </ion-col>
             <ion-col size="12">
@@ -102,61 +103,63 @@
                         </form>
 
 
-
-                                    <div class="hot">
-                                        <div class="hot_left">
-                                            <p style="text-align: center;font-size: 32px;color: #fff;font-weight: bold">{{policy.total}}</p>
-                                            <p style="text-align: center;color: #fff;margin-top: -20px">华海政策库已收录政策</p>
+                        <div class="hot">
+                            <div class="hot_left">
+                                <p style="text-align: center;font-size: 32px;color: #fff;font-weight: bold">{{policy.total}}</p>
+                                <p style="text-align: center;color: #fff;margin-top: -20px">华海政策库已收录政策</p>
+                            </div>
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col size="4" *ngFor="let item of policy.list.slice(0,3)">
+                                        <div class="hot_right">
+                                            <!--<div class="hot_img">
+                                                <img src="/assets/images/dashboard/hot.png">
+                                            </div>-->
+                                            <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
+                                                {{item.policyName}}</p>
+                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
+                                                预计补贴金额<span
+                                                    style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元
+                                            </p>
+                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
+                                                预计所需时间<span
+                                                    style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月
+                                            </p>
                                         </div>
-                                        <ion-grid>
-                                        <ion-row>
-                                            <ion-col size="4" *ngFor="let item of policy.list.slice(0,3)">
-                                                <div class="hot_right">
-                                                    <!--<div class="hot_img">
-                                                        <img src="/assets/images/dashboard/hot.png">
-                                                    </div>-->
-                                                    <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
-                                                        {{item.policyName}}</p>
-                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
-                                                        预计补贴金额<span
-                                                            style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元
-                                                    </p>
-                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
-                                                        预计所需时间<span
-                                                            style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月
-                                                    </p>
-                                                </div>
-                                            </ion-col>
-                                        </ion-row>
-                                        </ion-grid>
-                                    </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </div>
 
 
-
-                                    <div class="hot">
-                                        <div class="hot_left" style="background-color: rgba(13, 215, 141, 1);">
-                                            <p style="text-align: center;font-size: 32px;color: #fff;font-weight: bold">{{policy.update}}</p>
-                                            <p style="text-align: center;color: #fff;margin-top: -25px">今天更新政策</p>
-                                            <p style="text-align: center;color: #fff;margin-top: -13px">{{dateTime | date : 'yyyy-MM-dd HH:mm'}}</p>
+                        <div class="hot">
+                            <div class="hot_left" style="background-color: rgba(13, 215, 141, 1);">
+                                <p style="text-align: center;font-size: 32px;color: #fff;font-weight: bold">{{policy.update}}</p>
+                                <p style="text-align: center;color: #fff;margin-top: -25px">今天更新政策</p>
+                                <p style="text-align: center;color: #fff;margin-top: -13px">{{dateTime | date : 'yyyy-MM-dd HH:mm'}}</p>
+                            </div>
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col size="4" *ngFor="let item of policy.list.slice(3,6)">
+                                        <div class="hot_right">
+                                            <!--<div class="hot_img">
+                                                <img src="/assets/images/dashboard/new.png">
+                                            </div>-->
+                                            <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
+                                                {{item.policyName}}</p>
+                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
+                                                预计补贴金额<span
+                                                    style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元
+                                            </p>
+                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
+                                                预计所需时间<span
+                                                    style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月
+                                            </p>
                                         </div>
-                                        <ion-grid>
-                                        <ion-row>
-                                            <ion-col size="4" *ngFor="let item of policy.list.slice(3,6)">
-                                                <div class="hot_right">
-                                                    <!--<div class="hot_img">
-                                                        <img src="/assets/images/dashboard/new.png">
-                                                    </div>-->
-                                                    <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
-                                                        {{item.policyName}}</p>
-                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">预计补贴金额<span
-                                                            style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元</p>
-                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">预计所需时间<span
-                                                            style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月</p>
-                                                </div>
-                                            </ion-col>
-                                        </ion-row>
-                                        </ion-grid>
-                                    </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </div>
                     </mat-card-content>
                 </mat-card>
             </ion-col>
@@ -171,7 +174,9 @@
                                 <img src="/assets/images/dashboard/box.png" slot="start"
                                      style="width: 30px;height: 30px">
                                 <span>知产保险箱
-                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 15px;left: 80px;" matTooltip="通过华海安全云服务保障企业商业秘密" matTooltipPosition="after">
+                                <img src="/assets/images/qualification.png"
+                                     style="width: 20px;height: 20px;position: absolute;top: 15px;left: 80px;"
+                                     matTooltip="通过华海安全云服务保障企业商业秘密" matTooltipPosition="after">
                             </span>
                                 <img src="/assets/images/dashboard/to.png" slot="end"
                                      style="width: 25px;height: 25px;cursor: pointer" (click)="toBox()">
@@ -181,7 +186,9 @@
                                 <img src="/assets/images/dashboard/brand.png" slot="start"
                                      style="width: 30px;height: 30px">
                                 <span>商标自动续展
-                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 15px;left: 90px;" matTooltip="系统监察商标期限和自动完成续费" matTooltipPosition="after">
+                                <img src="/assets/images/qualification.png"
+                                     style="width: 20px;height: 20px;position: absolute;top: 15px;left: 90px;"
+                                     matTooltip="系统监察商标期限和自动完成续费" matTooltipPosition="after">
                                 </span>
                                 <ion-toggle (click)="presentLoading('one')" [(ngModel)]="guarantee.one" color="primary"
                                             slot="end"></ion-toggle>
@@ -190,7 +197,9 @@
                             <ion-item style="--border-style:none">
                                 <img src="/assets/images/dashboard/p.png" slot="start" style="width: 30px;height: 30px">
                                 <span>专利智能续费
-                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 15px;left: 90px;" matTooltip="系统监察专利期限和自动完成续费" matTooltipPosition="after">
+                                <img src="/assets/images/qualification.png"
+                                     style="width: 20px;height: 20px;position: absolute;top: 15px;left: 90px;"
+                                     matTooltip="系统监察专利期限和自动完成续费" matTooltipPosition="after">
                                 </span>
                                 <ion-toggle (click)="presentLoading('two')" [(ngModel)]="guarantee.two" color="primary"
                                             slot="end"></ion-toggle>
@@ -200,7 +209,9 @@
                                 <img src="/assets/images/dashboard/copyright.png" slot="start"
                                      style="width: 30px;height: 30px">
                                 <span>版权顾问
-                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 15px;left: 60px;" matTooltip="为客户提供版权咨询和解答服务" matTooltipPosition="after">
+                                <img src="/assets/images/qualification.png"
+                                     style="width: 20px;height: 20px;position: absolute;top: 15px;left: 60px;"
+                                     matTooltip="为客户提供版权咨询和解答服务" matTooltipPosition="after">
                                 </span>
                                 <ion-toggle (click)="presentLoading('three')" [(ngModel)]="guarantee.three"
                                             color="primary" slot="end"></ion-toggle>
@@ -220,7 +231,9 @@
                                 <ion-tab-button (click)="toCheckout()">
                                     <img src="/assets/images/dashboard/rocket.png">
                                     <ion-label>商标自助智能注册
-                                        <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 100px;left: 210px;" matTooltip="用户通过智能服务自助完成商标注册" matTooltipPosition="after">
+                                        <img src="/assets/images/qualification.png"
+                                             style="width: 20px;height: 20px;position: absolute;top: 100px;left: 210px;"
+                                             matTooltip="用户通过智能服务自助完成商标注册" matTooltipPosition="after">
                                     </ion-label>
                                 </ion-tab-button>
                             </ion-col>
@@ -229,7 +242,9 @@
                                 <ion-tab-button (click)="presentLoading()">
                                     <img src="/assets/images/dashboard/plane.png">
                                     <ion-label>专利快捷提交
-                                        <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 100px;left: 190px;" matTooltip="用户通过智能服务自助完成专利提交" matTooltipPosition="after">
+                                        <img src="/assets/images/qualification.png"
+                                             style="width: 20px;height: 20px;position: absolute;top: 100px;left: 190px;"
+                                             matTooltip="用户通过智能服务自助完成专利提交" matTooltipPosition="after">
                                     </ion-label>
                                 </ion-tab-button>
                             </ion-col>
@@ -238,14 +253,16 @@
                                 <ion-tab-button (click)="presentLoading()">
                                     <img src="/assets/images/dashboard/e.png">
                                     <ion-label>版权智能存证登记
-                                        <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 100px;left: 210px;" matTooltip="用户通过智能系统采集证据完成版权存证" matTooltipPosition="after"></ion-label>
+                                        <img src="/assets/images/qualification.png"
+                                             style="width: 20px;height: 20px;position: absolute;top: 100px;left: 210px;"
+                                             matTooltip="用户通过智能系统采集证据完成版权存证" matTooltipPosition="after"></ion-label>
                                 </ion-tab-button>
                             </ion-col>
                         </ion-row>
                     </mat-card-content>
                 </mat-card>
             </ion-col>
-            <ion-col size="12">
+            <ion-col *ngIf="ticket.dataSource?.data.length > 0" size="12">
                 <mat-card>
                     <mat-card-header>
                         <mat-card-title>我的工单</mat-card-title>
@@ -258,7 +275,9 @@
                             <ion-col size="4">
                                 <ion-list class="my_work">
                                     <ion-list-header>工单统计
-                                        <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 13px;left: 80px;" matTooltip="用户工单概况统计" matTooltipPosition="after">
+                                        <img src="/assets/images/qualification.png"
+                                             style="width: 20px;height: 20px;position: absolute;top: 13px;left: 80px;"
+                                             matTooltip="用户工单概况统计" matTooltipPosition="after">
                                     </ion-list-header>
                                     <ion-item style="margin-top: 0" lines="none">
                                         <div class="work">
@@ -302,7 +321,9 @@
                             <ion-col size="8">
                                 <ion-list>
                                     <ion-list-header>关注工单
-                                        <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;position: absolute;top: 13px;left: 80px;" matTooltip="用户标记关注的工单情况" matTooltipPosition="after">
+                                        <img src="/assets/images/qualification.png"
+                                             style="width: 20px;height: 20px;position: absolute;top: 13px;left: 80px;"
+                                             matTooltip="用户标记关注的工单情况" matTooltipPosition="after">
                                     </ion-list-header>
                                     <table *ngIf="ticket.dataSource" mat-table [dataSource]="ticket.dataSource">
 
@@ -374,7 +395,8 @@
                                         <p class="brand_name">商标</p>
                                     </div>
                                 </div>
-                                <ion-grid>
+                                <app-empty *ngIf="(copyOption.count > 0 || patentOption.count > 0 || brandOption.count > 0) && brandOption.count === 0" title="暂时没有相关数据"></app-empty>
+                                <ion-grid *ngIf="brandOption.count > 0">
                                     <ion-row>
                                         <ion-col size="6">
                                             <div *ngIf="brandOption.line" echarts [options]="brandOption.line"
@@ -395,7 +417,8 @@
                                         <p class="brand_name">专利</p>
                                     </div>
                                 </div>
-                                <ion-grid>
+                                <app-empty *ngIf="(copyOption.count > 0 || patentOption.count > 0 || brandOption.count > 0) && patentOption.count === 0" title="暂时没有相关数据"></app-empty>
+                                <ion-grid *ngIf="patentOption.count > 0">
                                     <ion-row>
                                         <ion-col size="6">
                                             <div *ngIf="patentOption.line" echarts [options]="patentOption.line"
@@ -416,7 +439,8 @@
                                         <p class="brand_name">版权</p>
                                     </div>
                                 </div>
-                                <ion-grid>
+                                <app-empty *ngIf="(copyOption.count > 0 || patentOption.count > 0 || brandOption.count > 0) && copyOption.count === 0" title="暂时没有相关数据"></app-empty>
+                                <ion-grid *ngIf="copyOption.count > 0">
                                     <ion-row>
                                         <ion-col size="6">
                                             <div *ngIf="copyOption.line" echarts [options]="copyOption.line"
@@ -446,7 +470,8 @@
                         </mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
-                        <table *ngIf="monitorDataSource" mat-table [dataSource]="monitorDataSource">
+                        <app-empty *ngIf="monitorDataSource?.data.length < 1" title="暂时没有相关数据"></app-empty>
+                        <table *ngIf="monitorDataSource?.data.length > 0" mat-table [dataSource]="monitorDataSource">
 
                             <!-- Name Column -->
                             <ng-container matColumnDef="name">

@@ -7,10 +7,10 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 })
 export class EmptyComponent {
     @Input() icon = 'cloud-circle';
-    @Input() title = '没有记录';
+    @Input() title = '';
     @Input() desc = '';
     @Output() confirm = new EventEmitter<any>();
-    @Output() confirmText = '';
+    @Input() confirmText = '';
 
     constructor() {
     }

@@ -1,6 +1,6 @@
 <div class="empty-content">
-    <ion-icon [name]="icon"></ion-icon>
+    <ion-icon *ngIf="icon" [name]="icon"></ion-icon>
     <h3 *ngIf="title">{{title}}</h3>
     <p *ngIf="desc">{{desc}}</p>
-    <ion-button *ngIf="confirmText" (click)="onClick()" color="success">{{confirmText}}</ion-button>
+    <button *ngIf="confirmText" (click)="onClick()" mat-raised-button color="primary">{{confirmText}}</button>
 </div>
