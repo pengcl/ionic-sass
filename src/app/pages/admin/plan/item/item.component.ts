@@ -119,7 +119,7 @@ export class AdminPlanItemPage implements OnInit {
                 },
                 yAxis: {
                     type: 'category',
-                    data: ['现有员工数', '个税申缴人数', '企业研发团队人数', '企业研究生以上学历人数']
+                    data: ['研究生学历以上人数', '企业研发团队人数', '个税申缴人数', '现有员工人数']
                 },
                 series: [
                     {
