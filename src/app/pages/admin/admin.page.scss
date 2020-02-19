@@ -23,6 +23,10 @@ mat-sidenav-container {
         outline: none !important;
         cursor: pointer;
 
+        &:hover {
+          background: #6BBBF9;
+        }
+
         &:first-child {
           margin-top: 0 !important;
         }

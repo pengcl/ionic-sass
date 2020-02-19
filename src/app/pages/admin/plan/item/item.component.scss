@@ -8,6 +8,10 @@
     }
   }
 
+  .smart-chart {
+    width: calc(100% - 1px) !important;
+  }
+
   mat-card {
     margin: 10px;
 
