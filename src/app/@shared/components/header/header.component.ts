@@ -68,8 +68,9 @@ export class HeaderComponent {
 
     async presentLoading() {
         const loading = await this.loadingController.create({
-            message: '功能即将开发，敬请期待',
-            duration: 1000
+            message: '功能即将开放，敬请期待',
+            duration: 1000,
+            spinner: null
         });
         await loading.present();
         await loading.onDidDismiss();
