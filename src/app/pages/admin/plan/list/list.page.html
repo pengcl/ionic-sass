@@ -105,11 +105,11 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="width: 250px"><b>操作</b></th>
             <td mat-cell *matCellDef="let element">
-                <a class="actions-icon" [routerLink]="['/admin/plan/item',element.id]" [queryParams]="{type:element.type}">
+                <a class="actions-icon" [routerLink]="['/admin/plan/item',element.id]" [queryParams]="{type:element.type}" title="查看">
                     <img src="/assets/images/view.png">
                 </a>
                 <a class="actions-icon" (click)="preDownload(element.id)" download
-                   [href]="FILE_PREFIX_URL + element.fileId">
+                   [href]="FILE_PREFIX_URL + element.fileId" title="下载">
                     <img src="/assets/images/download.png">
                 </a>
             </td>

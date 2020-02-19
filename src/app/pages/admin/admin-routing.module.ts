@@ -51,9 +51,9 @@ const routes: Routes = [
                 loadChildren: () =>
                     import('./company/item/item.module').then(m => m.AdminCompanyItemPageModule)
             },
-            {// 生成报告
+            {// 企业资质
                 path: 'company/qualification/:id',
-                data: {name: '生成报告'},
+                data: {name: '企业资质'},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./company/qualification/qualification.module').then(m => m.AdminCompanyQualificationPageModule)
@@ -88,7 +88,7 @@ const routes: Routes = [
             },
             {// 体检报告列表
                 path: 'monitor/list',
-                data: {name: '竞争对手监控'},
+                data: {name: '风险监控'},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./monitor/list/list.module').then(m => m.AdminMonitorListPageModule)
