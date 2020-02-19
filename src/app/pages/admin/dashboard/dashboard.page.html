@@ -126,6 +126,7 @@
                                                         预计所需时间<span
                                                             style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月
                                                     </p>
+                                                    <span class="time-left">最后限期：{{getDate(item.reportDateEnd)}}天</span>
                                                 </div>
                                             </ion-col>
                                         </ion-row>
@@ -152,6 +153,7 @@
                                                             style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元</p>
                                                     <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">预计所需时间<span
                                                             style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月</p>
+                                                    <span class="time-left">最后限期：{{getDate(item.reportDateEnd)}}天</span>
                                                 </div>
                                             </ion-col>
                                         </ion-row>
@@ -283,7 +285,7 @@
                                         </div>
                                     </ion-item>
 
-                                    <ion-item lines="none">
+                                    <ion-item [routerLink]="['/admin/ticket/list']" [queryParams]="{workStatus:'2,3'}" lines="none">
                                         <div class="work">
                                             <div class="work_left" style="background-color: rgba(254, 174, 77, 1)">
                                                 <img src="/assets/images/dashboard/alarm.png">

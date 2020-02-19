@@ -45,6 +45,12 @@
         <tr mat-row *matRowDef="let row; columns: displayed.info;"></tr>
     </table>
 </div>
+<div class="container">
+    <h3>服务异常原因</h3>
+    <div class="error-content">
+        {{source.remark}}
+    </div>
+</div>
 <div *ngIf="source.logs" class="container">
     <h3>工单状态流转</h3>
     <div class="log-content">
@@ -94,7 +100,7 @@
                     <a class="actions-icon" [href]="this.FILE_PREFIX_URL + element.fildId" target="_blank">
                         <img src="/assets/images/view.png">
                     </a>
-                    <a class="actions-icon" download
+                    <a class="actions-icon" [download]="element.name"
                        [href]="FILE_PREFIX_URL + element.fildId">
                         <img src="/assets/images/download.png">
                     </a>

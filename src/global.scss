@@ -30,7 +30,7 @@
 @import "theme/mat-slide-toggle";
 @import "theme/ion-progress-bar";
 @import "theme/mat-menu";
-
+@import "theme/mat-checkbox";
 html, body {
   height: 100%;
 }
@@ -463,10 +463,16 @@ mat-card.profile {
 }
 
 .top-menu {
-  width: 180px;
+  width: 190px;
   min-width: unset;
   max-width: unset;
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-left: 25px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+
+  .mat-menu-content {
+    padding: 0 !important;
+  }
 
   .mat-menu-item {
     text-align: center;

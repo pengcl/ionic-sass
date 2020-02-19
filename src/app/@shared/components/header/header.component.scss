@@ -48,14 +48,38 @@ mat-toolbar {
   button {
     font-size: 40px;
     margin-left: 30px;
-    border-left: 1px solid #fff;
     border-radius: 0;
     padding: 0 16px 0 30px;
-    width: 200px;
+    width: 230px;
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    position: relative;
+    height: 80px;
+    line-height: 80px;
+    margin-right: -16px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 15px;
+      bottom: 15px;
+      width: 1px;
+      border-left: 1px solid #fff;
+    }
+
+    &[aria-expanded=true] {
+      background: rgba(0, 115, 205, 1);
+    }
+
+    .img {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
 
     span {
       font-size: 20px;

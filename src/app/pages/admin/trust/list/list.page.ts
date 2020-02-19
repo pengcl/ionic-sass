@@ -65,7 +65,7 @@ export class AdminTrustListPage implements OnDestroy {
         route.queryParamMap.subscribe((queryParams: Params) => {
             this.selectedIndex = queryParams.params.selectedIndex;
             this.tab.index = this.selectedIndex;
-            this.tab.target = this.selectedIndex === '0' ? 'trademark' : 'patent';
+            this.tab.target = this.selectedIndex === '1' ? 'patent' : 'trademark';
         });
         this.getTrusts();
         this.getPatents();
@@ -98,7 +98,7 @@ export class AdminTrustListPage implements OnDestroy {
     }
 
     trust(target, item) {
-        console.log(item);
+        console.log(target, item);
         if (target === 'trademark') {
             this.trustSvc.trademarkTrust({
                 custId: this.company.id,
@@ -120,6 +120,7 @@ export class AdminTrustListPage implements OnDestroy {
 
     trusts(status) {
         let values = '';
+        console.log(this.tab.target);
         this.selection[this.tab.target].selected.forEach(item => {
             if (this.tab.target === 'trademark') {
                 console.log(item);

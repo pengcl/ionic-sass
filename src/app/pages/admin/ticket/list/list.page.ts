@@ -32,7 +32,7 @@ export class AdminTicketListPage {
         page: 1,
         rows: 10,
         workOrderNo: '',
-        workStatus: '',
+        workStatus: this.route.snapshot.queryParams.workStatus ? this.route.snapshot.queryParams.workStatus.split(',') : '',
         workType: '',
         createDateBegin: '',
         createDateEnd: '',
@@ -43,7 +43,7 @@ export class AdminTicketListPage {
     types;
 
     items;
-    displayedColumns: string[] = ['select', 'no', 'type', 'ticketStatus', 'startTime', 'serviceStatus', 'updateTime', 'admin', 'actions'];
+    displayedColumns: string[] = ['select', 'no', 'type', 'ticketStatus', 'startTime', 'serviceStatus', 'remark', 'updateTime', 'admin', 'actions'];
     dataSource;
     selection = new SelectionModel<any>(true, []);
 
@@ -72,11 +72,27 @@ export class AdminTicketListPage {
 
     getData() {
         this.params.page = 1;
-        this.ticketSvc.list(this.params).subscribe(res => {
+        this.ticketSvc.list(this.getBody()).subscribe(res => {
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
             console.log(res);
         });
+    }
+
+    getBody() {
+        const body = JSON.parse(JSON.stringify(this.params));
+        if (body.workStatus) {
+            let workStatus = '';
+            body.workStatus.forEach(item => {
+                if (workStatus) {
+                    workStatus = workStatus + ',' + item;
+                } else {
+                    workStatus = workStatus + item;
+                }
+            });
+            body.workStatus = workStatus;
+        }
+        return body;
     }
 
     search() {
@@ -90,7 +106,7 @@ export class AdminTicketListPage {
     }
 
     export() {
-        this.ticketSvc.export(this.params).subscribe(res => {
+        this.ticketSvc.export(this.getBody()).subscribe(res => {
             console.log(res);
             window.location.href = this.FILE_PREFIX_URL + res;
         });

@@ -33,7 +33,7 @@
                 </ion-col>
                 <ion-col size="2">
                     <mat-form-field appearance="outline">
-                        <mat-select name="workStatus" [(ngModel)]="params.workStatus" (ngModelChange)="getData()" placeholder="工单状态">
+                        <mat-select name="workStatus" [(ngModel)]="params.workStatus" (ngModelChange)="getData()" placeholder="工单状态" multiple>
                             <mat-option *ngFor="let item of statuses" [value]="item.value">
                                 {{item.name}}
                             </mat-option>
@@ -66,14 +66,14 @@
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef style="width: 50px">
-                <mat-checkbox (change)="$event ? masterToggle() : null"
+                <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
                               [checked]="selection.hasValue() && isAllSelected()"
                               [indeterminate]="selection.hasValue() && !isAllSelected()"
                               [aria-label]="checkboxLabel()">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let row">
-                <mat-checkbox (click)="$event.stopPropagation()"
+                <mat-checkbox color="primary" (click)="$event.stopPropagation()"
                               (change)="$event ? selection.toggle(row) : null"
                               [checked]="selection.isSelected(row)"
                               [aria-label]="checkboxLabel(row)">
@@ -120,6 +120,14 @@
             <th mat-header-cell *matHeaderCellDef><b>服务状态</b></th>
             <td mat-cell *matCellDef="let element">
                 {{element.serviceStatusName}}
+            </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="remark">
+            <th mat-header-cell *matHeaderCellDef><b>异常原因</b></th>
+            <td mat-cell *matCellDef="let element">
+                {{element.workErrRemark}}
             </td>
         </ng-container>
 

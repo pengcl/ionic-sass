@@ -130,6 +130,7 @@ export class AdminDashboardPage {
                 this.policy.total = res.totalCount;
                 this.policy.update = res.updateCount;
                 this.policy.list = res.list;
+                console.log(this.policy.list);
             });
         });
 
@@ -137,7 +138,6 @@ export class AdminDashboardPage {
         this.form.get('city').setValue(this.company.city);
         this.form.get('area').setValue(this.company.area);
         this.dashboardSvc.completions(this.company.id).subscribe(res => {
-            console.log(res);
             let total = 0;
             res.forEach(item => {
                 total = total + item.editCount;
@@ -627,6 +627,10 @@ export class AdminDashboardPage {
         monitorSvc.list({custId: this.company.id}).subscribe(res => {
             this.monitorDataSource = new MatTableDataSource<any>(res.list);
         });
+    }
+
+    getDate(end) {
+        return Math.round((end - Date.parse(new Date().toString())) / 86400000);
     }
 
     addMonitor(e) {

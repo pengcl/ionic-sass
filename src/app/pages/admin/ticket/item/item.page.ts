@@ -24,7 +24,8 @@ export class AdminTicketItemPage {
     source = {
         info: null,
         files: null,
-        logs: null
+        logs: null,
+        remark: null
     };
     selection = {
         info: new SelectionModel<any>(true, []),
@@ -41,6 +42,7 @@ export class AdminTicketItemPage {
             ticketSvc.item(this.id).subscribe(res => {
                 this.source.info = new MatTableDataSource<any>([{no: res.workOrderNo, type: res.workTypeName, status: res.workStatusName}]);
                 this.source.logs = res.workOrderLogs;
+                this.source.remark = res.workErrRemark;
                 const files = [];
                 res.workOrderAttchs.forEach(item => {
                     item.fileIds.split(',').forEach((id, i) => {

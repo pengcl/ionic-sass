@@ -63,6 +63,10 @@ mat-form-field {
   display: none !important;
 }
 
+.uploader.mat-form-field-can-float .mat-input-server:focus + .mat-form-field-label-wrapper .mat-form-field-label, .uploader.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  display: block !important;
+}
+
 .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-outline-gap {
   border-top-color: unset !important;
 }

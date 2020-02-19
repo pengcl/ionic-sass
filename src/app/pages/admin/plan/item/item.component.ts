@@ -126,7 +126,7 @@ export class AdminPlanItemPage implements OnInit {
                     series: [
                         {
                             type: 'bar',
-                            data: [res.employeeCount, res.taxPayableCount, res.rndCount, res.graduatesCount],
+                            data: [res.graduatesCount, res.rndCount, res.taxPayableCount, res.employeeCount],
                             label: {
                                 show: true,
                                 position: 'right',

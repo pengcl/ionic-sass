@@ -12,11 +12,11 @@ ion-grid {
 }
 
 mat-card {
-     margin: 10px;
+  margin: 10px;
 
-     &:not([class*=mat-elevation-z]) {
-       box-shadow: none;
-     }
+  &:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+  }
 
   .company {
     width: 100%;
@@ -152,6 +152,13 @@ mat-card {
         border-radius: 4px;
         margin-left: 20px;
         position: relative;
+
+        .time-left {
+          position: absolute;
+          right: 30px;
+          font-size: 16px;
+          bottom: 20px;
+        }
 
         p {
           margin-left: 30px;
@@ -292,7 +299,8 @@ ion-row.service {
       padding-top: 30px;
     }
   }
-  p{
+
+  p {
     font-weight: 400;
     font-style: normal;
     font-size: 16px;
