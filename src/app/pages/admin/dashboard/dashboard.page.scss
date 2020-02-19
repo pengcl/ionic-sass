@@ -12,11 +12,11 @@ ion-grid {
 }
 
 mat-card {
-  margin: 10px;
+     margin: 10px;
 
-  &:not([class*=mat-elevation-z]) {
-    box-shadow: none;
-  }
+     &:not([class*=mat-elevation-z]) {
+       box-shadow: none;
+     }
 
   .company {
     width: 100%;

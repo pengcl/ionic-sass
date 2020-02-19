@@ -1,0 +1,33 @@
+.container {
+  background: rgba(246, 247, 249, 1);
+  padding: 0;
+}
+ion-grid {
+  --ion-grid-padding: 0;
+
+  ion-col {
+    --ion-grid-column-padding: 0;
+  }
+}
+mat-card {
+  margin: 10px;
+
+  &:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+  }
+}
+ion-col.search-label {
+  line-height: 40px;
+  text-align: left;
+  font-size: 14px;
+  color: #5F717D;
+  &.hot{
+    color: #FD5451;
+  }
+}
+ion-col.search-label_r{
+  line-height: 40px;
+  text-align: right;
+  font-size: 14px;
+  color: #5F717D;
+}

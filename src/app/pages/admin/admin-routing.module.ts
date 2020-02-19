@@ -141,6 +141,34 @@ const routes: Routes = [
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./ticket/item/item.module').then(m => m.AdminTicketItemPageModule)
+            },
+            {// 我的账户
+                path: 'user',
+                data: {name: '我的账户'},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./user/user.module').then(m => m.AdminUserPageModule)
+            },
+            {// 匹配政策
+                path: 'policy/index',
+                data: {name: '匹配政策'},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./policy/index/policy.module').then(m => m.AdminPolicyPageModule)
+            },
+            {// 政策详情
+                path: 'policy/item',
+                data: {name: '政策详情'},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./policy/item/item.module').then(m => m.AdminPolicyItemPageModule)
+            },
+            {// 政策列表
+                path: 'policy/list',
+                data: {name: '政策列表'},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./policy/list/list.module').then(m => m.AdminPolicyListPageModule)
             }
         ]
     }
