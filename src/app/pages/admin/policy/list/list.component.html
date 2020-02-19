@@ -1,0 +1,112 @@
+<div class="container">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-content>
+                        <mat-form-field appearance="outline" style="width: 50%">
+                            <mat-label>请输入您需要搜索的政策项目名称</mat-label>
+                            <input type="text" placeholder="搜索公司主体" matInput autocomplete="off">
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+
+                        <ion-row style="margin-top: -20px">
+                            <ion-col size="1" class="search-label" style="color: #2C9EF7">热门搜索</ion-col>
+                            <ion-col size="1" class="search-label hot">疫情政策</ion-col>
+                            <ion-col size="1" class="search-label hot">国高认定</ion-col>
+                            <ion-col size="1" class="search-label hot">重大项目</ion-col>
+                            <ion-col size="1" class="search-label hot">股权资助</ion-col>
+                            <ion-col size="1" class="search-label">事前资助</ion-col>
+                            <ion-col size="1" class="search-label">科技奖励</ion-col>
+                            <ion-col size="1" class="search-label">节能减排</ion-col>
+                        </ion-row>
+
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="1" class="search-label">政策适用区域</ion-col>
+                                <ion-col size="6">
+                                    <form [formGroup]="form">
+                                        <ion-row>
+                                            <ion-col size="3" style="margin-right: 10px">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select formControlName="province" placeholder="省" required>
+                                                        <mat-option *ngFor="let item of provinces" [value]="item.name">
+                                                            {{item.name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </ion-col>
+                                            <ion-col size="3" style="margin-right: 10px">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select formControlName="city" placeholder="市" required>
+                                                        <mat-option *ngFor="let item of cities" [value]="item.name">
+                                                            {{item.name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </ion-col>
+                                            <ion-col size="3">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-select formControlName="area" placeholder="区" required>
+                                                        <mat-option *ngFor="let item of districts" [value]="item.name">
+                                                            {{item.name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </ion-col>
+                                        </ion-row>
+                                    </form>
+                                </ion-col>
+                                <ion-col size="1" class="search-label" style="text-align: center">申报时间</ion-col>
+                                <ion-col size="2">
+                                    <mat-form-field appearance="outline">
+                                        <input name="beginDate"
+                                               placeholder="请选择日期" matInput
+                                               [matDatepicker]="startPicker">
+                                        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #startPicker></mat-datepicker>
+                                    </mat-form-field>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+
+
+                            <ion-row>
+                                <ion-col size="2" class="search-label">补贴金额范围(万元)</ion-col>
+                                <ion-col size="1" style="margin-left: -70px;margin-right: 20px">
+                                    <mat-form-field appearance="outline">
+                                        <input name="beginDate"
+                                               placeholder="金额下限" matInput>
+                                    </mat-form-field>
+                                </ion-col>
+                                <ion-col size="1" class="search-label_r">至</ion-col>
+                                <ion-col size="1" style="margin:0 20px">
+                                    <mat-form-field appearance="outline">
+                                        <input name="beginDate"
+                                               placeholder="金额上限" matInput>
+                                    </mat-form-field>
+                                </ion-col>
+
+                                <ion-col size="2" class="search-label_r">政策适用程度(%)</ion-col>
+                                <ion-col size="1" style="margin: 0 20px">
+                                    <mat-form-field appearance="outline">
+                                        <input name="beginDate"
+                                               placeholder="程度下限" matInput>
+                                    </mat-form-field>
+                                </ion-col>
+                                <ion-col size="1" class="search-label_r">至</ion-col>
+                                <ion-col size="1" style="margin-left: 20px">
+                                    <mat-form-field appearance="outline">
+                                        <input name="beginDate"
+                                               placeholder="程度上限" matInput>
+                                    </mat-form-field>
+                                </ion-col>
+                            </ion-row>
+
+
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</div>

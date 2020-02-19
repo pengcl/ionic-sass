@@ -1,0 +1,62 @@
+<div class="container">
+    <ion-grid>
+        <ion-row>
+            <ion-col size="8">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>匹配政策补贴
+                            <span style="margin-left: 10px" matTooltip="根据企业资质匹配政策补贴金额" matTooltipPosition="after">
+                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;">
+                            </span>
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <app-empty *ngIf="subsidyOption === null" title="暂时没有相关数据"></app-empty>
+                        <div *ngIf="subsidyOption" echarts [options]="subsidyOption" class="main-chart subsidy-chart"
+                             style="height: 230px;"></div>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="4">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>华海政策库</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-row>
+                            <ion-col size="6">
+                                <div class="policy">
+                                    <p style="font-size: 32px;color: #2C9EF7;font-weight: 700">20,000</p>
+                                    <p class="text" style="margin-top: 20px">华海政策库</p>
+                                    <p class="text" style="margin-top: 3px">已收录政策</p>
+                                </div>
+                            </ion-col>
+                            <ion-col size="6">
+                                <div class="policy">
+                                    <p style="font-size: 32px;color: #0DD78D;font-weight: 700">500</p>
+                                    <p class="text" style="margin-top: 20px">今天更新政策</p>
+                                    <p class="text" style="margin-top: 5px">2020-02-19 18:00</p>
+                                </div>
+                            </ion-col>
+                            <ion-col size="12">
+                                <ion-button (click)="toPolicyItem()" color="primary" style="display: block;width: 35%;margin: 0 auto">查看全部政策</ion-button>
+                            </ion-col>
+                        </ion-row>
+
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>匹配政策</mat-card-title>
+                    </mat-card-header>
+
+                    <mat-card-content>
+
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</div>

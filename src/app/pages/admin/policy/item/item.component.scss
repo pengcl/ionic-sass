@@ -1,0 +1,346 @@
+.container {
+  background: rgba(246, 247, 249, 1);
+  padding: 0;
+}
+ion-grid {
+  --ion-grid-padding: 0;
+
+  ion-col {
+    --ion-grid-column-padding: 0;
+  }
+}
+mat-card {
+  margin: 10px;
+
+  &:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+  }
+}
+
+mat-card{
+  .company {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    .degree{
+      display: inline-block;
+      p{
+        text-align: center;
+        margin: 0;
+      }
+    }
+    .company_left {
+      border: none;
+      width: 10px;
+      height: 54px;
+      background: inherit;
+      background-color: rgba(44, 158, 247, 1);
+      border-radius: 0;
+      -moz-box-shadow: none;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      margin:0 10px;
+    }
+
+    .company_right {
+
+      p {
+        font-size: 32px;
+        font-weight: bold;
+        margin: 0;
+      }
+    }
+
+  }
+
+  mat-card-header {
+
+    mat-card-title {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    mat-card-subtitle {
+      top: 16px;
+      right: 16px;
+      position: absolute;
+      margin: 0;
+
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    &::ng-deep {
+      .mat-card-header-text {
+        margin: 0;
+      }
+    }
+  }
+
+  mat-card-content{
+    label{
+      display: block;
+      font-size: 14px;
+      color: #333;
+      font-weight: 400;
+      margin: 20px 0;
+      article{
+        margin: -20px 80px;
+      }
+    }
+  }
+}
+
+.content {
+  background: #fff;
+  width: 100%;
+  color: #aaa;
+  margin-top: 10px;
+
+  table.kc {
+    background: #fff;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0 10px;
+
+    thead {
+      border-top: 1px solid #DCE5EB;
+      background: #F6F7F9;
+
+      tr {
+        th {
+          font-weight: normal;
+          color: #898989;
+          padding: 15px 10px;
+
+          &.user {
+            width: 25%;
+            text-align: center;
+          }
+
+          &.grade {
+            width: 25%;
+            text-align: center;
+          }
+
+          &.consumption {
+            width: 25%;
+            text-align: center;
+          }
+
+          &.date {
+            width: 25%;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    tbody {
+      padding: 15px 10px;
+      border-bottom: 1px solid #DCE5EB;
+
+      tr {
+        td {
+          font-weight: normal;
+          color: #666;
+          padding: 15px 10px;
+          position: relative;
+
+          &.user {
+            width: 25%;
+            text-align: center;
+          }
+
+          &.grade {
+            width: 25%;
+            text-align: center;
+          }
+
+          &.consumption {
+            width: 25%;
+            text-align: center;
+          }
+
+          &.date {
+            width: 25%;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  table.zc {
+    background: #fff;
+    width: 100%;
+    font-size: 12px;
+    line-height: 1;
+
+    thead {
+      border-top: 1px solid #DCE5EB;
+      background: #F6F7F9;
+
+      tr {
+        th {
+          font-weight: normal;
+          color: #898989;
+          padding: 15px 2px;
+
+          &.user {
+            width: 39%;
+            text-align: center;
+          }
+
+          &.grade {
+            width: 12%;
+            text-align: center;
+          }
+
+          &.consumption {
+            width: 12%;
+            text-align: center;
+          }
+
+          &.date {
+            width: 12%;
+            text-align: center;
+          }
+
+          &.name {
+            width: 15%;
+            text-align: center;
+          }
+
+          &.sex {
+            width: 15%;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    tbody {
+      padding: 15px 10px;
+      border-bottom: 1px solid #DCE5EB;
+
+      tr {
+        td {
+          font-weight: normal;
+          color: #666;
+          padding: 15px 2px;
+          position: relative;
+
+          &.user {
+            width: 39%;
+            text-align: center;
+          }
+
+          &.grade {
+            width: 12%;
+            text-align: center;
+          }
+
+          &.consumption {
+            width: 12%;
+            text-align: center;
+          }
+
+          &.date {
+            width: 12%;
+            text-align: center;
+          }
+
+          &.name {
+            width: 15%;
+            text-align: center;
+          }
+
+          &.sex {
+            width: 15%;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+.content_2 {
+  background: #fff;
+  width: 75%;
+  color: #aaa;
+  margin-top: 10px;
+
+  table{
+    background: #fff;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0 10px;
+
+    thead {
+      border-top: 1px solid #DCE5EB;
+      background: #F6F7F9;
+
+      tr {
+        th {
+          font-weight: normal;
+          color: #898989;
+          padding: 15px 10px;
+
+          &.user {
+            width: 33%;
+            text-align: center;
+          }
+
+          &.grade {
+            width: 33%;
+            text-align: center;
+          }
+
+          &.consumption {
+            width: 33%;
+            text-align: center;
+          }
+
+        }
+      }
+    }
+
+    tbody {
+      padding: 15px 10px;
+      border-bottom: 1px solid #DCE5EB;
+
+      tr {
+        td {
+          font-weight: normal;
+          color: #666;
+          padding: 15px 10px;
+          position: relative;
+
+          &.user {
+            width: 33%;
+            text-align: center;
+          }
+
+          &.grade {
+            width: 33%;
+            text-align: center;
+          }
+
+          &.consumption {
+            width: 33%;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+
+}

@@ -35,7 +35,7 @@
         <span>内测用户</span>
     </button>
     <mat-menu [classList]="'top-menu'" #menu="matMenu">
-        <button (click)="presentLoading()" mat-menu-item>我的账户</button>
+        <button routerLink="/admin/user" mat-menu-item>我的账户</button>
         <button routerLink="/admin/order/list" mat-menu-item>我的订单</button>
         <button routerLink="/admin/ticket/list" mat-menu-item>我的工单</button>
         <mat-divider></mat-divider>

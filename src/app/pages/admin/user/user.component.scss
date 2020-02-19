@@ -1,0 +1,55 @@
+.container {
+  background: rgba(246, 247, 249, 1);
+  padding: 0;
+}
+
+mat-card {
+  margin: 10px;
+
+  &:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+  }
+
+  mat-card-header {
+
+    mat-card-title {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    mat-card-subtitle {
+      top: 16px;
+      right: 16px;
+      position: absolute;
+      margin: 0;
+
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    &::ng-deep {
+      .mat-card-header-text {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.policy {
+  display: flex;
+  flex-direction: column;
+  margin-top: -20px;
+
+  .policy_small {
+    width: 350px;
+    height: 100px;
+    background: inherit;
+    background-color: rgba(44, 158, 247, 1);
+    border: none;
+    border-radius: 4px;
+    margin: 10px auto;
+  }
+}
+
