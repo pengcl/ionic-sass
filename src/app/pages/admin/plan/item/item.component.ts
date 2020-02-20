@@ -83,8 +83,9 @@ export class AdminPlanItemPage implements OnInit {
                             type: 'pie',
                             radius: ['40%', '65%'],
                             label: {
-                                position: 'inner',
-                                formatter: '{d}%'
+                                position: 'outside',
+                                formatter: '{d}%',
+                                fontSize: 10
                             },
                             data: pieData,
                             itemStyle: {
