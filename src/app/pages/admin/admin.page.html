@@ -32,12 +32,6 @@
                 <button (click)="setActive(2)" [routerLink]="['/admin/trust/list']" routerLinkActive="active" mat-menu-item>商标托管</button>
                 <button (click)="setActive(2)" [routerLink]="['/admin/trust/list']" routerLinkActive="active" mat-menu-item>专利托管</button>
             </mat-menu>
-            <h3 (click)="setActive(null)" routerLink="/admin/monitor/list" routerLinkActive="active" mat-subheader>
-                <span class="mat-list-icon">
-                    <img src="/assets/images/side/4.png">
-                </span>
-                风险监控
-            </h3>
             <h3 [ngClass]="{'active' : menuIndex === 4}" [matMenuTriggerFor]="menuBox" mat-subheader>
                 <span class="mat-list-icon">
                     <img src="/assets/images/side/5.png">
@@ -69,6 +63,12 @@
                 <button (click)="setActive(6)" routerLink="/admin/plan/list" routerLinkActive="active" mat-menu-item>企业体检报告</button>
                 <button (click)="setActive(6)" routerLink="/admin/risk/list" routerLinkActive="active" mat-menu-item>知产风险报告</button>
             </mat-menu>
+            <h3 (click)="setActive(null)" routerLink="/admin/monitor/list" routerLinkActive="active" mat-subheader>
+                <span class="mat-list-icon">
+                    <img src="/assets/images/side/4.png">
+                </span>
+                竞争对手监控
+            </h3>
         </mat-list>
     </mat-sidenav>
 

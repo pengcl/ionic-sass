@@ -88,7 +88,7 @@ const routes: Routes = [
             },
             {// 体检报告列表
                 path: 'monitor/list',
-                data: {name: '风险监控', menuIndex: null},
+                data: {name: '竞争对手监控', menuIndex: null},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./monitor/list/list.module').then(m => m.AdminMonitorListPageModule)

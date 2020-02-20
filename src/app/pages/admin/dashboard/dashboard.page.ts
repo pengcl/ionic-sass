@@ -235,8 +235,8 @@ export class AdminDashboardPage {
                     }
                 },
                 grid: {
-                    left: '3%',
-                    right: '4%',
+                    left: '10%',
+                    right: '10%',
                     bottom: '10%',
                     containLabel: true
                 },
@@ -244,7 +244,7 @@ export class AdminDashboardPage {
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['67%', '70%'],
+                        radius: ['57%', '60%'],
                         data: [{name: '1', value: '1'}],
                         hoverOffset: 0,
                         label: {
@@ -254,15 +254,20 @@ export class AdminDashboardPage {
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['40%', '65%'],
+                        radius: ['30%', '55%'],
                         label: {
-                            position: 'inner',
-                            formatter: '{d}%'
+                            position: 'outside',
+                            formatter: '{d}%',
+                            fontSize: 10
                             // shadowBlur:3,
                             // shadowOffsetX: 2,
                             // shadowOffsetY: 2,
                             // shadowColor: '#999',
                             // padding: [0, 7],
+                        },
+                        labelLine: {
+                            length: 7,
+                            length2: 7
                         },
                         itemStyle: {
                             borderWidth: 2,
@@ -275,7 +280,7 @@ export class AdminDashboardPage {
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['35%', '38%'],
+                        radius: ['25%', '28%'],
                         data: [{name: '1', value: '1'}],
                         hoverOffset: 0,
                         label: {
@@ -372,16 +377,16 @@ export class AdminDashboardPage {
                     }
                 },
                 grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '10%',
+                    left: '20%',
+                    right: '20%',
+                    bottom: '20%',
                     containLabel: true
                 },
                 series: [
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['67%', '70%'],
+                        radius: ['57%', '60%'],
                         data: [{name: '1', value: '1'}],
                         hoverOffset: 0,
                         label: {
@@ -391,15 +396,20 @@ export class AdminDashboardPage {
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['40%', '65%'],
+                        radius: ['30%', '55%'],
                         label: {
-                            position: 'inner',
-                            formatter: '{d}%'
+                            position: 'outside',
+                            formatter: '{d}%',
+                            fontSize: 10
                             // shadowBlur:3,
                             // shadowOffsetX: 2,
                             // shadowOffsetY: 2,
                             // shadowColor: '#999',
                             // padding: [0, 7],
+                        },
+                        labelLine: {
+                            length: 7,
+                            length2: 7
                         },
                         data: pieData,
                         itemStyle: {
@@ -412,7 +422,7 @@ export class AdminDashboardPage {
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['35%', '38%'],
+                        radius: ['25%', '28%'],
                         data: [{name: '1', value: '1'}],
                         hoverOffset: 0,
                         label: {
@@ -509,8 +519,8 @@ export class AdminDashboardPage {
                     }
                 },
                 grid: {
-                    left: '3%',
-                    right: '4%',
+                    left: '10%',
+                    right: '10%',
                     bottom: '10%',
                     containLabel: true
                 },
@@ -518,7 +528,7 @@ export class AdminDashboardPage {
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['67%', '70%'],
+                        radius: ['57%', '60%'],
                         data: [{name: '1', value: '1'}],
                         hoverOffset: 0,
                         label: {
@@ -528,15 +538,20 @@ export class AdminDashboardPage {
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['40%', '65%'],
+                        radius: ['30%', '55%'],
                         label: {
-                            position: 'inner',
-                            formatter: '{d}%'
+                            position: 'outside',
+                            formatter: '{d}%',
+                            fontSize: 10
                             // shadowBlur:3,
                             // shadowOffsetX: 2,
                             // shadowOffsetY: 2,
                             // shadowColor: '#999',
                             // padding: [0, 7],
+                        },
+                        labelLine: {
+                            length: 7,
+                            length2: 7
                         },
                         data: pieData,
                         itemStyle: {
@@ -549,7 +564,7 @@ export class AdminDashboardPage {
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['35%', '38%'],
+                        radius: ['25%', '28%'],
                         data: [{name: '1', value: '1'}],
                         hoverOffset: 0,
                         label: {
