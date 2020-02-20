@@ -235,7 +235,7 @@ export class AdminDashboardPage {
                     }
                 },
                 grid: {
-                    left: '3%',
+                    left: '5%',
                     right: '4%',
                     bottom: '10%',
                     containLabel: true
@@ -256,13 +256,13 @@ export class AdminDashboardPage {
                         type: 'pie',
                         radius: ['40%', '65%'],
                         label: {
-                            position: 'inner',
-                            formatter: '{d}%'
-                            // shadowBlur:3,
-                            // shadowOffsetX: 2,
-                            // shadowOffsetY: 2,
-                            // shadowColor: '#999',
-                            // padding: [0, 7],
+                            position: 'outer',
+                            formatter: '{d}%',
+                            /*shadowBlur:3,
+                            shadowOffsetX: 2,
+                            shadowOffsetY: 2,
+                            shadowColor: '#999',*/
+                            padding: [0, -2],
                         },
                         itemStyle: {
                             borderWidth: 2,
@@ -394,12 +394,12 @@ export class AdminDashboardPage {
                         radius: ['40%', '65%'],
                         label: {
                             position: 'inner',
-                            formatter: '{d}%'
+                            formatter: '{d}%',
                             // shadowBlur:3,
                             // shadowOffsetX: 2,
                             // shadowOffsetY: 2,
                             // shadowColor: '#999',
-                            // padding: [0, 7],
+                            // padding: [0, -2],
                         },
                         data: pieData,
                         itemStyle: {
@@ -530,13 +530,13 @@ export class AdminDashboardPage {
                         type: 'pie',
                         radius: ['40%', '65%'],
                         label: {
-                            position: 'inner',
-                            formatter: '{d}%'
+                            position: 'outer',
+                            formatter: '{d}%',
                             // shadowBlur:3,
                             // shadowOffsetX: 2,
                             // shadowOffsetY: 2,
                             // shadowColor: '#999',
-                            // padding: [0, 7],
+                            padding: [0, -2],
                         },
                         data: pieData,
                         itemStyle: {
