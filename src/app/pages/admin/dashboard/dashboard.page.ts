@@ -130,6 +130,7 @@ export class AdminDashboardPage {
                 this.policy.total = res.totalCount;
                 this.policy.update = res.updateCount;
                 this.policy.list = res.list;
+                this.policy.list.sort(this.compare('reportDateEnd'));
                 console.log(this.policy.list);
             });
         });
@@ -704,5 +705,13 @@ export class AdminDashboardPage {
                 this.guarantee[target] = false;
             }
         });
+    }
+
+    compare(property) {
+        return (a, b) => {
+            const value1 = a[property];
+            const value2 = b[property];
+            return value1 - value2;
+        };
     }
 }

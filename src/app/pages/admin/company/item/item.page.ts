@@ -243,9 +243,11 @@ export class AdminCompanyItemPage implements OnInit {
                     cancel,
                     confirm
                 }).subscribe((state) => {
+                    console.log(state);
                     if (state.value) {
                         this.companySvc.default(res.busCust.id);
                         this.companySvc.updateCompanyStatus(res.busCust);
+                        this.router.navigate(['/admin/dashboard']);
                     }
                     if (this.id !== '0') {
                         this.location.back();
