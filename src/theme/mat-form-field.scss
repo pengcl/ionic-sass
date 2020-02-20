@@ -65,6 +65,7 @@ mat-form-field {
 
 .uploader.mat-form-field-can-float .mat-input-server:focus + .mat-form-field-label-wrapper .mat-form-field-label, .uploader.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
   display: block !important;
+  transform: none !important;
 }
 
 .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-outline-gap {
