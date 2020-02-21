@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {PolicyService} from '../policy.service';
+import {CompanyService} from '../../company/company.service';
+import {map} from 'rxjs/operators';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'app-item',
-  templateUrl: './item.component.html',
-  styleUrls: ['./item.component.scss']
+    selector: 'app-item',
+    templateUrl: './item.component.html',
+    styleUrls: ['./item.component.scss']
 })
-export class AdminPolicyItemPage implements OnInit {
+export class AdminPolicyItemPage {
+    company = this.companySvc.currentCompany;
+    id = this.route.snapshot.params.id;
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+    constructor(private policySvc: PolicyService,
+                private companySvc: CompanyService,
+                private route: ActivatedRoute) {
+        this.route.paramMap.pipe(map(params => this.id = params.get('id'))).subscribe(id => {
+            policySvc.getPolicy(this.id).subscribe(res => {
+                console.log(res);
+            });
+        });
+    }
 
 }

@@ -157,7 +157,7 @@ const routes: Routes = [
                     import('./policy/index/policy.module').then(m => m.AdminPolicyPageModule)
             },
             {// 政策详情
-                path: 'policy/item',
+                path: 'policy/item/:id',
                 data: {name: '政策详情'},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>

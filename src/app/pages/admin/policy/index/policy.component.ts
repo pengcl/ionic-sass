@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {DashboardService} from '../../dashboard/dashboard.service';
 import {CompanyService} from '../../company/company.service';
 import {Router} from '@angular/router';
+import {PolicyService} from '../policy.service';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
     selector: 'app-policy',
@@ -11,10 +13,15 @@ import {Router} from '@angular/router';
 export class AdminPolicyPage {
     subsidyOption;
     company = this.companySvc.currentCompany;
+    policy;
+    dateTime = new Date();
+    dataSource;
+    displayedColumns: ['name', 'money', 'type', 'scope', 'time', 'actions'];
 
     constructor(private dashboardSvc: DashboardService,
                 private companySvc: CompanyService,
-                private router: Router) {
+                private router: Router,
+                private policySvc: PolicyService) {
         this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
             if (res.keChuangBaoAmt + res.quickAmt === 0) {
                 this.subsidyOption = null;
@@ -69,6 +76,15 @@ export class AdminPolicyPage {
                     ]
                 };
             }
+        });
+
+        this.policySvc.count(this.company.id).subscribe(res => {
+            this.policy = res;
+        });
+
+        this.policySvc.item(this.company.id).subscribe(res => {
+            this.dataSource = new MatTableDataSource<any>(res.list);
+            console.log(this.dataSource);
         });
     }
 

@@ -3,6 +3,7 @@ import {AdminPolicyPage} from '../index/policy.component';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CompanyService} from '../../company/company.service';
 import {AddressService} from '../../../../@core/services/address.service';
+import {PolicyService} from '../policy.service';
 
 @Component({
     selector: 'app-list',
@@ -23,7 +24,8 @@ export class AdminPolicyListPage {
     });
 
     constructor(private companySvc: CompanyService,
-                private addressSvc: AddressService) {
+                private addressSvc: AddressService,
+                private policySvc: PolicyService) {
         this.getProvinces();
         this.form.get('province').valueChanges.subscribe(res => {
             this.cities = [];
@@ -35,9 +37,13 @@ export class AdminPolicyListPage {
             this.getDistricts();
         });
 
-      this.form.get('province').setValue(this.company.province);
-      this.form.get('city').setValue(this.company.city);
-      this.form.get('area').setValue(this.company.area);
+        this.form.get('province').setValue(this.company.province);
+        this.form.get('city').setValue(this.company.city);
+        this.form.get('area').setValue(this.company.area);
+
+        this.policySvc.getPolicyPage(this.company.id).subscribe(res => {
+            console.log(res);
+        });
     }
 
     getProvinces() {
