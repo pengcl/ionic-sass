@@ -7,6 +7,7 @@ import {CompanyService} from '../company/company.service';
 import {AuthService} from '../../auth/auth.service';
 import {UserService} from './user.service';
 import {SelectionModel} from '@angular/cdk/collections';
+import {getIndex} from '../../../@core/utils/utils';
 
 @Component({
     selector: 'app-user',
@@ -49,8 +50,10 @@ export class AdminUserPage implements OnInit {
                 fb: FormBuilder,
                 private datePipe: DatePipe) {
         this.form = fb.group({
-            date: [{begin: new Date(), end: new Date()}]
+            date: [{begin: new Date(Date.parse(new Date().toString()) - 86400000 * 7), end: new Date()}]
         });
+        this.params.payedDateBegin = this.datePipe.transform(this.form.get('date').value.begin, 'yyyy-MM-dd');
+        this.params.payedDateEnd = this.datePipe.transform(this.form.get('date').value.end, 'yyyy-MM-dd');
         companySvc.list({}).subscribe(res => {
             this.companies = res.list;
         });
@@ -61,6 +64,8 @@ export class AdminUserPage implements OnInit {
     }
 
     companyChange() {
+        const index = getIndex(this.companies, 'id', this.params.custId);
+        this.companySvc.updateCompanyStatus(this.companies[index]);
         this.getData();
     }
 
@@ -73,11 +78,11 @@ export class AdminUserPage implements OnInit {
 
     getData() {
         this.userSvc.balance(this.params.custId, 'qb').subscribe(res => {
-            this.account.qb = res.account.balance;
+            this.account.qb = res.account ? res.account.balance : 0;
             console.log(this.account.qb);
         });
         this.userSvc.balance(this.params.custId, 'zct').subscribe(res => {
-            this.account.zct = res.account.balance;
+            this.account.zct = res.account ? res.account.balance : 0;
             console.log(this.account.zct);
         });
         this.userSvc.balances(this.params).subscribe(res => {

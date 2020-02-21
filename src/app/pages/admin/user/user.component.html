@@ -79,42 +79,42 @@
                             <!-- Position Column -->
                             <ng-container matColumnDef="date">
                                 <th mat-header-cell *matHeaderCellDef><b>日期</b></th>
-                                <td mat-cell *matCellDef="let element"> {{element.payedDate}} </td>
+                                <td mat-cell *matCellDef="let element"> {{element.payedDate ? element.payedDate : 0}} </td>
                             </ng-container>
 
                             <!-- Name Column -->
                             <ng-container matColumnDef="cost">
                                 <th mat-header-cell *matHeaderCellDef><b>消费</b></th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.thirdConsumeAmount}}
+                                    {{element.thirdConsumeAmount ? element.thirdConsumeAmount : 0}}
                                 </td>
                             </ng-container>
 
                             <ng-container matColumnDef="payY">
                                 <th mat-header-cell *matHeaderCellDef><b>账户余额支付</b></th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.qbConsumeAmount}}
+                                    {{element.qbConsumeAmount ? element.qbConsumeAmount : 0}}
                                 </td>
                             </ng-container>
 
                             <ng-container matColumnDef="payZ">
                                 <th mat-header-cell *matHeaderCellDef><b>资产通支付</b></th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.zctConsumeAmount}}
+                                    {{element.zctConsumeAmount ? element.zctConsumeAmount : 0}}
                                 </td>
                             </ng-container>
 
                             <ng-container matColumnDef="rechargeY">
                                 <th mat-header-cell *matHeaderCellDef><b>账户余额充值</b></th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.qbRechargeAmount}}
+                                    {{element.qbRechargeAmount ? element.qbRechargeAmount : 0}}
                                 </td>
                             </ng-container>
 
                             <ng-container matColumnDef="rechargeZ">
                                 <th mat-header-cell *matHeaderCellDef><b>资产通充值</b></th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.zctRechargeAmount}}
+                                    {{element.zctRechargeAmount ? element.zctRechargeAmount : 0}}
                                 </td>
                             </ng-container>
 
@@ -125,7 +125,7 @@
                         </table>
                         <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total"
                                        (page)="page($event)"
-                                       [pageSizeOptions]="[10,20,50]" showFirstLastButtons>123
+                                       [pageSizeOptions]="[10,20,50]" showFirstLastButtons>
                         </mat-paginator>
                     </mat-card-content>
                 </mat-card>

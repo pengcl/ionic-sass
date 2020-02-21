@@ -7,7 +7,8 @@
                         <form [formGroup]="form">
                             <mat-form-field appearance="outline" style="width: 50%">
                                 <mat-label>请输入您需要搜索的政策项目名称</mat-label>
-                                <input type="text" formControlName="word" placeholder="搜索公司主体" matInput autocomplete="off">
+                                <input type="text" formControlName="word" placeholder="搜索公司主体" matInput
+                                       autocomplete="off">
                                 <mat-icon (click)="search()" matSuffix>search</mat-icon>
                             </mat-form-field>
 
@@ -21,86 +22,63 @@
                                 <ion-col (click)="setWord('科技奖励')" size="1" class="search-label">科技奖励</ion-col>
                                 <ion-col (click)="setWord('节能减排')" size="1" class="search-label">节能减排</ion-col>
                             </ion-row>
-
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col size="1" class="search-label">政策适用区域</ion-col>
-                                    <ion-col size="6">
-                                        <ion-row>
-                                            <ion-col size="3" style="margin-right: 10px">
-                                                <mat-form-field appearance="outline">
-                                                    <mat-select formControlName="province" placeholder="省" required>
-                                                        <mat-option *ngFor="let item of provinces" [value]="item.name">
-                                                            {{item.name}}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
-                                            </ion-col>
-                                            <ion-col size="3" style="margin-right: 10px">
-                                                <mat-form-field appearance="outline">
-                                                    <mat-select formControlName="city" placeholder="市" required>
-                                                        <mat-option *ngFor="let item of cities" [value]="item.name">
-                                                            {{item.name}}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
-                                            </ion-col>
-                                            <ion-col size="3">
-                                                <mat-form-field appearance="outline">
-                                                    <mat-select formControlName="area" placeholder="区" required>
-                                                        <mat-option *ngFor="let item of districts" [value]="item.name">
-                                                            {{item.name}}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
-                                            </ion-col>
-                                        </ion-row>
-                                    </ion-col>
-                                    <ion-col size="1" class="search-label" style="text-align: center">申报时间</ion-col>
-                                    <ion-col size="2">
-                                        <mat-form-field appearance="outline">
-                                            <sat-datepicker-toggle [for]="time" matSuffix></sat-datepicker-toggle>
-                                            <form [formGroup]="form">
-                                                <input matInput placeholder="选择日期" (dateChange)="timeChange($event)" [satDatepicker]="time" readonly>
-                                            </form>
-                                            <sat-datepicker #time [rangeMode]="true"></sat-datepicker>
-                                        </mat-form-field>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
+                            <div class="search-div">
+                                <span class="label">适用区域</span>
+                                <mat-form-field appearance="outline">
+                                    <mat-select formControlName="province" placeholder="省" required>
+                                        <mat-option *ngFor="let item of provinces" [value]="item.name">
+                                            {{item.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <mat-select formControlName="city" placeholder="市" required>
+                                        <mat-option *ngFor="let item of cities" [value]="item.name">
+                                            {{item.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <mat-select formControlName="area" placeholder="区" required>
+                                        <mat-option *ngFor="let item of districts" [value]="item.name">
+                                            {{item.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <span>申报时间</span>
+                                <mat-form-field appearance="outline">
+                                    <sat-datepicker-toggle [for]="time" matSuffix></sat-datepicker-toggle>
+                                    <form [formGroup]="form">
+                                        <input matInput placeholder="选择日期" (dateChange)="timeChange($event)"
+                                               [satDatepicker]="time" readonly>
+                                    </form>
+                                    <sat-datepicker #time [rangeMode]="true"></sat-datepicker>
+                                </mat-form-field>
+                            </div>
 
 
-                            <ion-row>
-                                <ion-col size="2" class="search-label">补贴金额范围(万元)</ion-col>
-                                <ion-col size="1" style="margin-left: -70px;margin-right: 20px">
-                                    <mat-form-field appearance="outline">
-                                        <input name="subsidyAmtBegin" formControlName="subsidyAmtBegin"
-                                               placeholder="金额下限" matInput>
-                                    </mat-form-field>
-                                </ion-col>
-                                <ion-col size="1" class="search-label_r">至</ion-col>
-                                <ion-col size="1" style="margin:0 20px">
-                                    <mat-form-field appearance="outline">
-                                        <input name="subsidyAmtEnd" formControlName="subsidyAmtEnd"
-                                               placeholder="金额上限" matInput>
-                                    </mat-form-field>
-                                </ion-col>
-
-                                <ion-col size="2" class="search-label_r">政策适用程度(%)</ion-col>
-                                <ion-col size="1" style="margin: 0 20px">
-                                    <mat-form-field appearance="outline">
-                                        <input name="weightBegin" formControlName="weightBegin"
-                                               placeholder="程度下限" matInput>
-                                    </mat-form-field>
-                                </ion-col>
-                                <ion-col size="1" class="search-label_r">至</ion-col>
-                                <ion-col size="1" style="margin-left: 20px">
-                                    <mat-form-field appearance="outline">
-                                        <input name="weightEnd" formControlName="weightEnd"
-                                               placeholder="程度上限" matInput>
-                                    </mat-form-field>
-                                </ion-col>
-                            </ion-row>
+                            <div class="search-div">
+                                <span class="label">补贴金额范围(万元)</span>
+                                <mat-form-field appearance="outline">
+                                    <input name="subsidyAmtBegin" formControlName="subsidyAmtBegin"
+                                           placeholder="金额下限" matInput>
+                                </mat-form-field>
+                                <span class="label">至</span>
+                                <mat-form-field appearance="outline">
+                                    <input name="subsidyAmtEnd" formControlName="subsidyAmtEnd"
+                                           placeholder="金额上限" matInput>
+                                </mat-form-field>
+                                <span class="label">政策适用程度(%)</span>
+                                <mat-form-field appearance="outline">
+                                    <input name="weightBegin" formControlName="weightBegin"
+                                           placeholder="程度下限" matInput>
+                                </mat-form-field>
+                                <span class="label">至</span>
+                                <mat-form-field appearance="outline">
+                                    <input name="weightEnd" formControlName="weightEnd"
+                                           placeholder="程度上限" matInput>
+                                </mat-form-field>
+                            </div>
                         </form>
                         <table mat-table [dataSource]="dataSource">
 

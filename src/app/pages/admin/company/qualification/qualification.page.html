@@ -135,7 +135,7 @@
                             </mat-radio-group>
                         </mat-form-field>
                         <mat-form-field
-                                *ngIf="condition.fieldType === '0002'"
+                                *ngIf="condition.fieldType === '0002' && dict[condition.conditionId]"
                                 appearance="outline">
                             <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}<i [matTooltip]="condition.conditionRemark" (click)="remark(condition.conditionRemark,$event)" *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i></label>
                             <input *ngIf="dict[condition.conditionId].length < 1" [placeholder]="'请输入' + condition.conditionName" [formControlName]="condition.conditionId"
