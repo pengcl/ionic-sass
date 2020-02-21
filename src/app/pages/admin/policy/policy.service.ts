@@ -33,7 +33,7 @@ export class PolicyService {
     }
 
     getPolicy(id): Observable<any> {
-        return this.http.get(this.PREFIX_URL + 'getPolicy&custId=' + id)
+        return this.http.get(this.PREFIX_URL + 'getPolicy&id=' + id)
             .pipe(observableMargeMap((res: any) => {
                 return resultProcess(res);
             }));
