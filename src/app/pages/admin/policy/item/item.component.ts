@@ -10,6 +10,7 @@ import {ActivatedRoute} from '@angular/router';
     styleUrls: ['./item.component.scss']
 })
 export class AdminPolicyItemPage {
+    policy;
     company = this.companySvc.currentCompany;
     id = this.route.snapshot.params.id;
 
@@ -18,7 +19,7 @@ export class AdminPolicyItemPage {
                 private route: ActivatedRoute) {
         this.route.paramMap.pipe(map(params => this.id = params.get('id'))).subscribe(id => {
             policySvc.getPolicy(this.id).subscribe(res => {
-                console.log(res);
+                this.policy = res;
             });
         });
     }

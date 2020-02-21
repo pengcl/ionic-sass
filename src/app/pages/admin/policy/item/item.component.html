@@ -5,11 +5,11 @@
                 <mat-card>
                     <div class="company">
                         <div class="degree">
-                            <p style="color: #333;font-size: 18px;font-weight: 700;margin: 10px auto 5px">80%</p>
+                            <p style="color: #333;font-size: 18px;font-weight: 700;margin: 10px auto 5px">{{policy?.weight}}%</p>
                             <p style="color: #333;font-size: 14px;font-weight: 400;">政策匹配程度</p>
                         </div>
                         <div class="company_left"></div>
-                        <div class="company_right"><p>国家高新技术企业认定</p></div>
+                        <div class="company_right"><p>{{policy?.policyName}}</p></div>
                     </div>
                 </mat-card>
             </ion-col>
@@ -20,16 +20,16 @@
                         <mat-card-title>政策信息</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <label>有效地区： 全国</label>
+                        <label>有效地区： {{policy?.area}}</label>
                         <label>适用行业：
                             <article>
                                 农业领域、机械制造、房产建材、交通运输、仓储、通信、电子、互联网、服饰珠宝化妆品、住宿、餐饮业、旅游、金融业、食品饮料、商业服务、科学研究和技术服务业、居民服务、修理和其他服务业、教育、医保化工、文化、体育和娱乐业、珠宝、工艺品、软件行业、车辆船舶飞机制造、传统服务业、电子商务
                             </article>
                         </label>
-                        <label style="margin-top: 30px">补贴金额范围（万元）：0 至 35</label>
-                        <label>政策有效时间：2019-12-01 至 2024-01-01</label>
-                        <label>申报时间范围：2019-12-01 至 2024-12-01</label>
-                        <label>申报所需时长：2个月</label>
+                        <label style="margin-top: 30px">补贴金额范围（万元）：{{policy?.subsidyAmtBegin}} 至 {{policy?.subsidyAmtEnd}}</label>
+                        <label>政策有效时间：{{policy?.reportDateBegin | date:'yyyy-MM-dd'}} 至 {{policy?.reportDateEnd | date:'yyyy-MM-dd'}}</label>
+                        <label>申报时间范围：{{policy?.reportDateBegin | date:'yyyy-MM-dd'}} 至 {{policy?.reportDateEnd | date:'yyyy-MM-dd'}}</label>
+                        <label>申报所需时长：{{policy?.reportTiming}}个月</label>
                     </mat-card-content>
                 </mat-card>
             </ion-col>
