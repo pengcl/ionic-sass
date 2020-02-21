@@ -16,7 +16,7 @@ export class AdminPolicyPage {
     policy;
     dateTime = new Date();
     dataSource;
-    displayedColumns: ['name', 'money', 'type', 'scope', 'time', 'actions'];
+    displayedColumns: string[] = ['name', 'money', 'type', 'scope', 'time', 'actions'];
 
     constructor(private dashboardSvc: DashboardService,
                 private companySvc: CompanyService,
