@@ -4,28 +4,28 @@
             <ion-col size="12">
                 <mat-card>
                     <mat-card-content>
-                        <mat-form-field appearance="outline" style="width: 50%">
-                            <mat-label>请输入您需要搜索的政策项目名称</mat-label>
-                            <input type="text" placeholder="搜索公司主体" matInput autocomplete="off">
-                            <mat-icon matSuffix>search</mat-icon>
-                        </mat-form-field>
+                        <form [formGroup]="form">
+                            <mat-form-field appearance="outline" style="width: 50%">
+                                <mat-label>请输入您需要搜索的政策项目名称</mat-label>
+                                <input type="text" formControlName="word" placeholder="搜索公司主体" matInput autocomplete="off">
+                                <mat-icon (click)="search()" matSuffix>search</mat-icon>
+                            </mat-form-field>
 
-                        <ion-row style="margin-top: -20px">
-                            <ion-col size="1" class="search-label" style="color: #2C9EF7">热门搜索</ion-col>
-                            <ion-col size="1" class="search-label hot">疫情政策</ion-col>
-                            <ion-col size="1" class="search-label hot">国高认定</ion-col>
-                            <ion-col size="1" class="search-label hot">重大项目</ion-col>
-                            <ion-col size="1" class="search-label hot">股权资助</ion-col>
-                            <ion-col size="1" class="search-label">事前资助</ion-col>
-                            <ion-col size="1" class="search-label">科技奖励</ion-col>
-                            <ion-col size="1" class="search-label">节能减排</ion-col>
-                        </ion-row>
+                            <ion-row style="margin-top: -20px">
+                                <ion-col size="1" class="search-label" style="color: #2C9EF7">热门搜索</ion-col>
+                                <ion-col (click)="setWord('疫情政策')" size="1" class="search-label hot">疫情政策</ion-col>
+                                <ion-col (click)="setWord('国高认定')" size="1" class="search-label hot">国高认定</ion-col>
+                                <ion-col (click)="setWord('重大项目')" size="1" class="search-label hot">重大项目</ion-col>
+                                <ion-col (click)="setWord('股权资助')" size="1" class="search-label hot">股权资助</ion-col>
+                                <ion-col (click)="setWord('事前资助')" size="1" class="search-label">事前资助</ion-col>
+                                <ion-col (click)="setWord('科技奖励')" size="1" class="search-label">科技奖励</ion-col>
+                                <ion-col (click)="setWord('节能减排')" size="1" class="search-label">节能减排</ion-col>
+                            </ion-row>
 
-                        <ion-grid>
-                            <ion-row>
-                                <ion-col size="1" class="search-label">政策适用区域</ion-col>
-                                <ion-col size="6">
-                                    <form [formGroup]="form">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col size="1" class="search-label">政策适用区域</ion-col>
+                                    <ion-col size="6">
                                         <ion-row>
                                             <ion-col size="3" style="margin-right: 10px">
                                                 <mat-form-field appearance="outline">
@@ -55,34 +55,33 @@
                                                 </mat-form-field>
                                             </ion-col>
                                         </ion-row>
-                                    </form>
-                                </ion-col>
-                                <ion-col size="1" class="search-label" style="text-align: center">申报时间</ion-col>
-                                <ion-col size="2">
-                                    <mat-form-field appearance="outline">
-                                        <input name="beginDate"
-                                               placeholder="请选择日期" matInput
-                                               [matDatepicker]="startPicker">
-                                        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-                                        <mat-datepicker #startPicker></mat-datepicker>
-                                    </mat-form-field>
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
+                                    </ion-col>
+                                    <ion-col size="1" class="search-label" style="text-align: center">申报时间</ion-col>
+                                    <ion-col size="2">
+                                        <mat-form-field appearance="outline">
+                                            <sat-datepicker-toggle [for]="time" matSuffix></sat-datepicker-toggle>
+                                            <form [formGroup]="form">
+                                                <input matInput placeholder="选择日期" (dateChange)="timeChange($event)" [satDatepicker]="time" readonly>
+                                            </form>
+                                            <sat-datepicker #time [rangeMode]="true"></sat-datepicker>
+                                        </mat-form-field>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
 
 
                             <ion-row>
                                 <ion-col size="2" class="search-label">补贴金额范围(万元)</ion-col>
                                 <ion-col size="1" style="margin-left: -70px;margin-right: 20px">
                                     <mat-form-field appearance="outline">
-                                        <input name="beginDate"
+                                        <input name="subsidyAmtBegin" formControlName="subsidyAmtBegin"
                                                placeholder="金额下限" matInput>
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="1" class="search-label_r">至</ion-col>
                                 <ion-col size="1" style="margin:0 20px">
                                     <mat-form-field appearance="outline">
-                                        <input name="beginDate"
+                                        <input name="subsidyAmtEnd" formControlName="subsidyAmtEnd"
                                                placeholder="金额上限" matInput>
                                     </mat-form-field>
                                 </ion-col>
@@ -90,20 +89,87 @@
                                 <ion-col size="2" class="search-label_r">政策适用程度(%)</ion-col>
                                 <ion-col size="1" style="margin: 0 20px">
                                     <mat-form-field appearance="outline">
-                                        <input name="beginDate"
+                                        <input name="weightBegin" formControlName="weightBegin"
                                                placeholder="程度下限" matInput>
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="1" class="search-label_r">至</ion-col>
                                 <ion-col size="1" style="margin-left: 20px">
                                     <mat-form-field appearance="outline">
-                                        <input name="beginDate"
+                                        <input name="weightEnd" formControlName="weightEnd"
                                                placeholder="程度上限" matInput>
                                     </mat-form-field>
                                 </ion-col>
                             </ion-row>
+                        </form>
+                        <table mat-table [dataSource]="dataSource">
 
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef><b>政策名称</b></th>
+                                <td mat-cell *matCellDef="let element" style="text-align: left !important;">
+                                    {{element.policyName}}
+                                </td>
+                            </ng-container>
 
+                            <ng-container matColumnDef="area">
+                                <th mat-header-cell *matHeaderCellDef><b>适用区域</b></th>
+                                <td mat-cell *matCellDef="let element" style="text-align: left !important;">
+                                    {{element.province}}
+                                </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="money">
+                                <th mat-header-cell *matHeaderCellDef><b>最高补贴金额（万元）</b></th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.subsidyAmtEnd}}
+                                </td>
+                                <td mat-footer-cell *matFooterCellDef></td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="rate">
+                                <th mat-header-cell *matHeaderCellDef><b>政策适用程度</b></th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.weight}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="scope">
+                                <th mat-header-cell *matHeaderCellDef><b>申报时间范围</b></th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.reportDateBegin | date : 'yyyy-MM-dd'}}
+                                    至{{element.reportDateEnd | date : 'yyyy-MM-dd'}}
+                                </td>
+                            </ng-container>
+
+                            <!-- Weight Column -->
+                            <ng-container matColumnDef="time">
+                                <th mat-header-cell *matHeaderCellDef style="width: 200px"><b>申报所需时长</b></th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.reportTiming}}个月
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef style="width: 120px"><b>操作</b></th>
+                                <td mat-cell *matCellDef="let element"
+                                    style="border-bottom-width: 1px !important;height: 50px">
+                                    <a class="actions-icon"
+                                       [routerLink]="['/admin/policy/item',element.id]" title="查看">
+                                        <img src="/assets/images/view.png">
+                                    </a>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </tr>
+
+                        </table>
+                        <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total"
+                                       (page)="page($event)"
+                                       [pageSizeOptions]="[10,20,50]" showFirstLastButtons>123
+                        </mat-paginator>
                     </mat-card-content>
                 </mat-card>
             </ion-col>

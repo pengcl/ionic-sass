@@ -16,7 +16,13 @@ export class AdminPolicyPage {
     policy;
     dateTime = new Date();
     dataSource;
-    displayedColumns: ['name', 'money', 'type', 'scope', 'time', 'actions'];
+    displayedColumns = ['name', 'money', 'type', 'scope', 'time', 'actions'];
+    params = {
+        custId: this.company.id,
+        page: 1,
+        rows: 10
+    };
+    total = 0;
 
     constructor(private dashboardSvc: DashboardService,
                 private companySvc: CompanyService,
@@ -81,11 +87,36 @@ export class AdminPolicyPage {
         this.policySvc.count(this.company.id).subscribe(res => {
             this.policy = res;
         });
+        this.getData();
+    }
 
-        this.policySvc.item(this.company.id).subscribe(res => {
+    getData() {
+        this.policySvc.item(this.params).subscribe(res => {
+            this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
-            console.log(this.dataSource);
         });
+    }
+
+    getBody() {
+        const body = JSON.parse(JSON.stringify(this.params));
+        if (body.workStatus) {
+            let workStatus = '';
+            body.workStatus.forEach(item => {
+                if (workStatus) {
+                    workStatus = workStatus + ',' + item;
+                } else {
+                    workStatus = workStatus + item;
+                }
+            });
+            body.workStatus = workStatus;
+        }
+        return body;
+    }
+
+    page(e) {
+        this.params.page = e.pageIndex + 1;
+        this.params.rows = e.pageSize;
+        this.getData();
     }
 
     toPolicyItem() {
