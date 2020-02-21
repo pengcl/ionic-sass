@@ -18,8 +18,11 @@ export class UserService {
             }));
     }
 
-    balance(id): Observable<any> {
-        return this.http.get(this.PREFIX_URL + 'getTotalBalance?custId' + id);
+    balance(id, type): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getAccount&custId=' + id + '&type=' + type)
+            .pipe(observableMargeMap((res: any) => {
+            return resultProcess(res);
+        }));;
     }
 
     add(id, name): Observable<any> {

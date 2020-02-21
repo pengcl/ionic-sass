@@ -38,6 +38,10 @@ export class AdminUserPage implements OnInit {
     selection = new SelectionModel<any>(true, []);
     date;
     form: FormGroup;
+    account = {
+        qb: 0,
+        zct: 0
+    };
 
     constructor(private authSvc: AuthService,
                 private userSvc: UserService,
@@ -68,8 +72,13 @@ export class AdminUserPage implements OnInit {
     }
 
     getData() {
-        this.userSvc.balance(this.params.custId).subscribe(res => {
-            console.log(res);
+        this.userSvc.balance(this.params.custId, 'qb').subscribe(res => {
+            this.account.qb = res.account.balance;
+            console.log(this.account.qb);
+        });
+        this.userSvc.balance(this.params.custId, 'zct').subscribe(res => {
+            this.account.zct = res.account.balance;
+            console.log(this.account.zct);
         });
         this.userSvc.balances(this.params).subscribe(res => {
             console.log(res);
