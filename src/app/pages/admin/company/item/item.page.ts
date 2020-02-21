@@ -248,9 +248,14 @@ export class AdminCompanyItemPage implements OnInit {
                         this.companySvc.default(res.busCust.id);
                         this.companySvc.updateCompanyStatus(res.busCust);
                         this.router.navigate(['/admin/dashboard']);
-                    }
-                    if (this.id !== '0') {
-                        this.location.back();
+                    } else {
+                        if (this.id !== '0') {
+                            this.location.back();
+                        } else {
+                            this.companySvc.default(res.busCust.id);
+                            this.companySvc.updateCompanyStatus(res.busCust);
+                            this.router.navigate(['/admin/dashboard']);
+                        }
                     }
                 });
             }

@@ -36,7 +36,7 @@
         <img class="img" src="/assets/images/arrow_up.png">
     </button>
     <mat-menu [classList]="'top-menu'" #menu="matMenu">
-        <button (click)="presentLoading()" mat-menu-item>我的账户</button>
+        <button routerLink="/admin/user" mat-menu-item>我的账户</button>
         <mat-divider></mat-divider>
         <button routerLink="/admin/order/list" mat-menu-item>我的订单</button>
         <mat-divider></mat-divider>

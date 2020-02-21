@@ -15,9 +15,9 @@
                                     </ion-col>
                                     <ion-col size="12">
                                         <mat-form-field appearance="outline">
-                                            <mat-select>
-                                                <mat-option>
-                                                    深圳中科华海科技有限公司
+                                            <mat-select name="company" [(ngModel)]="params.custId" (ngModelChange)="companyChange()">
+                                                <mat-option *ngFor="let item of companies" [value]="item.id">
+                                                    {{item.companyName}}
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
@@ -30,7 +30,7 @@
                                                          style="width: 60px;height: 60px;display: block;margin: 20px">
                                                 </div>
                                                 <div style="float: left">
-                                                    <p style="font-size: 32px;color: #fff;margin: 20px 5px">1,000,00</p>
+                                                    <p style="font-size: 32px;color: #fff;margin: 20px 5px">{{account.qb | currency : ' '}}</p>
                                                     <p style="color: #fff;margin-top: -20px">企业账户余额（元）</p>
                                                 </div>
                                             </div>
@@ -40,7 +40,7 @@
                                                          style="width: 60px;height: 60px;display: block;margin: 20px">
                                                 </div>
                                                 <div style="float: left">
-                                                    <p style="font-size: 32px;color: #fff;margin: 20px 5px">1,000,00</p>
+                                                    <p style="font-size: 32px;color: #fff;margin: 20px 5px">{{account.zct | currency : ' '}}</p>
                                                     <p style="color: #fff;margin-top: -20px">企业账户可用资产通（1资产通 = 1元）</p>
                                                 </div>
                                             </div>
@@ -58,26 +58,75 @@
                         <mat-card-title>消费统计</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <form>
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col size="12">
-                                        <label style="color: #5F717D;font-weight: 400;font-size: 14px">统计时间</label>
-                                    </ion-col>
-                                    <ion-col size="4">
-                                        <mat-form-field appearance="outline">
-                                            <input name="beginDate"
-                                                   placeholder="请选择日期" matInput
-                                                   [matDatepicker]="startPicker">
-                                            <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-                                            <mat-datepicker #startPicker></mat-datepicker>
-                                        </mat-form-field>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
-                        </form>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="12">
+                                    <label style="color: #5F717D;font-weight: 400;font-size: 14px">统计时间</label>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <mat-form-field appearance="outline">
+                                        <sat-datepicker-toggle [for]="time" matSuffix></sat-datepicker-toggle>
+                                        <form [formGroup]="form">
+                                            <input matInput placeholder="选择时间" formControlName="date" (dateChange)="timeChange($event)" [satDatepicker]="time" readonly>
+                                        </form>
+                                        <sat-datepicker #time [rangeMode]="true"></sat-datepicker>
+                                    </mat-form-field>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                        <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
 
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="date">
+                                <th mat-header-cell *matHeaderCellDef><b>日期</b></th>
+                                <td mat-cell *matCellDef="let element"> {{element.payedDate}} </td>
+                            </ng-container>
 
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="cost">
+                                <th mat-header-cell *matHeaderCellDef><b>消费</b></th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.thirdConsumeAmount}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="payY">
+                                <th mat-header-cell *matHeaderCellDef><b>账户余额支付</b></th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.qbConsumeAmount}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="payZ">
+                                <th mat-header-cell *matHeaderCellDef><b>资产通支付</b></th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.zctConsumeAmount}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="rechargeY">
+                                <th mat-header-cell *matHeaderCellDef><b>账户余额充值</b></th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.qbRechargeAmount}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="rechargeZ">
+                                <th mat-header-cell *matHeaderCellDef><b>资产通充值</b></th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.zctRechargeAmount}}
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                                (click)="selection.toggle(row)">
+                            </tr>
+                        </table>
+                        <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total"
+                                       (page)="page($event)"
+                                       [pageSizeOptions]="[10,20,50]" showFirstLastButtons>123
+                        </mat-paginator>
                     </mat-card-content>
                 </mat-card>
             </ion-col>

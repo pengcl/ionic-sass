@@ -1,0 +1,23 @@
+ion-loading {
+  .loading-wrapper {
+    position: relative;
+    text-align: left;
+    padding: 10px 10px 10px 40px !important;
+    min-width: 300px !important;
+    justify-content: left !important;
+    background: #2C9EF7 !important;
+    border-radius: 4px !important;
+    color: #fff !important;
+    &:before {
+      width: 20px;
+      height: 20px;
+      content: '';
+      position: absolute;
+      background-image: url("/assets/images/info.png");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      left: 10px;
+    }
+  }
+}

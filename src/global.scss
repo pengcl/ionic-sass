@@ -23,6 +23,7 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 @import '~@angular/material/theming';
+@import '~saturn-datepicker/bundle.css';
 @import "theme/mat-form-field";
 @import "theme/mat-table";
 @import "theme/mat-button";
@@ -31,6 +32,7 @@
 @import "theme/ion-progress-bar";
 @import "theme/mat-menu";
 @import "theme/mat-checkbox";
+@import "theme/ion-loading";
 html, body {
   height: 100%;
 }

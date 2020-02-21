@@ -82,7 +82,7 @@ import {COMPONENTS, ENTRY_COMPONENTS, PIPES} from './index';
 import {AdminCheckoutCodeComponent} from '../pages/admin/checkout/code/code.component';
 import {CountUpModule} from 'ngx-countup';
 import {NgxEchartsModule} from 'ngx-echarts';
-
+import {SatDatepickerModule, SatNativeDateModule} from 'saturn-datepicker';
 @NgModule({
     imports: [
         CommonModule,
@@ -97,6 +97,8 @@ import {NgxEchartsModule} from 'ngx-echarts';
         NgxQRCodeModule,
         CountUpModule,
         NgxEchartsModule,
+        SatDatepickerModule,
+        SatNativeDateModule,
         NgCircleProgressModule.forRoot({
             // set defaults here
             radius: 100,
@@ -121,6 +123,8 @@ import {NgxEchartsModule} from 'ngx-echarts';
         CountUpModule,
         NgxEchartsModule,
         NgCircleProgressModule,
+        SatDatepickerModule,
+        SatNativeDateModule,
         ...COMPONENTS,
         ...PIPES
     ],

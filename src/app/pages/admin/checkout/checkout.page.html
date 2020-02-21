@@ -354,6 +354,7 @@
                                                             class="weui-uploader__input"
                                                             type="file"
                                                             multiple
+                                                            [title]="thirdForm.get('proxyFileId').value ? '已上传':'未选择任何文件'"
                                                             [weui-uploader-file]="uploader.proxyFileId"
                                                     />
                                                 </div>
