@@ -118,15 +118,17 @@
                                                     </div>
                                                     <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
                                                         {{item.policyName}}</p>
-                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
+                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;display: inline-block">
                                                         预计补贴金额<span
                                                             style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元
+                                                    </p>
+                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin: -10px 20px;display: inline-block">
+                                                        最后限期：<span style="font-weight: 700" [ngStyle]="{'color' : getDate(item.reportDateEnd) > 30 ? '#2C9EF7' : 'red'}">{{getDate(item.reportDateEnd)}}</span>天
                                                     </p>
                                                     <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
                                                         预计所需时间<span
                                                             style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月
                                                     </p>
-                                                    <span class="time-left">最后限期：<span [ngStyle]="{'color' : getDate(item.reportDateEnd) > 30 ? '' : 'red'}">{{getDate(item.reportDateEnd)}}</span>天</span>
                                                 </div>
                                             </ion-col>
                                         </ion-row>
@@ -149,11 +151,13 @@
                                                     </div>
                                                     <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
                                                         {{item.policyName}}</p>
-                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">预计补贴金额<span
+                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;display: inline-block">预计补贴金额<span
                                                             style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元</p>
+                                                    <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin: -10px 20px;display: inline-block">
+                                                        最后限期：<span style="font-weight: 700" [ngStyle]="{'color' : getDate(item.reportDateEnd) > 30 ? '#2C9EF7' : 'red'}">{{getDate(item.reportDateEnd)}}</span>天
+                                                    </p>
                                                     <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">预计所需时间<span
                                                             style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月</p>
-                                                    <span class="time-left">最后限期：<span [ngStyle]="{'color' : getDate(item.reportDateEnd) > 30 ? '' : 'red'}">{{getDate(item.reportDateEnd)}}</span>天</span>
                                                 </div>
                                             </ion-col>
                                         </ion-row>
