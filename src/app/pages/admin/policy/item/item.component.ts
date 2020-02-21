@@ -20,6 +20,7 @@ export class AdminPolicyItemPage {
         this.route.paramMap.pipe(map(params => this.id = params.get('id'))).subscribe(id => {
             policySvc.getPolicy(this.id).subscribe(res => {
                 this.policy = res;
+                this.policy.industryNames = this.policy.industryNames.replace(/,/gi, '、');
             });
         });
     }
