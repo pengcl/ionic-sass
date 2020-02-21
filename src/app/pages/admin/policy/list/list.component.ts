@@ -4,26 +4,44 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CompanyService} from '../../company/company.service';
 import {AddressService} from '../../../../@core/services/address.service';
 import {PolicyService} from '../policy.service';
+import {MatTableDataSource} from '@angular/material';
+import {DatePipe} from '@angular/common';
+import {debounceTime, filter, map, distinctUntilChanged, switchMap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
-    styleUrls: ['./list.component.scss']
+    styleUrls: ['./list.component.scss'],
+    providers: [DatePipe]
 })
 export class AdminPolicyListPage {
     provinces = [];
     cities = [];
     districts = [];
     company = this.companySvc.currentCompany;
-
+    dataSource;
+    displayedColumns = ['name', 'area', 'money', 'rate', 'scope', 'time', 'actions'];
     form: FormGroup = new FormGroup({
         custId: new FormControl(this.company.id, [Validators.required]),
-        province: new FormControl('', [Validators.required]),
-        area: new FormControl('', [Validators.required]),
-        city: new FormControl('', [Validators.required])
+        province: new FormControl('', []),
+        area: new FormControl('', []),
+        city: new FormControl('', []),
+        reportDateBegin: new FormControl('', []),
+        reportDateEnd: new FormControl('', []),
+        subsidyAmtBegin: new FormControl('', []),
+        subsidyAmtEnd: new FormControl('', []),
+        weightBegin: new FormControl('', []),
+        weightEnd: new FormControl('', []),
+        word: new FormControl('', [])
     });
+    total = 0;
+    params = {
+        page: 1,
+        rows: 10
+    };
 
-    constructor(private companySvc: CompanyService,
+    constructor(private datePipe: DatePipe,
+                private companySvc: CompanyService,
                 private addressSvc: AddressService,
                 private policySvc: PolicyService) {
         this.getProvinces();
@@ -31,18 +49,55 @@ export class AdminPolicyListPage {
             this.cities = [];
             this.districts = [];
             this.getCities();
+            this.params.page = 1;
+            this.getData();
         });
         this.form.get('city').valueChanges.subscribe(res => {
             this.districts = [];
             this.getDistricts();
+            this.params.page = 1;
+            this.getData();
+        });
+
+        this.form.get('area').valueChanges.subscribe(res => {
+            this.params.page = 1;
+            this.getData();
         });
 
         this.form.get('province').setValue(this.company.province);
         this.form.get('city').setValue(this.company.city);
         this.form.get('area').setValue(this.company.area);
+        this.getData();
+        this.form.get('subsidyAmtBegin').valueChanges.pipe(
+            filter(text => text.length > 1),
+            debounceTime(1500),
+            distinctUntilChanged()).subscribe(() => {
+            this.params.page = 1;
+            this.getData();
+        });
 
-        this.policySvc.getPolicyPage(this.company.id).subscribe(res => {
-            console.log(res);
+        this.form.get('subsidyAmtEnd').valueChanges.pipe(
+            filter(text => text.length > 1),
+            debounceTime(1500),
+            distinctUntilChanged()).subscribe(() => {
+            this.params.page = 1;
+            this.getData();
+        });
+
+        this.form.get('weightBegin').valueChanges.pipe(
+            filter(text => text.length > 1),
+            debounceTime(1500),
+            distinctUntilChanged()).subscribe(() => {
+            this.params.page = 1;
+            this.getData();
+        });
+
+        this.form.get('weightEnd').valueChanges.pipe(
+            filter(text => text.length > 1),
+            debounceTime(1500),
+            distinctUntilChanged()).subscribe(() => {
+            this.params.page = 1;
+            this.getData();
         });
     }
 
@@ -56,6 +111,38 @@ export class AdminPolicyListPage {
 
     getDistricts() {
         this.districts = this.addressSvc.districts(this.form.get('province').value, this.form.get('city').value);
+    }
+
+    getData() {
+        const body = JSON.parse(JSON.stringify(this.form.value));
+        body.page = this.params.page;
+        body.rows = this.params.rows;
+        this.policySvc.list(body).subscribe(res => {
+            console.log(res);
+            this.total = res.total;
+            this.dataSource = new MatTableDataSource<any>(res.list);
+        });
+    }
+
+    setWord(word) {
+        this.form.get('word').setValue(word);
+    }
+
+    search() {
+        this.getData();
+    }
+
+    timeChange(e) {
+        this.params.page = 1;
+        this.form.get('reportDateBegin').setValue(this.datePipe.transform(e.value.begin, 'yyyy-MM-dd'));
+        this.form.get('reportDateEnd').setValue(this.datePipe.transform(e.value.end, 'yyyy-MM-dd'));
+        this.getData();
+    }
+
+    page(e) {
+        this.params.page = e.pageIndex + 1;
+        this.params.rows = e.pageSize;
+        this.getData();
     }
 
 }

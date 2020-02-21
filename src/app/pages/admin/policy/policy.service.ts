@@ -18,15 +18,15 @@ export class PolicyService {
             }));
     }
 
-    item(id): Observable<any> {
-        return this.http.get(this.PREFIX_URL + 'getMatchPolicies&custId=' + id)
+    item(body): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'getMatchPolicies', body)
             .pipe(observableMargeMap((res: any) => {
                 return resultProcess(res);
             }));
     }
 
-    getPolicyPage(id): Observable<any> {
-        return this.http.get(this.PREFIX_URL + 'getPolicyPage&custId=' + id)
+    list(body): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'getPolicyPage', body)
             .pipe(observableMargeMap((res: any) => {
                 return resultProcess(res);
             }));
