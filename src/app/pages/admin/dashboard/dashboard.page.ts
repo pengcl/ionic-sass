@@ -12,6 +12,7 @@ import {LoadingController} from '@ionic/angular';
 import {TicketService} from '../ticket/ticket.service';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
     selector: 'app-admin-dashboard',
@@ -82,6 +83,7 @@ export class AdminDashboardPage {
 
     constructor(private router: Router,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
+                private snackBar: MatSnackBar,
                 private companySvc: CompanyService,
                 private monitorSvc: MonitorService,
                 private planSvc: PlanService,
@@ -691,6 +693,12 @@ export class AdminDashboardPage {
 
     toCheckout() {
         this.router.navigate(['admin/checkout']);
+    }
+
+    openSnackBar() {
+        this.snackBar.open('功能即将开放，敬请期待', '', {
+            duration: 1000,
+        });
     }
 
     async presentLoading(target?) {
