@@ -3,7 +3,7 @@
 
     <mat-sidenav mode="side" opened>
         <mat-list>
-            <h3 routerLink="/admin/dashboard" routerLinkActive="active" mat-subheader>
+            <h3 routerLink="/admin/dashboard" [matMenuTriggerFor]="menuCompany" #companyTrigger="matMenuTrigger" (mouseover)="trustTrigger.closeMenu();boxTrigger.closeMenu();checkoutTrigger.closeMenu();reportTrigger.closeMenu();companyTrigger.closeMenu()" routerLinkActive="active" mat-subheader>
                 <span class="mat-list-icon">
                     <img src="/assets/images/side/1.png">
                 </span>
@@ -15,12 +15,12 @@
                 </span>
                 企业信息管理
             </h3>
-            <mat-menu [hasBackdrop]="false" xPosition="after" [overlapTrigger]="false" [classList]="'side-sub-menu'" #menuCompany="matMenu">
+            <mat-menu [hasBackdrop]="false" xPosition="after" [classList]="'side-sub-menu'" #menuCompany="matMenu">
                 <button [routerLink]="['/admin/company/list']" routerLinkActive="active" mat-menu-item>企业主体管理</button>
                 <button [routerLink]="['/admin/company/qualification',company.id]" routerLinkActive="active"
                         mat-menu-item>企业资质
                 </button>
-                <button (click)="presentLoading()" routerLinkActive="active" mat-menu-item>匹配政策</button>
+                <button routerLink="/admin/policy/index" routerLinkActive="active" mat-menu-item>匹配政策</button>
             </mat-menu>
             <h3 [ngClass]="{'active' : menuIndex === 2}" [matMenuTriggerFor]="menuTrust" #trustTrigger="matMenuTrigger" (mouseover)="companyTrigger.closeMenu();boxTrigger.closeMenu();checkoutTrigger.closeMenu();reportTrigger.closeMenu();trustTrigger.openMenu()" mat-subheader>
                 <span class="mat-list-icon">
@@ -28,9 +28,9 @@
                 </span>
                 知产托管
             </h3>
-            <mat-menu [hasBackdrop]="false" xPosition="after" [overlapTrigger]="false" [classList]="'side-sub-menu'" #menuTrust="matMenu">
-                <button [routerLink]="['/admin/trust/list']" routerLinkActive="active" mat-menu-item>商标托管</button>
-                <button [routerLink]="['/admin/trust/list']" routerLinkActive="active" mat-menu-item>专利托管</button>
+            <mat-menu [hasBackdrop]="false" xPosition="after" [classList]="'side-sub-menu'" #menuTrust="matMenu">
+                <button [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:0}" routerLinkActive="active" mat-menu-item>商标托管</button>
+                <button [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:1}" routerLinkActive="active" mat-menu-item>专利托管</button>
             </mat-menu>
             <h3 [ngClass]="{'active' : menuIndex === 4}" [matMenuTriggerFor]="menuBox" #boxTrigger="matMenuTrigger" (mouseover)="companyTrigger.closeMenu();trustTrigger.closeMenu();checkoutTrigger.closeMenu();reportTrigger.closeMenu();boxTrigger.openMenu()" mat-subheader>
                 <span class="mat-list-icon">
@@ -38,7 +38,7 @@
                 </span>
                 知产保险箱
             </h3>
-            <mat-menu [hasBackdrop]="false" xPosition="after" [overlapTrigger]="false" [classList]="'side-sub-menu'" #menuBox="matMenu">
+            <mat-menu [hasBackdrop]="false" xPosition="after" [classList]="'side-sub-menu'" #menuBox="matMenu">
                 <button routerLink="/admin/box/list" routerLinkActive="active" mat-menu-item>我的知产</button>
                 <button routerLink="/admin/box/upload" routerLinkActive="active" mat-menu-item>添加知产</button>
             </mat-menu>
@@ -48,7 +48,7 @@
                 </span>
                 知产智能服务
             </h3>
-            <mat-menu [hasBackdrop]="false" xPosition="after" [overlapTrigger]="false" [classList]="'side-sub-menu'" #menuCheckout="matMenu">
+            <mat-menu [hasBackdrop]="false" xPosition="after" [classList]="'side-sub-menu'" #menuCheckout="matMenu">
                 <button routerLink="/admin/checkout" routerLinkActive="active" mat-menu-item>商标自助智能注册</button>
                 <button (click)="presentLoading();" routerLinkActive="active" mat-menu-item>专利快捷提交</button>
                 <button (click)="presentLoading();" routerLinkActive="active" mat-menu-item>版权智能存证登记</button>
@@ -59,11 +59,11 @@
                 </span>
                 报告中心
             </h3>
-            <mat-menu [hasBackdrop]="false" xPosition="after" [overlapTrigger]="false" [classList]="'side-sub-menu'" #menuReport="matMenu">
+            <mat-menu [hasBackdrop]="false" xPosition="after" [classList]="'side-sub-menu'" #menuReport="matMenu">
                 <button routerLink="/admin/plan/list" routerLinkActive="active" mat-menu-item>企业体检报告</button>
                 <button routerLink="/admin/risk/list" routerLinkActive="active" mat-menu-item>知产风险报告</button>
             </mat-menu>
-            <h3 routerLink="/admin/monitor/list" routerLinkActive="active" mat-subheader>
+            <h3 routerLink="/admin/monitor/list" (mouseover)="trustTrigger.closeMenu();boxTrigger.closeMenu();checkoutTrigger.closeMenu();reportTrigger.closeMenu();companyTrigger.closeMenu()" routerLinkActive="active" mat-subheader>
                 <span class="mat-list-icon">
                     <img src="/assets/images/side/4.png">
                 </span>
@@ -72,7 +72,7 @@
         </mat-list>
     </mat-sidenav>
 
-    <mat-sidenav-content>
+    <mat-sidenav-content (mouseover)="trustTrigger.closeMenu();boxTrigger.closeMenu();checkoutTrigger.closeMenu();reportTrigger.closeMenu();companyTrigger.closeMenu()">
         <router-outlet></router-outlet>
         <!--<ion-fab class="fav-fab" *ngIf="show" horizontal="right" vertical="bottom" slot="fixed" cdkDrag>
             <ion-fab-button>

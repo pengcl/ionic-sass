@@ -109,7 +109,7 @@ const routes: Routes = [
             },
             {// 托管商标详情
                 path: 'trust/detail/:id',
-                data: {name: '商标托管详情' , menuIndex: 2},
+                data: {name: '商标托管详情', menuIndex: 2},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./trust/detail/detail.module').then(m => m.AdminTrustDetailPageModule)
@@ -151,21 +151,21 @@ const routes: Routes = [
             },
             {// 匹配政策
                 path: 'policy/index',
-                data: {name: '匹配政策'},
+                data: {name: '匹配政策', menuIndex: 1},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./policy/index/policy.module').then(m => m.AdminPolicyPageModule)
             },
             {// 政策详情
                 path: 'policy/item',
-                data: {name: '政策详情'},
+                data: {name: '政策详情', menuIndex: 1},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./policy/item/item.module').then(m => m.AdminPolicyItemPageModule)
             },
             {// 政策列表
                 path: 'policy/list',
-                data: {name: '政策列表'},
+                data: {name: '政策列表', menuIndex: 1},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./policy/list/list.module').then(m => m.AdminPolicyListPageModule)

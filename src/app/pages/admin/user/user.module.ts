@@ -3,8 +3,6 @@ import {NgModule} from '@angular/core';
 import {SharedModule} from '../../../@shared/shared.module';
 import {AdminUserPage} from './user.component';
 
-
-
 @NgModule({
   imports: [
     SharedModule,

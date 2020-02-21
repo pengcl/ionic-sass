@@ -63,7 +63,7 @@
                 <ion-col [size]="12">
                     <span class="value"><span class="label">企业名称</span><b>{{company?.companyName}}</b></span>
                 </ion-col>
-                <ion-col *ngFor="let condition of required.list" [size]="reportType === 1 ? 12 : 4">
+                <ion-col class="{{(i + 1) % 3 !== 0 ? 'form-field' : ''}}" *ngFor="let condition of required.list;let i = index" [size]="reportType === 1 ? 12 : 4">
                     <mat-form-field class="nl"
                                     *ngIf="condition.fieldType === '0001' && ((reportType === 1 && !!condition.required) || reportType === 2)"
                                     appearance="outline">
@@ -119,11 +119,11 @@
                 <ion-col size="12">
                     <h3>选填资质（{{optional.valueNum}} / {{optional.num}}）</h3>
                 </ion-col>
-                <ng-container *ngFor="let item of optional.list">
+                <ng-container *ngFor="let item of optional.list;let i = index">
                     <ion-col [size]="12">
                         <span class="value">{{item._name}}</span>
                     </ion-col>
-                    <ion-col *ngFor="let condition of item.list" [size]="4">
+                    <ion-col class="{{(i + 1) % 3 !== 0 ? 'form-field' : ''}}" *ngFor="let condition of item.list;let i = index" [size]="4">
                         <mat-form-field class="nl"
                                         *ngIf="condition.fieldType === '0001'"
                                         appearance="outline">

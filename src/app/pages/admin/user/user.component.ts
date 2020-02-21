@@ -1,27 +1,87 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {DatePipe} from '@angular/common';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatTableDataSource} from '@angular/material';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {CompanyService} from '../company/company.service';
+import {AuthService} from '../../auth/auth.service';
+import {UserService} from './user.service';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss'],
-  providers: [DatePipe,
-    {provide: MAT_DATE_LOCALE, useValue: 'zh_CN'},
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
-  ]
+    selector: 'app-user',
+    templateUrl: './user.component.html',
+    styleUrls: ['./user.component.scss'],
+    providers: [DatePipe,
+        {provide: MAT_DATE_LOCALE, useValue: 'zh_CN'},
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+        },
+        {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
+    ]
 })
 export class AdminUserPage implements OnInit {
+    company = this.companySvc.currentCompany;
+    companies;
+    total = 0;
+    params = {
+        custId: this.company.id,
+        page: 1,
+        rows: 10,
+        payedDateBegin: '',
+        payedDateEnd: ''
+    };
+    displayedColumns: string[] = ['date', 'cost', 'payY', 'payZ', 'rechargeY', 'rechargeZ'];
+    dataSource;
+    selection = new SelectionModel<any>(true, []);
+    date;
+    form: FormGroup;
 
-  constructor() { }
+    constructor(private authSvc: AuthService,
+                private userSvc: UserService,
+                private companySvc: CompanyService,
+                fb: FormBuilder,
+                private datePipe: DatePipe) {
+        this.form = fb.group({
+            date: [{begin: new Date(), end: new Date()}]
+        });
+        companySvc.list({}).subscribe(res => {
+            this.companies = res.list;
+        });
+        this.getData();
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
+
+    companyChange() {
+        this.getData();
+    }
+
+    timeChange(e) {
+        this.params.page = 1;
+        this.params.payedDateBegin = this.datePipe.transform(e.value.begin, 'yyyy-MM-dd');
+        this.params.payedDateEnd = this.datePipe.transform(e.value.end, 'yyyy-MM-dd');
+        this.getData();
+    }
+
+    getData() {
+        this.userSvc.balance(this.params.custId).subscribe(res => {
+            console.log(res);
+        });
+        this.userSvc.balances(this.params).subscribe(res => {
+            console.log(res);
+            this.total = res.total;
+            this.dataSource = new MatTableDataSource<any>(res.list);
+        });
+    }
+
+    page(e) {
+        this.params.page = e.pageIndex + 1;
+        this.params.rows = e.pageSize;
+        this.getData();
+    }
 
 }
