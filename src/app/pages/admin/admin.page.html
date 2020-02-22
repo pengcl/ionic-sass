@@ -3,7 +3,7 @@
 
     <mat-sidenav mode="side" opened>
         <mat-list>
-            <h3 routerLink="/admin/dashboard" [matMenuTriggerFor]="menuCompany" #companyTrigger="matMenuTrigger" (mouseover)="trustTrigger.closeMenu();boxTrigger.closeMenu();checkoutTrigger.closeMenu();reportTrigger.closeMenu();companyTrigger.closeMenu()" routerLinkActive="active" mat-subheader>
+            <h3 routerLink="/admin/dashboard" (mouseover)="trustTrigger.closeMenu();boxTrigger.closeMenu();checkoutTrigger.closeMenu();reportTrigger.closeMenu();companyTrigger.closeMenu()" routerLinkActive="active" mat-subheader>
                 <span class="mat-list-icon">
                     <img src="/assets/images/side/1.png">
                 </span>
