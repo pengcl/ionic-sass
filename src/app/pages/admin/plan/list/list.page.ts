@@ -7,6 +7,7 @@ import {PlanService} from '../plan.service';
 import {DatePipe} from '@angular/common';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {LoadingService} from '../../../../@core/services/loading.service';
 
 @Component({
     selector: 'app-admin-plan-list',
@@ -43,11 +44,13 @@ export class AdminPlanListPage {
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
                 private datePipe: DatePipe,
                 private companySvc: CompanyService,
-                private planSvc: PlanService) {
+                private planSvc: PlanService,
+                private loadingSvc: LoadingService) {
         this.getData();
     }
 
     getData() {
+        this.loadingSvc.show('加载中...', 0).then();
         const params = JSON.parse(JSON.stringify(this.params));
         if (params.beginDate) {
             params.beginDate = this.datePipe.transform(this.params.beginDate, 'yyyy-MM-dd');
@@ -56,6 +59,7 @@ export class AdminPlanListPage {
             params.endDate = this.datePipe.transform(this.params.endDate, 'yyyy-MM-dd');
         }
         this.planSvc.list(params).subscribe(res => {
+            this.loadingSvc.hide();
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });
