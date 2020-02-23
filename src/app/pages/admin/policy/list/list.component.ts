@@ -7,6 +7,7 @@ import {PolicyService} from '../policy.service';
 import {MatTableDataSource} from '@angular/material';
 import {DatePipe} from '@angular/common';
 import {debounceTime, filter, map, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {LoadingService} from '../../../../@core/services/loading.service';
 
 @Component({
     selector: 'app-list',
@@ -43,7 +44,8 @@ export class AdminPolicyListPage {
     constructor(private datePipe: DatePipe,
                 private companySvc: CompanyService,
                 private addressSvc: AddressService,
-                private policySvc: PolicyService) {
+                private policySvc: PolicyService,
+                private loadingSvc: LoadingService) {
         this.getProvinces();
         this.form.get('province').valueChanges.subscribe(res => {
             this.cities = [];
@@ -64,9 +66,9 @@ export class AdminPolicyListPage {
             this.getData();
         });
 
-        this.form.get('province').setValue(this.company.province);
+        /*this.form.get('province').setValue(this.company.province);
         this.form.get('city').setValue(this.company.city);
-        this.form.get('area').setValue(this.company.area);
+        this.form.get('area').setValue(this.company.area);*/
         this.getData();
         this.form.get('subsidyAmtBegin').valueChanges.pipe(
             filter(text => text.length > 1),
@@ -114,11 +116,12 @@ export class AdminPolicyListPage {
     }
 
     getData() {
+        this.loadingSvc.show('加载中...', 0).then();
         const body = JSON.parse(JSON.stringify(this.form.value));
         body.page = this.params.page;
         body.rows = this.params.rows;
         this.policySvc.list(body).subscribe(res => {
-            console.log(res);
+            this.loadingSvc.hide();
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });

@@ -61,3 +61,14 @@ mat-card {
     }
   }
 }
+table {
+  &::ng-deep {
+    tbody {
+      tr:first-child {
+        td {
+          border-bottom-width:1px !important;
+        }
+      }
+    }
+  }
+}

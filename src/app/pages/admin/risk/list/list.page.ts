@@ -4,6 +4,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
 import {CompanyService} from '../../company/company.service';
 import {RiskService} from '../risk.service';
+import {LoadingService} from '../../../../@core/services/loading.service';
 
 @Component({
     selector: 'app-admin-risk-list',
@@ -26,12 +27,15 @@ export class AdminRiskListPage {
     constructor(private route: ActivatedRoute,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
                 private companySvc: CompanyService,
-                private planSvc: RiskService) {
+                private planSvc: RiskService,
+                private loadingSvc: LoadingService) {
         this.getData();
     }
 
     getData() {
+        this.loadingSvc.show('加载中...', 0).then();
         this.planSvc.list(this.params).subscribe(res => {
+            this.loadingSvc.hide();
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });

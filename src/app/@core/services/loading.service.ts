@@ -16,9 +16,7 @@ export class LoadingService {
             duration: timeInterval ? timeInterval : 0
         });
         await this.loading.present();
-
         const {role, data} = await this.loading.onDidDismiss();
-
         console.log('Loading dismissed!');
     }
 
