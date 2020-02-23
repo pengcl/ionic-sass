@@ -73,14 +73,14 @@
                             <ng-container matColumnDef="type">
                                 <th mat-header-cell *matHeaderCellDef><b>获取方式</b></th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'color':element.weight<80 ? '#0DD78D' : ''}">
-                                    {{element.weight<80 ? '科创宝培育' : '快速培育'}}
+                                    {{element.weight ? (element.weight<80 ? '科创宝培育' : '快速培育') : ''}}
                                 </td>
                             </ng-container>
 
                             <ng-container matColumnDef="scope">
                                 <th mat-header-cell *matHeaderCellDef><b>申报时间范围</b></th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.reportDateBegin | date : 'yyyy-MM-dd'}}至{{element.reportDateEnd | date : 'yyyy-MM-dd'}}
+                                    {{element.reportDateBegin ? element.reportDateBegin+'至' : '' | date : 'yyyy-MM-dd'}}{{element.reportDateEnd | date : 'yyyy-MM-dd'}}
                                 </td>
                             </ng-container>
 
@@ -88,7 +88,7 @@
                             <ng-container matColumnDef="time">
                                 <th mat-header-cell *matHeaderCellDef style="width: 90px"><b>申报所需时长</b></th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.reportTiming}}个月
+                                    {{element.reportTiming ? element.reportTiming + '个月' : ''}}
                                 </td>
                             </ng-container>
 
@@ -96,7 +96,7 @@
                                 <th mat-header-cell *matHeaderCellDef><b>操作</b></th>
                                 <td mat-cell *matCellDef="let element"
                                     style="height: 50px;">
-                                    <a class="actions-icon"
+                                    <a class="actions-icon" *ngIf="element.id"
                                        [routerLink]="['/admin/policy/item',element.id]" title="查看">
                                         <img src="/assets/images/view.png">
                                     </a>

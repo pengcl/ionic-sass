@@ -86,7 +86,7 @@
                             <ng-container matColumnDef="cost">
                                 <th mat-header-cell *matHeaderCellDef><b>消费</b></th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.thirdConsumeAmount ? element.thirdConsumeAmount : 0}}
+                                    {{element.thirdConsumeAmount ? element.thirdConsumeAmoun : 0}}
                                 </td>
                             </ng-container>
 
@@ -115,6 +115,13 @@
                                 <th mat-header-cell *matHeaderCellDef><b>资产通充值</b></th>
                                 <td mat-cell *matCellDef="let element">
                                     {{element.zctRechargeAmount ? element.zctRechargeAmount : 0}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="refund">
+                                <th mat-header-cell *matHeaderCellDef><b>退款</b></th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.thirdRefundAmount ? element.thirdRefundAmount : 0}}
                                 </td>
                             </ng-container>
 

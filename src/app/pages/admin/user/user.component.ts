@@ -34,7 +34,7 @@ export class AdminUserPage implements OnInit {
         payedDateBegin: '',
         payedDateEnd: ''
     };
-    displayedColumns: string[] = ['date', 'cost', 'payY', 'payZ', 'rechargeY', 'rechargeZ'];
+    displayedColumns: string[] = ['date', 'cost', 'payY', 'payZ', 'rechargeY', 'rechargeZ', 'refund'];
     dataSource;
     selection = new SelectionModel<any>(true, []);
     date;
