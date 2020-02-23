@@ -5,6 +5,7 @@ import {MonitorService} from '../monitor/monitor.service';
 import {PlanService} from '../plan/plan.service';
 import {RiskService} from '../risk/risk.service';
 import {DashboardService} from './dashboard.service';
+import {DialogService} from '../../../@core/modules/dialog';
 import * as echarts from 'echarts';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AddressService} from '../../../@core/services/address.service';
@@ -84,6 +85,7 @@ export class AdminDashboardPage {
     constructor(private router: Router,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
                 private snackBar: MatSnackBar,
+                private dialogSvc: DialogService,
                 private companySvc: CompanyService,
                 private monitorSvc: MonitorService,
                 private planSvc: PlanService,
@@ -110,7 +112,6 @@ export class AdminDashboardPage {
         riskSvc.list({custId: this.company.id, rows: 3}).subscribe(res => {
             this.risks = res.list;
         });
-
         this.getProvinces();
         this.form.get('province').valueChanges.subscribe(res => {
             this.cities = [];
@@ -697,7 +698,7 @@ export class AdminDashboardPage {
 
     openSnackBar() {
         this.snackBar.open('功能即将开放，敬请期待', '', {
-            duration: 1000,
+            duration: 1000
         });
     }
 
