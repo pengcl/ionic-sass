@@ -50,7 +50,7 @@ export class AdminPlanListPage {
     }
 
     getData() {
-        this.loadingSvc.show('加载中...', 0).then();
+        /*this.loadingSvc.show('加载中...', 0).then();*/
         const params = JSON.parse(JSON.stringify(this.params));
         if (params.beginDate) {
             params.beginDate = this.datePipe.transform(this.params.beginDate, 'yyyy-MM-dd');

@@ -30,6 +30,7 @@ export class AdminPlanItemPage implements OnInit {
         page: 1,
         rows: 10
     };
+    policies;
 
     constructor(private route: ActivatedRoute,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
@@ -39,8 +40,9 @@ export class AdminPlanItemPage implements OnInit {
         this.route.paramMap.pipe(map(params => this.id = params.get('id'))).subscribe(id => {
             planSvc.item(this.id).subscribe(res => {
                 this.data = res;
-                this.dataSource = new MatTableDataSource<any>(res.policys);
-                this.dataSource.data.forEach(row => this.selection.select(row));
+                this.policies = res.policys;
+                this.total = this.policies.length;
+                this.getData();
                 const pieLabels = ['版权数量', '商标数量', '专利数量'];
                 const pieData = [
                     {
@@ -167,6 +169,14 @@ export class AdminPlanItemPage implements OnInit {
     ngOnInit() {
     }
 
+    getData() {
+        const rows = JSON.parse(JSON.stringify(this.policies)).slice((this.params.page - 1) * this.params.rows, this.params.page * this.params.rows);
+        console.log(this.policies);
+        this.dataSource = new MatTableDataSource<any>(rows);
+        this.selection = new SelectionModel<any>(true, []);
+        this.dataSource.data.forEach(row => this.selection.select(row));
+    }
+
     preDownload() {
         this.planSvc.preDownload(this.id, 1).subscribe();
     }
@@ -210,5 +220,6 @@ export class AdminPlanItemPage implements OnInit {
     page(e) {
         this.params.page = e.pageIndex + 1;
         this.params.rows = e.pageSize;
+        this.getData();
     }
 }
