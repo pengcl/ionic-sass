@@ -80,7 +80,7 @@
                             <ng-container matColumnDef="scope">
                                 <th mat-header-cell *matHeaderCellDef><b>申报时间范围</b></th>
                                 <td mat-cell *matCellDef="let element">
-                                    {{element.reportDateBegin ? element.reportDateBegin+'至' : '' | date : 'yyyy-MM-dd'}}{{element.reportDateEnd | date : 'yyyy-MM-dd'}}
+                                    {{element.reportDateBegin | date : 'yyyy-MM-dd'}}<span *ngIf="element.reportDateBegin">至</span>{{element.reportDateEnd | date : 'yyyy-MM-dd'}}
                                 </td>
                             </ng-container>
 
