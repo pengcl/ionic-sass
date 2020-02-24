@@ -61,4 +61,8 @@ export class AdminPage {
         await loading.onDidDismiss();
     }
 
+    logout() {
+        this.authSvc.logout();
+    }
+
 }
