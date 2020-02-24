@@ -12,16 +12,16 @@
                                 <mat-icon (click)="search()" matSuffix>search</mat-icon>
                             </mat-form-field>
 
-                            <ion-row style="margin-top: -20px">
-                                <ion-col size="1" class="search-label" style="color: #2C9EF7">热门搜索</ion-col>
-                                <ion-col (click)="setWord('疫情政策')" size="1" class="search-label hot" style="margin-left: -20px">疫情政策</ion-col>
-                                <ion-col (click)="setWord('国高认定')" size="1" class="search-label hot" style="margin-left: -20px">国高认定</ion-col>
-                                <ion-col (click)="setWord('重大项目')" size="1" class="search-label hot" style="margin-left: -20px">重大项目</ion-col>
-                                <ion-col (click)="setWord('股权资助')" size="1" class="search-label hot" style="margin-left: -20px">股权资助</ion-col>
-                                <ion-col (click)="setWord('事前资助')" size="1" class="search-label" style="margin-left: -20px">事前资助</ion-col>
-                                <ion-col (click)="setWord('科技奖励')" size="1" class="search-label" style="margin-left: -20px">科技奖励</ion-col>
-                                <ion-col (click)="setWord('节能减排')" size="1" class="search-label" style="margin-left: -20px">节能减排</ion-col>
-                            </ion-row>
+                            <div class="search-labels" style="margin-top: -20px">
+                                <span size="1" class="search-label" style="color: #2C9EF7">热门搜索</span>
+                                <span (click)="setWord('疫情政策')" size="1" class="search-label hot">疫情政策</span>
+                                <span (click)="setWord('国高认定')" size="1" class="search-label hot">国高认定</span>
+                                <span (click)="setWord('重大项目')" size="1" class="search-label hot">重大项目</span>
+                                <span (click)="setWord('股权资助')" size="1" class="search-label hot">股权资助</span>
+                                <span (click)="setWord('事前资助')" size="1" class="search-label">事前资助</span>
+                                <span (click)="setWord('科技奖励')" size="1" class="search-label">科技奖励</span>
+                                <span (click)="setWord('节能减排')" size="1" class="search-label">节能减排</span>
+                            </div>
                             <div class="search-div">
                                 <span class="label">适用区域</span>
                                 <mat-form-field appearance="outline">

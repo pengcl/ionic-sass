@@ -44,3 +44,17 @@ ion-col.search-label_r {
     margin: 0 10px;
   }
 }
+
+.search-labels {
+  .search-label {
+    line-height: 40px;
+    text-align: left;
+    font-size: 14px;
+    color: #5F717D;
+    display: inline-block;
+    margin: 0 10px;
+    &.hot {
+      color: #FD5451;
+    }
+  }
+}
