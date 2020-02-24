@@ -53,8 +53,25 @@ ion-col.search-label_r {
     color: #5F717D;
     display: inline-block;
     margin: 0 10px;
+
     &.hot {
       color: #FD5451;
     }
   }
 }
+
+table {
+  &::ng-deep {
+    tbody {
+      tr{
+        td.mat-column-name {
+          &:hover{
+            color: #2C9EF7 !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+

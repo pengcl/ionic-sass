@@ -390,7 +390,7 @@
 
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell *matHeaderCellDef><b>政策名称</b></th>
-                                <td mat-cell *matCellDef="let element" style="text-align: left !important;">
+                                <td mat-cell *matCellDef="let element" style="text-align: left !important;" [routerLink]="['/admin/policy/item',element.id]">
                                     {{element.policyName}}
                                 </td>
                                 <td mat-footer-cell *matFooterCellDef>合计</td>
@@ -420,6 +420,8 @@
                             </tr>
                             <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
                         </table>
+                        <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)"
+                                       [pageSizeOptions]="[10,20,50]" showFirstLastButtons>123</mat-paginator>
                     </mat-card-content>
                 </mat-card>
             </ion-col>

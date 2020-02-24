@@ -19,11 +19,17 @@ export class AdminPlanItemPage implements OnInit {
         pie: null,
         line: null
     };
+    total = 0;
     company = this.companySvc.currentCompany;
     data;
     displayedColumns: string[] = ['select', 'name', 'money', 'time'];
     dataSource;
     selection = new SelectionModel<any>(true, []);
+    params = {
+        custId: this.company.id,
+        page: 1,
+        rows: 10
+    };
 
     constructor(private route: ActivatedRoute,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
@@ -201,4 +207,8 @@ export class AdminPlanItemPage implements OnInit {
         return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
     }
 
+    page(e) {
+        this.params.page = e.pageIndex + 1;
+        this.params.rows = e.pageSize;
+    }
 }

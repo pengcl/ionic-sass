@@ -339,3 +339,16 @@
   }
 
 }
+table {
+  &::ng-deep {
+    tbody {
+      tr{
+        td.mat-column-name {
+          &:hover{
+            color: #2C9EF7 !important;
+          }
+        }
+      }
+    }
+  }
+}

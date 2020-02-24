@@ -57,7 +57,7 @@
 
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell *matHeaderCellDef><b>政策名称</b></th>
-                                <td mat-cell *matCellDef="let element" style="text-align: left !important;text-indent: 20px">
+                                <td mat-cell *matCellDef="let element" style="text-align: left !important;text-indent: 20px" [routerLink]="['/admin/policy/item',element.id]">
                                     {{element.policyName}}
                                 </td>
                             </ng-container>

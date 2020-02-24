@@ -129,6 +129,7 @@ export class AdminPolicyListPage {
 
     setWord(word) {
         this.form.get('word').setValue(word);
+        this.getData();
     }
 
     search() {
