@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
+import {DialogService} from '../../../../@core/modules/dialog';
 import {AuthService} from '../../../auth/auth.service';
 import {CompanyService} from '../../company/company.service';
 import {BoxService} from '../box.service';
@@ -32,6 +33,7 @@ export class AdminBoxListPage {
 
     constructor(private route: ActivatedRoute,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
+                private dialogSvc: DialogService,
                 private authSvc: AuthService,
                 private companySvc: CompanyService,
                 private planSvc: PlanService,
@@ -40,6 +42,7 @@ export class AdminBoxListPage {
     }
 
     getData() {
+        this.selection = new SelectionModel<any>(true, []);
         this.boxSvc.list(this.params).subscribe(res => {
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
@@ -62,6 +65,24 @@ export class AdminBoxListPage {
         this.params.page = e.pageIndex + 1;
         this.params.rows = e.pageSize;
         this.getData();
+    }
+
+    del() {
+        this.dialogSvc.show({content: '您是否确定要删除！', confirm: '是的', cancel: '不了'}).subscribe(res => {
+            if (res.value) {
+                let ids = '';
+                this.selection.selected.forEach(item => {
+                    if (ids) {
+                        ids = ids + ',' + item.id;
+                    } else {
+                        ids = item.id;
+                    }
+                });
+                this.boxSvc.del({id: ids}).subscribe(res => {
+                    this.getData();
+                });
+            }
+        });
     }
 
     preDownload(id) {

@@ -24,4 +24,11 @@ export class BoxService {
                 return resultProcess(res);
             }));
     }
+
+    del(body): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'delSafeBox', body)
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
 }

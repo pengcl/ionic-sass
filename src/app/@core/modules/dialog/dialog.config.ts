@@ -13,7 +13,7 @@ export class DialogConfig {
     /**
      * 样式，默认：`auto`
      */
-    skin?: any = 'android';
+    skin?: any = 'ios';
     theme?: 'info' | 'warn' | 'error' | 'success';
     /**
      * 标题

@@ -41,7 +41,7 @@
                                                 </div>
                                                 <div style="float: left">
                                                     <p style="font-size: 32px;color: #fff;margin: 20px 5px">{{account.zct | currency : ' '}}</p>
-                                                    <p style="color: #fff;margin-top: -20px">企业账户可用资产通（1资产通 = 1元）</p>
+                                                    <p style="color: #fff;margin-top: -20px">企业账户可用知产通（1知产通 = 1元）</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -105,7 +105,7 @@
                             </ng-container>
 
                             <ng-container matColumnDef="payZ">
-                                <th mat-header-cell *matHeaderCellDef><b>资产通支付</b></th>
+                                <th mat-header-cell *matHeaderCellDef><b>知产通支付</b></th>
                                 <td mat-cell *matCellDef="let element">
                                     {{element.zctConsumeAmount ? element.zctConsumeAmount : 0}}
                                 </td>
@@ -119,7 +119,7 @@
                             </ng-container>
 
                             <ng-container matColumnDef="rechargeZ">
-                                <th mat-header-cell *matHeaderCellDef><b>资产通充值</b></th>
+                                <th mat-header-cell *matHeaderCellDef><b>知产通充值</b></th>
                                 <td mat-cell *matCellDef="let element">
                                     {{element.zctRechargeAmount ? element.zctRechargeAmount : 0}}
                                 </td>
