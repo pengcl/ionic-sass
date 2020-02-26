@@ -18,7 +18,7 @@ export class AdminPolicyItemPage {
                 private companySvc: CompanyService,
                 private route: ActivatedRoute) {
         this.route.paramMap.pipe(map(params => this.id = params.get('id'))).subscribe(id => {
-            policySvc.getPolicy(this.id).subscribe(res => {
+            policySvc.getPolicy(this.id, this.company.id).subscribe(res => {
                 this.policy = res;
                 this.policy.industryNames = this.policy.industryNames.replace(/,/gi, '、');
             });
