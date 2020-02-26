@@ -32,8 +32,8 @@ export class PolicyService {
             }));
     }
 
-    getPolicy(id): Observable<any> {
-        return this.http.get(this.PREFIX_URL + 'getPolicy&id=' + id)
+    getPolicy(id, custId): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getSaaSPolicy&id=' + id + '&custId=' + custId)
             .pipe(observableMargeMap((res: any) => {
                 return resultProcess(res);
             }));
