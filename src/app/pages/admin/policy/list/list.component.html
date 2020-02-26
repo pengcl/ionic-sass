@@ -9,7 +9,7 @@
                                 <mat-label>请输入您需要搜索的政策项目名称</mat-label>
                                 <input type="text" formControlName="word" placeholder="请输入您需要搜索的政策项目名称" matInput
                                        autocomplete="off">
-                                <mat-icon (click)="search()" matSuffix>search</mat-icon>
+                                <mat-icon (click)="search()" style="cursor: pointer" matSuffix>search</mat-icon>
                             </mat-form-field>
 
                             <div class="search-labels" style="margin-top: -20px">
@@ -84,7 +84,7 @@
 
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell *matHeaderCellDef><b>政策名称</b></th>
-                                <td mat-cell *matCellDef="let element" style="text-align: left !important;text-indent: 20px" [routerLink]="['/admin/policy/item',element.id]">
+                                <td mat-cell *matCellDef="let element" style="cursor:pointer;text-align: left !important;text-indent: 20px" [routerLink]="['/admin/policy/item',element.id]">
                                     {{element.policyName}}
                                 </td>
                             </ng-container>

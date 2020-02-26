@@ -372,14 +372,14 @@
                             <!-- Checkbox Column -->
                             <ng-container matColumnDef="select">
                                 <th mat-header-cell *matHeaderCellDef style="width: 50px">
-                                    <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
+                                    <mat-checkbox disabled color="primary" (change)="$event ? masterToggle() : null"
                                                   [checked]="selection.hasValue() && isAllSelected()"
                                                   [indeterminate]="selection.hasValue() && !isAllSelected()"
                                                   [aria-label]="checkboxLabel()">
                                     </mat-checkbox>
                                 </th>
                                 <td mat-cell *matCellDef="let row">
-                                    <mat-checkbox color="primary" (click)="$event.stopPropagation()"
+                                    <mat-checkbox disabled color="primary" (click)="$event.stopPropagation()"
                                                   (change)="$event ? selection.toggle(row) : null"
                                                   [checked]="selection.isSelected(row)"
                                                   [aria-label]="checkboxLabel(row)">
@@ -390,7 +390,7 @@
 
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell *matHeaderCellDef><b>政策名称</b></th>
-                                <td mat-cell *matCellDef="let element" style="text-align: left !important;" [routerLink]="['/admin/policy/item',element.id]">
+                                <td mat-cell *matCellDef="let element" style="text-align: left !important;cursor: pointer" [routerLink]="['/admin/policy/item',element.id]">
                                     {{element.policyName}}
                                 </td>
                                 <td mat-footer-cell *matFooterCellDef>合计</td>
@@ -415,9 +415,7 @@
                             </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-                                (click)="selection.toggle(row)">
-                            </tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
                         </table>
                         <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)"
@@ -433,9 +431,9 @@
                     </mat-card-header>
                     <mat-card-content>
                         <div>
-                            <p style="color: #21333F;font-size: 16px">科创项目咨询及规划服务--科创宝</p>
+                            <p style="color: #21333F;font-size: 16px">科创项目咨询及规划服务——科创直通车</p>
                             <article style="text-indent: 10px;margin: 20px;font-size: 13px;color: #21333F;line-height: 20px">
-                                针对目前企业对科技政策全面体验的需求，推出科创宝咨询规划服务。科创宝在服务周期内，对企业所属行业所属阶段展开深入分析，对相关国家优惠政策推送并针对性监控，对企业量身定制科技项目，就政府项目规划培育申报等提供全方位、前瞻性的咨询顾问服务。从而帮助企业享受政策红利，减低产业升级成本，通过政府资金的途径解决资金链难题。
+                                根据相关国家优惠政策及企业情况，定期推送并量身定制科技项目，就政府项目规划、培育、申报等提供全方位、前瞻性的咨询顾问服务。从而帮助企业享受政策红利，降低产业升级成本，通过获取政府资金的途径缓解企业的资金链难题。
                             </article>
                             <div class="content">
                                 <table cellpadding="0" cellspacing="0" border="0" class="kc">
@@ -689,13 +687,13 @@
                             </div>
                             <div class="work_right" style="padding: 0;height: auto">
                                 <article style="text-indent: 10px;margin: 10px;font-size: 13px;color: #21333F;line-height: 20px">
-                                    深圳中科华海科技有限公司成立于2015年，立足知识产权和双创（科创、文创）两大核心战略，专注于知识产权SAAS服务云平台、双创服务云平台等相关配套业务的发展。基于中科华海所构建的知识产权产业云脑，现已形成以国高培育版、知产云、科创宝、文创宝、创新宝、单项知识产权服务等多元主营业务为支撑的知产生态圈，是最懂商业的知识产权与双创智能服务云平台。
+                                    深圳中科华海科技有限公司成立于2015年，立足知识产权和双创（科创、文创）两大核心战略，专注于知识产权SaaS服务云平台、双创服务云平台等相关配套业务的发展。基于中科华海所构建的知识产权产业云脑，以企业知识产权智能画像的云产品为依托，构建了以商标/专利/版权/科技项目的获取、维护、运用、保护；企业知识产权一站式托管云平台；财税、法律服务、科技金融、品牌设计等企业咨询服务业务为支撑的知产生态圈，是最懂商业的知识产权与双创产业智能服务云平台。
                                 </article>
                                 <article style="text-indent: 10px;margin: 10px;font-size: 13px;color: #21333F;line-height: 20px">
-                                    公司拥有超过百人规模的全球化团队，核心成员来自于宾夕法尼亚大学、人民大学、武汉大学、西安交通大学、华南理工大学、约克大学等国内外知名高校，并以深圳总部为中心，立足于粤港澳大湾区，产业服务网络辐射全球120多个国家，是中燃宝集团、康佳集团、海航集团、海南橡胶集团、深圳市设计与艺术联盟、深圳市南山区文化科技促进会等多家全球或国内500强企业和5A级协会组织的知识产权与双创战略合作伙伴。
+                                    公司拥有超过百人规模的全球化团队，核心成员来自于宾夕法尼亚大学、人民大学、武汉大学、西安交通大学、华南理工大学、约克大学等国内外知名高校，并以深圳总部为中心，立足于粤港澳大湾区，产业服务网络辐射全球120多个国家，是中燃集团、康佳集团、海航集团、海南橡胶集团、深圳市设计与艺术联盟、深圳市南山区文化科技促进会等多家全球或国内500强企业和5A级协会组织的知识产权与双创战略合作伙伴。
                                 </article>
                                 <article style="text-indent: 10px;margin: 10px;font-size: 13px;color: #21333F;line-height: 20px">
-                                    中科华海积极响应习主席及中国国家知识产权局“国家知识产权战略纲要”和“一带一路”的发展政策，以知识产权与双创产业为基础，以云链化为竞争壁垒，通过互联网技术链接，加上知识产权金融撮合服务助推力，将持续为中国“知识产权与双创产业+互联网+人工智能”综合产业生态开创更加广阔的应用前景，深刻影响和改变知识产权与双创产业的服务方式和营商环境。
+                                    中科华海积极响应习主席及中国国家知识产权局“一带一路”和“国家知识产权战略纲要”的发展政策，以知识产权与双创产业为基础，以云链化为竞争壁垒，通过互联网技术链接，加上知识产权金融撮合服务助推力，将持续为中国“知识产权与双创产业+互联网+人工智能”综合产业生态开创更加广阔的应用前景，深刻影响和改变知识产权与双创产业的服务方式和营商环境。
                                 </article>
                             </div>
                         </div>

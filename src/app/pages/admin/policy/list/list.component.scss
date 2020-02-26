@@ -46,6 +46,8 @@ ion-col.search-label_r {
 }
 
 .search-labels {
+  position: relative;
+  z-index: 999;
   .search-label {
     line-height: 40px;
     text-align: left;
@@ -53,6 +55,7 @@ ion-col.search-label_r {
     color: #5F717D;
     display: inline-block;
     margin: 0 10px;
+    cursor: pointer;
 
     &.hot {
       color: #FD5451;
@@ -63,9 +66,9 @@ ion-col.search-label_r {
 table {
   &::ng-deep {
     tbody {
-      tr{
+      tr {
         td.mat-column-name {
-          &:hover{
+          &:hover {
             color: #2C9EF7 !important;
           }
         }

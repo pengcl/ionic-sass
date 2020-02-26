@@ -189,7 +189,7 @@ export class AdminPlanItemPage implements OnInit {
     /** Gets the total cost of all transactions. */
     getTotalCost() {
         let cost = 0;
-        this.selection.selected.forEach(item => {
+        this.policies.forEach(item => {
             cost = cost + item.subsidyAmtEnd;
         });
         return cost;

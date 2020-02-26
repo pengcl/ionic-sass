@@ -11,46 +11,37 @@
 </mat-card>
 <div class="container">
     <form>
-        <ion-grid style="margin: 0 -10px">
-            <ion-row>
-                <ion-col size="2">
-                    <mat-form-field appearance="outline">
-                        <mat-select name="type" [(ngModel)]="params.type" (ngModelChange)="change()"
-                                    placeholder="请选择报告类型">
-                            <mat-option [value]="''">
-                                全部
-                            </mat-option>
-                            <mat-option [value]="'0'">
-                                快捷匹配
-                            </mat-option>
-                            <mat-option [value]="'1'">
-                                精准匹配
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="1" class="search-label">生成时间</ion-col>
-                <ion-col size="2">
-                    <mat-form-field appearance="outline">
-                        <input name="beginDate" [(ngModel)]="params.beginDate" (ngModelChange)="change()"
-                               placeholder="请选择日期" matInput
-                               [matDatepicker]="startPicker">
-                        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-                        <mat-datepicker #startPicker></mat-datepicker>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="1" class="search-label">至</ion-col>
-                <ion-col size="2">
-                    <mat-form-field appearance="outline">
-                        <input name="endDate" [(ngModel)]="params.endDate" (ngModelChange)="change()"
-                               placeholder="请选择日期" matInput
-                               [matDatepicker]="endPicker">
-                        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-                        <mat-datepicker dataformatas="" #endPicker></mat-datepicker>
-                    </mat-form-field>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+        <span size="1" class="search-label">报告类型</span>
+        <mat-form-field appearance="outline">
+            <mat-select name="type" [(ngModel)]="params.type" (ngModelChange)="change()"
+                        placeholder="请选择报告类型">
+                <mat-option [value]="''">
+                    全部
+                </mat-option>
+                <mat-option [value]="'0'">
+                    快捷匹配
+                </mat-option>
+                <mat-option [value]="'1'">
+                    精准匹配
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <span size="1" class="search-label">生成时间</span>
+        <mat-form-field appearance="outline">
+            <input name="beginDate" [(ngModel)]="params.beginDate" (ngModelChange)="change()"
+                   placeholder="请选择日期" matInput
+                   [matDatepicker]="startPicker">
+            <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+        <span class="search-label">至</span>
+        <mat-form-field appearance="outline">
+            <input name="endDate" [(ngModel)]="params.endDate" (ngModelChange)="change()"
+                   placeholder="请选择日期" matInput
+                   [matDatepicker]="endPicker">
+            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker dataformatas="" #endPicker></mat-datepicker>
+        </mat-form-field>
     </form>
     <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
         <!-- Checkbox Column -->
@@ -81,7 +72,8 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef><b>报告名称</b></th>
             <td mat-cell *matCellDef="let element">
-                {{element.name}}
+                <a [routerLink]="['/admin/plan/item',element.id]"
+                   [queryParams]="{type:element.type}" href="javascript:;">{{element.name}}</a>
             </td>
         </ng-container>
 
@@ -105,7 +97,8 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="width: 250px"><b>操作</b></th>
             <td mat-cell *matCellDef="let element">
-                <a class="actions-icon" [routerLink]="['/admin/plan/item',element.id]" [queryParams]="{type:element.type}" title="查看">
+                <a class="actions-icon" [routerLink]="['/admin/plan/item',element.id]"
+                   [queryParams]="{type:element.type}" title="查看">
                     <img src="/assets/images/view.png">
                 </a>
                 <a class="actions-icon" (click)="preDownload(element.id)" download
