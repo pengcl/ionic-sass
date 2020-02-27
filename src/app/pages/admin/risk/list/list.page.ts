@@ -35,7 +35,9 @@ export class AdminRiskListPage {
     getData() {
         this.loadingSvc.show('加载中...', 0).then();
         this.planSvc.list(this.params).subscribe(res => {
-            this.loadingSvc.hide();
+            if (res){
+                this.loadingSvc.hide();
+            }
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });
