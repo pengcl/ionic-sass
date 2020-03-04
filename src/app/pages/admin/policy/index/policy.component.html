@@ -58,7 +58,7 @@
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell *matHeaderCellDef><b>政策名称</b></th>
                                 <td mat-cell *matCellDef="let element" style="text-align: left !important;text-indent: 20px;cursor: pointer">
-                                    <a *ngIf="element.id" [routerLink]="['/admin/policy/item',element.id]" href="javascript:;">{{element.policyName}}</a>
+                                    <a *ngIf="element.id" [routerLink]="['/admin/policy/item',element.id]" href="javascript:;">{{element.policyName.slice(0,30)}}{{element.policyName.length > 30 ? '...' : ''}}</a>
                                     <span *ngIf="!element.id">{{element.policyName}}</span>
                                 </td>
                             </ng-container>
@@ -74,7 +74,7 @@
                             <ng-container matColumnDef="type">
                                 <th mat-header-cell *matHeaderCellDef><b>获取方式</b></th>
                                 <td mat-cell *matCellDef="let element" [ngStyle]="{'color':element.weight<80 ? '#0DD78D' : ''}">
-                                    {{element.weight ? (element.weight<80 ? '科创宝培育' : '快速培育') : ''}}
+                                    {{element.weight ? (element.weight<80 ? '科创直通车' : '快速培育') : ''}}
                                 </td>
                             </ng-container>
 

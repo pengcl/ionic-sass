@@ -40,9 +40,12 @@
                         <mat-card-title>支持内容</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <label>（1）提升企业资质，为投标、融资、上市提供便捷；</label>
-                        <label>（2）减少征收10%企业所得税；</label>
-                        <label>（3）受理认定后补助科技经费最高35万。</label>
+                        <label *ngIf="policy?.supportRemark" [innerHTML]="policy?.supportRemark"></label>
+                        <!--<label *ngIf="!policy?.supportRemark">
+                            （1）提升企业资质，为投标、融资、上市提供便捷；<br>
+                            （2）减少征收10%企业所得税；<br>
+                            （3）受理认定后补助科技经费最高35万。
+                        </label>-->
                     </mat-card-content>
                 </mat-card>
             </ion-col>
@@ -51,22 +54,22 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-card-title>
-                            科技项目咨询及规划服务——科创宝
+                            科技项目咨询及规划服务——科创直通车
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
                         <article
                                 style="text-indent: 10px;margin: 20px;font-size: 13px;color: #595e73;line-height: 20px">
-                            针对目前企业对科技政策全面体验的需求，推出科创宝咨询规划服务。科创宝在服务周期内，对企业所属行业所属阶段展开深入分析，对相关国家优惠政策推送并针对性监控，对企业量身定制科技项目，就政府项目规划培育申报等提供全方位、前瞻性的咨询顾问服务。从而帮助企业享受政策红利，减低产业升级成本，通过政府资金的途径解决资金链难题。
+                            根据相关国家优惠政策及企业情况，定期推送并量身定制科技项目，就政府项目规划、培育、申报等提供全方位、前瞻性的咨询顾问服务。从而帮助企业享受政策红利，降低产业升级成本，通过获取政府资金的途径缓解企业的资金链难题。
                         </article>
                         <div class="content">
                             <table cellpadding="0" cellspacing="0" border="0" class="kc">
                                 <thead>
                                 <tr>
                                     <th class="user">服务内容</th>
-                                    <th class="grade">一级科创宝</th>
-                                    <th class="consumption">二级科创宝</th>
-                                    <th class="date">三级科创宝</th>
+                                    <th class="grade">一级科创直通车</th>
+                                    <th class="consumption">二级科创直通车</th>
+                                    <th class="date">三级科创直通车</th>
                                 </tr>
                                 </thead>
                                 <tbody>

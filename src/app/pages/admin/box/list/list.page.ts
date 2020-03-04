@@ -22,8 +22,8 @@ export class AdminBoxListPage {
         custId: this.company.id,
         page: 1,
         rows: 10,
-        fileField: this.route.snapshot.queryParams.fileField,
-        fileType: this.route.snapshot.queryParams.fileType
+        fileField: this.route.snapshot.queryParams.fileField ? this.route.snapshot.queryParams.fileField : 0,
+        fileType: this.route.snapshot.queryParams.fileType ? this.route.snapshot.queryParams.fileType : ''
     };
 
     displayedColumns: string[] = ['select', 'name', 'type', 'date', 'actions'];

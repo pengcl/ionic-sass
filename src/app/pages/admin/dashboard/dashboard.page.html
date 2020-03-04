@@ -110,31 +110,33 @@
                                 <p style="text-align: center;font-size: 32px;color: #fff;font-weight: bold">{{policy.total}}</p>
                                 <p style="text-align: center;color: #fff;margin-top: -20px">华海政策库已收录政策</p>
                             </div>
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col size="4" *ngFor="let item of policy.list.slice(0,3)">
-                                        <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]">
-                                            <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
-                                                <img src="/assets/images/dashboard/hot.png">
+                            <div style="width: calc(100% - 200px)">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col size="4" *ngFor="let item of policy.list.slice(0,3)">
+                                            <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]">
+                                                <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
+                                                    <img src="/assets/images/dashboard/hot.png">
+                                                </div>
+                                                <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-bottom:10px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
+                                                    {{item.policyName}}</p>
+                                                <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -20px;display: inline-block">
+                                                    补贴金额<span
+                                                        style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元
+                                                </p>
+                                                <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-left:20px;margin-top:-20px;display: inline-block;">
+                                                    最后限期：<span style="font-weight: 700"
+                                                               [ngStyle]="{'color' : getDate(item.reportDateEnd) > 30 ? '#2C9EF7' : 'red'}">{{getDate(item.reportDateEnd)}}</span>天
+                                                </p>
+                                                <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
+                                                    所需时间<span
+                                                        style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月
+                                                </p>
                                             </div>
-                                            <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-bottom:10px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
-                                                {{item.policyName}}</p>
-                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -20px;display: inline-block">
-                                                补贴金额<span
-                                                    style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元
-                                            </p>
-                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-left:20px;margin-top:-20px;display: inline-block;">
-                                                最后限期：<span style="font-weight: 700"
-                                                           [ngStyle]="{'color' : getDate(item.reportDateEnd) > 30 ? '#2C9EF7' : 'red'}">{{getDate(item.reportDateEnd)}}</span>天
-                                            </p>
-                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
-                                                所需时间<span
-                                                    style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月
-                                            </p>
-                                        </div>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
                         </div>
 
 
@@ -144,31 +146,33 @@
                                 <p style="text-align: center;color: #fff;margin-top: -25px">近一个月更新政策</p>
                                 <p style="text-align: center;color: #fff;margin-top: -13px">{{dateTime | date : 'yyyy-MM-dd HH:mm'}}</p>
                             </div>
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col size="4" *ngFor="let item of policy.list.slice(3,6)">
-                                        <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]">
-                                            <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
-                                                <img src="/assets/images/dashboard/hot.png">
+                            <div style="width: calc(100% - 200px)">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col size="4" *ngFor="let item of policy.list.slice(3,6)">
+                                            <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]">
+                                                <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
+                                                    <img src="/assets/images/dashboard/hot.png">
+                                                </div>
+                                                <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;margin-bottom:10px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
+                                                    {{item.policyName}}</p>
+                                                <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -20px;display: inline-block">
+                                                    补贴金额<span
+                                                        style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元
+                                                </p>
+                                                <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-left:20px;margin-top:-20px;display: inline-block">
+                                                    最后限期：<span style="font-weight: 700"
+                                                               [ngStyle]="{'color' : getDate(item.reportDateEnd) > 30 ? '#2C9EF7' : 'red'}">{{getDate(item.reportDateEnd)}}</span>天
+                                                </p>
+                                                <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
+                                                    所需时间<span
+                                                        style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月
+                                                </p>
                                             </div>
-                                            <p style="color: #21333F;font-weight: bold;font-size: 20px;margin-top: 30px;margin-bottom:10px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
-                                                {{item.policyName}}</p>
-                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -20px;display: inline-block">
-                                                补贴金额<span
-                                                    style="font-weight: 700;color: #2C9EF7;">{{item.subsidyAmtEnd}}</span>万元
-                                            </p>
-                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-left:20px;margin-top:-20px;display: inline-block">
-                                                最后限期：<span style="font-weight: 700"
-                                                           [ngStyle]="{'color' : getDate(item.reportDateEnd) > 30 ? '#2C9EF7' : 'red'}">{{getDate(item.reportDateEnd)}}</span>天
-                                            </p>
-                                            <p style="color:#B5C4D0;font-weight: 400;font-size: 14px;margin-top: -10px;">
-                                                所需时间<span
-                                                    style="font-weight: 700;color: #2C9EF7;">{{item.reportTiming}}</span>个月
-                                            </p>
-                                        </div>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-grid>
+                            </div>
                         </div>
                     </mat-card-content>
                 </mat-card>
@@ -240,7 +244,8 @@
                             <ion-col size="4">
                                 <div style="margin: 0 auto">
                                     <img src="/assets/images/dashboard/rocket.png"
-                                         style="width: 70px;height: 70px;display: block;margin: 0 auto;cursor: pointer" (click)="toCheckout()">
+                                         style="width: 70px;height: 70px;display: block;margin: 0 auto;cursor: pointer"
+                                         (click)="toCheckout()">
                                     <p>商标自助智能注册
                                         <img src="/assets/images/qualification.png"
                                              style="width: 20px;height: 20px;margin-left: 10px;display: inline-block;vertical-align: middle"
@@ -252,7 +257,8 @@
                             <ion-col size="4">
                                 <div style="margin: 0 auto">
                                     <img src="/assets/images/dashboard/plane.png"
-                                         style="width: 70px;height: 70px;display: block;margin: 0 auto;cursor: pointer" (click)="presentLoading()">
+                                         style="width: 70px;height: 70px;display: block;margin: 0 auto;cursor: pointer"
+                                         (click)="presentLoading()">
                                     <p>专利快捷提交
                                         <img src="/assets/images/qualification.png"
                                              style="width: 20px;height: 20px;margin-left: 10px;display: inline-block;vertical-align: middle"
@@ -264,7 +270,8 @@
                             <ion-col size="4">
                                 <div style="margin: 0 auto">
                                     <img src="/assets/images/dashboard/e.png"
-                                         style="width: 70px;height: 70px;display: block;margin: 0 auto;cursor: pointer" (click)="presentLoading()">
+                                         style="width: 70px;height: 70px;display: block;margin: 0 auto;cursor: pointer"
+                                         (click)="presentLoading()">
                                     <p>版权智能存证登记
                                         <img src="/assets/images/qualification.png"
                                              style="width: 20px;height: 20px;margin-left: 10px;display: inline-block;vertical-align: middle"
@@ -349,7 +356,7 @@
                                             <th mat-header-cell *matHeaderCellDef
                                                 style="width: 200px;text-align: left;height: 60px"><b>工单内容</b></th>
                                             <td mat-cell *matCellDef="let element" title="{{element.serviceName}}"
-                                                style="text-align: left;border-bottom-width: 1px !important;"> {{element.serviceName.slice(0,12)}}{{element.serviceName.length > 12 ? '...' : ''}} </td>
+                                                style="text-align: left;border-bottom-width: 1px !important;"> {{element.serviceName.slice(0, 12)}}{{element.serviceName.length > 12 ? '...' : ''}} </td>
                                         </ng-container>
 
                                         <!-- Name Column -->

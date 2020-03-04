@@ -50,6 +50,8 @@ mat-card {
     border: none;
     border-radius: 4px;
     margin: 10px auto;
+    display: flex;
+    flex-direction: row;
   }
 }
 

@@ -56,7 +56,7 @@ export class AdminPolicyPage {
                     },
                     yAxis: {
                         type: 'category',
-                        data: ['科创宝培育可获得', '快速培育可获得']
+                        data: ['科创直通车可获得', '快速培育可获得']
                     },
                     series: [
                         {

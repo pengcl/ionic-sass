@@ -15,7 +15,8 @@
                                     </ion-col>
                                     <ion-col size="12">
                                         <mat-form-field appearance="outline">
-                                            <mat-select name="company" [(ngModel)]="params.custId" (ngModelChange)="companyChange()">
+                                            <mat-select name="company" [(ngModel)]="params.custId"
+                                                        (ngModelChange)="companyChange()">
                                                 <mat-option *ngFor="let item of companies" [value]="item.id">
                                                     {{item.companyName}}
                                                 </mat-option>
@@ -25,23 +26,23 @@
                                     <ion-col size="12">
                                         <div class="policy">
                                             <div class="policy_small">
-                                                <div style="float: left">
+                                                <div>
                                                     <img src="/assets/images/amount.png"
                                                          style="width: 60px;height: 60px;display: block;margin: 20px">
                                                 </div>
-                                                <div style="float: left">
+                                                <div style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
                                                     <p style="font-size: 32px;color: #fff;margin: 20px 5px">{{account.qb | currency : ' '}}</p>
                                                     <p style="color: #fff;margin-top: -20px">企业账户余额（元）</p>
                                                 </div>
                                             </div>
                                             <div class="policy_small" style="background: rgba(13, 215, 141, 1)">
-                                                <div style="float: left">
+                                                <div>
                                                     <img src="/assets/images/amount.png"
                                                          style="width: 60px;height: 60px;display: block;margin: 20px">
                                                 </div>
-                                                <div style="float: left">
+                                                <div style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
                                                     <p style="font-size: 32px;color: #fff;margin: 20px 5px">{{account.zct | currency : ' '}}</p>
-                                                    <p style="color: #fff;margin-top: -20px">企业账户可用知产通（1知产通 = 1元）</p>
+                                                    <p style="color: #fff;margin-top: -20px;">企业账户可用知产通（1知产通 = 1元）</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -67,7 +68,8 @@
                                     <mat-form-field appearance="outline">
                                         <sat-datepicker-toggle [for]="time" matSuffix></sat-datepicker-toggle>
                                         <form [formGroup]="form">
-                                            <input matInput placeholder="选择时间" formControlName="date" (dateChange)="timeChange($event)" [satDatepicker]="time" readonly>
+                                            <input matInput placeholder="选择时间" formControlName="date"
+                                                   (dateChange)="timeChange($event)" [satDatepicker]="time" readonly>
                                         </form>
                                         <sat-datepicker #time [rangeMode]="true"></sat-datepicker>
                                     </mat-form-field>
@@ -79,7 +81,8 @@
                             <!-- Position Column -->
                             <ng-container matColumnDef="date">
                                 <th mat-header-cell *matHeaderCellDef><b>日期</b></th>
-                                <td mat-cell *matCellDef="let element"> {{element.payedDate ? element.payedDate : 0}} </td>
+                                <td mat-cell
+                                    *matCellDef="let element"> {{element.payedDate ? element.payedDate : 0}} </td>
                             </ng-container>
 
                             <!-- Name Column -->
@@ -124,7 +127,6 @@
                                     {{element.zctRechargeAmount ? element.zctRechargeAmount : 0}}
                                 </td>
                             </ng-container>
-
 
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

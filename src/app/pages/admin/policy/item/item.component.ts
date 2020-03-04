@@ -21,6 +21,8 @@ export class AdminPolicyItemPage {
             policySvc.getPolicy(this.id, this.company.id).subscribe(res => {
                 this.policy = res;
                 this.policy.industryNames = this.policy.industryNames.replace(/,/gi, '、');
+                this.policy.supportRemark = this.policy.supportRemark.replace(/\r\n/gi, '<br>');
+                console.log(this.policy.supportRemark);
             });
         });
     }
