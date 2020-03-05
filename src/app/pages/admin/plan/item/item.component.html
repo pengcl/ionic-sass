@@ -390,7 +390,7 @@
 
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell *matHeaderCellDef><b>政策名称</b></th>
-                                <td mat-cell *matCellDef="let element" style="text-align: left !important;cursor: pointer" [routerLink]="['/admin/policy/item',element.id]">
+                                <td mat-cell *matCellDef="let element" style="text-align: left !important;cursor: pointer" [routerLink]="['/admin/policy/item',element.id]" [queryParams]="{ id: 'top'}">
                                     {{element.policyName}}
                                 </td>
                                 <td mat-footer-cell *matFooterCellDef>合计</td>

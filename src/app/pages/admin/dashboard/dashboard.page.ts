@@ -1,5 +1,5 @@
-import {Component, Inject} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, Inject, OnInit} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
 import {CompanyService} from '../company/company.service';
 import {MonitorService} from '../monitor/monitor.service';
 import {PlanService} from '../plan/plan.service';
@@ -81,6 +81,7 @@ export class AdminDashboardPage {
         two: false,
         three: false
     };
+
 
     constructor(private router: Router,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,

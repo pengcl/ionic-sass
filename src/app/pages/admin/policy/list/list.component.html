@@ -84,7 +84,7 @@
 
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell *matHeaderCellDef><b>政策名称</b></th>
-                                <td mat-cell *matCellDef="let element" style="cursor:pointer;text-align: left !important;text-indent: 20px" [routerLink]="['/admin/policy/item',element.id]">
+                                <td mat-cell *matCellDef="let element" style="cursor:pointer;text-align: left !important;text-indent: 20px" [routerLink]="['/admin/policy/item',element.id]" [queryParams]="{ id: 'top'}">
                                     {{element.policyName.slice(0,30)}}{{element.policyName.length > 30 ? '...' : ''}}
                                 </td>
                             </ng-container>
@@ -133,7 +133,7 @@
                                 <td mat-cell *matCellDef="let element"
                                     style="height: 50px">
                                     <a class="actions-icon"
-                                       [routerLink]="['/admin/policy/item',element.id]" title="查看">
+                                       [routerLink]="['/admin/policy/item',element.id]" [queryParams]="{ id: 'top'}" title="查看">
                                         <img src="/assets/images/view.png">
                                     </a>
                                 </td>
