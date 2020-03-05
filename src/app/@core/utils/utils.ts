@@ -91,4 +91,3 @@ export function color() {
     return colors[index];
 }
 
-

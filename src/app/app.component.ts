@@ -1,7 +1,10 @@
-import {Component} from '@angular/core';
-import {Router, ActivatedRoute, NavigationEnd} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute, NavigationEnd, ActivationEnd} from '@angular/router';
 import {tap, filter, map, mergeMap} from 'rxjs/operators';
 import {TabService} from './@shared/components/header/tab.service';
+
+
+declare var $: any;
 
 @Component({
     selector: 'app-root',
@@ -30,5 +33,7 @@ export class AppComponent {
                 this.tabSvc.set({name: data.name, path: this.router.url});
             }
         });
+
+
     }
 }
