@@ -114,8 +114,7 @@
                                 <ion-grid>
                                     <ion-row>
                                         <ion-col size="4" *ngFor="let item of policy.list.slice(0,3)">
-                                            <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]"
-                                                 [queryParams]="{ id: 'top'}">
+                                            <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]">
                                                 <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
                                                     <img src="/assets/images/dashboard/hot.png">
                                                 </div>
@@ -152,8 +151,7 @@
                                     <ion-row>
                                         <ion-col size="4" *ngFor="let item of policy.list.slice(3,6)">
                                             <div class="hot_right"
-                                                 [routerLink]="['/admin/policy/item',item.id]"
-                                                 [queryParams]="{ id: 'top'}">
+                                                 [routerLink]="['/admin/policy/item',item.id]">
                                                 <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
                                                     <img src="/assets/images/dashboard/hot.png">
                                                 </div>

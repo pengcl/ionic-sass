@@ -4,8 +4,6 @@ import {tap, filter, map, mergeMap} from 'rxjs/operators';
 import {TabService} from './@shared/components/header/tab.service';
 
 
-declare var $: any;
-
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -36,4 +34,5 @@ export class AppComponent {
 
 
     }
+
 }
