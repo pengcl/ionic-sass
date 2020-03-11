@@ -70,46 +70,10 @@
                 </span>
                 企业雷达监控
             </h3>
-            <!--<h3 [ngClass]="{'active' : menuIndex === 10}"  [matMenuTriggerFor]="menuMine" #mineTrigger="matMenuTrigger" (mouseover)="trustTrigger.closeMenu();keyTrigger.closeMenu();serviceTrigger.closeMenu();mineTrigger.openMenu()" mat-subheader>
-                <mat-icon aria-hidden="false" aria-label="Example home icon">account_circle</mat-icon>
-                我的
-            </h3>
-            <mat-menu [hasBackdrop]="false" xPosition="after" [classList]="'side-sub-menu'" #menuMine="matMenu">
-                <button routerLink="/admin/company/list" routerLinkActive="active" mat-menu-item>我的企业</button>
-                <button routerLink="/admin/user" routerLinkActive="active" mat-menu-item>我的账户</button>
-                <button routerLink="/admin/order/list" routerLinkActive="active" mat-menu-item>我的订单</button>
-                <button routerLink="/admin/ticket/list" routerLinkActive="active" mat-menu-item>我的工单</button>
-                <button (click)="logout()" mat-menu-item>退出登录</button>
-            </mat-menu>-->
         </mat-list>
     </mat-sidenav>
 
     <mat-sidenav-content (mouseover)="trustTrigger.closeMenu();keyTrigger.closeMenu();serviceTrigger.closeMenu();">
         <router-outlet></router-outlet>
-        <!--<ion-fab class="fav-fab" *ngIf="show" horizontal="right" vertical="bottom" slot="fixed" cdkDrag>
-            <ion-fab-button>
-                <ion-icon name="ios-share"></ion-icon>
-            </ion-fab-button>
-            <ion-fab-list side="top">
-                <ion-fab-button href="https://www.wispclouds.com/" color="primary">
-                    商城
-                </ion-fab-button>
-            </ion-fab-list>
-            <ion-fab-list side="end">
-                <ion-fab-button routerLink="/admin/checkout" color="dark">
-                    下单
-                </ion-fab-button>
-            </ion-fab-list>
-            <ion-fab-list side="bottom">
-                <ion-fab-button (click)="show = false" color="secondary">
-                    关闭
-                </ion-fab-button>
-            </ion-fab-list>
-            <ion-fab-list side="start">
-                <ion-fab-button routerLink="/admin/dashboard" color="light">
-                    首页
-                </ion-fab-button>
-            </ion-fab-list>
-        </ion-fab>-->
     </mat-sidenav-content>
 </mat-sidenav-container>

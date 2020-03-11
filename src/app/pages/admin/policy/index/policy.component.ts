@@ -93,9 +93,8 @@ export class AdminPolicyPage {
     }
 
     getData() {
-        this.loadingSvc.show('加载中...', 0).then();
+        this.loadingSvc.show('加载中...', 1000).then();
         this.policySvc.item(this.params).subscribe(res => {
-            this.loadingSvc.hide();
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });

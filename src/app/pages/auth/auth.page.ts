@@ -45,41 +45,13 @@ export class AuthPage implements OnInit, OnDestroy {
         });
 
         this.randomValidUid = new Date().getTime();
-        this.authSvc.getValidImg(this.randomValidUid).subscribe(res => {
-            const data = JSON.parse(res.result);
-            initGeetest({
-                gt: data.gt,
-                challenge: data.challenge,
-                product: 'popup', // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
-                offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
-            }, captchaObj => {
-                this.handlerPopup(captchaObj);
-            });
-        });
-    }
-
-    handlerPopup(captchaObj) {
-        this.captchaObj = captchaObj;
-        // 弹出式需要绑定触发验证码弹出按钮
-        captchaObj.bindOn('#sendValidCode');
-
-        // 将验证码加到id为captcha的元素里
-        captchaObj.appendTo('#popup-captcha');
     }
 
     sendValidCode() {
+        this.getValidImg();
 
         if (!this.activeClass) {
             return false;
-        }
-
-        if (this.form.get('loginid').invalid) {
-            this.dialog.show({
-                content: '请输入手机号！',
-                cancel: '',
-                confirm: '我知道了'
-            }).subscribe(data => {
-            });
         }
 
         const validate = this.captchaObj.getValidate();
@@ -121,6 +93,7 @@ export class AuthPage implements OnInit, OnDestroy {
                 });
             }
         });
+
     }
 
     login() {
@@ -147,5 +120,38 @@ export class AuthPage implements OnInit, OnDestroy {
         if (this.timePromise) {
             this.timePromise.unsubscribe();
         }
+    }
+
+    getValidImg() {
+        if (this.form.get('loginid').invalid) {
+            this.dialog.show({
+                content: '请正确填写手机号！',
+                cancel: '',
+                confirm: '我知道了'
+            }).subscribe(data => {
+            });
+            return false;
+        }
+        this.authSvc.getValidImg(this.randomValidUid).subscribe(res => {
+            const data = JSON.parse(res.result);
+            initGeetest({
+                gt: data.gt,
+                challenge: data.challenge,
+                product: 'popup', // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
+                offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+            }, captchaObj => {
+                this.handlerPopup(captchaObj);
+            });
+        });
+
+    }
+
+    handlerPopup(captchaObj) {
+        this.captchaObj = captchaObj;
+        // 弹出式需要绑定触发验证码弹出按钮
+        captchaObj.bindOn('#sendValidCode');
+
+        // 将验证码加到id为captcha的元素里
+        captchaObj.appendTo('#popup-captcha');
     }
 }
