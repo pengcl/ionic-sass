@@ -39,6 +39,17 @@ mat-card {
 
   mat-form-field {
     width: 100%;
+    #sendValidCode {
+      display: none;
+    }
+    &.code-show {
+      #sendValidCodeFalse {
+        display: none;
+      }
+      #sendValidCode {
+        display: inline-block;
+      }
+    }
   }
 
   button#submit {
