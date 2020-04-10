@@ -1,11 +1,12 @@
-import {Component, Inject} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, Inject, OnInit} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
 import {CompanyService} from '../company/company.service';
 import {MonitorService} from '../monitor/monitor.service';
 import {PlanService} from '../plan/plan.service';
 import {RiskService} from '../risk/risk.service';
 import {DashboardService} from './dashboard.service';
 import {DialogService} from '../../../@core/modules/dialog';
+import * as echarts from 'echarts';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AddressService} from '../../../@core/services/address.service';
 import {LoadingController} from '@ionic/angular';
@@ -134,6 +135,7 @@ export class AdminDashboardPage {
                 this.policy.update = res.updateCount;
                 this.policy.list = res.list;
                 this.policy.list.sort(this.compare('reportDateEnd'));
+                console.log(this.policy.list);
             });
         });
 

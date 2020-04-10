@@ -142,22 +142,18 @@ export class AdminCompanyItemPage implements OnInit {
                                     }
                                     if (key === 'industryIds') {
                                         const selectedIndustries = [];
-                                        console.log('industries:', this.industries);
+                                        console.log(this.industries);
                                         res.busCust[key].split(',').forEach(id => {
                                             const index = getIndex(this.industries, 'id', parseInt(id, 10));
-                                            console.log('index:', index);
-                                            if (index >= 0) {
-                                                selectedIndustries.push(this.industries[index]);
-                                            }
-
+                                            selectedIndustries.push(this.industries[index]);
                                         });
                                         this.selectedIndustries = selectedIndustries;
                                         this.setIndustries();
                                     }
                                 }
                             }
+                            console.log(this.form);
                         }
-
                     });
                 } else {
                     this.form.get('custId').disable();

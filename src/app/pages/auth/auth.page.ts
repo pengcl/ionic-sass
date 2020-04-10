@@ -5,6 +5,7 @@ import {LocationStrategy} from '@angular/common';
 
 import {interval as observableInterval} from 'rxjs';
 import {AuthService} from './auth.service';
+import {ToastService} from '../../@core/modules/toast';
 import {DialogService} from '../../@core/modules/dialog';
 import {StorageService} from '../../@core/services/storage.service';
 
@@ -16,9 +17,7 @@ declare var initGeetest: any;
     styleUrls: ['./auth.page.scss']
 })
 export class AuthPage implements OnInit, OnDestroy {
-    appConfig;
     form: FormGroup;
-    isSignInFormSubmit = false;
     isSignUpFormSubmit = false;
 
     captchaObj;
@@ -33,6 +32,7 @@ export class AuthPage implements OnInit, OnDestroy {
                 private route: ActivatedRoute,
                 private location: LocationStrategy,
                 private storageSvc: StorageService,
+                private toastSvc: ToastService,
                 private dialog: DialogService,
                 private authSvc: AuthService) {
     }
@@ -45,12 +45,41 @@ export class AuthPage implements OnInit, OnDestroy {
         });
 
         this.randomValidUid = new Date().getTime();
+        this.authSvc.getValidImg(this.randomValidUid).subscribe(res => {
+            const data = JSON.parse(res.result);
+            initGeetest({
+                gt: data.gt,
+                challenge: data.challenge,
+                product: 'popup', // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
+                offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+            }, captchaObj => {
+                this.handlerPopup(captchaObj);
+            });
+        });
+    }
+
+    handlerPopup(captchaObj) {
+        this.captchaObj = captchaObj;
+        // 弹出式需要绑定触发验证码弹出按钮
+        captchaObj.bindOn('#sendValidCode');
+
+        // 将验证码加到id为captcha的元素里
+        captchaObj.appendTo('#popup-captcha');
     }
 
     sendValidCode() {
-        this.getValidImg();
 
         if (!this.activeClass) {
+            return false;
+        }
+
+        if (this.form.get('loginid').invalid) {
+            this.dialog.show({
+                content: '请正确填写手机号！',
+                cancel: '',
+                confirm: '我知道了'
+            }).subscribe(data => {
+            });
             return false;
         }
 
@@ -93,7 +122,6 @@ export class AuthPage implements OnInit, OnDestroy {
                 });
             }
         });
-
     }
 
     login() {
@@ -120,38 +148,5 @@ export class AuthPage implements OnInit, OnDestroy {
         if (this.timePromise) {
             this.timePromise.unsubscribe();
         }
-    }
-
-    getValidImg() {
-        if (this.form.get('loginid').invalid) {
-            this.dialog.show({
-                content: '请正确填写手机号！',
-                cancel: '',
-                confirm: '我知道了'
-            }).subscribe(data => {
-            });
-            return false;
-        }
-        this.authSvc.getValidImg(this.randomValidUid).subscribe(res => {
-            const data = JSON.parse(res.result);
-            initGeetest({
-                gt: data.gt,
-                challenge: data.challenge,
-                product: 'popup', // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
-                offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
-            }, captchaObj => {
-                this.handlerPopup(captchaObj);
-            });
-        });
-
-    }
-
-    handlerPopup(captchaObj) {
-        this.captchaObj = captchaObj;
-        // 弹出式需要绑定触发验证码弹出按钮
-        captchaObj.bindOn('#sendValidCode');
-
-        // 将验证码加到id为captcha的元素里
-        captchaObj.appendTo('#popup-captcha');
     }
 }
