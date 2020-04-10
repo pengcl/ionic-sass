@@ -1,4 +1,4 @@
-<div class="container {{data?.type === 0 ? 's' : 'c'}}">
+<!--<div class="container {{data?.type === 0 ? 's' : 'c'}}">
     <ion-grid *ngIf="data">
         <ion-row>
             <ion-col size="12">
@@ -369,7 +369,7 @@
                     </mat-card-header>
                     <mat-card-content>
                         <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
-                            <!-- Checkbox Column -->
+                            &lt;!&ndash; Checkbox Column &ndash;&gt;
                             <ng-container matColumnDef="select">
                                 <th mat-header-cell *matHeaderCellDef style="width: 50px">
                                     <mat-checkbox disabled color="primary" (change)="$event ? masterToggle() : null"
@@ -396,7 +396,7 @@
                                 <td mat-footer-cell *matFooterCellDef>合计</td>
                             </ng-container>
 
-                            <!-- Name Column -->
+                            &lt;!&ndash; Name Column &ndash;&gt;
                             <ng-container matColumnDef="money">
                                 <th mat-header-cell *matHeaderCellDef><b>最高获得金额（万元）</b></th>
                                 <td mat-cell *matCellDef="let element">
@@ -405,7 +405,7 @@
                                 <td mat-footer-cell *matFooterCellDef></td>
                             </ng-container>
 
-                            <!-- Weight Column -->
+                            &lt;!&ndash; Weight Column &ndash;&gt;
                             <ng-container matColumnDef="time">
                                 <th mat-header-cell *matHeaderCellDef style="width: 200px"><b>申请时间</b></th>
                                 <td mat-cell *matCellDef="let element">
@@ -702,9 +702,681 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-    <!--<div class="row-buttons" style="background-color: rgba(33, 40, 68, 1);margin: 0">
+    &lt;!&ndash;<div class="row-buttons" style="background-color: rgba(33, 40, 68, 1);margin: 0">
         <ion-button (click)="download()" color="primary" style="margin: 20px 50%;">下载报告</ion-button>
-    </div>-->
-</div>
+    </div>&ndash;&gt;
+</div>-->
+<div class="container">
+    <ion-grid>
+        <ion-row style="border: none">
+            <ion-col size="12">
+                <mat-card style="background: rgba(246,247,249,1)">
+                    <div class="company">
+                        <div class="company_left"></div>
+                        <div class="company_right"><p>{{company?.companyName}}</p></div>
+                    </div>
+                </mat-card>
+            </ion-col>
+            <ion-col size="12">
+                <mat-card style="padding: 0">
+                    <ion-row style="border: none;background: #F6F7F9">
+                        <ion-col size="4">
+                            <div class="company_condition_l">
+                                <p>运作时长<span>5年</span></p>
+                            </div>
+                        </ion-col>
+                        <ion-col size="4">
+                            <div class="company_condition_m">
+                                <p>所属行业<span>企业服务</span></p>
+                            </div>
+                        </ion-col>
+                        <ion-col size="4">
+                            <div class="company_condition_r">
+                                <p>企业体量<span>小型企业</span></p>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                </mat-card>
+            </ion-col>
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>行业信息</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-row style="margin-top: 20px !important;">
+                            <ion-col size="4">
+                                <ion-item lines="none">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/service.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>
+                                        <p>行业</p>
+                                        <h3>企业服务</h3>
+                                    </ion-label>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="8">
+                                <ion-item lines="none" style="--background:rgba(246,247,249,1);">
+                                    <article>
+                                        企业是信息化最为广阔的市场空间，尤其考虑到国内企业信息化解决方案渗透率还处于比较低的水平。由于灵活性、标准化程度高、使用门槛低等特点，SaaS已基本上成为现阶段为中小企业提供软件解决方案的首选途径。但在付费环节上，国内中小企业的SaaS仍然是个挑战。
+                                    </article>
+                                    <div style="width:4px;height:28px;background:rgba(211,211,211,1);border-radius:2px;position: absolute;top: 33px;right: 21px"></div>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>企业体量分析结果</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-row style="margin-top: 20px !important;">
+                            <ion-col size="4">
+                                <ion-item lines="none" class="result_l">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/income.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>
+                                        <p>年营业收入范围</p>
+                                        <h2>2000 - 5000 万元</h2>
+                                    </ion-label>
+                                    <div class="result_img">
+                                        <img src="/assets/images/company/hand.png"/>
+                                    </div>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="8">
+                                <ion-item lines="none" class="result_r">
+                                    <ion-label>
+                                        <h3>正常范围 1000 - 2000 万</h3>
+                                        <p>互联网+企业服务行业公司运营时长5年时，年营业收入正常范围在1000 - 2000 万元。</p>
+                                        <p>当前企业年营业收入范围为2000 - 5000 万元，高于正常范围值，商业运营水平优秀。</p>
+                                    </ion-label>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
 
+                        <ion-row style="margin-top: 10px !important;">
+                            <ion-col size="4">
+                                <ion-item lines="none" class="result_l">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/assets.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>
+                                        <p>固定资产范围</p>
+                                        <h2>500 - 1000 万元</h2>
+                                    </ion-label>
+                                    <div class="result_img">
+                                        <img src="/assets/images/company/tick.png"/>
+                                    </div>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="8">
+                                <ion-item lines="none" class="result_r">
+                                    <ion-label>
+                                        <h3>正常范围 500 - 2000 万元</h3>
+                                        <p>互联网+企业服务行业公司运营时长5年时，固定资产正常范围在500 - 2000 万元。 </p>
+                                        <p>当前企业固定资产范围为2000 - 1000 万元，处于正常范围值，企业经营水平优秀。</p>
+                                    </ion-label>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row style="margin-top: 10px !important;">
+                            <ion-col size="4">
+                                <ion-item lines="none" class="result_l">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/amount.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>
+                                        <p>企业总人数范围</p>
+                                        <h2 style="color: #B81F1C">10-50 人</h2>
+                                    </ion-label>
+                                    <div class="result_img">
+                                        <img src="/assets/images/company/warn.png"/>
+                                    </div>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="8">
+                                <ion-item lines="none" class="result_r">
+                                    <ion-label>
+                                        <h3>正常范围 30 - 100 人</h3>
+                                        <p>互联网+企业服务行业公司运营时长5年时，企业人总人数正常范围在30 - 100 人。 </p>
+                                        <p>当前企业总人数范围为10 - 50 人，处于正常范围值，企业经营水平优秀。</p>
+                                    </ion-label>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>人力结构分析结果</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-row style="margin-top: 20px !important;">
+                            <ion-col size="4">
+                                <ion-item lines="none" class="result_l">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/member.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>
+                                        <p>管理人员比例</p>
+                                        <h2>20%</h2>
+                                    </ion-label>
+                                    <div class="result_img">
+                                        <img src="/assets/images/company/tick.png"/>
+                                    </div>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="8">
+                                <ion-item lines="none" class="result_r">
+                                    <ion-label>
+                                        <h3>正常范围 17-23 %</h3>
+                                        <p>互联网+企业服务行业公司运营时长5年时，管理人员正常比例范围为17 - 23%。</p>
+                                        <p>当前企业管理人员比例为20%，处于正常范围值，企业管理水平优秀。</p>
+                                    </ion-label>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row style="margin-top: 10px">
+                            <ion-col size="4">
+                                <ion-list>
+                                    <ion-list-header>职能比例</ion-list-header>
+                                    <ion-item lines="none">
+                                        <div echarts [options]="brandOption"
+                                             style="width: 200px;height: 200px;margin: 0 auto"
+                                             class="main-chart;"></div>
+                                    </ion-item>
+                                </ion-list>
+                            </ion-col>
+                            <ion-col size="8">
+                                <div style="width: 100%;height: 100%;background: #F6F7F9">
+                                    <ion-row style="border: none">
+                                        <ion-col size="6">
+                                            <table cellpadding="0" cellspacing="0" border="0" class="result_table">
+                                                <thead>
+                                                <tr>
+                                                    <th class="user">职能</th>
+                                                    <th class="grade">正常范围</th>
+                                                    <th class="consumption">企业类别</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="user">研发</td>
+                                                    <td class="grade">15-25%</td>
+                                                    <td class="consumption">-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="user">销售</td>
+                                                    <td class="grade">35-45%</td>
+                                                    <td class="consumption">-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="user">服务</td>
+                                                    <td class="grade">15-25%</td>
+                                                    <td class="consumption">-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="user">其他</td>
+                                                    <td class="grade">10-20%</td>
+                                                    <td class="consumption">-</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </ion-col>
+                                        <ion-col size="6">
+                                            <article>
+                                                互联网+企业服务行业公司运营时长5年时，人力结构正常范围为研发人员占比15-25%，销售人员占比30-45%，服务人员占比15-25%，其他人员占比10-20%。
+                                            </article>
+                                            <article>
+                                                当前企业销售人员占比低于正常范围值，其他人员占比高于正常范围值，需要注意企业人力结构是否存在不合理，应进行相应的适当调整
+                                            </article>
+                                        </ion-col>
+                                    </ion-row>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row style="margin-top: 10px">
+                            <ion-col size="4">
+                                <ion-list>
+                                    <ion-list-header>学历组成</ion-list-header>
+                                    <ion-item lines="none">
+                                        <div echarts [options]="brandOption"
+                                             style="width: 200px;height: 200px;margin: 0 auto"
+                                             class="main-chart;"></div>
+                                    </ion-item>
+                                </ion-list>
+                            </ion-col>
+                            <ion-col size="8">
+                                <div style="width: 100%;height: 100%;background: #F6F7F9">
+                                    <ion-row style="border: none">
+                                        <ion-col size="6">
+                                            <table cellpadding="0" cellspacing="0" border="0" class="result_table">
+                                                <thead>
+                                                <tr>
+                                                    <th class="user">职能</th>
+                                                    <th class="grade">正常范围</th>
+                                                    <th class="consumption">企业类别</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="user">专科</td>
+                                                    <td class="grade">10-20%</td>
+                                                    <td class="consumption">-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="user">本科</td>
+                                                    <td class="grade">40-50%</td>
+                                                    <td class="consumption" style="color: #E02020">↓</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="user">研究生及以上</td>
+                                                    <td class="grade">20-40%</td>
+                                                    <td class="consumption">-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="user">其他</td>
+                                                    <td class="grade">5-10%</td>
+                                                    <td class="consumption" style="color: #E02020">↑</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </ion-col>
+                                        <ion-col size="6">
+                                            <article>
+                                                互联网+企业服务行业公司运营时长5年时，人员学历组成正常范围为专科人员占比10-20%，本科人员占比40-50%，研究生及以上人员占比20-40%，其他人员占比5-10%。
+                                            </article>
+                                            <article>
+                                                当前企业本科人员占比低于正常范围值，其他人员占比高于正常范围值，需要注意企业人员学历是否存在不合理，应进行相应的适当调整。
+                                            </article>
+                                        </ion-col>
+                                    </ion-row>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>品牌布局分析结果</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-row style="margin-top: 20px">
+                            <ion-col size="4">
+                                <ion-item lines="none" class="layout_l"
+                                          style="border-bottom: 1px solid rgba(229,235,240,1)">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/depth.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>行业深度<span>良好</span></ion-label>
+                                    <div class="result_img">
+                                        <img src="/assets/images/company/tick.png"/>
+                                    </div>
+                                </ion-item>
+                                <ion-item lines="none" class="layout_l">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/breadth.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>经营广度<span style="color: #E02020">待加强</span></ion-label>
+                                    <div class="result_img">
+                                        <img src="/assets/images/company/warn.png"/>
+                                    </div>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="8">
+                                <ion-item lines="none">
+                                    <article style="color: #5F717D;padding: 48px 37px 47px 40px;">
+                                        互联网+企业服务行业公司品牌布局主要着重于09类、35类、45类商标注册，商标每年增速不低于总量10%。企业当前已经申报商标1500个，商标涉及类别32个，核心类别均超过行业平均水平，处于行业领先地位。建议持续深入开发行业，保持商标注册增速，建设品牌体系保护。
+                                    </article>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row style="border: none;margin-top: 22px">
+                            <ion-col size="6">
+                                <ion-item lines="none" class="top">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/top.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>品牌TOP 3</ion-label>
+                                </ion-item>
+                                <ion-item lines="none">
+                                    <table cellpadding="0" cellspacing="0" border="0" class="table_top">
+                                        <thead>
+                                        <tr>
+                                            <th class="user"></th>
+                                            <th class="grade">商标名称</th>
+                                            <th class="consumption">类别数量</th>
+                                            <th class="date">使用时长</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="user">
+                                                <img src="/assets/images/company/one.png" height="31" width="24"/>
+                                            </td>
+                                            <td class="grade">中科华海</td>
+                                            <td class="consumption">20</td>
+                                            <td class="date">5年</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="user">
+                                                <img src="/assets/images/company/two.png" height="24" width="24"/>
+                                            </td>
+                                            <td class="grade">知产云</td>
+                                            <td class="consumption">18</td>
+                                            <td class="date">5年</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="user">
+                                                <img src="/assets/images/company/three.png" height="24" width="24"/>
+                                            </td>
+                                            <td class="grade">华海商学院</td>
+                                            <td class="consumption">18</td>
+                                            <td class="date">4年</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="6">
+                                <ion-item lines="none" class="top">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/pie.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>商标注册总数情况</ion-label>
+                                </ion-item>
+                                <ion-item lines="none" style="margin-top: -10px;">
+                                    <ion-thumbnail style="margin: 0 27px"></ion-thumbnail>
+                                    <ion-label
+                                            style="font-size:14px;font-weight:500;color:rgba(95,113,125,1);line-height:32px;">
+                                        商标注册总数 <em style="font-style: normal;color: #3FA2F4;font-size: 24px">160</em>
+                                    </ion-label>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row style="border: none;margin-top: 21px">
+                            <ion-col size="6">
+                                <ion-item lines="none" class="top">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/main.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>主要类别注册情况</ion-label>
+                                </ion-item>
+                                <ion-item lines="none">
+                                    <div *ngIf="subsidyOption" echarts [options]="subsidyOption"
+                                         class="main-chart subsidy-chart"
+                                         style="height: 230px;"></div>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="6">
+                                <ion-item lines="none" class="top">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/brand.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>商标注册类别情况</ion-label>
+                                </ion-item>
+                                <ion-item lines="none" style="margin-top: -10px;">
+                                    <ion-thumbnail style="margin: 0 27px"></ion-thumbnail>
+                                    <ion-label
+                                            style="font-size:14px;font-weight:500;color:rgba(95,113,125,1);line-height:32px;">
+                                        注册类别总数 <em style="font-style: normal;color: #3FA2F4;font-size: 24px">38</em>
+                                    </ion-label>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>科研创造力分析结果</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-row style="margin-top: 20px">
+                            <ion-col size="4">
+                                <ion-item lines="none" class="layout_l"
+                                          style="border-bottom: 1px solid rgba(229,235,240,1)">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/achievement.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>科研成果<span style="color: #4DC36D">优秀</span></ion-label>
+                                    <div class="result_img">
+                                        <img src="/assets/images/company/hand.png"/>
+                                    </div>
+                                </ion-item>
+                                <ion-item lines="none" class="layout_l">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/ability.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>科研能力<span>良好</span></ion-label>
+                                    <div class="result_img">
+                                        <img src="/assets/images/company/tick.png"/>
+                                    </div>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="8">
+                                <ion-item lines="none">
+                                    <article style="color: #5F717D;padding: 48px 37px 38px 40px;">
+                                        <p style="margin: 0">企业科研创造力主要考量科研成果和科研能力。</p>
+                                        <p style="margin: 0">互联网+企业服务行业运营时长5年的平均情况，发明专利15件、实用新型专利95件、软件著作权140件。</p>
+                                        <p style="margin: 0">
+                                            企业当前科研成果均超过行业平均水平，发明专利20件、实用新型专利120件、软件著作权200件，建议保持科研投入，保证科研创造力处于行业优势地位。</p>
+                                    </article>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row style="margin-top: 11px">
+                            <ion-col size="4">
+                                <ion-item lines="none">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/patent.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>
+                                        <p>发明专利</p>
+                                        <h3>20个</h3>
+                                    </ion-label>
+                                </ion-item>
+                                <ion-item lines="none">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/patent_n.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>
+                                        <p>实用新型专利</p>
+                                        <h3>100个</h3>
+                                    </ion-label>
+                                </ion-item>
+                                <ion-item lines="none">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/copyright.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>
+                                        <p>软件著作权</p>
+                                        <h3>200个</h3>
+                                    </ion-label>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="8">
+                                <div style="width: 100%;height: 100%;background:rgba(246,247,249,1);">
+                                    <p style="font-size:18px;font-weight:400;color:#5F717D;line-height:32px;margin: 0;padding: 31px">
+                                        科研成果情况</p>
+                                    <div *ngIf="subsidyOption" echarts [options]="subsidyOption"
+                                         class="main-chart subsidy-chart"
+                                         style="height: 230px;"></div>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row style="margin-top: 11px;">
+                            <ion-col size="4">
+                                <ion-item lines="none" class="result_l">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/proportion.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>
+                                        <p>科研人员占比</p>
+                                        <h2 style="color: #4DC36D">15%</h2>
+                                    </ion-label>
+                                    <div class="result_img">
+                                        <img src="/assets/images/company/hand.png"/>
+                                    </div>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="8">
+                                <ion-item lines="none" class="result_r">
+                                    <ion-label>
+                                        <h3>正常范围 15-25 %</h3>
+                                        <p>互联网+企业服务行业公司运营时长5年时，科研人员正常比例范围为15 - 25%。</p>
+                                        <p>当前企业科研人员比例为15%，处于正常范围值，企业科研人员充足。</p>
+                                    </ion-label>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row style="margin-top: 11px;">
+                            <ion-col size="4">
+                                <ion-item lines="none" class="result_l">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/education.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>
+                                        <p>科研人员本科学历及以上</p>
+                                        <h2>60%</h2>
+                                    </ion-label>
+                                    <div class="result_img">
+                                        <img src="/assets/images/company/tick.png"/>
+                                    </div>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="8">
+                                <ion-item lines="none" class="result_r">
+                                    <ion-label>
+                                        <h3>正常范围 45-70 %</h3>
+                                        <p>互联网+企业服务行业公司运营时长5年时，科研人员本科及以上学历平均范围为45 - 70%。</p>
+                                        <p>当前科研人员本科及以上学历占比为60%，处于正常范围值，企业研发水平优秀。</p>
+                                    </ion-label>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row style="margin-top: 11px;">
+                            <ion-col size="4">
+                                <ion-item lines="none" class="result_l">
+                                    <ion-thumbnail>
+                                        <img src="/assets/images/company/input.png"/>
+                                    </ion-thumbnail>
+                                    <ion-label>
+                                        <p>科研费用投入占比</p>
+                                        <h2>8%</h2>
+                                    </ion-label>
+                                    <div class="result_img">
+                                        <img src="/assets/images/company/tick.png"/>
+                                    </div>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="8">
+                                <ion-item lines="none" class="result_r">
+                                    <ion-label>
+                                        <h3>正常范围 3-5 %</h3>
+                                        <p>互联网+企业服务行业公司运营时长5年时，科研费用投入平均范围为3 - 5%。 </p>
+                                        <p>当前企业科研费用投入比例为8%，超出平均范围值，企业科研能力优秀。</p>
+                                    </ion-label>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+
+            <ion-col size="12">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>匹配政策
+                            <span style="margin-left: 10px" matTooltip="由中科华海搜集全国范围内的企业相关政策" matTooltipPosition="after">
+                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;">
+                            </span>
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ion-row style="border: none">
+                            <ion-col size="6">
+                                <div class="policy-left">
+                                    <p>
+                                        快速培育可获得<em>120</em>万元
+                                        <span>快速培育
+                                            <img src="/assets/images/company/into.png" height="13" width="13"/>
+                                        </span>
+                                    </p>
+                                </div>
+                            </ion-col>
+                            <ion-col size="6">
+                                <div class="policy-right">
+                                    <p>
+                                        科创直通车(2年)可获得<em>300</em>万元
+                                        <span class="right">政策收益提升
+                                        <em>150%</em>
+                                        <img src="/assets/images/company/into.png" height="13" width="13"/>
+                                        </span>
+                                    </p>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                        <div class="hot">
+                            <ion-grid>
+                                <ion-row style="border: none">
+                                    <ion-col size="3" *ngFor="let item of policy.list.slice(0,4);let i = index">
+                                        <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]"
+                                             [ngStyle]="{'margin-right': i === 3 ? '0' : '22px'}">
+                                            <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
+                                                <img src="/assets/images/dashboard/icon_hot.png">
+                                            </div>
+                                            <p style="font-size:18px;font-weight:600;color:rgba(33,51,63,1);line-height:25px;margin-bottom:10px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
+                                                {{item.policyName}}</p>
+                                            <p style="font-size:14px;font-weight:400;color:rgba(95,113,125,1);line-height:20px;">
+                                                预计补贴金额<span
+                                                    style="float: right"><em
+                                                    style="font-style: normal;font-size:14px;font-weight:400;color:rgba(63,162,244,1);line-height:20px;">{{item.subsidyAmtEnd}}</em>万元</span>
+                                            </p>
+                                            <p style="font-size:14px;font-weight:400;color:rgba(95,113,125,1);line-height:20px;margin-top: 6px;">
+                                                预计所需时间<span
+                                                    style="float: right"><em
+                                                    style="font-style: normal;font-size:14px;font-weight:400;color:rgba(63,162,244,1);line-height:20px;">{{item.reportTiming}}</em>个月</span>
+                                            </p>
+                                            <p style="font-size:14px;font-weight:400;color:rgba(95,113,125,1);line-height:20px;margin-top: 15px;">
+                                                <span style="padding: 6px 15px;border-radius:4px;border:1px solid rgba(63,162,244,1);font-size:14px;font-weight:500;color:rgba(42,159,247,1);line-height:20px;">立即了解</span>
+                                                <span style="float: right;margin-top: -5px;"><img
+                                                        src="/assets/images/dashboard/icon_clock.png" height="20"
+                                                        width="20" style="position: relative;top:5px"/><em
+                                                        style="font-weight:500;color:rgba(224,32,32,1);font-style: normal">{{getDate(item.reportDateEnd)}}</em>天</span>
+                                            </p>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</div>
 

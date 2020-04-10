@@ -10,6 +10,7 @@ import {DialogModule} from './modules/dialog';
 
 import {throwIfAlreadyLoaded} from './module-import-guard';
 import {INTERCEPTORS} from './interceptors';
+import {ToastModule} from './modules/toast';
 
 
 export const CORE_PROVIDERS = [
@@ -24,7 +25,8 @@ export const CORE_PROVIDERS = [
         RouterModule,
         HttpClientModule,
         MaskModule,
-        DialogModule
+        DialogModule,
+        ToastModule
     ],
     exports: [
         CommonModule,
@@ -33,7 +35,8 @@ export const CORE_PROVIDERS = [
         RouterModule,
         HttpClientModule,
         MaskModule,
-        DialogModule
+        DialogModule,
+        ToastModule
     ],
     declarations: []
 })

@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {PolicyService} from '../policy.service';
 import {MatTableDataSource} from '@angular/material';
 import {LoadingService} from '../../../../@core/services/loading.service';
+import {ToastService} from '../../../../@core/modules/toast';
 
 @Component({
     selector: 'app-policy',
@@ -29,7 +30,7 @@ export class AdminPolicyPage {
                 private companySvc: CompanyService,
                 private router: Router,
                 private policySvc: PolicyService,
-                private loadingSvc: LoadingService) {
+                private toastSvc: ToastService) {
         this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
             if (res.keChuangBaoAmt + res.quickAmt === 0) {
                 this.subsidyOption = null;
@@ -93,8 +94,9 @@ export class AdminPolicyPage {
     }
 
     getData() {
-        this.loadingSvc.show('加载中...', 1000).then();
+        this.toastSvc.show('加载中...', 0);
         this.policySvc.item(this.params).subscribe(res => {
+            this.toastSvc.hide();
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });

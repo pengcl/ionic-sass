@@ -8,6 +8,7 @@ import {MatTableDataSource} from '@angular/material';
 import {DatePipe} from '@angular/common';
 import {debounceTime, filter, map, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {LoadingService} from '../../../../@core/services/loading.service';
+import {ToastService} from '../../../../@core/modules/toast';
 
 @Component({
     selector: 'app-list',
@@ -45,7 +46,7 @@ export class AdminPolicyListPage {
                 private companySvc: CompanyService,
                 private addressSvc: AddressService,
                 private policySvc: PolicyService,
-                private loadingSvc: LoadingService) {
+                private toastSvc: ToastService) {
         this.getProvinces();
         this.form.get('province').valueChanges.subscribe(res => {
             this.cities = [];
@@ -116,12 +117,12 @@ export class AdminPolicyListPage {
     }
 
     getData() {
-        this.loadingSvc.show('加载中...', 0).then();
+        this.toastSvc.show('加载中...', 0);
         const body = JSON.parse(JSON.stringify(this.form.value));
         body.page = this.params.page;
         body.rows = this.params.rows;
         this.policySvc.list(body).subscribe(res => {
-            this.loadingSvc.hide();
+            this.toastSvc.hide();
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });
