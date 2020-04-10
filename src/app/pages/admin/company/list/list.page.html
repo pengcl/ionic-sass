@@ -14,17 +14,15 @@
         <ion-row>
             <ion-col size="6">
                 <mat-form-field appearance="outline" style="width: 100%">
-                    <mat-label>搜索公司主体</mat-label>
-                    <input [(ngModel)]="params.companyName" type="text" placeholder="搜索公司主体" matInput autocomplete="off">
+                    <mat-label>搜索企业主体</mat-label>
+                    <input [(ngModel)]="params.companyName" type="text" placeholder="搜索企业主体" matInput
+                           autocomplete="off">
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
             </ion-col>
             <ion-col size="6">
-                <div class="row-buttons" style="text-align: right">
-                    <button [routerLink]="['/admin/company/item',0]" mat-raised-button matSuffix style="background: #027CFF;color: #fff">
-                        <mat-icon matPrefix>add</mat-icon>
-                        添加
-                    </button>
+                <div class="row-buttons" style="text-align: right;margin: 0">
+                    <ion-button color="primary" [routerLink]="['/admin/company/add']">新增企业主体</ion-button>
                 </div>
             </ion-col>
         </ion-row>
@@ -50,26 +48,31 @@
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> 名称</th>
-            <td mat-cell *matCellDef="let element"><a [routerLink]="['/admin/company/item',element.id]" class="link"
-                                                      href="javascript:;">{{element.companyName}}</a></td>
+            <th mat-header-cell *matHeaderCellDef>目标企业</th>
+            <td mat-cell *matCellDef="let element" style="text-align: left">
+                <a [routerLink]="['/admin/company/item',element.id]"
+                   class="link"
+                   href="javascript:;"
+                   style="text-decoration: underline;color: #2C9EF7;">
+                    {{element.companyName}}
+                </a></td>
         </ng-container>
 
         <!-- contract Column -->
-        <ng-container matColumnDef="no">
+        <!--<ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef> 机构代码</th>
             <td mat-cell *matCellDef="let element">{{element.creditNumber}}</td>
-        </ng-container>
+        </ng-container>-->
 
         <!-- department Column -->
         <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef> 创建日期</th>
-            <td mat-cell *matCellDef="let element">{{element.createTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <th mat-header-cell *matHeaderCellDef>添加时间</th>
+            <td mat-cell *matCellDef="let element">{{element.createTime | date : 'yyyy-MM-dd'}}</td>
         </ng-container>
 
         <!-- suppliers Column -->
         <ng-container matColumnDef="default">
-            <th mat-header-cell *matHeaderCellDef style="width: 150px"> 设为默认</th>
+            <th mat-header-cell *matHeaderCellDef style="width: 150px">默认主体</th>
             <td mat-cell *matCellDef="let element">
                 <mat-slide-toggle color="primary" (click)="default(element.id)"
                                   [checked]="!!element.isPrimary"></mat-slide-toggle>
@@ -78,9 +81,10 @@
 
         <!-- suppliers Column -->
         <ng-container matColumnDef="current">
-            <th mat-header-cell *matHeaderCellDef style="width: 150px"> 当前主体</th>
+            <th mat-header-cell *matHeaderCellDef style="width: 150px">当前主体</th>
             <td mat-cell *matCellDef="let element">
-                <mat-slide-toggle color="primary" (click)="change(element)" [checked]="element.id === company.id"></mat-slide-toggle>
+                <mat-slide-toggle color="primary" (click)="change(element)"
+                                  [checked]="element.id === company.id"></mat-slide-toggle>
             </td>
         </ng-container>
 
@@ -89,15 +93,19 @@
             <th mat-header-cell *matHeaderCellDef> 操作</th>
             <td mat-cell *matCellDef="let element">
                 <ion-button (click)="$event.stopPropagation()"
-                            [routerLink]="['/admin/company/qualification',element.id]" size="small" color="primary">
-                    <ion-icon slot="start" name="add"></ion-icon>
-                    查看企业资质
+                            [routerLink]="['/admin/company/item',element.id]"
+                            color="primary">
+                    修改信息
                 </ion-button>
                 <ion-button (click)="$event.stopPropagation()"
-                            [routerLink]="['/admin/plan/list']" [queryParams]="{company:element.id}" size="small"
+                            [routerLink]="['/admin/company/qualification',element.id]"
                             color="primary">
-                    <ion-icon slot="start" name="stats"></ion-icon>
-                    查看报告
+                    智能画像
+                </ion-button>
+                <ion-button color="primary"
+                            [routerLink]="['/admin/plan/list']"
+                            (click)="$event.stopPropagation()">
+                    体检报告
                 </ion-button>
             </td>
         </ng-container>
@@ -107,5 +115,6 @@
             (click)="selection.toggle(row)">
         </tr>
     </table>
-    <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)" [pageSizeOptions]="[10,20,50]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)"
+                   [pageSizeOptions]="[10,20,50]" showFirstLastButtons></mat-paginator>
 </div>

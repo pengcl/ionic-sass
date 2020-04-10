@@ -44,6 +44,13 @@ const routes: Routes = [
                 loadChildren: () =>
                     import('./company/list/list.module').then(m => m.AdminCompanyListPageModule)
             },
+            {// 主体例表
+                path: 'company/add',
+                data: {name: '新增企业主体', menuIndex: 10},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./company/add/add.module').then(m => m.AdminCompanyAddPageModule)
+            },
             {// 主体详情
                 path: 'company/item/:id',
                 data: {name: '企业详情', menuIndex: 10},
@@ -73,7 +80,7 @@ const routes: Routes = [
                     import('./plan/list/list.module').then(m => m.AdminPlanListPageModule)
             },
             {// 体检报告列表
-                path: 'plan/item/:id',
+                path: 'plan/item',
                 data: {name: '企业体检报告', menuIndex: 7},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>

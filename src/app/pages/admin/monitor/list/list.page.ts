@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material';
 import {DialogService} from '../../../../@core/modules/dialog';
 import {CompanyService} from '../../company/company.service';
 import {MonitorService} from '../monitor.service';
+import {ToastService} from '../../../../@core/modules/toast';
 
 @Component({
     selector: 'app-admin-monitor-list',
@@ -29,12 +30,15 @@ export class AdminMonitorListPage {
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
                 private dialogSvc: DialogService,
                 private companySvc: CompanyService,
-                private monitorSvc: MonitorService) {
+                private monitorSvc: MonitorService,
+                private toastSvc: ToastService) {
         this.getData();
     }
 
     getData() {
+        this.toastSvc.loading('加载中...', 0);
         this.monitorSvc.list(this.params).subscribe(res => {
+            this.toastSvc.hide();
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });

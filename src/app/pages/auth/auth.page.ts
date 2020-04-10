@@ -8,6 +8,7 @@ import {AuthService} from './auth.service';
 import {ToastService} from '../../@core/modules/toast';
 import {DialogService} from '../../@core/modules/dialog';
 import {StorageService} from '../../@core/services/storage.service';
+import {ToastService} from '../../@core/modules/toast';
 
 declare var initGeetest: any;
 
@@ -34,7 +35,8 @@ export class AuthPage implements OnInit, OnDestroy {
                 private storageSvc: StorageService,
                 private toastSvc: ToastService,
                 private dialog: DialogService,
-                private authSvc: AuthService) {
+                private authSvc: AuthService,
+                private toastSvc: ToastService) {
     }
 
     ngOnInit() {
@@ -45,6 +47,24 @@ export class AuthPage implements OnInit, OnDestroy {
         });
 
         this.randomValidUid = new Date().getTime();
+        this.getValidImg();
+    }
+
+    sendValidCode() {
+        if (this.form.get('loginid').invalid) {
+            this.dialog.show({
+                content: '请正确填写手机号！',
+                cancel: '',
+                confirm: '我知道了'
+            }).subscribe(data => {
+            });
+            return false;
+        }
+
+        if (!this.activeClass) {
+            return false;
+        }
+        this.validation();
         this.authSvc.getValidImg(this.randomValidUid).subscribe(res => {
             const data = JSON.parse(res.result);
             initGeetest({
@@ -148,5 +168,70 @@ export class AuthPage implements OnInit, OnDestroy {
         if (this.timePromise) {
             this.timePromise.unsubscribe();
         }
+    }
+    getValidImg() {
+        this.authSvc.getValidImg(this.randomValidUid).subscribe(res => {
+            const data = JSON.parse(res.result);
+            initGeetest({
+                gt: data.gt,
+                challenge: data.challenge,
+                product: 'popup', // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
+                offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+            }, captchaObj => {
+                this.handlerPopup(captchaObj);
+            });
+        });
+
+    }
+
+    handlerPopup(captchaObj) {
+        this.captchaObj = captchaObj;
+        // 弹出式需要绑定触发验证码弹出按钮
+        captchaObj.bindOn('#sendValidCode');
+
+        // 将验证码加到id为captcha的元素里
+        captchaObj.appendTo('#popup-captcha');
+    }
+
+    validation() {
+        const validate = this.captchaObj.getValidate();
+        if (!validate) {
+            alert('请先完成验证！');
+            return false;
+        }
+
+        this.authSvc.sendValidCode({
+            geetest_challenge: validate.geetest_challenge,
+            geetest_validate: validate.geetest_validate,
+            geetest_seccode: validate.geetest_seccode,
+            randomValidUid: this.randomValidUid,
+            phone: this.form.get('loginid').value,
+            type: 1
+        }).subscribe(res => {
+            if (res.code === '0000') {
+                if (!this.activeClass) {
+                    return false;
+                }
+                this.activeClass = false;
+                // $scope.loadingToast.open(false);
+                this.timePromise = observableInterval(1000).subscribe(() => {
+                    if (this.second <= 0) {
+                        this.timePromise.unsubscribe();
+
+                        this.second = 59;
+                        this.activeText = '重发验证码';
+                        this.activeClass = true;
+                        document.getElementById('sendValidCode').style.display = 'block';
+                        document.getElementById('origin_sendValidCode').style.display = 'none';
+                    } else {
+                        document.getElementById('sendValidCode').style.display = 'none';
+                        document.getElementById('origin_sendValidCode').style.display = 'block';
+                        this.activeText = '' + this.second + 's';
+                        this.activeClass = false;
+                        this.second = this.second - 1;
+                    }
+                });
+            }
+        });
     }
 }
