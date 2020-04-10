@@ -47,11 +47,7 @@ export class AuthPage implements OnInit, OnDestroy {
         });
 
         this.randomValidUid = new Date().getTime();
-        this.form.get('loginid').valueChanges.subscribe(res => {
-            if (this.form.get('loginid').valid) {
-                this.getValidImg();
-            }
-        });
+        this.getValidImg();
     }
 
     sendValidCode() {
