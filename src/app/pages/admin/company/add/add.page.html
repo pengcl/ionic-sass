@@ -1,0 +1,500 @@
+<div class="container">
+    <mat-card>
+        <mat-card-content>
+            <mat-horizontal-stepper labelPosition="bottom" linear #stepper>
+                <mat-step [stepControl]="firstFormGroup">
+                    <form [formGroup]="firstFormGroup">
+                        <ng-template matStepLabel>确认主体信息</ng-template>
+                        <p style="margin-bottom: 10px;">请输入企业名称</p>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="4">
+                                    <mat-form-field appearance="outline" style="margin-bottom: 0;width: 100%">
+                                        <input type="text" matInput
+                                               placeholder="请输入企业名称">
+                                    </mat-form-field>
+                                </ion-col>
+                                <ion-col size="8">
+                                    <button mat-raised-button color="primary" style="margin-left: 20px">搜索</button>
+                                </ion-col>
+
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">企业名称</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff" class="right bottom">广州卡趴网络科技有限公司</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">法人</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff" class="right bottom">盘小龙</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">经营状态</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff" class="bottom">在营（开业）企业</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">成立时间</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff" class="right bottom">2014-12-22</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">注册资金</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff" class="right bottom">588.2353万元人民币</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">实缴资本</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff" class="bottom">-</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">统一社会信用代码</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff"
+                                                  class="right bottom">914401053211030519</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">组织机构代码</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff" class="right bottom">32110305-1</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">工商注册号</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff" class="bottom">440105000409523</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">纳税人识别号</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff"
+                                                  class="right bottom">914401053211030519</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">企业类型</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff" class="right bottom">有限责任公司(自然人投资或控股)</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">营业期限</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff" class="bottom">2014-12-22 至 -</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right">所属地区</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff" class="right">广东省广州市天河区</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="8">
+                                    <ion-row>
+                                        <ion-col size="2.5">
+                                            <span class="right">企业地址</span>
+                                        </ion-col>
+                                        <ion-col size="9.5">
+                                            <span style="background: #fff">广州市天河区科韵路12号之一101自编之十一</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                        <div class="form_bottom">
+                            <button mat-raised-button matStepperNext color="primary">下一步</button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step [stepControl]="secondFormGroup">
+                    <form [formGroup]="secondFormGroup">
+                        <ng-template matStepLabel>填写经营及重要信息</ng-template>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="12">
+                                    <mat-card>
+                                        <mat-card-header>
+                                            <mat-card-title style="margin-bottom: 50px">联系人信息</mat-card-title>
+                                        </mat-card-header>
+                                        <mat-card-content>
+                                            <ion-grid>
+                                                <ion-row>
+                                                    <ion-col size="4">
+                                                        <mat-form-field appearance="outline" style="margin-bottom: 0">
+                                                            <label><em>*</em>联系人</label>
+                                                            <input type="text" matInput required>
+                                                        </mat-form-field>
+                                                    </ion-col>
+
+                                                    <ion-col size="4">
+                                                        <mat-form-field appearance="outline" style="margin-bottom: 0">
+                                                            <label><em>*</em>联系电话</label>
+                                                            <input type="text" matInput required>
+                                                        </mat-form-field>
+                                                    </ion-col>
+
+                                                    <ion-col size="4">
+                                                        <mat-form-field appearance="outline" style="margin-bottom: 0">
+                                                            <label>职务</label>
+                                                            <input type="text" matInput>
+                                                        </mat-form-field>
+                                                    </ion-col>
+                                                </ion-row>
+                                            </ion-grid>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </ion-col>
+
+                                <ion-col size="12">
+                                    <mat-card>
+                                        <mat-card-header>
+                                            <mat-card-title style="margin-bottom: 50px">经营信息</mat-card-title>
+                                        </mat-card-header>
+                                        <mat-card-content>
+                                            <ion-grid>
+                                                <ion-row>
+                                                    <ion-col size="4" class="form-field">
+                                                        <mat-form-field appearance="outline">
+                                                            <label><em>*</em>行业</label>
+                                                            <mat-select required>
+                                                                <mat-option>互联网+/生活服务</mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </ion-col>
+
+                                                    <ion-col size="8">
+                                                        <mat-form-field appearance="outline" style="width: 40%;">
+                                                            <label><em>*</em>业务运营时间</label>
+                                                            <input required matInput placeholder="请选择"
+                                                                   [matDatepicker]="picker">
+                                                            <mat-datepicker-toggle matSuffix
+                                                                                   [for]="picker"></mat-datepicker-toggle>
+                                                            <mat-datepicker #picker></mat-datepicker>
+                                                        </mat-form-field>
+                                                        <span style="display: inline;border: none;background: #fff;font-weight: 400;color: #FF0000;font-size: 14px">
+                                        <em style="font-style: normal;">*</em>注：企业每年仅可调整一次</span>
+                                                    </ion-col>
+
+                                                    <ion-col size="4" class="form-field">
+                                                        <mat-form-field appearance="outline">
+                                                            <label><em>*</em>企业总人数</label>
+                                                            <mat-select required>
+                                                                <mat-option>10-50人</mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </ion-col>
+
+                                                    <ion-col size="4" class="form-field">
+                                                        <mat-form-field appearance="outline">
+                                                            <label><em>*</em>年营收范围</label>
+                                                            <mat-select required>
+                                                                <mat-option>2000-5000万</mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </ion-col>
+
+                                                    <ion-col size="4">
+                                                        <mat-form-field appearance="outline">
+                                                            <label><em>*</em>固定资产范围</label>
+                                                            <mat-select required>
+                                                                <mat-option>500-1000万</mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </ion-col>
+
+                                                    <ion-col size="4" class="form-field">
+                                                        <ion-row>
+                                                            <ion-col size="4">
+                                                                <mat-form-field appearance="outline">
+                                                                    <label>管理人员比例</label>
+                                                                    <mat-select required>
+                                                                        <mat-option>20%</mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </ion-col>
+                                                            <ion-col size="8">
+                                                                <div echarts [options]="brandOption"
+                                                                     style="width: 180px;height: 180px;top: -25px;left: -20px;"
+                                                                     class="main-chart"></div>
+                                                            </ion-col>
+                                                        </ion-row>
+                                                    </ion-col>
+
+                                                    <ion-col size="4" class="form-field">
+                                                        <ion-row>
+                                                            <ion-col size="2">
+                                                                <span class="function">研发</span>
+                                                                <span class="function" style="margin-top: 5px">销售</span>
+                                                                <span class="function" style="margin-top: 5px">服务</span>
+                                                            </ion-col>
+                                                            <ion-col size="4">
+                                                                <mat-form-field appearance="outline"
+                                                                                style="margin-bottom: -15px">
+                                                                    <label style="left: -60px">职能分布</label>
+                                                                    <mat-select required>
+                                                                        <mat-option>20%</mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                                <mat-form-field appearance="outline"
+                                                                                style="margin-bottom: -15px">
+                                                                    <mat-select required>
+                                                                        <mat-option>20%</mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                                <mat-form-field appearance="outline"
+                                                                                style="margin-bottom: -15px">
+                                                                    <mat-select required>
+                                                                        <mat-option>20%</mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </ion-col>
+                                                            <ion-col size="6">
+                                                                <div echarts [options]="brandOption"
+                                                                     style="width: 180px;height: 180px;top: -25px;left: -20px;"
+                                                                     class="main-chart"></div>
+                                                            </ion-col>
+                                                        </ion-row>
+                                                    </ion-col>
+
+                                                    <ion-col size="4">
+                                                        <ion-row>
+                                                            <ion-col size="2">
+                                                                <span class="function">专科</span>
+                                                                <span class="function" style="margin-top: 5px">本科</span>
+                                                                <span class="function"
+                                                                      style="margin-top: -3px">研究生及以上</span>
+                                                            </ion-col>
+                                                            <ion-col size="4">
+                                                                <mat-form-field appearance="outline"
+                                                                                style="margin-bottom: -15px">
+                                                                    <label style="left: -60px">学历组成</label>
+                                                                    <mat-select required>
+                                                                        <mat-option>20%</mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                                <mat-form-field appearance="outline"
+                                                                                style="margin-bottom: -15px">
+                                                                    <mat-select required>
+                                                                        <mat-option>20%</mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                                <mat-form-field appearance="outline"
+                                                                                style="margin-bottom: -15px">
+                                                                    <mat-select required>
+                                                                        <mat-option>20%</mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </ion-col>
+                                                            <ion-col size="6">
+                                                                <div echarts [options]="brandOption"
+                                                                     style="width: 180px;height: 180px;top: -25px;left: -20px;"
+                                                                     class="main-chart"></div>
+                                                            </ion-col>
+                                                        </ion-row>
+                                                    </ion-col>
+                                                </ion-row>
+                                            </ion-grid>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </ion-col>
+
+                                <ion-col size="12">
+                                    <mat-card>
+                                        <mat-card-header>
+                                            <mat-card-title style="margin-bottom: 50px">科研创造力信息</mat-card-title>
+                                        </mat-card-header>
+                                        <mat-card-content>
+                                            <ion-row>
+                                                <ion-col size="4" class="form-field">
+                                                    <mat-form-field appearance="outline">
+                                                        <label>企业研发投入</label>
+                                                        <mat-select required>
+                                                            <mat-option>500-1000万</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </ion-col>
+
+                                                <ion-col size="4">
+                                                    <ion-row>
+                                                        <ion-col size="2">
+                                                            <span class="function">专科</span>
+                                                            <span class="function" style="margin-top: 5px">本科</span>
+                                                            <span class="function"
+                                                                  style="margin-top: -3px">研究生及以上</span>
+                                                        </ion-col>
+                                                        <ion-col size="4">
+                                                            <mat-form-field appearance="outline"
+                                                                            style="margin-bottom: -15px">
+                                                                <label style="left: -60px">科研人员学历组成</label>
+                                                                <mat-select required>
+                                                                    <mat-option>20%</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                            <mat-form-field appearance="outline"
+                                                                            style="margin-bottom: -15px">
+                                                                <mat-select required>
+                                                                    <mat-option>20%</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                            <mat-form-field appearance="outline"
+                                                                            style="margin-bottom: -15px">
+                                                                <mat-select required>
+                                                                    <mat-option>20%</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </ion-col>
+                                                        <ion-col size="6">
+                                                            <div echarts [options]="brandOption"
+                                                                 style="width: 180px;height: 180px;top: -25px;left: -20px;"
+                                                                 class="main-chart"></div>
+                                                        </ion-col>
+                                                    </ion-row>
+                                                </ion-col>
+                                            </ion-row>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                        <div class="form_bottom">
+                            <button mat-raised-button matStepperPrevious color="primary">上一步</button>
+                            <button mat-raised-button matStepperNext color="primary">下一步</button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>填写政策匹配信息</ng-template>
+                    <ion-row>
+                        <ion-col size="12">
+                            <mat-card>
+                                <mat-card-header>
+                                    <mat-card-title style="margin-bottom: 25px;">政策匹配信息</mat-card-title>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <ion-row>
+                                        <ion-col size="4" class="form_field">
+                                            <ion-row>
+                                                <ion-col size="12">
+                                                    <label style="color: #21333F;font-size: 14px;font-weight: 400;"><em style="font-style: normal;color: #FF0000;">*</em>是否有研发支出专账</label>
+                                                </ion-col>
+                                                <ion-col size="12">
+                                                    <mat-radio-group>
+                                                        <mat-radio-button [value]="true">是</mat-radio-button>
+                                                        <mat-radio-button [value]="false">否</mat-radio-button>
+                                                    </mat-radio-group>
+                                                </ion-col>
+                                            </ion-row>
+                                        </ion-col>
+
+                                        <ion-col size="4" class="form_field">
+                                            <ion-row>
+                                                <ion-col size="12">
+                                                    <label style="color: #21333F;font-size: 14px;font-weight: 400;"><em style="font-style: normal;color: #FF0000;">*</em>是否为国家高新技术企业</label>
+                                                </ion-col>
+                                                <ion-col size="12">
+                                                    <mat-radio-group>
+                                                        <mat-radio-button [value]="true">是</mat-radio-button>
+                                                        <mat-radio-button [value]="false">否</mat-radio-button>
+                                                    </mat-radio-group>
+                                                </ion-col>
+                                            </ion-row>
+                                        </ion-col>
+
+                                        <ion-col size="4">
+
+                                            <ion-row>
+                                                <ion-col size="12">
+                                                    <label style="color: #21333F;font-size: 14px;font-weight: 400;"><em style="font-style: normal;color: #FF0000;">*</em>研发设备总价值（万元）</label>
+                                                </ion-col>
+                                                <ion-col size="12">
+                                                    <mat-form-field appearance="outline" style="margin:10px 0 0 0">
+                                                        <mat-select required>
+                                                            <mat-option>100-200</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </ion-col>
+                                            </ion-row>
+                                        </ion-col>
+                                    </ion-row>
+                                </mat-card-content>
+                            </mat-card>
+                        </ion-col>
+                    </ion-row>
+                    <div class="form_bottom">
+                        <button mat-raised-button matStepperPrevious color="primary">上一步</button>
+                        <button mat-raised-button color="primary">完成</button>
+                    </div>
+                </mat-step>
+            </mat-horizontal-stepper>
+        </mat-card-content>
+    </mat-card>
+</div>
+<!--
+<div class="container-bottom">
+
+</div>-->

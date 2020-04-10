@@ -7,6 +7,7 @@ import {interval as observableInterval} from 'rxjs';
 import {AuthService} from './auth.service';
 import {DialogService} from '../../@core/modules/dialog';
 import {StorageService} from '../../@core/services/storage.service';
+import {ToastService} from '../../@core/modules/toast';
 
 declare var initGeetest: any;
 
@@ -34,7 +35,8 @@ export class AuthPage implements OnInit, OnDestroy {
                 private location: LocationStrategy,
                 private storageSvc: StorageService,
                 private dialog: DialogService,
-                private authSvc: AuthService) {
+                private authSvc: AuthService,
+                private toastSvc: ToastService) {
     }
 
     ngOnInit() {
@@ -45,15 +47,82 @@ export class AuthPage implements OnInit, OnDestroy {
         });
 
         this.randomValidUid = new Date().getTime();
+        this.form.get('loginid').valueChanges.subscribe(res => {
+            if (this.form.get('loginid').valid) {
+                this.getValidImg();
+            }
+        });
     }
 
     sendValidCode() {
-        this.getValidImg();
+        if (this.form.get('loginid').invalid) {
+            this.dialog.show({
+                content: '请正确填写手机号！',
+                cancel: '',
+                confirm: '我知道了'
+            }).subscribe(data => {
+            });
+            return false;
+        }
 
         if (!this.activeClass) {
             return false;
         }
+        this.validation();
 
+    }
+
+    login() {
+        this.isSignUpFormSubmit = true;
+        if (this.form.invalid) {
+            if (this.form.get('loginid').valid && this.form.get('pwd').valid &&
+                this.form.get('validCode').valid && this.form.get('agree').invalid) {
+                this.dialog.show({content: '请勾选用户协议', confirm: '我知道了', cancel: ''}).subscribe();
+            }
+            return false;
+        }
+
+        this.authSvc.login(this.form.value).subscribe(res => {
+            if (res.code === '0000') {
+                this.authSvc.token(res.result.key);
+                this.router.navigate(['/loader']);
+            } else {
+                this.dialog.show({content: res.msg, confirm: '我知道了'}).subscribe();
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        if (this.timePromise) {
+            this.timePromise.unsubscribe();
+        }
+    }
+
+    getValidImg() {
+        this.authSvc.getValidImg(this.randomValidUid).subscribe(res => {
+            const data = JSON.parse(res.result);
+            initGeetest({
+                gt: data.gt,
+                challenge: data.challenge,
+                product: 'popup', // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
+                offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+            }, captchaObj => {
+                this.handlerPopup(captchaObj);
+            });
+        });
+
+    }
+
+    handlerPopup(captchaObj) {
+        this.captchaObj = captchaObj;
+        // 弹出式需要绑定触发验证码弹出按钮
+        captchaObj.bindOn('#sendValidCode');
+
+        // 将验证码加到id为captcha的元素里
+        captchaObj.appendTo('#popup-captcha');
+    }
+
+    validation() {
         const validate = this.captchaObj.getValidate();
         if (!validate) {
             alert('请先完成验证！');
@@ -93,65 +162,5 @@ export class AuthPage implements OnInit, OnDestroy {
                 });
             }
         });
-
-    }
-
-    login() {
-        this.isSignUpFormSubmit = true;
-        if (this.form.invalid) {
-            if (this.form.get('loginid').valid && this.form.get('pwd').valid &&
-                this.form.get('validCode').valid && this.form.get('agree').invalid) {
-                this.dialog.show({content: '请勾选用户协议', confirm: '我知道了', cancel: ''}).subscribe();
-            }
-            return false;
-        }
-
-        this.authSvc.login(this.form.value).subscribe(res => {
-            if (res.code === '0000') {
-                this.authSvc.token(res.result.key);
-                this.router.navigate(['/loader']);
-            } else {
-                this.dialog.show({content: res.msg, confirm: '我知道了'}).subscribe();
-            }
-        });
-    }
-
-    ngOnDestroy() {
-        if (this.timePromise) {
-            this.timePromise.unsubscribe();
-        }
-    }
-
-    getValidImg() {
-        if (this.form.get('loginid').invalid) {
-            this.dialog.show({
-                content: '请正确填写手机号！',
-                cancel: '',
-                confirm: '我知道了'
-            }).subscribe(data => {
-            });
-            return false;
-        }
-        this.authSvc.getValidImg(this.randomValidUid).subscribe(res => {
-            const data = JSON.parse(res.result);
-            initGeetest({
-                gt: data.gt,
-                challenge: data.challenge,
-                product: 'popup', // 产品形式，包括：float，embed，popup。注意只对PC版验证码有效
-                offline: !data.success // 表示用户后台检测极验服务器是否宕机，一般不需要关注
-            }, captchaObj => {
-                this.handlerPopup(captchaObj);
-            });
-        });
-
-    }
-
-    handlerPopup(captchaObj) {
-        this.captchaObj = captchaObj;
-        // 弹出式需要绑定触发验证码弹出按钮
-        captchaObj.bindOn('#sendValidCode');
-
-        // 将验证码加到id为captcha的元素里
-        captchaObj.appendTo('#popup-captcha');
     }
 }

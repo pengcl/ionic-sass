@@ -3,6 +3,7 @@ import {PolicyService} from '../policy.service';
 import {CompanyService} from '../../company/company.service';
 import {map} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatTableDataSource} from '@angular/material';
 
 declare var $: any;
 
@@ -15,7 +16,8 @@ export class AdminPolicyItemPage implements OnInit {
     policy;
     company = this.companySvc.currentCompany;
     id = this.route.snapshot.params.id;
-
+    dataSource;
+    displayedColumns = ['name', 'url'];
     constructor(private policySvc: PolicyService,
                 private companySvc: CompanyService,
                 private route: ActivatedRoute) {
@@ -24,6 +26,9 @@ export class AdminPolicyItemPage implements OnInit {
                 this.policy = res;
                 this.policy.industryNames = this.policy.industryNames.replace(/,/gi, '、');
                 this.policy.supportRemark = this.policy.supportRemark.replace(/\r\n/gi, '<br>');
+                this.policy.applyRemark = this.policy.applyRemark.replace(/\r\n/gi, '<br>');
+                this.policy.dataRemark = this.policy.dataRemark.replace(/\r\n/gi, '<br>');
+                this.dataSource = new MatTableDataSource<any>(res.urls);
             });
         });
 

@@ -18,7 +18,7 @@ export class AdminCompanyListPage {
         rows: 10,
         companyName: ''
     };
-    displayedColumns: string[] = ['name', 'no', 'date', 'default', 'current', 'actions'];
+    displayedColumns: string[] = ['name', 'date', 'default', 'current', 'actions'];
     dataSource;
     selection = new SelectionModel<any>(true, []);
 

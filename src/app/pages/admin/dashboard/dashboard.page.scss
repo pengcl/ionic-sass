@@ -20,13 +20,14 @@ mat-card {
 
   .company {
     width: 100%;
+    margin-left: -15px;
 
     .company_left {
       border: none;
-      width: 10px;
-      height: 50px;
+      width: 4px;
+      height: 31px;
       background: inherit;
-      background-color: rgba(44, 158, 247, 1);
+      background-color: rgba(44, 160, 245, 1);
       border-radius: 0;
       -moz-box-shadow: none;
       -webkit-box-shadow: none;
@@ -37,12 +38,14 @@ mat-card {
     .company_right {
       display: inline-block;
       position: absolute;
-      margin: 2px 8px;
+      margin: 0 8px;
 
       p {
-        font-size: 32px;
-        font-weight: bold;
+        font-size: 24px;
+        font-weight: 400;
         margin: 0;
+        color: #000;
+        line-height: 33px;
       }
     }
 
@@ -59,10 +62,13 @@ mat-card {
   }
 
   mat-card-header {
+    border-bottom: 1px solid #DCE5EC;
 
     mat-card-title {
+      font-weight: 600;
+      color: rgba(33, 51, 63, 1);
+      line-height: 28px;
       font-size: 20px;
-      font-weight: bold;
     }
 
     mat-card-subtitle {
@@ -70,6 +76,25 @@ mat-card {
       right: 16px;
       position: absolute;
       margin: 0;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 24px;
+
+      span {
+        color: #5F717D;
+        font-size: 14px;
+
+        em {
+          font-style: normal;
+          color: #0073CD;
+          font-size: 14px;
+        }
+      }
+
+      i {
+        color: #eff3f6;
+        padding: 0 8px;
+      }
 
       img {
         width: 30px;
@@ -121,14 +146,14 @@ mat-card {
 
       .hot_img {
         position: absolute;
-        left: 0;
+        right: 0;
         top: 0;
-        width: 100px;
-        height: 100px;
+        width: 40px;
+        height: 30px;
 
         img {
           position: relative;
-          width: 100px;
+          width: 22px;
           height: auto;
         }
       }
@@ -143,15 +168,15 @@ mat-card {
       }
 
       .hot_right {
-        height: 120px;
+        height: 167px;
         background: inherit;
         background-color: rgba(255, 255, 255, 1);
         box-sizing: border-box;
-        border: 1px solid rgba(220, 229, 235, 1);
+        border: 1px solid rgba(220, 229, 236, 1);;
         border-radius: 4px;
-        margin-left: 20px;
         position: relative;
         cursor: pointer;
+
 
         .time-left {
           position: absolute;
@@ -161,22 +186,38 @@ mat-card {
         }
 
         p {
-          margin-left: 30px;
+          margin: 0 17px;
         }
       }
     }
 
     .my_work {
-      ion-item {
-        margin: 15px auto;
+      ion-thumbnail {
+        width: 34px;
+        height: 34px;
+        margin: 14px;
       }
+
     }
 
     .work {
-      display: flex;
-      flex-direction: row;
+      margin: 5px 0;
+      width: 243px;
+      height: 64px;
       border-radius: 4px;
-      width: 100%;
+      border: 1px solid rgba(220, 229, 236, 1);
+
+      ion-thumbnail {
+        width: 16px;
+        height: 16px;
+      }
+
+      ion-label {
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(95, 113, 125, 1);
+        line-height: 32px;
+      }
 
       .work_left {
         width: 84px;
@@ -229,6 +270,30 @@ mat-card {
       }
     }
 
+    .property {
+      border-radius: 4px;
+      border: 1px solid rgba(229, 235, 240, 1);
+      padding: 0;
+      margin: 30px 20px 0 0;
+
+      ion-list-header {
+        padding: 22px 21px 23px 20px;
+        font-size: 18px;
+        font-weight: 400;
+        color: rgba(33, 51, 63, 1);
+        line-height: 25px;
+        background: rgba(248, 250, 252, 1);
+        border-radius: 4px 4px 0 0;
+
+        span {
+          font-size: 32px;
+          font-weight: bold;
+          color: rgba(42, 159, 247, 1);
+          line-height: 32px;
+        }
+      }
+    }
+
     .brand {
       margin: 20px auto 0;
       width: 200px;
@@ -264,11 +329,10 @@ mat-card {
 
 ion-list {
   ion-list-header {
-    position: relative;
-    padding-inline-end: calc(var(--ion-safe-area-left, 0px) + 16px);
     font-weight: 400;
     font-size: 14px;
     color: #5F717D;
+    padding: 0;
 
     a {
       float: right;
@@ -277,9 +341,31 @@ ion-list {
   }
 
   ion-item {
-    &::ng-deep {
-      .item-inner {
-        border-style: none;
+    --padding-start: 0;
+
+    ion-thumbnail {
+      width: 68px;
+      height: 68px;
+      margin: 0;
+
+      &.end {
+        width: 36px;
+        height: 51px;
+        margin-top: 40px;
+      }
+    }
+
+    ion-label {
+      font-weight: 400;
+      color: #21333F;
+      line-height: 25px;
+      font-size: 18px;
+
+      p {
+        font-size: 14px;
+        font-weight: 400;
+        color: #5F717D;
+        line-height: 32px;
       }
     }
   }
@@ -313,7 +399,7 @@ ion-row.service {
 }
 
 ion-progress-bar {
-  height: 10px;
+  height: 4px;
   background: inherit;
   background-color: rgba(44, 158, 247, 1);
   border-radius: 5px;
