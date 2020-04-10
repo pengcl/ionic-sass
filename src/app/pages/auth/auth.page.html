@@ -11,9 +11,11 @@
       <mat-form-field appearance="outline">
         <input type="number" matInput placeholder="手机号" formControlName="loginid">
       </mat-form-field>
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" [ngClass]="{'code-show':form.get('loginid').valid}">
         <input formControlName="validCode" matInput placeholder="验证码">
-
+        <button mat-button matSuffix id="sendValidCodeFalse" class="valid-code" (click)="sendValidCode()">
+          {{activeText}}
+        </button>
         <button mat-button matSuffix id="sendValidCode" class="valid-code" (click)="sendValidCode()">
           {{activeText}}
         </button>

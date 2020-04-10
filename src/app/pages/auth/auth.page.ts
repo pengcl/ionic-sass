@@ -5,9 +5,9 @@ import {LocationStrategy} from '@angular/common';
 
 import {interval as observableInterval} from 'rxjs';
 import {AuthService} from './auth.service';
+import {ToastService} from '../../@core/modules/toast';
 import {DialogService} from '../../@core/modules/dialog';
 import {StorageService} from '../../@core/services/storage.service';
-import {ToastService} from '../../@core/modules/toast';
 
 declare var initGeetest: any;
 
@@ -17,9 +17,7 @@ declare var initGeetest: any;
     styleUrls: ['./auth.page.scss']
 })
 export class AuthPage implements OnInit, OnDestroy {
-    appConfig;
     form: FormGroup;
-    isSignInFormSubmit = false;
     isSignUpFormSubmit = false;
 
     captchaObj;
@@ -34,9 +32,9 @@ export class AuthPage implements OnInit, OnDestroy {
                 private route: ActivatedRoute,
                 private location: LocationStrategy,
                 private storageSvc: StorageService,
+                private toastSvc: ToastService,
                 private dialog: DialogService,
-                private authSvc: AuthService,
-                private toastSvc: ToastService) {
+                private authSvc: AuthService) {
     }
 
     ngOnInit() {
@@ -47,58 +45,6 @@ export class AuthPage implements OnInit, OnDestroy {
         });
 
         this.randomValidUid = new Date().getTime();
-        this.form.get('loginid').valueChanges.subscribe(res => {
-            if (this.form.get('loginid').valid) {
-                this.getValidImg();
-            }
-        });
-    }
-
-    sendValidCode() {
-        if (this.form.get('loginid').invalid) {
-            this.dialog.show({
-                content: '请正确填写手机号！',
-                cancel: '',
-                confirm: '我知道了'
-            }).subscribe(data => {
-            });
-            return false;
-        }
-
-        if (!this.activeClass) {
-            return false;
-        }
-        this.validation();
-
-    }
-
-    login() {
-        this.isSignUpFormSubmit = true;
-        if (this.form.invalid) {
-            if (this.form.get('loginid').valid && this.form.get('pwd').valid &&
-                this.form.get('validCode').valid && this.form.get('agree').invalid) {
-                this.dialog.show({content: '请勾选用户协议', confirm: '我知道了', cancel: ''}).subscribe();
-            }
-            return false;
-        }
-
-        this.authSvc.login(this.form.value).subscribe(res => {
-            if (res.code === '0000') {
-                this.authSvc.token(res.result.key);
-                this.router.navigate(['/loader']);
-            } else {
-                this.dialog.show({content: res.msg, confirm: '我知道了'}).subscribe();
-            }
-        });
-    }
-
-    ngOnDestroy() {
-        if (this.timePromise) {
-            this.timePromise.unsubscribe();
-        }
-    }
-
-    getValidImg() {
         this.authSvc.getValidImg(this.randomValidUid).subscribe(res => {
             const data = JSON.parse(res.result);
             initGeetest({
@@ -110,7 +56,6 @@ export class AuthPage implements OnInit, OnDestroy {
                 this.handlerPopup(captchaObj);
             });
         });
-
     }
 
     handlerPopup(captchaObj) {
@@ -122,7 +67,22 @@ export class AuthPage implements OnInit, OnDestroy {
         captchaObj.appendTo('#popup-captcha');
     }
 
-    validation() {
+    sendValidCode() {
+
+        if (!this.activeClass) {
+            return false;
+        }
+
+        if (this.form.get('loginid').invalid) {
+            this.dialog.show({
+                content: '请正确填写手机号！',
+                cancel: '',
+                confirm: '我知道了'
+            }).subscribe(data => {
+            });
+            return false;
+        }
+
         const validate = this.captchaObj.getValidate();
         if (!validate) {
             alert('请先完成验证！');
@@ -162,5 +122,31 @@ export class AuthPage implements OnInit, OnDestroy {
                 });
             }
         });
+    }
+
+    login() {
+        this.isSignUpFormSubmit = true;
+        if (this.form.invalid) {
+            if (this.form.get('loginid').valid && this.form.get('pwd').valid &&
+                this.form.get('validCode').valid && this.form.get('agree').invalid) {
+                this.dialog.show({content: '请勾选用户协议', confirm: '我知道了', cancel: ''}).subscribe();
+            }
+            return false;
+        }
+
+        this.authSvc.login(this.form.value).subscribe(res => {
+            if (res.code === '0000') {
+                this.authSvc.token(res.result.key);
+                this.router.navigate(['/loader']);
+            } else {
+                this.dialog.show({content: res.msg, confirm: '我知道了'}).subscribe();
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        if (this.timePromise) {
+            this.timePromise.unsubscribe();
+        }
     }
 }
