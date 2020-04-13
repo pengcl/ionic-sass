@@ -20,8 +20,7 @@ export class IndustryComponent {
     constructor(private modalController: ModalController,
                 private navParams: NavParams,
                 private industrySvc: IndustryService) {
-        this.items = this.navParams.data.items ? this.navParams.data.items : [];
-        console.log(this.navParams.data.items);
+        this.items = this.navParams.data.items;
         this.type = this.navParams.data.type ? this.navParams.data.type : '';
         industrySvc.list(this.type).subscribe(res => {
             this.industries = listToTree(res, {idKey: 'id', parentKey: 'parentId', childrenKey: 'children'});
@@ -40,9 +39,8 @@ export class IndustryComponent {
 
     getSelected() {
         this.items.forEach(item => {
-                this.selected[item.id] = true;
+            this.selected[item.id] = true;
         });
-
     }
 
     cancel() {

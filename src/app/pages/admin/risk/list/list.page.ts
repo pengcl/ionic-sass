@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material';
 import {CompanyService} from '../../company/company.service';
 import {RiskService} from '../risk.service';
 import {LoadingService} from '../../../../@core/services/loading.service';
+import {ToastService} from '../../../../@core/modules/toast';
 
 @Component({
     selector: 'app-admin-risk-list',
@@ -28,16 +29,14 @@ export class AdminRiskListPage {
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
                 private companySvc: CompanyService,
                 private planSvc: RiskService,
-                private loadingSvc: LoadingService) {
+                private toastSvc: ToastService) {
         this.getData();
     }
 
     getData() {
-        this.loadingSvc.show('加载中...', 0).then();
+        this.toastSvc.loading('加载中...', 0);
         this.planSvc.list(this.params).subscribe(res => {
-            if (res){
-                this.loadingSvc.hide();
-            }
+            this.toastSvc.hide();
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });
