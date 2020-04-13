@@ -11,6 +11,7 @@ import {ToastModule} from './modules/toast';
 
 import {throwIfAlreadyLoaded} from './module-import-guard';
 import {INTERCEPTORS} from './interceptors';
+import {ToastModule} from './modules/toast';
 
 
 export const CORE_PROVIDERS = [

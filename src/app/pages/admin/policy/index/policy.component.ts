@@ -30,7 +30,6 @@ export class AdminPolicyPage {
                 private companySvc: CompanyService,
                 private router: Router,
                 private policySvc: PolicyService,
-                private loadingSvc: LoadingService,
                 private toastSvc: ToastService) {
         this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
             if (res.keChuangBaoAmt + res.quickAmt === 0) {
@@ -95,9 +94,8 @@ export class AdminPolicyPage {
     }
 
     getData() {
-        this.toastSvc.loading('加载中...', 0);
+        this.toastSvc.show('加载中...', 0);
         this.policySvc.item(this.params).subscribe(res => {
-            this.toastSvc.hide();
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });

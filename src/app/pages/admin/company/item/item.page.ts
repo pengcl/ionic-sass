@@ -31,6 +31,46 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     styleUrls: ['./item.page.scss']
 })
 export class AdminCompanyItemPage implements OnInit {
+    brandOption = {
+        color: ['#69EBB7', '#5F8FF3'],
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+        },
+        legend: {
+            bottom: 0,
+            data: ['执行人员', '管理人员'],
+            itemWidth: 8,
+            itemHeight: 8,
+            borderRadius: 50
+        },
+        series: [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius: ['50%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: '30',
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    {value: 25, name: '执行人员'},
+                    {value: 75, name: '管理人员'}
+                ]
+            }
+        ]
+    };
     id = this.route.snapshot.params.id;
     industries;
     selectedIndustries = [];

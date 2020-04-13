@@ -7,6 +7,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
 
 import {map} from 'rxjs/operators';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-admin-plan-item',
@@ -14,6 +15,95 @@ import {map} from 'rxjs/operators';
     styleUrls: ['./item.component.scss']
 })
 export class AdminPlanItemPage implements OnInit {
+    brandOption = {
+        color: ['#69EBB7', '#5F8FF3'],
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+        },
+        legend: {
+            bottom: 0,
+            data: ['执行人员', '管理人员'],
+            itemWidth: 8,
+            itemHeight: 8,
+            borderRadius: 50
+        },
+        series: [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius: ['50%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: '30',
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    {value: 25, name: '执行人员'},
+                    {value: 75, name: '管理人员'}
+                ]
+            }
+        ]
+    };
+    subsidyOption = {
+        color: ['#3bcec6'],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '8%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01],
+            name: '万元',
+            fontSize: '14px'
+        },
+        yAxis: {
+            type: 'category',
+            data: ['科创直通车可获得', '快速培育可获得']
+        },
+        series: [
+            {
+                type: 'bar',
+                data: [100, 200],
+                label: {
+                    show: true,
+                    position: 'right',
+                    color: '#21333F'
+                },
+                itemStyle: {
+                    normal: {
+                        color: (params) => {
+                            const colorList = ['rgba(13, 215, 141, 1)', 'rgba(254, 174, 77, 1)'];
+                            return colorList[params.dataIndex];
+                        }
+                    },
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
     id = this.route.snapshot.params.id;
     option = {
         pie: null,
@@ -31,6 +121,15 @@ export class AdminPlanItemPage implements OnInit {
         rows: 10
     };
     policies;
+    form: FormGroup = new FormGroup({
+        custId: new FormControl(this.company.id, [Validators.required]),
+        province: new FormControl('', [Validators.required]),
+        area: new FormControl('', [Validators.required]),
+        city: new FormControl('', [Validators.required])
+    });
+    policy = {
+        list: []
+    };
 
     constructor(private route: ActivatedRoute,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
@@ -164,9 +263,22 @@ export class AdminPlanItemPage implements OnInit {
             });
         });
 
+        this.form.get('province').setValue(this.company.province);
+        this.form.get('city').setValue(this.company.city);
+        this.form.get('area').setValue(this.company.area);
+        this.dashboardSvc.policies(this.form.value).subscribe(res => {
+            this.policy.list = res.list.sort((a, b) => {
+                return a.reportDateEnd - b.reportDateEnd;
+            });
+        });
+
     }
 
     ngOnInit() {
+    }
+
+    getDate(end) {
+        return Math.round((end - Date.parse(new Date().toString())) / 86400000);
     }
 
     getData() {
