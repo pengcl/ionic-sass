@@ -180,7 +180,7 @@
             </button>
         </div>
     </form>-->
-    <ion-grid>
+    <ion-grid *ngIf="data">
         <ion-row>
             <ion-col size="12">
                 <mat-card>
@@ -206,7 +206,7 @@
                                                         </ion-thumbnail>
                                                         <ion-label>
                                                             <p>行业</p>
-                                                            <h3>企业服务</h3>
+                                                            <h3>{{data.busindustry.industryName ? data.busindustry.industryName : '-'}}</h3>
                                                         </ion-label>
                                                     </ion-item>
                                                     <ion-item lines="none">
@@ -215,7 +215,7 @@
                                                         </ion-thumbnail>
                                                         <ion-label>
                                                             <p>运作时长</p>
-                                                            <h3>5年</h3>
+                                                            <h3>{{getCondValue(7)}}年</h3>
                                                         </ion-label>
                                                     </ion-item>
                                                     <ion-item lines="none">
@@ -237,7 +237,7 @@
                                                         </ion-thumbnail>
                                                         <ion-label>
                                                             <p>年营业收入范围</p>
-                                                            <h3>2000-5000万元</h3>
+                                                            <h3>{{getCondValue(9)}}万元</h3>
                                                         </ion-label>
                                                     </ion-item>
                                                     <ion-item lines="none">
@@ -246,7 +246,7 @@
                                                         </ion-thumbnail>
                                                         <ion-label>
                                                             <p>固定资产范围</p>
-                                                            <h3>500-1000万元</h3>
+                                                            <h3>{{getCondValue(17)}}万元</h3>
                                                         </ion-label>
                                                     </ion-item>
                                                     <ion-item lines="none">
@@ -255,7 +255,7 @@
                                                         </ion-thumbnail>
                                                         <ion-label>
                                                             <p>企业总人数范围</p>
-                                                            <h3>10-50人</h3>
+                                                            <h3>{{getCondValue(18)}}人</h3>
                                                         </ion-label>
                                                     </ion-item>
                                                 </ion-list>
@@ -308,28 +308,15 @@
                     <mat-card-content>
                         <ion-grid>
                             <ion-row>
-                                <ion-col size="3">
+                                <ion-col *ngFor="let item of brand" size="3">
                                     <div class="brand">
                                         <ion-item lines="none">
-                                            <ion-label>行业深度</ion-label>
+                                            <ion-label>{{item.label}}</ion-label>
                                             <div style="display: flex;flex-direction: row;float: right">
                                                 <ion-thumbnail style="width: 32px;height: 32px">
-                                                    <img src="/assets/images/company/good.png"/>
+                                                    <img [src]="'/assets/images/company/' + (item.score >= 81 ? 'good' : item.score >= 60 ? 'well' : 'strengthen') + '.png'"/>
                                                 </ion-thumbnail>
-                                                <span>优秀</span>
-                                            </div>
-                                        </ion-item>
-                                    </div>
-                                </ion-col>
-                                <ion-col size="3">
-                                    <div class="brand">
-                                        <ion-item lines="none">
-                                            <ion-label>经营广度</ion-label>
-                                            <div style="display: flex;flex-direction: row;float: right">
-                                                <ion-thumbnail style="width: 32px;height: 32px">
-                                                    <img src="/assets/images/company/well.png"/>
-                                                </ion-thumbnail>
-                                                <span>良好</span>
+                                                <span>{{item.name}}</span>
                                             </div>
                                         </ion-item>
                                     </div>
@@ -339,7 +326,7 @@
                                         <ion-item lines="none">
                                             <ion-label>商标数量</ion-label>
                                             <div style="display: flex;flex-direction: row;float: right">
-                                                <em>1,500</em>
+                                                <em>{{getCondValue(5)}}</em>
                                                 <span class="num">个</span>
                                             </div>
                                         </ion-item>
@@ -351,7 +338,7 @@
                                         <ion-item lines="none">
                                             <ion-label>商标类别数量</ion-label>
                                             <div style="display: flex;flex-direction: row;float: right">
-                                                <em>38</em>
+                                                <em>{{getCondValue(6)}}</em>
                                                 <span class="num">类</span>
                                             </div>
                                         </ion-item>
@@ -371,29 +358,13 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
+                                            <tr *ngFor="let item of getChatValue(1)">
                                                 <td class="user">
                                                     <img src="/assets/images/company/one.png" height="31" width="24"/>
                                                 </td>
-                                                <td class="grade">中科华海</td>
-                                                <td class="consumption">20</td>
-                                                <td class="date">5年</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="user">
-                                                    <img src="/assets/images/company/two.png" height="24" width="24"/>
-                                                </td>
-                                                <td class="grade">知产云</td>
-                                                <td class="consumption">18</td>
-                                                <td class="date">5年</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="user">
-                                                    <img src="/assets/images/company/three.png" height="24" width="24"/>
-                                                </td>
-                                                <td class="grade">华海商学院</td>
-                                                <td class="consumption">18</td>
-                                                <td class="date">4年</td>
+                                                <td class="grade">{{item.text}}</td>
+                                                <td class="consumption">{{item.count}}</td>
+                                                <td class="date">{{item.count1}}年</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -402,7 +373,7 @@
                                 <ion-col size="4">
                                     <ion-list class="brand_top">
                                         <ion-list-header>商标类别注册数量TOP 5</ion-list-header>
-                                        <div *ngIf="subsidyOption" echarts [options]="subsidyOption"
+                                        <div *ngIf="option[6]" echarts [options]="option[6]"
                                              class="main-chart subsidy-chart"
                                              style="height: 230px;"></div>
                                     </ion-list>
@@ -410,8 +381,8 @@
                                 <ion-col size="4">
                                     <ion-list class="brand_top">
                                         <ion-list-header>商标注册情况</ion-list-header>
-                                        <!--<div *ngIf="copyOption" echarts [options]="copyOption"
-                                             style="width: 200px;height: 230px" class="main-chart"></div>-->
+                                        <div *ngIf="option[8]" echarts [options]="option[8]"
+                                             style="width: 200px;height: 230px" class="main-chart"></div>
                                     </ion-list>
                                 </ion-col>
                             </ion-row>
@@ -471,7 +442,7 @@
                                                 <ion-item lines="none">
                                                     <ion-label>发明专利</ion-label>
                                                     <div style="display: flex;flex-direction: row;float: right">
-                                                        <em>20</em>
+                                                        <em>{{getCondValue(8)}}</em>
                                                         <span class="num">个</span>
                                                     </div>
                                                 </ion-item>
@@ -483,7 +454,7 @@
                                                 <ion-item lines="none">
                                                     <ion-label>实用新型专利</ion-label>
                                                     <div style="display: flex;flex-direction: row;float: right">
-                                                        <em>100</em>
+                                                        <em>{{getCondValue(9)}}</em>
                                                         <span class="num">个</span>
                                                     </div>
                                                 </ion-item>
@@ -495,7 +466,7 @@
                                                 <ion-item lines="none">
                                                     <ion-label>软件著作权</ion-label>
                                                     <div style="display: flex;flex-direction: row;float: right">
-                                                        <em>200</em>
+                                                        <em>{{getCondValue(11)}}</em>
                                                         <span class="num">个</span>
                                                     </div>
                                                 </ion-item>
@@ -581,7 +552,8 @@
                             <ion-grid>
                                 <ion-row>
                                     <ion-col size="3" *ngFor="let item of policy.list.slice(0,4);let i = index">
-                                        <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]" [ngStyle]="{'margin-right': i === 3 ? '0' : '22px'}">
+                                        <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]"
+                                             [ngStyle]="{'margin-right': i === 3 ? '0' : '22px'}">
                                             <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
                                                 <img src="/assets/images/dashboard/icon_hot.png">
                                             </div>

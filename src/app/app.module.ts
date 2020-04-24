@@ -31,6 +31,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ],
     providers: [
         {provide: 'PREFIX_URL', useValue: environment.PREFIX_URL},
+        {provide: 'CLOUDS_PREFIX_URL', useValue: 'https://api-v1.wispclouds.com//api/v1/'},
         {provide: 'FILE_PREFIX_URL', useValue: environment.FILE_PREFIX_URL},
         {
             provide: PERFECT_SCROLLBAR_CONFIG,

@@ -1,0 +1,199 @@
+<div class="container">
+    <mat-card>
+        <mat-card-content>
+            <mat-horizontal-stepper labelPosition="bottom" linear>
+                <mat-step [stepControl]="form">
+                    <form [formGroup]="form">
+                        <ng-template matStepLabel>确认主体信息</ng-template>
+                        <p style="margin-bottom: 10px;">请输入企业名称</p>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="4">
+                                    <mat-form-field appearance="outline" style="margin-bottom: 0;width: 100%">
+                                        <input type="text" matInput formControlName="companyName"
+                                               placeholder="请输入企业名称" [matAutocomplete]="auto">
+                                        <mat-autocomplete #auto="matAutocomplete">
+                                            <mat-option (click)="setCompany()" *ngFor="let option of options"
+                                                        [value]="option">
+                                                {{option}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </ion-col>
+                                <ion-col size="8">
+                                    <button mat-raised-button color="primary" style="margin-left: 20px">搜索</button>
+                                </ion-col>
+                                <ng-container *ngIf="company">
+                                    <ion-col size="4">
+                                        <ion-row>
+                                            <ion-col size="5">
+                                                <span class="right bottom">企业名称</span>
+                                            </ion-col>
+                                            <ion-col size="7">
+                                                <span style="background: #fff" class="right bottom">{{company.companyName ? company.companyName : '-'}}</span>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+                                    <ion-col size="4">
+                                        <ion-row>
+                                            <ion-col size="5">
+                                                <span class="right bottom">法人</span>
+                                            </ion-col>
+                                            <ion-col size="7">
+                                                <span style="background: #fff" class="right bottom">{{company.legalRepresentative ? company.legalRepresentative : '-'}}</span>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+                                    <ion-col size="4">
+                                        <ion-row>
+                                            <ion-col size="5">
+                                                <span class="right bottom">经营状态</span>
+                                            </ion-col>
+                                            <ion-col size="7">
+                                                <span style="background: #fff" class="bottom">{{company.businessType ? company.businessType : '-'}}</span>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+
+                                    <ion-col size="4">
+                                        <ion-row>
+                                            <ion-col size="5">
+                                                <span class="right bottom">成立时间</span>
+                                            </ion-col>
+                                            <ion-col size="7">
+                                                <span style="background: #fff" class="right bottom">{{company.registeredDate ? company.registeredDate : '-'}}</span>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+                                    <ion-col size="4">
+                                        <ion-row>
+                                            <ion-col size="5">
+                                                <span class="right bottom">注册资金</span>
+                                            </ion-col>
+                                            <ion-col size="7">
+                                                <span style="background: #fff" class="right bottom">{{company.registeredCapitalStr ? company.registeredCapitalStr : '-'}}</span>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+                                    <ion-col size="4">
+                                        <ion-row>
+                                            <ion-col size="5">
+                                                <span class="right bottom">实缴资本</span>
+                                            </ion-col>
+                                            <ion-col size="7">
+                                                <span style="background: #fff" class="bottom">{{company.paidInCapitalStr ? company.paidInCapitalStr : '-'}}</span>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+
+                                    <ion-col size="4">
+                                        <ion-row>
+                                            <ion-col size="5">
+                                                <span class="right bottom">统一社会信用代码</span>
+                                            </ion-col>
+                                            <ion-col size="7">
+                                            <span style="background: #fff"
+                                                  class="right bottom">{{company.unifiedSocialCreditCode ? company.unifiedSocialCreditCode : ''}}</span>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+                                    <ion-col size="4">
+                                        <ion-row>
+                                            <ion-col size="5">
+                                                <span class="right bottom">组织机构代码</span>
+                                            </ion-col>
+                                            <ion-col size="7">
+                                                <span style="background: #fff" class="right bottom">{{company.organizationCode ? company.organizationCode : '-'}}</span>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+                                    <ion-col size="4">
+                                        <ion-row>
+                                            <ion-col size="5">
+                                                <span class="right bottom">营业期限</span>
+                                            </ion-col>
+                                            <ion-col size="7">
+                                                <span style="background: #fff" class="bottom">{{company.businessTermStartDate ? company.businessTermStartDate : '-'}} 至 {{company.businessTermEndDate ? company.businessTermEndDate : '-'}}</span>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+
+                                    <ion-col size="4">
+                                        <ion-row>
+                                            <ion-col size="5">
+                                                <span class="right">所属地区</span>
+                                            </ion-col>
+                                            <ion-col size="7">
+                                                <span style="background: #fff" class="right">-</span>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+                                    <ion-col size="8">
+                                        <ion-row>
+                                            <ion-col size="2.5">
+                                                <span class="right">企业地址</span>
+                                            </ion-col>
+                                            <ion-col size="9.5">
+                                                <span style="background: #fff">{{company.address ? company.address : '-'}}</span>
+                                            </ion-col>
+                                        </ion-row>
+                                    </ion-col>
+
+                                </ng-container>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col size="12">
+                                    <p style="margin-bottom: 10px;">企业所在地</p>
+                                </ion-col>
+                                <ion-col size="2">
+                                    <mat-form-field appearance="outline" style="margin-bottom: 0;width: 98%">
+                                        <mat-select placeholder="省" formControlName="province">
+                                            <mat-option *ngFor="let province of provinces" [value]="province.name">
+                                                {{province.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <!--<input type="text" matInput formControlName="province"
+                                               placeholder="省" [matAutocomplete]="auto">-->
+                                    </mat-form-field>
+                                </ion-col>
+                                <ion-col size="2">
+                                    <mat-form-field appearance="outline" style="margin-bottom: 0;width: 98%">
+                                        <mat-select placeholder="市" formControlName="city">
+                                            <mat-option *ngFor="let city of cities" [value]="city.name">
+                                                {{city.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </ion-col>
+                                <ion-col size="2">
+                                    <mat-form-field appearance="outline" style="margin-bottom: 0;width: 98%">
+                                        <mat-select placeholder="区" formControlName="area">
+                                            <mat-option *ngFor="let district of districts" [value]="district.name">
+                                                {{district.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                        <div class="form_bottom">
+                            <button [disabled]="form.invalid" (click)="submit()" mat-raised-button color="primary">下一步</button>
+                        </div>
+                    </form>
+                </mat-step>
+                <mat-step disabled>
+                    <form>
+                        <ng-template matStepLabel>填写经营及重要信息</ng-template>
+                    </form>
+                </mat-step>
+                <mat-step disabled>
+                    <ng-template matStepLabel>填写政策匹配信息</ng-template>
+                    <div class="form_bottom">
+                        <button mat-raised-button matStepperPrevious color="primary">上一步</button>
+                        <button mat-raised-button color="primary">完成</button>
+                    </div>
+                </mat-step>
+            </mat-horizontal-stepper>
+        </mat-card-content>
+    </mat-card>
+</div>

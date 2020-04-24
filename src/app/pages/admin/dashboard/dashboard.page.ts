@@ -21,39 +21,75 @@ import {MatSnackBar} from '@angular/material';
     styleUrls: ['./dashboard.page.scss']
 })
 export class AdminDashboardPage {
-    subsidyOption = {
-        tooltip: {},
-        series: [
-            {
-                name: '速度',
-                type: 'gauge',
-                z: 3,
-                axisLine: {            // 坐标轴线
-                    lineStyle: {       // 属性lineStyle控制线条样式
-                        width: 10
-                    }
-                },
-                axisTick: {            // 坐标轴小标记
-                    length: 15,        // 属性length控制线长
-                    lineStyle: {       // 属性lineStyle控制线条样式
-                        color: 'auto'
-                    }
-                },
-                splitLine: {           // 分隔线
-                    length: 20,         // 属性length控制线长
-                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-                        color: 'auto'
-                    }
-                },
-                title: {
-                    // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-                    fontWeight: 'bolder',
-                    fontSize: 20,
-                    fontStyle: 'italic'
-                },
-                data: [{value: 40}]
-            }
-        ]
+    subsidy = {
+        quick: {
+            tooltip: {},
+            series: [
+                {
+                    name: '速度',
+                    type: 'gauge',
+                    z: 3,
+                    axisLine: {            // 坐标轴线
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            width: 10
+                        }
+                    },
+                    axisTick: {            // 坐标轴小标记
+                        length: 15,        // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    splitLine: {           // 分隔线
+                        length: 20,         // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    title: {
+                        // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        fontWeight: 'bolder',
+                        fontSize: 20,
+                        fontStyle: 'italic'
+                    },
+                    data: [{value: 0, count: 0}]
+                }
+            ]
+        },
+        keChuangBao: {
+            tooltip: {},
+            series: [
+                {
+                    name: '速度',
+                    type: 'gauge',
+                    z: 3,
+                    axisLine: {            // 坐标轴线
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            width: 10
+                        }
+                    },
+                    axisTick: {            // 坐标轴小标记
+                        length: 15,        // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    splitLine: {           // 分隔线
+                        length: 20,         // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    title: {
+                        // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        fontWeight: 'bolder',
+                        fontSize: 20,
+                        fontStyle: 'italic'
+                    },
+                    data: [{value: 0, count: 0}]
+                }
+            ]
+        }
     };
     brandOption = {
         count: 0,
@@ -188,7 +224,12 @@ export class AdminDashboardPage {
                 this.completions = res;
             }
         });
-
+        this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
+            this.subsidy.keChuangBao.series[0].data[0].value = res.keChuangBaoAmt;
+            this.subsidy.keChuangBao.series[0].data[0].count = res.keChuangBaoCount;
+            this.subsidy.quick.series[0].data[0].value = res.quickAmt;
+            this.subsidy.quick.series[0].data[0].count = res.quickCount;
+        });
         /*this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
             if (res.keChuangBaoAmt + res.quickAmt === 0) {
                 this.subsidyOption = null;

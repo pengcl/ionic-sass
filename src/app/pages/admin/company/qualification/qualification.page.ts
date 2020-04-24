@@ -32,6 +32,296 @@ import {DashboardService} from '../../dashboard/dashboard.service';
     ]
 })
 export class AdminCompanyQualificationPage implements OnInit {
+    res = {
+        'code': '0000',
+        'result': {
+            'id': 0,
+            'gradeModelOperations': {
+                'id': 4,
+                'name': '差',
+                'operation': '<',
+                'val1': 5,
+                'modelId': 3
+            },
+            'gradeModules': [
+                {
+                    'id': 4,
+                    'name': '第一个模块'
+                },
+                {
+                    'id': 23,
+                    'name': '第二个测试模块'
+                }
+            ],
+            'gradeModuleOperations': [
+                {
+                    'id': 10,
+                    'name': '普通',
+                    'suggest': '11111',
+                    'moduleId': 4
+                },
+                {
+                    'id': 22,
+                    'name': '第二个',
+                    'suggest': '真的时很差',
+                    'moduleId': 23
+                }
+            ],
+            'gradeTargets': [],
+            //评分集合
+            'gradeTargetGroups': [
+                {	//行业深度
+                    'id': -100,
+                    'name': '待加强',
+                    'score': 100,
+                    'suggest': '',
+                    'isStandardeCond': 0
+                },
+                {//经营广度
+                    'id': -101,
+                    'name': '待加强',
+                    'score': 100,
+                    'suggest': '',
+                    'isStandardeCond': 0
+                }
+            ],
+            'gradeTargetStanderdeGroups': [],
+            'gradeConds': [],
+            'gradeCondVals': [],
+            'charts': [
+                {
+                    'groupId': 1,
+                    'count': 2,				//商标数量
+                    'text': '助 卡趴停车',		//商标名称
+                    'count1': 5				//使用年限
+                },
+
+                {
+                    'groupId': 2,
+                    'count': 3,				//数量
+                    'text': '2015'			//年份
+                },
+
+                {
+                    'groupId': 5,
+                    'text': '35'				//商标类别编码
+                },
+
+                {
+                    'groupId': 3,
+                    'count': 1,				//数量
+                    'text': '广告销售',		//类别名称
+                    'count1': 18				//行业平均水平
+                },
+
+                {
+                    'groupId': 6,
+                    'count': 4,				//数量
+                    'text': '运输贮藏'		//类别名称
+                },
+                {
+                    'groupId': 9,
+                    'count': 1,				//发明专利数量
+                    'text': '2015',			//年份
+                    'count1': 0,				//实用新型专利数量
+                    'count2': 0				//软著数量
+                },
+
+                {
+                    'groupId': 7,
+                    'count': 5,				//数量
+                    'text': '发明专利',		//显示值
+                    'count1': 5				//行业平均水平
+                },
+                {
+                    'groupId': 4,
+                    'count': 5,				//研发费用占比
+                    'text': '研发费用占比',	//可以无视
+                    'count1': 5				//行业平均研发费用占比
+                },
+                {
+                    'groupId': 8,
+                    'text': '2015', //年份
+                    'count': 1, // 申请中数量
+                    'count1': 1,//已失效数量
+                    'count2': 1 //已注册数量
+                },
+                {
+                    'groupId': 8,
+                    'text': '2016', //年份
+                    'count': 1, // 申请中数量
+                    'count1': 1,//已失效数量
+                    'count2': 1 //已注册数量
+                },
+                {
+                    'groupId': 8,
+                    'text': '2017', //年份
+                    'count': 1, // 申请中数量
+                    'count1': 1,//已失效数量
+                    'count2': 1 //已注册数量
+                },
+                {
+                    'groupId': 8,
+                    'text': '2018', //年份
+                    'count': 1, // 申请中数量
+                    'count1': 1,//已失效数量
+                    'count2': 1 //已注册数量
+                },
+                {
+                    'groupId': 8,
+                    'text': '2019', //年份
+                    'count': 1, // 申请中数量
+                    'count1': 1,//已失效数量
+                    'count2': 1 //已注册数量
+                }
+            ],
+            'conds': [
+
+                {
+                    'createTime': 1587373429000,
+                    'id': 7,
+                    'custId': 'd9c500f5263811eab1fb00163e0e6521',
+                    'condId': 19,
+                    'valId': 441,
+                    'val': 10000,
+                    'val1': '1000',
+                    'val2': '10000'
+                },
+                {
+                    'createTime': 1587373429000,
+                    'id': 8,
+                    'custId': 'd9c500f5263811eab1fb00163e0e6521',
+                    'condId': 18,
+                    'valId': 435,
+                    'val': 300,
+                    'val1': '100',
+                    'val2': '300'
+                },
+                {
+                    'createTime': 1587622615000,
+                    'id': 9,
+                    'custId': 'd9c500f5263811eab1fb00163e0e6521',
+                    'condId': 17,
+                    'valId': 446,
+                    'val': 8000,
+                    'val1': '2000',
+                    'val2': '8000'
+                },
+                {
+                    'condId': 7,
+                    'val': 7
+                },
+                {
+                    'condId': 0,
+                    'valId': 35
+                },
+                {
+                    'condId': 11,
+                    'val': 16
+                }
+            ],
+            //行业信息
+            'busindustry': {
+                'createTime': 1584168757000,
+                'createBy': 'cf0d55b21a6a11eab1fb00163e0e6521',
+                'updateTime': 1584168757000,
+                'updateBy': 'cf0d55b21a6a11eab1fb00163e0e6521',
+                'createByName': 'qinzhenyu',
+                'updateByName': 'qinzhenyu',
+                'id': 35,
+                'industryName': '互联网+',
+                'explainContent': '互联网+',
+                'summaryContent': '',
+                'pointContent': '',
+                'status': 1,
+                'registedBrandCode': '9',
+                'registedBrandCount': 12,
+                'registedBrandCode2': '35',
+                'registedBrandCount2': 18,
+                'registedBrandCode3': '42',
+                'registedBrandCount3': 8,
+                'inventionCount': 5,
+                'practicalCount': 30,
+                'softwareCopyrightCount': 36,
+                'relationCondValId': 35,
+                'relationCondValName': '软件和信息技术服务业',
+                'registedBrandName': '第九类——科学仪器',
+                'registedBrandName2': '第三十五类——广告销售',
+                'registedBrandName3': '第四十二类——科技服务'
+            }
+        }
+    };
+    data = this.res.result;
+    subsidy = {
+        quick: {
+            tooltip: {},
+            series: [
+                {
+                    name: '速度',
+                    type: 'gauge',
+                    z: 3,
+                    axisLine: {            // 坐标轴线
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            width: 10
+                        }
+                    },
+                    axisTick: {            // 坐标轴小标记
+                        length: 15,        // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    splitLine: {           // 分隔线
+                        length: 20,         // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    title: {
+                        // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        fontWeight: 'bolder',
+                        fontSize: 20,
+                        fontStyle: 'italic'
+                    },
+                    data: [{value: 0, count: 0}]
+                }
+            ]
+        },
+        keChuangBao: {
+            tooltip: {},
+            series: [
+                {
+                    name: '速度',
+                    type: 'gauge',
+                    z: 3,
+                    axisLine: {            // 坐标轴线
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            width: 10
+                        }
+                    },
+                    axisTick: {            // 坐标轴小标记
+                        length: 15,        // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    splitLine: {           // 分隔线
+                        length: 20,         // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    title: {
+                        // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        fontWeight: 'bolder',
+                        fontSize: 20,
+                        fontStyle: 'italic'
+                    },
+                    data: [{value: 0, count: 0}]
+                }
+            ]
+        }
+    };
     brandOption = {
         color: ['#69EBB7', '#5F8FF3'],
         tooltip: {
@@ -149,12 +439,34 @@ export class AdminCompanyQualificationPage implements OnInit {
         },
         yAxis: {
             type: 'value'
-        }
+        },
+        series: [
+            {
+                name: '无效',
+                type: 'bar',
+                stack: '1',
+                data: [1, 2, 3],
+                barWidth: 14
+            },
+            {
+                name: '申请中',
+                type: 'bar',
+                stack: '1',
+                data: [1, 2, 3],
+                barWidth: 14
+            },
+            {
+                name: '已注册',
+                type: 'bar',
+                stack: '1',
+                data: [1, 2, 3],
+                barWidth: 14
+            }
+        ]
     };
     id = this.route.snapshot.params.id;
     type = '0';
     reportType = 1;
-    data;
     conditions;
     year = (new Date()).getFullYear();
     years = (() => {
@@ -201,8 +513,19 @@ export class AdminCompanyQualificationPage implements OnInit {
         city: new FormControl('', [Validators.required])
     });
     policy = {
+        total: 0,
+        update: 0,
         list: []
     };
+    brand = (() => {
+        const list = [];
+        list.push(this.data.gradeTargetGroups[getIndex(this.data.gradeTargetGroups, 'id', -100)]);
+        list.push(this.data.gradeTargetGroups[getIndex(this.data.gradeTargetGroups, 'id', -101)]);
+        list[0].label = '行业深度';
+        list[1].label = '经营广度';
+        return list;
+    })();
+    option: any = {};
 
     constructor(private title: Title,
                 private route: ActivatedRoute,
@@ -225,7 +548,6 @@ export class AdminCompanyQualificationPage implements OnInit {
             uniqueKey: new FormControl(this.type === '0' ? this.year : '', [Validators.required]),
             conditions: new FormControl('', [Validators.required])
         });*/
-
         planSvc.list(this.params).subscribe(res => {
             this.dataSource = new MatTableDataSource<any>(res.list);
         });
@@ -237,6 +559,13 @@ export class AdminCompanyQualificationPage implements OnInit {
             this.policy.list = res.list.sort((a, b) => {
                 return a.reportDateEnd - b.reportDateEnd;
             });
+        });
+        this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
+            console.log(res);
+            this.subsidy.keChuangBao.series[0].data[0].value = res.keChuangBaoAmt;
+            this.subsidy.keChuangBao.series[0].data[0].count = res.keChuangBaoCount;
+            this.subsidy.quick.series[0].data[0].value = res.quickAmt;
+            this.subsidy.quick.series[0].data[0].count = res.quickCount;
         });
     }
 
@@ -263,6 +592,7 @@ export class AdminCompanyQualificationPage implements OnInit {
     }*/
 
     ngOnInit() {
+        console.log(this.data);
         this.title.setTitle(this.type === '0' ? '企业资质信息' : this.type === '1' ? '项目' : '员工');
         this.companySvc.get(this.id).subscribe(res => {
             this.company = res.busCust;
@@ -290,6 +620,66 @@ export class AdminCompanyQualificationPage implements OnInit {
                 });
             }
         });*/
+        this.getHBar(6);
+        this.getVBar(8);
+    }
+
+    getHBar(id) {
+        const chats = this.getChatValue(id);
+        const option = JSON.parse(JSON.stringify(this.subsidyOption));
+        option.yAxis.data = [];
+        option.series[0].data = [];
+        chats.forEach(item => {
+            option.yAxis.data.push(item.text);
+            option.series[0].data.push(item.count);
+        });
+        this.option[id] = option;
+    }
+
+    getVBar(id) {
+        const chats = this.getChatValue(id);
+        const option = JSON.parse(JSON.stringify(this.copyOption));
+        option.legend.data = [];
+        option.xAxis.data = [];
+        option.series[0].data = [];
+        option.series[1].data = [];
+        option.series[2].data = [];
+        chats.forEach(item => {
+            option.legend.data.push(item.text);
+            option.xAxis.data.push(item.text);
+            option.series[0].data.push(item.count2);
+            option.series[1].data.push(item.count);
+            option.series[2].data.push(item.count1);
+        });
+        console.log(option);
+        this.option[id] = option;
+    }
+
+    getCondValue(id) {
+        const index = getIndex(this.data.conds, 'condId', id);
+        const cond = this.data.conds[index];
+        let value: any = '-';
+        if (cond) {
+            const v2 = cond.val2;
+            const v1 = cond.val1;
+            const v0 = cond.val;
+            if (v2) {
+                value = v1 + '-' + v2;
+            } else {
+                value = v0;
+            }
+        }
+        return value;
+    }
+
+    getChatValue(id) {
+        const list = [];
+        this.data.charts.forEach(item => {
+            if (item.groupId === id) {
+                list.push(item);
+            }
+        });
+        return list;
     }
 
     getNum() {
@@ -402,7 +792,6 @@ export class AdminCompanyQualificationPage implements OnInit {
 
     remark(content, e) {
         e.preventDefault();
-        console.log(content);
     }
 
     preDownload(id) {

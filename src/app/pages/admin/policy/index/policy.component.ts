@@ -96,6 +96,7 @@ export class AdminPolicyPage {
     getData() {
         this.toastSvc.show('加载中...', 0);
         this.policySvc.item(this.params).subscribe(res => {
+            this.toastSvc.hide();
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
         });
