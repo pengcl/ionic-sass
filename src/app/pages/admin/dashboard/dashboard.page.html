@@ -118,17 +118,17 @@
                         <ion-grid>
                             <ion-row>
                                 <ion-col size="6">
-                                    <div *ngIf="subsidyOption" echarts [options]="subsidyOption"
+                                    <div *ngIf="subsidy.quick" echarts [options]="subsidy.quick"
                                          class="main-chart subsidy-chart"
                                          style="height: 220px;"></div>
                                     <p style="text-align: center;margin-top: -40px;font-size:14px;font-weight:400;color:rgba(42,159,247,1);line-height:24px;">
-                                        <em style="font-style: normal;font-weight:500;color:rgba(42,159,247,1);font-size:24px;line-height:30px;">120</em>万元
+                                        <em style="font-style: normal;font-weight:500;color:rgba(42,159,247,1);font-size:24px;line-height:30px;">{{subsidy.quick.series[0].data[0].value}}</em>万元
                                     </p>
                                     <p style="text-align: center;font-size:12px;font-weight:400;color:rgba(95,113,125,1);line-height:17px;margin-top: -15px">
                                         快速培育可获得</p>
                                     <p style="text-align: center;font-size:14px;font-weight:400;color:#5F717D;line-height:20px;">
                                         可培育项目数<em
-                                            style="font-style: normal;color: #21333F;font-size: 18px;font-weight: 500">8</em>
+                                            style="font-style: normal;color: #21333F;font-size: 18px;font-weight: 500">{{subsidy.quick.series[0].data[0].count}}</em>
                                     </p>
                                     <ion-item lines="none">
                                         <ion-thumbnail slot="start"></ion-thumbnail>
@@ -138,17 +138,17 @@
                                     </ion-item>
                                 </ion-col>
                                 <ion-col size="6">
-                                    <div *ngIf="subsidyOption" echarts [options]="subsidyOption"
+                                    <div *ngIf="subsidy.keChuangBao" echarts [options]="subsidy.keChuangBao"
                                          class="main-chart subsidy-chart"
                                          style="height: 220px;"></div>
                                     <p style="text-align: center;margin-top: -40px;font-size:14px;font-weight:400;color:rgba(42,159,247,1);line-height:24px;">
-                                        <em style="font-style: normal;font-weight:500;color:rgba(42,159,247,1);font-size:24px;line-height:30px;">300</em>万元
+                                        <em style="font-style: normal;font-weight:500;color:rgba(42,159,247,1);font-size:24px;line-height:30px;">{{subsidy.keChuangBao.series[0].data[0].value}}</em>万元
                                     </p>
                                     <p style="text-align: center;font-size:12px;font-weight:400;color:rgba(95,113,125,1);line-height:17px;margin-top: -15px">
                                         科创直通车(2年)可获得</p>
                                     <p style="text-align: center;font-size:14px;font-weight:400;color:#5F717D;line-height:20px;">
                                         可培育项目数<em
-                                            style="font-style: normal;color: #21333F;font-size: 18px;font-weight: 500">20</em>
+                                            style="font-style: normal;color: #21333F;font-size: 18px;font-weight: 500">{{subsidy.keChuangBao.series[0].data[0].count}}</em>
                                     </p>
                                 </ion-col>
                             </ion-row>

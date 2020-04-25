@@ -13,6 +13,7 @@ export class CompanyService {
     company = new Subject<any>();
 
     constructor(@Inject('PREFIX_URL') private PREFIX_URL,
+                @Inject('CLOUDS_PREFIX_URL') private CLOUDS_PREFIX_URL,
                 private router: Router,
                 private http: HttpClient,
                 private storage: StorageService) {
@@ -44,8 +45,40 @@ export class CompanyService {
         }));
     }
 
+    search(name): Observable<any> {
+        return this.http.get('http://api-v2.wispclouds.com/getcomlist?keyword=' + name);
+    }
+
     find(name): Observable<any> {
         return this.http.get('https://api-v1.wispclouds.com/api/v1/company/getDetailByCompanyName?companyName=' + name + '&origin=' + 'WISP');
+    }
+
+    condVal(custId, condId): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'getCondVals', {custId, condId});
+    }
+
+    getCred(custId): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'getSaasCred', {custId}).pipe(observableMargeMap((res: any) => {
+            return resultProcess(res);
+        }));
+    }
+
+    updateCond(body): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'updateCustGradeConds', body).pipe(observableMargeMap((res: any) => {
+            return resultProcess(res);
+        }));
+    }
+
+    create(body): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'saveSaaSCust', body).pipe(observableMargeMap((res: any) => {
+            return resultProcess(res);
+        }));
+    }
+
+    change(body): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'updateSaaSCust', body).pipe(observableMargeMap((res: any) => {
+            return resultProcess(res);
+        }));
     }
 
     update(body): Observable<any> {

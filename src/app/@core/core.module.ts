@@ -13,7 +13,6 @@ import {throwIfAlreadyLoaded} from './module-import-guard';
 import {INTERCEPTORS} from './interceptors';
 
 
-
 export const CORE_PROVIDERS = [
     ...INTERCEPTORS
 ];
