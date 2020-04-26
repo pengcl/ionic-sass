@@ -14,6 +14,7 @@ import {TicketService} from '../ticket/ticket.service';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
 import {MatSnackBar} from '@angular/material';
+import {getIndex} from '../../../@core/utils/utils';
 
 @Component({
     selector: 'app-admin-dashboard',
@@ -21,6 +22,42 @@ import {MatSnackBar} from '@angular/material';
     styleUrls: ['./dashboard.page.scss']
 })
 export class AdminDashboardPage {
+    option = {
+        tooltip: {},
+        series: [
+            {
+                name: '速度',
+                type: 'gauge',
+                z: 3,
+                axisLine: {            // 坐标轴线
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        width: 10
+                    }
+                },
+                axisTick: {            // 坐标轴小标记
+                    length: 15,        // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                        color: 'auto'
+                    }
+                },
+                splitLine: {           // 分隔线
+                    length: 20,         // 属性length控制线长
+                    lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                        color: 'auto'
+                    }
+                },
+                title: {
+                    // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                    fontWeight: 'bolder',
+                    fontSize: 20,
+                    fontStyle: 'italic'
+                },
+                data: [{value: 0, count: 0}]
+            }
+        ]
+    };
+    quick;
+    keChuangBao;
     subsidy = {
         quick: {
             tooltip: {},
@@ -150,7 +187,9 @@ export class AdminDashboardPage {
         two: false,
         three: false
     };
-
+    data;
+    brand;
+    scientific;
 
     constructor(private router: Router,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
@@ -204,7 +243,6 @@ export class AdminDashboardPage {
                 this.policy.update = res.updateCount;
                 this.policy.list = res.list;
                 this.policy.list.sort(this.compare('reportDateEnd'));
-                console.log(this.policy.list);
             });
         });
 
@@ -225,66 +263,13 @@ export class AdminDashboardPage {
             }
         });
         this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
-            this.subsidy.keChuangBao.series[0].data[0].value = res.keChuangBaoAmt;
-            this.subsidy.keChuangBao.series[0].data[0].count = res.keChuangBaoCount;
-            this.subsidy.quick.series[0].data[0].value = res.quickAmt;
-            this.subsidy.quick.series[0].data[0].count = res.quickCount;
+            this.keChuangBao = JSON.parse(JSON.stringify(this.option));
+            this.quick = JSON.parse(JSON.stringify(this.option));
+            this.keChuangBao.series[0].data[0].value = res.keChuangBaoAmt;
+            this.keChuangBao.series[0].data[0].count = res.keChuangBaoCount;
+            this.quick.series[0].data[0].value = res.quickAmt;
+            this.quick.series[0].data[0].count = res.quickCount;
         });
-        /*this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
-            if (res.keChuangBaoAmt + res.quickAmt === 0) {
-                this.subsidyOption = null;
-            } else {
-                this.subsidyOption = {
-                    color: ['#3bcec6'],
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'shadow'
-                        }
-                    },
-                    grid: {
-                        left: '3%',
-                        right: '5%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
-                    xAxis: {
-                        type: 'value',
-                        boundaryGap: [0, 0.01],
-                        name: '万元',
-                        fontSize: '14px'
-                    },
-                    yAxis: {
-                        type: 'category',
-                        data: ['科创直通车可获得', '快速培育可获得']
-                    },
-                    series: [
-                        {
-                            type: 'bar',
-                            data: [res.keChuangBaoAmt, res.quickAmt],
-                            label: {
-                                show: true,
-                                position: 'right',
-                                color: '#21333F'
-                            },
-                            itemStyle: {
-                                normal: {
-                                    color: (params) => {
-                                        const colorList = ['rgba(13, 215, 141, 1)', 'rgba(254, 174, 77, 1)'];
-                                        return colorList[params.dataIndex];
-                                    }
-                                },
-                                emphasis: {
-                                    shadowBlur: 10,
-                                    shadowOffsetX: 0,
-                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                }
-                            }
-                        }
-                    ]
-                };
-            }
-        });*/
         this.ticketSvc.statistics(this.company.id).subscribe(res => {
             this.ticket.ing = res.serviceCount;
             this.ticket.error = res.errCount;
@@ -721,6 +706,26 @@ export class AdminDashboardPage {
         monitorSvc.list({custId: this.company.id}).subscribe(res => {
             this.monitorDataSource = new MatTableDataSource<any>(res.list);
         });
+
+        companySvc.source(this.company.id).subscribe(res => {
+            this.data = res;
+            this.brand = (() => {
+                const list = [];
+                list.push(this.getGroupValue(-100));
+                list.push(this.getGroupValue(-101));
+                list[0].label = '行业深度';
+                list[1].label = '经营广度';
+                return list;
+            })();
+            this.scientific = (() => {
+                const list = [];
+                list.push(this.getGroupValue(9));
+                list.push(this.getGroupValue(10));
+                list[0].label = '科研成果';
+                list[1].label = '科研能力';
+                return list;
+            })();
+        });
     }
 
     getDate(end) {
@@ -775,6 +780,33 @@ export class AdminDashboardPage {
         this.snackBar.open('功能即将开放，敬请期待', '', {
             duration: 1000
         });
+    }
+
+    getCondValue(id, key?) {
+        const index = getIndex(this.data.conds, 'condId', id);
+        const cond = this.data.conds[index];
+        let value: any = '';
+        if (key) {
+            value = cond[key] ? cond[key] : '-';
+        } else {
+            value = '-';
+            if (cond) {
+                const v2 = cond.val2;
+                const v1 = cond.val1;
+                const v0 = cond.val;
+                if (v2) {
+                    value = v1 + '-' + v2;
+                } else {
+                    value = v0;
+                }
+            }
+        }
+        return value;
+    }
+
+    getGroupValue(id) {
+        const body = this.data.gradeTargetGroups[getIndex(this.data.gradeTargetGroups, 'targetId', id)];
+        return body;
     }
 
     async presentLoading(target?) {

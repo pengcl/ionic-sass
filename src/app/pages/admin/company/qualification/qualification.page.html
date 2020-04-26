@@ -11,175 +11,6 @@
     </mat-card-header>
 </mat-card>
 <div class="container">
-    <!--<form style="margin-top: 0px;" class="{{reportType === 1 ? 'form-s' : 'form-c'}}" [formGroup]="formGroup"
-          novalidate>
-        <ion-grid>
-            <ion-row>
-                <ion-col size="12">
-                    <mat-radio-group class="type" [(ngModel)]="reportType" [ngModelOptions]="{standalone:true}">
-                        <mat-radio-button [value]="1">生成智能快捷体检报告</mat-radio-button>
-                        <mat-radio-button [value]="2">生成智能精准体检报告</mat-radio-button>
-                    </mat-radio-group>
-                    <span style="float: right;color: #B5C4D0;font-size: 14px;margin: 20px 36px">{{reportType === 1 ? '填写企业必要信息即可生成快捷体检报告，快速培育企业资质' : '填写企业详细信息即可生成精准体检报告，精准调整企业发展'}}
-                        <img src="/assets/images/plan/info.png" style="width: 20px;height: 20px;position: absolute;top:20px;right: 0">
-                    </span>
-                </ion-col>
-                <ion-col size="12" style="display: none">
-                    <ng-container *ngIf="type === '0'" translate="yes">
-                        <mat-form-field appearance="outline">
-                            <mat-select [formControlName]="'uniqueKey'" placeholder="年份" required>
-                                <mat-option *ngFor="let item of years" [value]="item.value">
-                                    {{item.label}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </ng-container>
-                    <ng-container *ngIf="type === '1'" translate="yes">
-                        <mat-form-field>
-                            <input matInput formControlName="uniqueKey" placeholder="项目名称" required>
-                            <mat-error *ngIf="formGroup.get('uniqueKey').hasError('required')">
-                                项目名称是 <strong>必填</strong> 项
-                            </mat-error>
-                        </mat-form-field>
-                    </ng-container>
-                    <ng-container *ngIf="type === '2'" translate="yes">
-                        <mat-form-field>
-                            <input formControlName="uniqueKey" matInput value="" placeholder="姓名" required>
-                            <mat-error *ngIf="formGroup.get('uniqueKey').hasError('required')">
-                                姓名 <strong>必填</strong> 项
-                            </mat-error>
-                        </mat-form-field>
-                    </ng-container>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </form>
-    <form *ngIf="form" class="{{reportType === 1 ? 'form-s' : 'form-c'}}" [formGroup]="form" novalidate>
-        <ion-grid>
-            <ion-row>
-                <ion-col *ngIf="reportType === 2" size="12">
-                    <h3>必填资质（{{required.valueNum}} / {{required.num}}）</h3>
-                </ion-col>
-                <ion-col [size]="12">
-                    <span class="value"><span class="label">企业名称</span><b>{{company?.companyName}}</b></span>
-                </ion-col>
-                <ion-col class="{{(i + 1) % 3 !== 0 ? 'form-field' : ''}}" *ngFor="let condition of required.list;let i = index" [size]="reportType === 1 ? 12 : 4">
-                    <mat-form-field class="nl"
-                                    *ngIf="condition.fieldType === '0001' && ((reportType === 1 && !!condition.required) || reportType === 2)"
-                                    appearance="outline">
-                        <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}<i [matTooltip]="condition.conditionRemark" (click)="remark(condition.conditionRemark,$event)" *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i></label>
-                        <input style="display: none" [formControlName]="condition.conditionId" matInput
-                               [required]="!!condition.required">
-                        <mat-radio-group [formControlName]="condition.conditionId">
-                            <mat-radio-button [value]="true">是</mat-radio-button>
-                            <mat-radio-button [value]="false">否</mat-radio-button>
-                        </mat-radio-group>
-                    </mat-form-field>
-                    <mat-form-field
-                            *ngIf="condition.fieldType === '0002' && dict[condition.conditionId] && ((reportType === 1 && !!condition.required) || reportType === 2)"
-                            appearance="outline">
-                        <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}<i [matTooltip]="condition.conditionRemark" (click)="remark(condition.conditionRemark,$event)" *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i></label>
-                        <input *ngIf="dict[condition.conditionId].length < 1" [placeholder]="'请输入' + condition.conditionName" [formControlName]="condition.conditionId"
-                               matInput
-                               pattern="(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)"
-                               [maxlength]="12" [required]="!!condition.required">
-                        <mat-select *ngIf="dict[condition.conditionId].length > 0"
-                                    [formControlName]="condition.conditionId" [placeholder]="'请选择'"
-                                    [required]="!!condition.required">
-                            <mat-option *ngFor="let item of dict[condition.conditionId]" [value]="item.dictValue">
-                                {{item.dictName}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error
-                                *ngIf="form.get(condition.conditionId + '').hasError('pattern') && !form.get(condition.conditionId + '').hasError('required')">
-                            {{condition.conditionName}}必须是 <strong>数字</strong>
-                        </mat-error>
-                        <mat-error
-                                *ngIf="form.get(condition.conditionId + '').hasError('maxlength') && !form.get(condition.conditionId + '').hasError('required')">
-                            {{condition.conditionName}}的长度不能大于 <strong>12</strong>
-                        </mat-error>
-                        <mat-error *ngIf="form.get(condition.conditionId + '').hasError('required')">
-                            {{condition.conditionName}}是 <strong>必填</strong> 项
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field
-                            *ngIf="condition.fieldType === '0003' && ((reportType === 1 && !!condition.required) || reportType === 2)"
-                            appearance="outline">
-                        <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}<i [matTooltip]="condition.conditionRemark" (click)="remark(condition.conditionRemark,$event)" *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i></label>
-                        <input [formControlName]="condition.conditionId" matInput placeholder="请选择" [matDatepicker]="picker"
-                               [required]="!!condition.required">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-        <ion-grid *ngIf="reportType === 2">
-            <ion-row>
-                <ion-col size="12">
-                    <h3>选填资质（{{optional.valueNum}} / {{optional.num}}）</h3>
-                </ion-col>
-                <ng-container *ngFor="let item of optional.list;let i = index">
-                    <ion-col [size]="12">
-                        <span class="value">{{item._name}}</span>
-                    </ion-col>
-                    <ion-col class="{{(i + 1) % 3 !== 0 ? 'form-field' : ''}}" *ngFor="let condition of item.list;let i = index" [size]="4">
-                        <mat-form-field class="nl"
-                                        *ngIf="condition.fieldType === '0001'"
-                                        appearance="outline">
-                            <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}<i [matTooltip]="condition.conditionRemark" (click)="remark(condition.conditionRemark,$event)" *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i></label>
-                            <input style="display: none" [formControlName]="condition.conditionId" matInput>
-                            <mat-radio-group [formControlName]="condition.conditionId">
-                                <mat-radio-button [value]="true">是</mat-radio-button>
-                                <mat-radio-button [value]="false">否</mat-radio-button>
-                            </mat-radio-group>
-                        </mat-form-field>
-                        <mat-form-field
-                                *ngIf="condition.fieldType === '0002' && dict[condition.conditionId]"
-                                appearance="outline">
-                            <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}<i [matTooltip]="condition.conditionRemark" (click)="remark(condition.conditionRemark,$event)" *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i></label>
-                            <input *ngIf="dict[condition.conditionId].length < 1" [placeholder]="'请输入' + condition.conditionName" [formControlName]="condition.conditionId"
-                                   matInput
-                                   pattern="(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)"
-                                   [maxlength]="12" [required]="!!condition.required">
-                            <mat-select *ngIf="dict[condition.conditionId].length > 0"
-                                        [formControlName]="condition.conditionId" [placeholder]="'请选择'"
-                                        [required]="!!condition.required">
-                                <mat-option *ngFor="let item of dict[condition.conditionId]" [value]="item.dictValue">
-                                    {{item.dictName}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-error
-                                    *ngIf="form.get(condition.conditionId + '').hasError('pattern') && !form.get(condition.conditionId + '').hasError('required')">
-                                {{condition.conditionName}}必须是 <strong>数字</strong>
-                            </mat-error>
-                            <mat-error
-                                    *ngIf="form.get(condition.conditionId + '').hasError('maxlength') && !form.get(condition.conditionId + '').hasError('required')">
-                                {{condition.conditionName}}的长度不能大于 <strong>12</strong>
-                            </mat-error>
-                            <mat-error *ngIf="form.get(condition.conditionId + '').hasError('required')">
-                                {{condition.conditionName}}是 <strong>必填</strong> 项
-                            </mat-error>
-                        </mat-form-field>
-                        <mat-form-field
-                                *ngIf="condition.fieldType === '0003'"
-                                appearance="outline">
-                            <label><em *ngIf="!!condition.required">*</em>{{condition.conditionName}}<i [matTooltip]="condition.conditionRemark" (click)="remark(condition.conditionRemark,$event)" *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i></label>
-                            <input [formControlName]="condition.conditionId" placeholder="请选择" matInput [matDatepicker]="picker"
-                                   [required]="!!condition.required">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
-                    </ion-col>
-                </ng-container>
-            </ion-row>
-        </ion-grid>
-        <div class="row-buttons">
-            <button [disabled]="form.invalid" (click)="submit(reportType === 2)" mat-raised-button color="primary">
-                生成报告
-            </button>
-        </div>
-    </form>-->
     <ion-grid *ngIf="data">
         <ion-row>
             <ion-col size="12">
@@ -224,7 +55,7 @@
                                                         </ion-thumbnail>
                                                         <ion-label>
                                                             <p>企业体量</p>
-                                                            <h3>小型企业</h3>
+                                                            <h3>{{getGroupValue(11).name}}</h3>
                                                         </ion-label>
                                                     </ion-item>
                                                 </ion-list>
@@ -237,7 +68,7 @@
                                                         </ion-thumbnail>
                                                         <ion-label>
                                                             <p>年营业收入范围</p>
-                                                            <h3>{{getCondValue(9)}}万元</h3>
+                                                            <h3>{{getCondValue(19)}}万元</h3>
                                                         </ion-label>
                                                     </ion-item>
                                                     <ion-item lines="none">
@@ -276,14 +107,14 @@
                                             <ion-col size="4">
                                                 <ion-list>
                                                     <ion-list-header style="padding-top: 30px;">员工职能结构</ion-list-header>
-                                                    <div echarts [options]="brandOption"
+                                                    <div *ngIf="circle.job" echarts [options]="circle.job"
                                                          style="width: 200px;height: 200px" class="main-chart"></div>
                                                 </ion-list>
                                             </ion-col>
                                             <ion-col size="4">
                                                 <ion-list>
                                                     <ion-list-header style="padding-top: 30px;">员工学历结构</ion-list-header>
-                                                    <div echarts [options]="brandOption"
+                                                    <div *ngIf="circle.edu" echarts [options]="circle.edu"
                                                          style="width: 200px;height: 200px" class="main-chart"></div>
                                                 </ion-list>
                                             </ion-col>
@@ -358,9 +189,9 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr *ngFor="let item of getChatValue(1)">
+                                            <tr *ngFor="let item of getChatValue(1);let i = index">
                                                 <td class="user">
-                                                    <img src="/assets/images/company/one.png" height="31" width="24"/>
+                                                    <img [src]="'/assets/images/company/' + (i + 1) + '.png'" height="31" width="24"/>
                                                 </td>
                                                 <td class="grade">{{item.text}}</td>
                                                 <td class="consumption">{{item.count}}</td>
@@ -382,7 +213,7 @@
                                     <ion-list class="brand_top">
                                         <ion-list-header>商标注册情况</ion-list-header>
                                         <div *ngIf="option[8]" echarts [options]="option[8]"
-                                             style="width: 200px;height: 230px" class="main-chart"></div>
+                                             style="height: 230px" class="main-chart"></div>
                                     </ion-list>
                                 </ion-col>
                             </ion-row>
@@ -405,20 +236,20 @@
                             <ion-row>
                                 <ion-col size="5">
                                     <ion-row>
-                                        <ion-col size="6">
-                                            <div class="research">
+                                        <ion-col *ngFor="let item of scientific" size="6">
+                                            <div class="brand">
                                                 <ion-item lines="none">
-                                                    <ion-label>科研成果</ion-label>
+                                                    <ion-label>{{item.label}}</ion-label>
                                                     <div style="display: flex;flex-direction: row;float: right">
                                                         <ion-thumbnail style="width: 32px;height: 32px">
-                                                            <img src="/assets/images/company/good.png"/>
+                                                            <img [src]="'/assets/images/company/' + (item.score >= 81 ? 'good' : item.score >= 60 ? 'well' : 'strengthen') + '.png'"/>
                                                         </ion-thumbnail>
-                                                        <span>优秀</span>
+                                                        <span>{{item.name}}</span>
                                                     </div>
                                                 </ion-item>
                                             </div>
                                         </ion-col>
-                                        <ion-col size="6">
+                                        <!--<ion-col size="6">
                                             <div class="research">
                                                 <ion-item lines="none">
                                                     <ion-label>科研能力</ion-label>
@@ -430,7 +261,7 @@
                                                     </div>
                                                 </ion-item>
                                             </div>
-                                        </ion-col>
+                                        </ion-col>-->
                                     </ion-row>
 
                                 </ion-col>
@@ -481,14 +312,14 @@
                                         <ion-col size="6">
                                             <ion-list class="brand_top">
                                                 <ion-list-header>企业科研人员占比</ion-list-header>
-                                                <div echarts [options]="brandOption"
+                                                <div *ngIf="circle['sci-rate']" echarts [options]="circle['sci-rate']"
                                                      style="width: 200px;height: 200px" class="main-chart"></div>
                                             </ion-list>
                                         </ion-col>
                                         <ion-col size="6">
                                             <ion-list class="brand_top">
                                                 <ion-list-header>科研人员学历分布</ion-list-header>
-                                                <div echarts [options]="brandOption"
+                                                <div *ngIf="circle.sci" echarts [options]="circle.sci"
                                                      style="width: 200px;height: 200px" class="main-chart"></div>
                                             </ion-list>
                                         </ion-col>
@@ -498,14 +329,14 @@
                                 <ion-col size="4">
                                     <ion-list class="brand_top">
                                         <ion-list-header>科研成果保护情况</ion-list-header>
-                                        <!--<div *ngIf="subsidyOption" echarts [options]="subsidyOption" class="main-chart subsidy-chart"
-                                             style="height: 230px;"></div>-->
+                                        <div *ngIf="option[9]" echarts [options]="option[9]" class="main-chart subsidy-chart"
+                                             style="height: 230px;"></div>
                                     </ion-list>
                                 </ion-col>
                                 <ion-col size="4">
                                     <ion-list class="brand_top">
                                         <ion-list-header>科研费用占比</ion-list-header>
-                                        <div *ngIf="subsidyOption" echarts [options]="subsidyOption"
+                                        <div *ngIf="option[4]" echarts [options]="option[4]"
                                              class="main-chart subsidy-chart"
                                              style="height: 230px;"></div>
                                     </ion-list>
@@ -529,7 +360,7 @@
                             <ion-col size="6">
                                 <div class="policy-left">
                                     <p>
-                                        快速培育可获得<em>120</em>万元
+                                        快速培育可获得<em>{{amt.quick}}</em>万元
                                         <span>快速培育
                                             <img src="/assets/images/company/into.png" height="13" width="13"/>
                                         </span>
@@ -539,9 +370,9 @@
                             <ion-col size="6">
                                 <div class="policy-right">
                                     <p>
-                                        科创直通车(2年)可获得<em>300</em>万元
+                                        科创直通车(2年)可获得<em>{{amt.keChuangBao}}</em>万元
                                         <span class="right">政策收益提升
-                                        <em>150%</em>
+                                        <em>{{amt.rate}}%</em>
                                         <img src="/assets/images/company/into.png" height="13" width="13"/>
                                         </span>
                                     </p>

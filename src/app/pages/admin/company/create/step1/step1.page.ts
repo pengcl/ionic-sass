@@ -47,7 +47,7 @@ export class AdminCompanyCreateStep1Page implements OnInit {
             debounceTime(1000),
             distinctUntilChanged()).subscribe(companyName => {
             this.companySvc.search(companyName).subscribe(res => {
-                if (res.code === 20000 && res.data) {
+                if (res.code === '200' && res.data) {
                     this.options = res.data;
                 }
             });
