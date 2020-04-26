@@ -7,12 +7,14 @@ import {tap} from 'rxjs/operators';
 /*import {DialogService} from '../data/dialog.service';*/
 import {DialogService} from '../modules/dialog';
 import {LoadingService} from '../services/loading.service';
+import {ToastService} from '../modules/toast';
 import {AuthService} from '../../pages/auth/auth.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
     constructor(private router: Router,
+                private toastSvc: ToastService,
                 private loadingSvc: LoadingService,
                 private dialogSvc: DialogService,
                 private authSvc: AuthService) {
@@ -27,13 +29,15 @@ export class ErrorInterceptor implements HttpInterceptor {
     }
 
     private handleResponse(res: any): void {
+        this.toastSvc.hide();
+        this.dialogSvc.destroyAll();
+        this.loadingSvc.hide();
         if (res.body) {
-            if (typeof (res.body.code) !== 'number' && res.body.code !== '0000') {
+            if ((typeof (res.body.code) !== 'number' && res.body.code !== '0000') && res.body.code !== '200') {
                 if (res.body.code) {
                     if (res.body.code === '1001') {
                         this.authSvc.requestAuth();
                     } else {
-                        this.loadingSvc.hide();
                         this.dialogSvc.show({
                             content: res.body.msg ? res.body.msg : res.body.message,
                             cancel: '我知道了'

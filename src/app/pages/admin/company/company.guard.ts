@@ -37,12 +37,12 @@ export class CompanyGuard implements CanActivate, CanActivateChild, CanLoad {
     }
 
     checkCompany(url: string): boolean {
-        if (this.companySvc.isExist || url === '/admin/company/item/0') {
+        if (this.companySvc.isExist || url === '/admin/company/create/step1') {
             return true;
         }
         this.dialogSvc.show({title: '温馨提示', content: '您当前的账户名下没有主体，请马上添加!', cancel: '', confirm: '好的，我知道了'}).subscribe(res => {
             this.companySvc.companyRedirectUrl = url;
-            this.router.navigate(['/admin/company/item/0']);
+            this.router.navigate(['/admin/company/create/step1']);
         });
         return false;
     }

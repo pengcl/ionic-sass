@@ -14,8 +14,9 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {PlanService} from '../../plan/plan.service';
 import {CompanyService} from '../company.service';
 import {getIndex} from '../../../../@core/utils/utils';
-import {AdminDashboardPage} from '../../dashboard/dashboard.page';
 import {DashboardService} from '../../dashboard/dashboard.service';
+
+const colors = ['#5F7194', '#56CFFF', '#5F8FF3', '#69EBB7'];
 
 @Component({
     selector: 'app-admin-company-qualification',
@@ -32,8 +33,79 @@ import {DashboardService} from '../../dashboard/dashboard.service';
     ]
 })
 export class AdminCompanyQualificationPage implements OnInit {
+    data;
+    subsidy = {
+        quick: {
+            tooltip: {},
+            series: [
+                {
+                    name: '速度',
+                    type: 'gauge',
+                    z: 3,
+                    axisLine: {            // 坐标轴线
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            width: 10
+                        }
+                    },
+                    axisTick: {            // 坐标轴小标记
+                        length: 15,        // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    splitLine: {           // 分隔线
+                        length: 20,         // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    title: {
+                        // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        fontWeight: 'bolder',
+                        fontSize: 20,
+                        fontStyle: 'italic'
+                    },
+                    data: [{value: 0, count: 0}]
+                }
+            ]
+        },
+        keChuangBao: {
+            tooltip: {},
+            series: [
+                {
+                    name: '速度',
+                    type: 'gauge',
+                    z: 3,
+                    axisLine: {            // 坐标轴线
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            width: 10
+                        }
+                    },
+                    axisTick: {            // 坐标轴小标记
+                        length: 15,        // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    splitLine: {           // 分隔线
+                        length: 20,         // 属性length控制线长
+                        lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                            color: 'auto'
+                        }
+                    },
+                    title: {
+                        // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                        fontWeight: 'bolder',
+                        fontSize: 20,
+                        fontStyle: 'italic'
+                    },
+                    data: [{value: 0, count: 0}]
+                }
+            ]
+        }
+    };
     brandOption = {
-        color: ['#69EBB7', '#5F8FF3'],
+        color: colors,
         tooltip: {
             trigger: 'item',
             formatter: '{a} <br/>{b}: {c} ({d}%)'
@@ -73,18 +145,11 @@ export class AdminCompanyQualificationPage implements OnInit {
         ]
     };
     subsidyOption = {
-        color: ['#3bcec6'],
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'shadow'
-            }
-        },
+        color: colors,
         grid: {
             left: '3%',
-            right: '5%',
-            bottom: '3%',
-            containLabel: true
+            right: '10%',
+            bottom: '10%'
         },
         xAxis: {
             type: 'value',
@@ -93,8 +158,9 @@ export class AdminCompanyQualificationPage implements OnInit {
             fontSize: '14px'
         },
         yAxis: {
+            axisLabel: false,
             type: 'category',
-            data: ['科创直通车可获得', '快速培育可获得']
+            data: []
         },
         series: [
             {
@@ -102,13 +168,13 @@ export class AdminCompanyQualificationPage implements OnInit {
                 data: [100, 200],
                 label: {
                     show: true,
-                    position: 'right',
+                    position: 'left',
                     color: '#21333F'
                 },
                 itemStyle: {
                     normal: {
                         color: (params) => {
-                            const colorList = ['rgba(13, 215, 141, 1)', 'rgba(254, 174, 77, 1)'];
+                            const colorList = colors;
                             return colorList[params.dataIndex];
                         }
                     },
@@ -122,7 +188,7 @@ export class AdminCompanyQualificationPage implements OnInit {
         ]
     };
     copyOption = {
-        color: ['#ff5257', '#27d78f', '#36a0f4'],
+        color: colors,
         legend: {
             bottom: 10,
             data: ['已注册', '申请中', '无效'],
@@ -149,12 +215,79 @@ export class AdminCompanyQualificationPage implements OnInit {
         },
         yAxis: {
             type: 'value'
-        }
+        },
+        series: [
+            {
+                name: '无效',
+                type: 'bar',
+                stack: '1',
+                data: [1, 2, 3],
+                barWidth: 14
+            },
+            {
+                name: '申请中',
+                type: 'bar',
+                stack: '1',
+                data: [1, 2, 3],
+                barWidth: 14
+            },
+            {
+                name: '已注册',
+                type: 'bar',
+                stack: '1',
+                data: [1, 2, 3],
+                barWidth: 14
+            }
+        ]
+    };
+    group = {
+        color: colors,
+        legend: {
+            bottom: 0,
+            data: ['执行人员', '管理人员'],
+            itemWidth: 8,
+            itemHeight: 8,
+            borderRadius: 50
+        },
+        xAxis: [
+            {
+                type: 'category',
+                axisTick: {show: false},
+                data: ['2012', '2013', '2014', '2015', '2016']
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: 'Forest',
+                type: 'bar',
+                barGap: 0,
+                data: [320, 332, 301, 334, 390]
+            },
+            {
+                name: 'Steppe',
+                type: 'bar',
+                data: [220, 182, 191, 234, 290]
+            },
+            {
+                name: 'Desert',
+                type: 'bar',
+                data: [150, 232, 201, 154, 190]
+            },
+            {
+                name: 'Wetland',
+                type: 'bar',
+                data: [98, 77, 101, 99, 40]
+            }
+        ]
     };
     id = this.route.snapshot.params.id;
     type = '0';
     reportType = 1;
-    data;
     conditions;
     year = (new Date()).getFullYear();
     years = (() => {
@@ -201,7 +334,18 @@ export class AdminCompanyQualificationPage implements OnInit {
         city: new FormControl('', [Validators.required])
     });
     policy = {
+        total: 0,
+        update: 0,
         list: []
+    };
+    brand;
+    scientific;
+    option: any = {};
+    circle: any = {};
+    amt: any = {
+        keChuangBao: 0,
+        quick: 0,
+        rate: 0
     };
 
     constructor(private title: Title,
@@ -218,14 +362,6 @@ export class AdminCompanyQualificationPage implements OnInit {
                 private companySvc: CompanyService,
                 private qualificationSvc: QualificationService,
                 private dashboardSvc: DashboardService) {
-        /*this.formGroup = new FormGroup({
-            id: new FormControl('', []),
-            demension: new FormControl(this.type, [Validators.required]),
-            custId: new FormControl(this.id, [Validators.required]),
-            uniqueKey: new FormControl(this.type === '0' ? this.year : '', [Validators.required]),
-            conditions: new FormControl('', [Validators.required])
-        });*/
-
         planSvc.list(this.params).subscribe(res => {
             this.dataSource = new MatTableDataSource<any>(res.list);
         });
@@ -238,58 +374,177 @@ export class AdminCompanyQualificationPage implements OnInit {
                 return a.reportDateEnd - b.reportDateEnd;
             });
         });
-    }
-
-    getDate(end) {
-        return Math.round((end - Date.parse(new Date().toString())) / 86400000);
-    }
-
-    /*setupForm(conditions) {
-        conditions.forEach(condition => {
-            if (condition.fieldType === '0001') {
-                this.form.setControl(condition.conditionId,
-                    new FormControl(condition.conditionVal === '1' ? true : condition.conditionVal === '0' ? false : '',
-                        [!!condition.required ? Validators.required : Validators.nullValidator]));
-            } else {
-                if (condition.fieldType === '0002') {
-                    this.dictSvc.get('condition_' + condition.conditionId).subscribe(res => {
-                        this.dict[condition.conditionId] = res.result;
-                    });
-                }
-                this.form.setControl(condition.conditionId, new FormControl(condition.conditionVal,
-                    [!!condition.required ? Validators.required : Validators.nullValidator]));
-            }
+        this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
+            this.amt.keChuangBao = res.keChuangBaoAmt;
+            this.amt.quick = res.quickAmt;
+            this.amt.rate = (res.keChuangBaoAmt - res.quickAmt) !== 0 ? ((res.keChuangBaoAmt - res.quickAmt) * 100 / res.quickAmt)
+                .toFixed(2) : 0;
+            this.subsidy.keChuangBao.series[0].data[0].value = res.keChuangBaoAmt;
+            this.subsidy.keChuangBao.series[0].data[0].count = res.keChuangBaoCount;
+            this.subsidy.quick.series[0].data[0].value = res.quickAmt;
+            this.subsidy.quick.series[0].data[0].count = res.quickCount;
         });
-    }*/
+    }
 
     ngOnInit() {
         this.title.setTitle(this.type === '0' ? '企业资质信息' : this.type === '1' ? '项目' : '员工');
         this.companySvc.get(this.id).subscribe(res => {
             this.company = res.busCust;
         });
-        /*this.qualificationSvc.list(this.id, this.type).subscribe(res => {
-            if (res[0]) {
-                this.formGroup.get('id').setValue(res[0].credId);
-                this.formGroup.get('uniqueKey').setValue(res[0].uniqueKey);
-                this.conditions = res[0].conditions;
-                this.setupForm(res[0].conditions);
-                this.getData(res[0].conditions);
-                this.getNum();
-                this.form.valueChanges.subscribe(() => {
-                    this.getNum();
-                });
-            } else {
-                this.qualificationSvc.item(this.type, this.id).subscribe(result => {
-                    this.conditions = result.conditions;
-                    this.setupForm(result.conditions);
-                    this.getData(result.conditions);
-                    this.getNum();
-                    this.form.valueChanges.subscribe(() => {
-                        this.getNum();
-                    });
-                });
+        this.companySvc.source(this.id).subscribe(res => {
+            this.data = res;
+            this.brand = (() => {
+                const list = [];
+                list.push(this.getGroupValue(-100));
+                list.push(this.getGroupValue(-101));
+                list[0].label = '行业深度';
+                list[1].label = '经营广度';
+                return list;
+            })();
+            this.scientific = (() => {
+                const list = [];
+                list.push(this.getGroupValue(9));
+                list.push(this.getGroupValue(10));
+                list[0].label = '科研成果';
+                list[1].label = '科研能力';
+                return list;
+            })();
+            this.getHBar(6, '个');
+            this.getHBar(4, '%');
+            this.getVBar(8);
+            this.getCircle('job', [{id: 21, label: '研发'}, {id: 25, label: '销售'}, {id: 26, label: '服务'}]);
+            this.getCircle('edu', [{id: 28, label: '专科'}, {id: 29, label: '本科及以上'}]);
+            this.getCircle('sci', [{id: 31, label: '专科'}, {id: 30, label: '本科及以上'}]);
+            this.getCircle('sci-rate', [{id: 21, label: '研发'}]);
+            this.getGroupBar(9);
+        });
+    }
+
+    getDate(end) {
+        return Math.round((end - Date.parse(new Date().toString())) / 86400000);
+    }
+
+    getCircle(id, items) {
+        const option = JSON.parse(JSON.stringify(this.brandOption));
+        option.legend.data = [];
+        option.series[0].data = [];
+        let other = 100;
+        items.forEach(item => {
+            let value = this.getCondValue(item.id);
+            other = other - value;
+            value = typeof value !== 'string' ? value : parseInt(value.split('-')[1], 10);
+            const name = item.label;
+            option.legend.data.push(item.label);
+            option.series[0].data.push({name, value});
+        });
+        option.legend.data.push('其它');
+        option.series[0].data.push({
+            name: '其它',
+            value: other
+        });
+        this.circle[id] = option;
+    }
+
+    getHBar(id, unit) {
+        const chats = this.getChatValue(id);
+        const option = JSON.parse(JSON.stringify(this.subsidyOption));
+        option.xAxis.name = unit;
+        option.yAxis.data = [];
+        option.series[0].data = [];
+        chats.forEach((item, index) => {
+            option.yAxis.data.push(item.text);
+            option.series[0].data.push(item.count);
+            option.series[0].label = {
+                show: true,
+                position: 'insideLeft',
+                formatter: (params) => {
+                    return params.name;
+                }
+            };
+            option.series[0].itemStyle.normal = {
+                color: (params) => {
+                    const colorList = colors;
+                    return colorList[params.dataIndex];
+                }
+            };
+        });
+        this.option[id] = option;
+    }
+
+    getGroupBar(id) {
+        const chats = this.getChatValue(id);
+        const option = JSON.parse(JSON.stringify(this.group));
+        option.series = option.series.slice(0, 3);
+        option.legend.data = ['发明专利', '使用新型专利', '软件著作权'];
+        option.series[0].name = '发明专利';
+        option.series[0].data = [];
+        option.series[1].name = '使用新型专利';
+        option.series[1].data = [];
+        option.series[2].name = '软件著作权';
+        option.series[2].data = [];
+        option.xAxis[0].data = [];
+        chats.forEach(item => {
+            option.xAxis[0].data.push(item.text);
+            option.series[0].data.push(item.count);
+            option.series[1].data.push(item.count1);
+            option.series[2].data.push(item.count2);
+        });
+        this.option[id] = option;
+    }
+
+    getVBar(id) {
+        const chats = this.getChatValue(id);
+        const option = JSON.parse(JSON.stringify(this.copyOption));
+        option.legend.data = [];
+        option.xAxis.data = [];
+        option.series[0].data = [];
+        option.series[1].data = [];
+        option.series[2].data = [];
+        chats.forEach(item => {
+            option.legend.data.push(item.text);
+            option.xAxis.data.push(item.text);
+            option.series[0].data.push(item.count2);
+            option.series[1].data.push(item.count);
+            option.series[2].data.push(item.count1);
+        });
+        this.option[id] = option;
+    }
+
+    getCondValue(id, key?) {
+        const index = getIndex(this.data.conds, 'condId', id);
+        const cond = this.data.conds[index];
+        let value: any = '';
+        if (key) {
+            value = cond[key] ? cond[key] : '-';
+        } else {
+            value = '-';
+            if (cond) {
+                const v2 = cond.val2;
+                const v1 = cond.val1;
+                const v0 = cond.val;
+                if (v2) {
+                    value = v1 + '-' + v2;
+                } else {
+                    value = v0;
+                }
             }
-        });*/
+        }
+        return value;
+    }
+
+    getChatValue(id) {
+        const list = [];
+        this.data.charts.forEach(item => {
+            if (item.groupId === id) {
+                list.push(item);
+            }
+        });
+        return list;
+    }
+
+    getGroupValue(id) {
+        const body = this.data.gradeTargetGroups[getIndex(this.data.gradeTargetGroups, 'targetId', id)];
+        return body;
     }
 
     getNum() {
@@ -382,27 +637,8 @@ export class AdminCompanyQualificationPage implements OnInit {
         });
     }
 
-    /*submit(isFull) {
-        const conditions = this.getConditions();
-        this.formGroup.get('conditions').setValue(conditions);
-        if (this.form.invalid || this.formGroup.invalid || this.loading) {
-            return false;
-        }
-        this.loadingSvc.show('提交中...', 0).then();
-        this.loading = true;
-        this.qualificationSvc.add(this.formGroup.value).subscribe(res => {
-            if (res) {
-                this.create(res, isFull);
-            } else {
-                this.loadingSvc.hide();
-                this.loading = false;
-            }
-        });
-    }*/
-
     remark(content, e) {
         e.preventDefault();
-        console.log(content);
     }
 
     preDownload(id) {

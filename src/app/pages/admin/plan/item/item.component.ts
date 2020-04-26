@@ -8,6 +8,9 @@ import {MatTableDataSource} from '@angular/material';
 
 import {map} from 'rxjs/operators';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {getIndex} from '../../../../@core/utils/utils';
+
+const colors = ['#5F7194', '#56CFFF', '#5F8FF3', '#69EBB7'];
 
 @Component({
     selector: 'app-admin-plan-item',
@@ -16,7 +19,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class AdminPlanItemPage implements OnInit {
     brandOption = {
-        color: ['#69EBB7', '#5F8FF3'],
+        color: colors,
         tooltip: {
             trigger: 'item',
             formatter: '{a} <br/>{b}: {c} ({d}%)'
@@ -52,6 +55,59 @@ export class AdminPlanItemPage implements OnInit {
                     {value: 25, name: '执行人员'},
                     {value: 75, name: '管理人员'}
                 ]
+            }
+        ]
+    };
+    copyOption = {
+        color: colors,
+        legend: {
+            bottom: 10,
+            data: ['已注册', '申请中', '无效'],
+            itemWidth: 8,
+            itemHeight: 8,
+            textStyle: {
+                fontSize: 10
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '15%',
+            containLabel: true
+        },
+        xAxis: {
+
+            type: 'category',
+            data: ['2018', '2019'],
+            axisTick: {
+                alignWithLabel: true,
+                interval: 0
+            }
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '无效',
+                type: 'bar',
+                stack: '1',
+                data: [1, 2, 3],
+                barWidth: 14
+            },
+            {
+                name: '申请中',
+                type: 'bar',
+                stack: '1',
+                data: [1, 2, 3],
+                barWidth: 14
+            },
+            {
+                name: '已注册',
+                type: 'bar',
+                stack: '1',
+                data: [1, 2, 3],
+                barWidth: 14
             }
         ]
     };
@@ -104,7 +160,84 @@ export class AdminPlanItemPage implements OnInit {
             }
         ]
     };
-    id = this.route.snapshot.params.id;
+    lineOption = {
+        color: colors,
+        title: {
+            text: '折线图堆叠'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['企业现状', '行业水平']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '企业现状',
+                type: 'line',
+                stack: '总量',
+                data: [120, 132, 101, 134, 90, 230, 210]
+            },
+            {
+                name: '行业水平',
+                type: 'line',
+                stack: '总量',
+                data: [220, 182, 191, 234, 290, 330, 310]
+            }
+        ]
+    };
+    groupOption = {
+        color: colors,
+        legend: {
+            data: ['2011年', '2012年']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01]
+        },
+        yAxis: {
+            type: 'category',
+            data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)']
+        },
+        series: [
+            {
+                name: '2011年',
+                type: 'bar',
+                data: [18203, 23489, 29034, 104970, 131744, 630230]
+            },
+            {
+                name: '2012年',
+                type: 'bar',
+                data: [19325, 23438, 31000, 121594, 134141, 681807]
+            }
+        ]
+    };
+    id = this.companySvc.currentCompany.id;
     option = {
         pie: null,
         line: null
@@ -130,6 +263,18 @@ export class AdminPlanItemPage implements OnInit {
     policy = {
         list: []
     };
+    circle: any = {};
+    brand;
+    scientific;
+    amt: any = {
+        keChuangBao: 0,
+        quick: 0,
+        rate: 0
+    };
+    items: any[] = Array(45)
+        .fill(0)
+        .map((v: any, i: number) => i);
+    types;
 
     constructor(private route: ActivatedRoute,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
@@ -138,7 +283,6 @@ export class AdminPlanItemPage implements OnInit {
                 private planSvc: PlanService) {
         this.route.paramMap.pipe(map(params => this.id = params.get('id'))).subscribe(id => {
             planSvc.item(this.id).subscribe(res => {
-                this.data = res;
                 this.policies = res.policys;
                 this.total = this.policies.length;
                 this.getData();
@@ -275,6 +419,162 @@ export class AdminPlanItemPage implements OnInit {
     }
 
     ngOnInit() {
+        this.companySvc.source(this.company.id).subscribe(res => {
+            this.data = res;
+            this.getVBar(8);
+            this.getCircle('job', [{id: 21, label: '研发'}, {id: 25, label: '销售'}, {id: 26, label: '服务'}]);
+            this.getCircle('edu', [{id: 28, label: '专科'}, {id: 29, label: '本科及以上'}]);
+            this.getGroupBar(3);
+            this.getGroupBar(7);
+            this.getLineBar(2);
+            const selectedTypes = this.getChatValue(5);
+            const items = Array(45)
+                .fill(0)
+                .map((v: any, i: number) => i);
+            const types = [];
+            items.forEach(item => {
+                const index = getIndex(selectedTypes, 'text', item + '');
+                let selected = false;
+                if (typeof index === 'number') {
+                    selected = true;
+                }
+                types.push({
+                    id: item + 1,
+                    selected
+                });
+            });
+            this.types = types;
+            this.brand = (() => {
+                const list = [];
+                list.push(this.getGroupValue(-100));
+                list.push(this.getGroupValue(-101));
+                list[0].label = '行业深度';
+                list[1].label = '经营广度';
+                return list;
+            })();
+            this.scientific = (() => {
+                const list = [];
+                list.push(this.getGroupValue(9));
+                list.push(this.getGroupValue(10));
+                list[0].label = '科研成果';
+                list[1].label = '科研能力';
+                return list;
+            })();
+        });
+        this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
+            this.amt.keChuangBao = res.keChuangBaoAmt;
+            this.amt.quick = res.quickAmt;
+            this.amt.rate = (res.keChuangBaoAmt - res.quickAmt) !== 0 ? ((res.keChuangBaoAmt - res.quickAmt) * 100 / res.quickAmt)
+                .toFixed(2) : 0;
+        });
+    }
+
+    getVBar(id) {
+        const chats = this.getChatValue(id);
+        const option = JSON.parse(JSON.stringify(this.copyOption));
+        option.legend.data = [];
+        option.xAxis.data = [];
+        option.series[0].data = [];
+        option.series[1].data = [];
+        option.series[2].data = [];
+        chats.forEach(item => {
+            option.legend.data.push(item.text);
+            option.xAxis.data.push(item.text);
+            option.series[0].data.push(item.count2);
+            option.series[1].data.push(item.count);
+            option.series[2].data.push(item.count1);
+        });
+        this.option[id] = option;
+    }
+
+    getLineBar(id) {
+        const option = JSON.parse(JSON.stringify(this.lineOption));
+        const charts = this.getChatValue(id);
+        option.xAxis.data = [];
+        option.series[0].data = [];
+        option.series[1].data = [];
+        charts.forEach(item => {
+            option.xAxis.data.push(item.text);
+            option.series[0].data.push(item.count);
+            option.series[1].data.push(item.count1);
+        });
+        // todo count1 is disappear
+        this.option[id] = option;
+    }
+
+    getGroupBar(id) {
+        const option = JSON.parse(JSON.stringify(this.groupOption));
+        const charts = this.getChatValue(id);
+        option.legend.data = ['企业现状', '行业平均水平'];
+        option.series[0].name = '企业现状';
+        option.series[1].name = '行业平均水平';
+        option.yAxis.data = [];
+        option.series[0].data = [];
+        option.series[1].data = [];
+        charts.forEach((item, index) => {
+            option.yAxis.data.push(item.text);
+            option.series[0].data.push(item.count);
+            option.series[1].data.push(item.count1);
+        });
+        this.option[id] = option;
+    }
+
+    getCircle(id, items) {
+        const option = JSON.parse(JSON.stringify(this.brandOption));
+        option.legend.data = [];
+        option.series[0].data = [];
+        let other = 100;
+        items.forEach(item => {
+            let value = this.getCondValue(item.id);
+            other = other - value;
+            value = typeof value !== 'string' ? value : parseInt(value.split('-')[1], 10);
+            const name = item.label;
+            option.legend.data.push(item.label);
+            option.series[0].data.push({name, value});
+        });
+        option.legend.data.push('其它');
+        option.series[0].data.push({
+            name: '其它',
+            value: other
+        });
+        this.circle[id] = option;
+    }
+
+    getCondValue(id, key?) {
+        const index = getIndex(this.data.conds, 'condId', id);
+        const cond = this.data.conds[index];
+        let value: any = '';
+        if (key) {
+            value = cond[key] ? cond[key] : '-';
+        } else {
+            value = '-';
+            if (cond) {
+                const v2 = cond.val2;
+                const v1 = cond.val1;
+                const v0 = cond.val;
+                if (v2) {
+                    value = v1 + '-' + v2;
+                } else {
+                    value = v0;
+                }
+            }
+        }
+        return value;
+    }
+
+    getChatValue(id) {
+        const list = [];
+        this.data.charts.forEach(item => {
+            if (item.groupId === id) {
+                list.push(item);
+            }
+        });
+        return list;
+    }
+
+    getGroupValue(id) {
+        const body = this.data.gradeTargetGroups[getIndex(this.data.gradeTargetGroups, 'targetId', id)];
+        return body;
     }
 
     getDate(end) {
@@ -283,7 +583,6 @@ export class AdminPlanItemPage implements OnInit {
 
     getData() {
         const rows = JSON.parse(JSON.stringify(this.policies)).slice((this.params.page - 1) * this.params.rows, this.params.page * this.params.rows);
-        console.log(this.policies);
         this.dataSource = new MatTableDataSource<any>(rows);
         this.selection = new SelectionModel<any>(true, []);
         this.dataSource.data.forEach(row => this.selection.select(row));
