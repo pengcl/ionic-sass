@@ -345,7 +345,7 @@ export class AdminPlanItemPage implements OnInit {
 
     getGroupValue(id) {
         const body = this.data.gradeTargetGroups[getIndex(this.data.gradeTargetGroups, 'targetId', id)];
-        return body;
+        return body || {};
     }
 
     getDate(end) {
