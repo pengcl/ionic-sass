@@ -103,7 +103,7 @@
                     智能画像
                 </ion-button>
                 <ion-button color="primary"
-                            [routerLink]="['/admin/plan/list']"
+                            [routerLink]="['/admin/plan/item']" [queryParams]="{id:element.id}"
                             (click)="$event.stopPropagation()">
                     体检报告
                 </ion-button>

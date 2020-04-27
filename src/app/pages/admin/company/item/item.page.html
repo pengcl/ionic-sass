@@ -588,7 +588,7 @@
     </ion-grid>
 </div>
 <div class="container-bottom">
-    <ion-button [routerLink]="['admin/policy/index']" color="primary" style="width: 177px !important;height: 48px!important;">查看企业适配政策</ion-button>
-    <ion-button color="primary">查看体检报告</ion-button>
+    <ion-button [routerLink]="['/admin/policy/index']" color="primary" style="width: 177px !important;height: 48px!important;">查看企业适配政策</ion-button>
+    <ion-button [routerLink]="['/admin/plan/item']" [queryParams]="{id:id}" color="primary">查看体检报告</ion-button>
     <ion-button (click)="save()" style="--background: rgba(13, 215, 141, 1);">保存本次修改</ion-button>
 </div>

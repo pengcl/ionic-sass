@@ -101,7 +101,7 @@ const routes: Routes = [
                     import('./plan/list/list.module').then(m => m.AdminPlanListPageModule)
             },
             {// 体检报告列表
-                path: 'plan/item/:id',
+                path: 'plan/item',
                 data: {name: '企业体检报告', menuIndex: 7},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
