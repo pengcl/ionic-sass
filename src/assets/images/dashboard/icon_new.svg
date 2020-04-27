@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="22px" height="19px" viewBox="0 0 22 19" enable-background="new 0 0 22 19" xml:space="preserve">
+<g id="页面-1">
+	<g id="切图" transform="translate(-298.000000, -246.000000)">
+		<g id="new_icon" transform="translate(298.000000, 246.000000)">
+			
+				<linearGradient id="矩形_1_" gradientUnits="userSpaceOnUse" x1="20.5938" y1="3.7017" x2="19.6388" y2="3.006" gradientTransform="matrix(22 0 0 -19 -430.9531 72.8438)">
+				<stop  offset="0" style="stop-color:#3BF7D2"/>
+				<stop  offset="1" style="stop-color:#1BB2DF"/>
+			</linearGradient>
+			<polygon id="矩形" fill="url(#矩形_1_)" points="0,0 22,0 22,19 11,15.09 0,19 			"/>
+			<g id="NEW">
+				<g>
+					<text transform="matrix(1 0 0 1 2.3359 11)" fill="#CCFFF7" font-family="'Arial-BoldMT'" font-size="8">NEW</text>
+				</g>
+				<g>
+					<text transform="matrix(1 0 0 1 2.3359 11)" fill="#CCFFF7" font-family="'Arial-BoldMT'" font-size="8">NEW</text>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>

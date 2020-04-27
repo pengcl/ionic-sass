@@ -38,7 +38,7 @@
                     <mat-card-content>
                         <ion-row style="margin-top: 20px !important;">
                             <ion-col size="4">
-                                <ion-item lines="none">
+                                <ion-item lines="none" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;">
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/service.png"/>
                                     </ion-thumbnail>
@@ -49,11 +49,11 @@
                                 </ion-item>
                             </ion-col>
                             <ion-col size="8">
-                                <ion-item lines="none" style="--background:rgba(246,247,249,1);">
-                                    <article>
+                                <ion-item lines="none"style="--background:rgba(246,247,249,1);border-top-right-radius:4px;border-bottom-right-radius:4px;">
+                                    <article style="padding: 30px 40px;height:140px;overflow: auto">
                                         {{data.busindustry.explainContent ? data.busindustry.explainContent : '-'}}
                                     </article>
-                                    <div style="width:4px;height:28px;background:rgba(211,211,211,1);border-radius:2px;position: absolute;top: 33px;right: 21px"></div>
+                                    <div style="width:4px;height:28px;background:rgba(211,211,211,1);border-radius:2px;position: absolute;top: 33px;right: 21px; display: none"></div>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
@@ -66,9 +66,10 @@
                         <mat-card-title>企业体量分析结果</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <ion-row style="margin-top: 20px !important;">
+                        <ion-row style="margin-top: 20px !important;" [ngStyle]="{'border-color':getGroupValue(15).score < 60 ? '#EEDADA' : '' }">
                             <ion-col size="4">
-                                <ion-item lines="none" class="result_l">
+                                <ion-item lines="none" class="result_l"  style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;"
+                                          [ngStyle]="{'border-right-color':getGroupValue(15).score < 60 ? '#EEDADA' : '' }">
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/income.png"/>
                                     </ion-thumbnail>
@@ -82,15 +83,16 @@
                                 </ion-item>
                             </ion-col>
                             <ion-col size="8">
-                                <ion-item lines="none" class="result_r">
+                                <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                     <ion-label [innerHTML]="getGroupValue(15).suggest"></ion-label>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
 
-                        <ion-row style="margin-top: 10px !important;">
+                        <ion-row style="margin-top: 10px !important;" [ngStyle]="{'border-color':getGroupValue(16).score < 60 ? '#EEDADA' : '' }">
                             <ion-col size="4">
-                                <ion-item lines="none" class="result_l">
+                                <ion-item lines="none" class="result_l" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;"
+                                          [ngStyle]="{'border-right-color':getGroupValue(16).score < 60 ? '#EEDADA' : '' }">
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/assets.png"/>
                                     </ion-thumbnail>
@@ -104,15 +106,18 @@
                                 </ion-item>
                             </ion-col>
                             <ion-col size="8">
-                                <ion-item lines="none" class="result_r">
+                                <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                     <ion-label [innerHTML]="getGroupValue(16).suggest"></ion-label>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
 
-                        <ion-row style="margin-top: 10px !important;">
+                        <ion-row style="margin-top: 10px !important;" [ngStyle]="{'border-color':getGroupValue(17).score < 60 ? '#EEDADA' : '' }">
                             <ion-col size="4">
-                                <ion-item lines="none" class="result_l">
+                                <ion-item lines="none"
+                                          class="result_l"
+                                          style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;"
+                                          [ngStyle]="{'border-right-color':getGroupValue(17).score < 60 ? '#EEDADA' : '' }">
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/amount.png"/>
                                     </ion-thumbnail>
@@ -126,7 +131,7 @@
                                 </ion-item>
                             </ion-col>
                             <ion-col size="8">
-                                <ion-item lines="none" class="result_r">
+                                <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                     <ion-label [innerHTML]="getGroupValue(17).suggest"></ion-label>
                                 </ion-item>
                             </ion-col>
@@ -141,9 +146,10 @@
                         <mat-card-title>人力结构分析结果</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <ion-row style="margin-top: 20px !important;">
+                        <ion-row style="margin-top: 20px !important;" [ngStyle]="{'border-color':getGroupValue(18).score < 60 ? '#EEDADA' : '' }">
                             <ion-col size="4">
-                                <ion-item lines="none" class="result_l">
+                                <ion-item lines="none" class="result_l" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;"
+                                          [ngStyle]="{'border-right-color':getGroupValue(18).score < 60 ? '#EEDADA' : '' }">
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/member.png"/>
                                     </ion-thumbnail>
@@ -157,7 +163,7 @@
                                 </ion-item>
                             </ion-col>
                             <ion-col size="8">
-                                <ion-item lines="none" class="result_r">
+                                <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                     <ion-label [innerHTML]="getGroupValue(18).suggest"></ion-label>
                                 </ion-item>
                             </ion-col>
@@ -175,7 +181,7 @@
                                 </ion-list>
                             </ion-col>
                             <ion-col size="8">
-                                <div style="width: 100%;height: 100%;background: #F6F7F9">
+                                <div style="width: 100%;height: 100%;background: #F6F7F9;border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                     <ion-row style="border: none">
                                         <ion-col size="6">
                                             <table cellpadding="0" cellspacing="0" border="0" class="result_table">
@@ -225,7 +231,7 @@
                                 </ion-list>
                             </ion-col>
                             <ion-col size="8">
-                                <div style="width: 100%;height: 100%;background: #F6F7F9">
+                                <div style="width: 100%;height: 100%;background: #F6F7F9;border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                     <ion-row style="border: none">
                                         <ion-col size="6">
                                             <table cellpadding="0" cellspacing="0" border="0" class="result_table">
@@ -272,10 +278,13 @@
                         <mat-card-title>品牌布局分析结果</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <ion-row style="margin-top: 20px">
+                        <ion-row style="margin-top: 20px" [ngStyle]="{'border-color':getGroupValue(-100).score < 60 ? '#EEDADA' : '' }">
                             <ion-col size="4">
-                                <ion-item *ngFor="let item of brand" lines="none" class="layout_l"
-                                          style="border-bottom: 1px solid rgba(229,235,240,1)">
+                                <ion-item *ngFor="let item of brand;let i = index" lines="none" class="layout_l"
+                                          style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;"
+                                [ngStyle]="{'border-bottom':i === brand.length-1 ? 'none' : '1px solid rgba(229,235,240,1)',
+                                            'border-right-color':getGroupValue(-100).score < 60 ? '#EEDADA' : '',
+                                            'border-bottom-color':getGroupValue(-100).score < 60 ? '#EEDADA' : ''}">
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/depth.png"/>
                                     </ion-thumbnail>
@@ -285,7 +294,7 @@
                                     </div>
                                 </ion-item>
                             </ion-col>
-                            <ion-col size="8">
+                            <ion-col size="8" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                 <ion-item lines="none">
                                     <article style="color: #5F717D;padding: 48px 37px 47px 40px;">
                                         <ion-label [innerHTML]="getGroupValue(-100).suggest"></ion-label>
@@ -316,7 +325,7 @@
                                         <tbody>
                                         <tr *ngFor="let item of getChatValue(1);let i = index">
                                             <td class="user">
-                                                <img [src]="'/assets/images/company/' + (i + 1) + '.png'" height="31" width="24"/>
+                                                <img [src]="'/assets/images/company/' + (i + 1) + '.png'" height="auto" width="24"/>
                                             </td>
                                             <td class="grade">{{item.text}}</td>
                                             <td class="consumption">{{item.count}}</td>
@@ -397,7 +406,7 @@
                         <ion-row style="margin-top: 20px">
                             <ion-col size="4">
                                 <ion-item lines="none" class="layout_l"
-                                          style="border-bottom: 1px solid rgba(229,235,240,1)">
+                                           style="border-bottom: 1px solid rgba(229,235,240,1);border-top-left-radius: 4px;border-bottom-left-radius: 4px;">
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/achievement.png"/>
                                     </ion-thumbnail>
@@ -406,7 +415,7 @@
                                         <img src="/assets/images/company/hand.png"/>
                                     </div>
                                 </ion-item>
-                                <ion-item lines="none" class="layout_l">
+                                <ion-item lines="none" class="layout_l" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;">
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/ability.png"/>
                                     </ion-thumbnail>
@@ -416,7 +425,7 @@
                                     </div>
                                 </ion-item>
                             </ion-col>
-                            <ion-col size="8">
+                            <ion-col size="8" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                 <ion-item lines="none">
                                     <article style="color: #5F717D;padding: 48px 37px 38px 40px;">
                                         <ion-label [innerHTML]="getGroupValue(9).suggest"></ion-label>
@@ -457,8 +466,8 @@
                                 </ion-item>
                             </ion-col>
                             <ion-col size="8">
-                                <div style="width: 100%;height: 100%;background:rgba(246,247,249,1);">
-                                    <p style="font-size:18px;font-weight:400;color:#5F717D;line-height:32px;margin: 0;padding: 31px">
+                                <div style="width: 100%;height: 100%;background:rgba(246,247,249,1);border-top-right-radius:4px;border-bottom-right-radius:4px;">
+                                    <p style="font-size:18px;font-weight:400;color:#5F717D;line-height:32px;margin: 0;padding: 31px;">
                                         科研成果情况</p>
                                     <div *ngIf="option[7]" echarts [options]="option[7]"
                                          class="main-chart subsidy-chart"
@@ -467,67 +476,70 @@
                             </ion-col>
                         </ion-row>
 
-                        <ion-row style="margin-top: 11px;">
+                        <ion-row style="margin-top: 11px;" [ngStyle]="{'border-color':getGroupValue(19).score < 60 ? '#EEDADA' : '' }">
                             <ion-col size="4">
-                                <ion-item lines="none" class="result_l">
+                                <ion-item lines="none" class="result_l" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;"
+                                          [ngStyle]="{'border-right-color':getGroupValue(19).score < 60 ? '#EEDADA' : '' }">
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/proportion.png"/>
                                     </ion-thumbnail>
                                     <ion-label>
                                         <p>科研人员占比</p>
-                                        <h2 style="color: #4DC36D">{{getCondValue(21)}}%</h2>
+                                        <h2 [ngStyle]="{'color': getGroupValue(19).score >= 60 ? '#3fa2f4' : '#B81F1C'}">{{getCondValue(21)}}%</h2>
                                     </ion-label>
                                     <div class="result_img">
-                                        <img src="/assets/images/company/hand.png"/>
+                                        <img [src]="'/assets/images/company/' + (getGroupValue(19).score >= 81 ? 'hand' : getGroupValue(19).score >= 60 ? 'tick' : 'warn') + '.png'"/>
                                     </div>
                                 </ion-item>
                             </ion-col>
                             <ion-col size="8">
-                                <ion-item lines="none" class="result_r">
+                                <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                     <ion-label [innerHTML]="getGroupValue(19).suggest"></ion-label>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
 
-                        <ion-row style="margin-top: 11px;">
+                        <ion-row style="margin-top: 11px;" [ngStyle]="{'border-color':getGroupValue(20).score < 60 ? '#EEDADA' : '' }">
                             <ion-col size="4">
-                                <ion-item lines="none" class="result_l">
+                                <ion-item lines="none" class="result_l" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;"
+                                          [ngStyle]="{'border-right-color':getGroupValue(20).score < 60 ? '#EEDADA' : '' }">
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/education.png"/>
                                     </ion-thumbnail>
                                     <ion-label>
                                         <p>科研人员本科学历及以上</p>
-                                        <h2>{{getCondValue(28)}}%</h2>
+                                        <h2 [ngStyle]="{'color': getGroupValue(20).score >= 60 ? '#3fa2f4' : '#B81F1C'}">{{getCondValue(28)}}%</h2>
                                     </ion-label>
                                     <div class="result_img">
-                                        <img src="/assets/images/company/tick.png"/>
+                                        <img [src]="'/assets/images/company/' + (getGroupValue(20).score >= 81 ? 'hand' : getGroupValue(20).score >= 60 ? 'tick' : 'warn') + '.png'"/>
                                     </div>
                                 </ion-item>
                             </ion-col>
                             <ion-col size="8">
-                                <ion-item lines="none" class="result_r">
+                                <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                     <ion-label [innerHTML]="getGroupValue(20).suggest"></ion-label>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
 
-                        <ion-row style="margin-top: 11px;">
+                        <ion-row style="margin-top: 11px;" [ngStyle]="{'border-color':getGroupValue(21).score < 60 ? '#EEDADA' : '' }">
                             <ion-col size="4">
-                                <ion-item lines="none" class="result_l">
+                                <ion-item lines="none" class="result_l" style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;"
+                                          [ngStyle]="{'border-right-color':getGroupValue(21).score < 60 ? '#EEDADA' : '' }">
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/input.png"/>
                                     </ion-thumbnail>
                                     <ion-label>
                                         <p>科研费用投入占比</p>
-                                        <h2>{{getCondValue(24)}}%</h2>
+                                        <h2 [ngStyle]="{'color': getGroupValue(21).score >= 60 ? '#3fa2f4' : '#B81F1C'}">{{getCondValue(24)}}%</h2>
                                     </ion-label>
                                     <div class="result_img">
-                                        <img src="/assets/images/company/tick.png"/>
+                                        <img [src]="'/assets/images/company/' + (getGroupValue(21).score >= 81 ? 'hand' : getGroupValue(21).score >= 60 ? 'tick' : 'warn') + '.png'"/>
                                     </div>
                                 </ion-item>
                             </ion-col>
                             <ion-col size="8">
-                                <ion-item lines="none" class="result_r">
+                                <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                     <ion-label [innerHTML]="getGroupValue(21).suggest"></ion-label>
                                 </ion-item>
                             </ion-col>
@@ -541,7 +553,7 @@
                     <mat-card-header>
                         <mat-card-title>匹配政策
                             <span style="margin-left: 10px" matTooltip="由中科华海搜集全国范围内的企业相关政策" matTooltipPosition="after">
-                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;">
+                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px; position:relative;top:3px;">
                             </span>
                         </mat-card-title>
                     </mat-card-header>
@@ -559,10 +571,10 @@
                             </ion-col>
                             <ion-col size="6">
                                 <div class="policy-right">
-                                    <p>
-                                        科创直通车(2年)可获得<em>{{amt.keChuangBao}}</em>万元
+                                    <p style="text-shadow:0px 2px 4px rgba(255,90,90,0.5);">
+                                        科创直通车(2年)可获得<em style="text-shadow:0px 2px 4px rgba(255,90,90,0.5);">{{amt.keChuangBao}}</em>万元
                                         <span class="right">政策收益提升
-                                        <em>{{amt.rate}}%</em>
+                                        <em style="text-shadow:0px 2px 4px rgba(255,90,90,0.5);">{{amt.rate}}%</em>
                                         <img src="/assets/images/company/into.png" height="13" width="13"/>
                                         </span>
                                     </p>
@@ -578,7 +590,7 @@
                                             <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
                                                 <img src="/assets/images/dashboard/icon_hot.png">
                                             </div>
-                                            <p style="font-size:18px;font-weight:600;color:rgba(33,51,63,1);line-height:25px;margin-bottom:10px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
+                                            <p style="font-size:18px;font-weight:400;color:rgba(33,51,63,1);line-height:25px;margin-bottom:10px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
                                                 {{item.policyName}}</p>
                                             <p style="font-size:14px;font-weight:400;color:rgba(95,113,125,1);line-height:20px;">
                                                 预计补贴金额<span
