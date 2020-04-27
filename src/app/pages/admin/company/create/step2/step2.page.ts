@@ -29,7 +29,7 @@ import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdap
 })
 export class AdminCompanyCreateStep2Page implements OnInit {
     id = this.route.snapshot.params.id;
-    // 1, 17, 18, 19, 21, 25, 26, 28, 29
+    // 2, 17, 18, 19, 21, 25, 26, 28, 29,24,30,31
     form: FormGroup = new FormGroup({
         company: new FormGroup({
             custId: new FormControl(this.id, [Validators.required]),
@@ -40,7 +40,7 @@ export class AdminCompanyCreateStep2Page implements OnInit {
             operateDate: new FormControl('', [Validators.required])
         }),
         conds: new FormGroup({
-            1: new FormControl('', []),
+            2: new FormControl('', []),
             17: new FormControl('', [Validators.required]),
             18: new FormControl('', [Validators.required]),
             19: new FormControl('', [Validators.required]),
@@ -109,7 +109,7 @@ export class AdminCompanyCreateStep2Page implements OnInit {
                 private industrySvc: IndustryService,
                 private addressSvc: AddressService,
                 private companySvc: CompanyService) {
-        this.setForm([1, 17, 18, 19, 21, 24, 25, 26, 28, 29, 30, 31]);
+        this.setForm([2, 17, 18, 19, 21, 24, 25, 26, 28, 29, 30, 31]);
     }
 
     ngOnInit() {
@@ -160,7 +160,7 @@ export class AdminCompanyCreateStep2Page implements OnInit {
     }
 
     dateChange(e) {
-        this.form.get('company').get('operateDate').setValue(e.value._i.year + '-' + e.value._i.month + '-' + e.value._i.day);
+        this.form.get('company').get('operateDate').setValue(e.value._i.year + '-' + e.value._i.month + '-' + e.value._i.date);
     }
 
     submit() {
@@ -182,6 +182,7 @@ export class AdminCompanyCreateStep2Page implements OnInit {
             this.companySvc.updateCond(body).subscribe(res => {
                 this.toastSvc.hide();
                 console.log(res);
+                this.router.navigate(['/admin/company/create/step3', this.id]);
             });
         });
     }
