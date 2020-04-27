@@ -4,10 +4,10 @@ import {LocationStrategy} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ErrorStateMatcher} from '@angular/material';
 import {LoadingService} from '../../../../@core/services/loading.service';
+import {ToastService} from '../../../../@core/modules/toast';
 import {DialogService} from '../../../../@core/modules/dialog';
 import {ModalService} from '../../../../@core/services/modal.service';
 import {ModalController} from '@ionic/angular';
-import {debounceTime, filter, map, distinctUntilChanged} from 'rxjs/operators';
 import {Uploader, UploaderOptions} from '../../../../@shared/modules/uploader';
 import {AuthService} from '../../../auth/auth.service';
 import {IndustryService} from '../../../../@shared/components/industry/industry.service';
@@ -15,8 +15,9 @@ import {IndustryComponent} from '../../../../@shared/components/industry/industr
 import {DictService} from '../../../../@core/services/dict.service';
 import {AddressService} from '../../../../@core/services/address.service';
 import {CompanyService} from '../company.service';
-import {DATA} from '../../../../@core/utils/cities';
 import {getIndex} from '../../../../@core/utils/utils';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatTableDataSource} from '@angular/material';
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
     isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -28,7 +29,16 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
     selector: 'app-admin-company-item',
     templateUrl: './item.page.html',
-    styleUrls: ['./item.page.scss']
+    styleUrls: ['./item.page.scss'],
+    providers: [
+        {provide: MAT_DATE_LOCALE, useValue: 'zh_CN'},
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+        },
+        {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
+    ]
 })
 export class AdminCompanyItemPage implements OnInit {
     brandOption = {
@@ -76,23 +86,34 @@ export class AdminCompanyItemPage implements OnInit {
     selectedIndustries = [];
     token = this.authSvc.token();
     form: FormGroup = new FormGroup({
-        custId: new FormControl('', [Validators.required]),
-        custType: new FormControl(1, [Validators.required]),
-        companyName: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
-        creditNumber: new FormControl('', [Validators.required, Validators.minLength(18), Validators.maxLength(18)]),
-        industryIds: new FormControl('', [Validators.required]),
-        name: new FormControl('', [Validators.required, Validators.pattern(/^[\u4e00-\u9fa5]+$/)]),
-        mobile: new FormControl('', [Validators.required, Validators.pattern(/[0-9]*/), Validators.maxLength(32)]),
-        province: new FormControl('', [Validators.required]),
-        mechanismId: new FormControl('', []),
-        email: new FormControl('', [Validators.email]),
-        licenseFileId: new FormControl('', []),
-        area: new FormControl('', [Validators.required]),
-        city: new FormControl('', [Validators.required]),
-        address: new FormControl('', []),
-        remark: new FormControl('', [])
+        company: new FormGroup({
+            custId: new FormControl(this.id, [Validators.required]),
+            name: new FormControl('', [Validators.required]),
+            mobile: new FormControl('', [Validators.required]),
+            industryIds: new FormControl('', [Validators.required]),
+            job: new FormControl('', []),
+            operateDate: new FormControl('', [Validators.required])
+        }),
+        conds: new FormGroup({
+            2: new FormControl('', []),
+            17: new FormControl('', [Validators.required]),
+            18: new FormControl('', [Validators.required]),
+            19: new FormControl('', [Validators.required]),
+            21: new FormControl('', []),
+            25: new FormControl('', []),
+            26: new FormControl('', []),
+            28: new FormControl('', []),
+            29: new FormControl('', []),
+            24: new FormControl('', []),
+            30: new FormControl('', []),
+            31: new FormControl('', [])
+        }),
+        form: new FormGroup({}),
+        match: new FormGroup({
+            custId: new FormControl(this.id, [Validators.required]),
+            conditions: new FormControl('', [Validators.required])
+        })
     });
-
     submitted = false;
 
     uploader = {
@@ -103,7 +124,6 @@ export class AdminCompanyItemPage implements OnInit {
                 key: this.token, type: 'cust_cert', dir: 'cust_cert'
             },
             onUploadSuccess: (file, res) => {
-                console.log(JSON.parse(res).result);
                 this.form.get('licenseFileId').setValue(JSON.parse(res).result);
             }
         } as UploaderOptions),
@@ -114,17 +134,13 @@ export class AdminCompanyItemPage implements OnInit {
                 key: this.token, type: 'cust_cert', dir: 'cust_cert'
             },
             onUploadSuccess: (file, res) => {
-                console.log(JSON.parse(res).result);
                 this.form.get('mechanismId').setValue(JSON.parse(res).result);
             }
         } as UploaderOptions)
     };
     company = this.companySvc.currentCompany;
-    matcher = new MyErrorStateMatcher();
-    provinces = [];
-    cities = [];
-    districts = [];
     loading = false;
+    cloudCompany;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -134,104 +150,200 @@ export class AdminCompanyItemPage implements OnInit {
                 private modalSvc: ModalService,
                 private modalController: ModalController,
                 private loadingSvc: LoadingService,
+                private toastSvc: ToastService,
                 private dialogSvc: DialogService,
                 private dictSvc: DictService,
                 private addressSvc: AddressService,
                 private industrySvc: IndustryService,
                 private authSvc: AuthService,
                 private companySvc: CompanyService) {
+        this.setForm([2, 17, 18, 19, 21, 24, 25, 26, 28, 29, 30, 31]);
     }
+
+    option: any = {};
+    dict = {};
+    required = {
+        num: 0,
+        valueNum: 0,
+        list: []
+    };
+    optional = {
+        num: 0,
+        valueNum: 0,
+        list: []
+    };
+    conditions;
 
     ngOnInit() {
         this.getProvinces();
         this.companySvc.get(this.id).subscribe(res => {
-            console.log(res);
-        });
-        this.form.get('companyName').valueChanges.pipe(
-            filter(text => text.length > 1),
-            debounceTime(1000),
-            distinctUntilChanged()).subscribe(companyName => {
-            this.companySvc.validatorName(companyName).subscribe(res => {
-                if (res && res.id !== this.id) {
-                    // this.sameCompany = res;
-                    this.form.get('companyName').setErrors(null);
-                } else {
-                    // this.sameCompany = false;
+            console.log(res.busCust);
+            this.company = res.busCust;
+            this.form.get('company').get('name').setValue(res.busCust.name);
+            this.form.get('company').get('mobile').setValue(res.busCust.mobile);
+            this.form.get('company').get('job').setValue(res.busCust.job);
+            this.form.get('company').get('operateDate').setValue(res.busCust.operateDate);
+            this.form.get('company').get('industryIds').setValue(res.busCust.industryIds);
+            console.log(this.form.get('company').get('operateDate').value);
+            this.companySvc.find(res.busCust.companyName).subscribe(cloud => {
+                if (cloud.code === 20000) {
+                    this.cloudCompany = cloud.data.companyDTO;
+                    /*this.company = res.data.companyDTO;
+                    this.form.get('companyName').setValue(this.company.companyName);
+                    this.form.get('creditNumber').setValue(this.company.unifiedSocialCreditCode);
+                    this.form.get('mechanismId').setValue(this.company.organizationCode);
+                    this.form.get('address').setValue(this.company.address);
+                    this.form.get('operateDate').setValue(this.company.registeredDate);*/
                 }
             });
-        });
-        this.form.get('province').valueChanges.subscribe(res => {
-            this.cities = [];
-            this.districts = [];
-            this.getCities();
-        });
-        this.form.get('city').valueChanges.subscribe(res => {
-            this.districts = [];
-            this.getDistricts();
-        });
-        this.industrySvc.list()
-            .pipe(map(res => this.industries = res))
-            .subscribe(industries => {
-                if (this.id !== '0') {
-                    this.form.get('custId').enable();
-                    this.companySvc.get(this.id).subscribe(res => {
-                        if (res) {
-                            for (const key in this.form.value) {
-                                if (res.busCust[key] || key === 'custId') {
-                                    if (key === 'custId') {
-                                        this.form.get(key).setValue(res.busCust.id);
-                                    } else {
-                                        this.form.get(key).setValue(res.busCust[key]);
-                                    }
-                                    if (key === 'industryIds') {
-                                        const selectedIndustries = [];
-                                        console.log(this.industries);
-                                        res.busCust[key].split(',').forEach(id => {
-                                            const index = getIndex(this.industries, 'id', parseInt(id, 10));
-                                            selectedIndustries.push(this.industries[index]);
-                                        });
-                                        this.selectedIndustries = selectedIndustries;
-                                        this.setIndustries();
-                                    }
-                                }
-                            }
-                            console.log(this.form);
-                        }
-                    });
-                } else {
-                    this.form.get('custId').disable();
-                }
+
+            this.industrySvc.list().subscribe(industries => {
+                const selected = [];
+                res.busCust.industryIds.split(',').forEach(id => {
+                    const index = getIndex(industries, 'id', parseInt(id, 10));
+                    if (index) {
+                        console.log(index);
+                        selected.push(industries[index]);
+                    }
+                });
+                this.selectedIndustries = selected;
+                this.setIndustries();
             });
+        });
+        this.companySvc.getCred(this.id).subscribe(res => {
+            this.setupForm(res.conditions);
+            this.conditions = res.conditions;
+            this.setupForm(res.conditions);
+            this.getData(res.conditions);
+            this.getNum();
+            this.form.valueChanges.subscribe(() => {
+                this.getNum();
+            });
+        });
     }
 
-    getNumber() {
-        this.companySvc.find(this.form.get('companyName').value).subscribe(res => {
-            if (res.data) {
-                const company = res.data.companyDTO;
-                this.form.get('creditNumber').setValue(company.unifiedSocialCreditCode);
+    setupForm(conditions) {
+        conditions.forEach(condition => {
+            if (condition.fieldType === '0001') {
+                // @ts-ignore
+                this.form.controls.form.setControl(condition.conditionId,
+                    new FormControl(condition.conditionVal === '1' ? true : condition.conditionVal === '0' ? false : '',
+                        [!!condition.required ? Validators.required : Validators.nullValidator]));
+            } else {
+                if (condition.fieldType === '0002') {
+                    this.dictSvc.get('condition_' + condition.conditionId).subscribe(res => {
+                        this.dict[condition.conditionId] = res.result;
+                    });
+                }
+                // @ts-ignore
+                this.form.controls.form.setControl(condition.conditionId, new FormControl(condition.conditionVal,
+                    [!!condition.required ? Validators.required : Validators.nullValidator]));
             }
         });
     }
 
-    cityPicker() {
-        /*this.form.get('province').markAsTouched();
-        this.pickerSvc.showCity(DATA, '', '', {cancel: '取消', confirm: '确认'}).subscribe(res => {
-            this.form.get('province').setValue(res.items[0].label);
-            this.form.get('city').setValue(res.items[1].label);
-            this.form.get('area').setValue(res.items[2].label);
-        });*/
+    getNum() {
+        this.required.valueNum = 0;
+        this.optional.valueNum = 0;
+        this.conditions.forEach(item => {
+            if (!!item.required && this.form.get('form').get('' + item.conditionId).valid) {
+                this.required.valueNum = this.required.valueNum + 1;
+            }
+            if (!item.required) {
+                if (item.fieldType === '0001') {
+                    if (typeof this.form.get('form').get('' + item.conditionId).value === 'boolean') {
+                        this.optional.valueNum = this.optional.valueNum + 1;
+                    }
+                } else {
+                    if (this.form.get('form').get('' + item.conditionId).value.toString().length > 0) {
+                        this.optional.valueNum = this.optional.valueNum + 1;
+                    }
+                }
+            }
+        });
+    }
+
+    getData(conditions) {
+        const required = {
+            num: 0,
+            valueNum: 0,
+            list: []
+        };
+        const optional = {
+            num: 0,
+            valueNum: 0,
+            list: []
+        };
+        const group = [];
+        conditions.forEach(item => {
+            if (!!item.required) {
+                required.num = required.num + 1;
+                required.list.push(item);
+            } else {
+                optional.num = optional.num + 1;
+                if (group.length === 0) {
+                    group.push({
+                        _id: item.typeId,
+                        _name: item.typeName,
+                        list: [item]
+                    });
+                } else {
+                    const index = getIndex(group, '_id', item.typeId);
+                    if (index >= 0) {
+                        group[index].list.push(item);
+                    } else {
+                        group.push({
+                            _id: item.typeId,
+                            _name: item.typeName,
+                            list: [item]
+                        });
+                    }
+                }
+                optional.list = group;
+            }
+        });
+        this.required = required;
+        this.optional = optional;
+    }
+
+    getConditions() {
+        const conditions = [];
+        console.log(this.form.get('form').value);
+        for (const key in this.form.get('form').value) {
+            if (key) {
+                conditions.push({
+                    conditionId: key,
+                    conditionVal: typeof this.form.get('form').get(key).value === 'boolean' ?
+                        (this.form.get('form').get(key).value ? 1 : 0) : this.form.get('form').get(key).value
+                });
+            }
+        }
+        return JSON.stringify(conditions);
+    }
+
+    setForm(ids) {
+        ids.forEach(id => {
+            this.getVal(id);
+        });
+    }
+
+    compareFn(c1, c2): boolean {
+        return c1 && c2 ? c1.valId === c2.valId : c1 === c2;
+    }
+
+    getVal(id) {
+        this.companySvc.condVal(this.id, id).subscribe(res => {
+            res.result.forEach(item => {
+                if (item.checked) {
+                    this.form.get('conds').get(id + '').setValue({condId: item.condId, valId: item.id});
+                }
+            });
+            this.option['' + id] = res.result;
+        });
     }
 
     getProvinces() {
-        this.provinces = this.addressSvc.provinces();
-    }
 
-    getCities() {
-        this.cities = this.addressSvc.cities(this.form.get('province').value);
-    }
-
-    getDistricts() {
-        this.districts = this.addressSvc.districts(this.form.get('province').value, this.form.get('city').value);
     }
 
 
@@ -243,8 +355,9 @@ export class AdminCompanyItemPage implements OnInit {
         });
         await modal.present();
         const {data} = await modal.onDidDismiss(); // 获取关闭传回的值
-        this.form.get('industryIds').markAsTouched();
+        this.form.get('company').get('industryIds').markAsTouched();
         this.selectedIndustries = data;
+        console.log(this.selectedIndustries);
         this.setIndustries();
     }
 
@@ -261,7 +374,7 @@ export class AdminCompanyItemPage implements OnInit {
         this.selectedIndustries.forEach(item => {
             ids.push(item.id);
         });
-        this.form.get('industryIds').setValue(ids);
+        this.form.get('company').get('industryIds').setValue(ids);
     }
 
     submit() {
@@ -304,8 +417,29 @@ export class AdminCompanyItemPage implements OnInit {
         });
     }
 
-    back() {
-        this.location.back();
+    save() {
+        this.form.get('match').get('conditions').setValue(this.getConditions());
+        if (this.form.invalid) {
+            return false;
+        }
+        const body = {
+            custId: this.id,
+            custGradeConds: []
+        };
+        const values = this.form.get('conds').value;
+        for (const key in values) {
+            if (values[key]) {
+                body.custGradeConds.push(this.form.get('conds').get(key).value);
+            }
+        }
+        this.toastSvc.loading('加载中...', 0);
+        this.companySvc.change(this.form.get('company').value).subscribe(() => {
+            this.companySvc.updateCond(body).subscribe(res => {
+                this.companySvc.updateCred(this.form.get('match').value).subscribe(() => {
+                    this.toastSvc.hide();
+                });
+            });
+        });
     }
 
 }
