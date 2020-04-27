@@ -10,7 +10,10 @@ import {map} from 'rxjs/operators';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {getIndex} from '../../../../@core/utils/utils';
 
-const colors = ['#5F7194', '#56CFFF', '#5F8FF3', '#69EBB7'];
+const colors = ['#FFB559', '#5F8FF3', '#5D6F92', '#F46C50'];
+const colors2 = ['#69EBB7', '#5F8FF3', '#56CFFF'];
+const colors3 = ['#5F8FF9', '#5AD8A6'];
+const color4 = ['#6497EE', '#75EBE7'];
 
 @Component({
     selector: 'app-admin-plan-item',
@@ -22,14 +25,14 @@ export class AdminPlanItemPage implements OnInit {
         color: colors,
         tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+            formatter: '{d}%'
         },
         legend: {
             bottom: 0,
             data: ['执行人员', '管理人员'],
             itemWidth: 8,
             itemHeight: 8,
-            borderRadius: 50
+            icon: 'circle'
         },
         series: [
             {
@@ -44,7 +47,7 @@ export class AdminPlanItemPage implements OnInit {
                 emphasis: {
                     label: {
                         show: true,
-                        fontSize: '30',
+                        fontSize: '16',
                         fontWeight: 'bold'
                     }
                 },
@@ -161,26 +164,19 @@ export class AdminPlanItemPage implements OnInit {
         ]
     };
     lineOption = {
-        color: colors,
-        title: {
-            text: '折线图堆叠'
-        },
+        color: colors3,
         tooltip: {
             trigger: 'axis'
         },
         legend: {
-            data: ['企业现状', '行业水平']
+            data: ['企业现状', '行业水平'],
+            right: 0
         },
         grid: {
             left: '3%',
             right: '4%',
             bottom: '3%',
             containLabel: true
-        },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
-            }
         },
         xAxis: {
             type: 'category',
@@ -206,14 +202,20 @@ export class AdminPlanItemPage implements OnInit {
         ]
     };
     groupOption = {
-        color: colors,
+        color: color4,
         legend: {
-            data: ['2011年', '2012年']
+            data: ['2011年', '2012年'],
+            bottom: 0,
+            itemWidth: 7,
+            itemHeight: 7,
+            icon: 'circle',
+            left: 70,
+            itemGap: 20,
         },
         grid: {
             left: '3%',
             right: '4%',
-            bottom: '3%',
+            bottom: '20%',
             containLabel: true
         },
         xAxis: {
@@ -505,8 +507,8 @@ export class AdminPlanItemPage implements OnInit {
     getGroupBar(id) {
         const option = JSON.parse(JSON.stringify(this.groupOption));
         const charts = this.getChatValue(id);
-        option.legend.data = ['企业现状', '行业平均水平'];
-        option.series[0].name = '企业现状';
+        option.legend.data = ['企业现况', '行业平均水平'];
+        option.series[0].name = '企业现况';
         option.series[1].name = '行业平均水平';
         option.yAxis.data = [];
         option.series[0].data = [];
@@ -523,6 +525,9 @@ export class AdminPlanItemPage implements OnInit {
         const option = JSON.parse(JSON.stringify(this.brandOption));
         option.legend.data = [];
         option.series[0].data = [];
+        if (id === 'edu') {
+            option.color = colors2;
+        }
         let other = 100;
         items.forEach(item => {
             let value = this.getCondValue(item.id);

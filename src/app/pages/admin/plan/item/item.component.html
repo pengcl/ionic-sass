@@ -288,7 +288,7 @@
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/depth.png"/>
                                     </ion-thumbnail>
-                                    <ion-label>{{item.label}}<span>{{item.name}}</span></ion-label>
+                                    <ion-label>{{item.label}}<span [ngStyle]="{'color': getGroupValue(-100).score >= 60 ? '#3fa2f4' : '#B81F1C'}">{{item.name}}</span></ion-label>
                                     <div class="result_img">
                                         <img [src]="'/assets/images/company/' + (item.score >= 81 ? 'hand' : item.score >= 60 ? 'tick' : 'warn') + '.png'"/>
                                     </div>

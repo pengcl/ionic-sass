@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {CompanyService} from '../company/company.service';
 import {MonitorService} from '../monitor/monitor.service';
@@ -15,6 +15,10 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
 import {MatSnackBar} from '@angular/material';
 import {getIndex} from '../../../@core/utils/utils';
+import * as G2 from '@antv/g2';
+import {registerShape} from '@antv/g2';
+
+declare var $: any;
 
 @Component({
     selector: 'app-admin-dashboard',
@@ -191,6 +195,9 @@ export class AdminDashboardPage {
     brand;
     scientific;
 
+    chartOption: any;
+    private chart: G2.Chart;
+
     constructor(private router: Router,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
                 private snackBar: MatSnackBar,
@@ -202,7 +209,8 @@ export class AdminDashboardPage {
                 private ticketSvc: TicketService,
                 private dashboardSvc: DashboardService,
                 private addressSvc: AddressService,
-                private loadingController: LoadingController) {
+                private loadingController: LoadingController,
+                private el: ElementRef) {
         dashboardSvc.matchingStatus(this.company.id).subscribe(res => {
             this.matchingStatus = res;
         });
@@ -269,6 +277,10 @@ export class AdminDashboardPage {
             this.keChuangBao.series[0].data[0].count = res.keChuangBaoCount;
             this.quick.series[0].data[0].value = res.quickAmt;
             this.quick.series[0].data[0].count = res.quickCount;
+            setTimeout(() => {
+                console.log($('#c1'));
+                this.drawChart('#c1', this.quick.series[0].data[0].value);
+            });
         });
         this.ticketSvc.statistics(this.company.id).subscribe(res => {
             this.ticket.ing = res.serviceCount;
@@ -288,68 +300,39 @@ export class AdminDashboardPage {
                 });
             });
             this.copyOption.pie = {
-                color: ['#3a9cfd', '#3a9aca', '#3e9793', '#389868'],
-                legend: {
-                    bottom: 10,
-                    data: pieLabels,
-                    itemWidth: 8,
-                    itemHeight: 8,
-                    textStyle: {
-                        fontSize: 10
-                    }
+                color: ['#FFB559', '#5F8FF3', '#69EBB7', '#F46C50', '#5F7194'],
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{d}%'
                 },
-                grid: {
-                    left: '10%',
-                    right: '10%',
-                    bottom: '10%',
-                    containLabel: true
+                legend: {
+                    bottom: 30,
+                    data: pieLabels,
+                    itemWidth: 7,
+                    itemHeight: 7,
+                    icon: 'circle'
                 },
                 series: [
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['57%', '60%'],
-                        data: [{name: '1', value: '1'}],
-                        hoverOffset: 0,
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
                         label: {
-                            show: false
-                        }
-                    },
-                    {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: ['30%', '55%'],
-                        label: {
-                            position: 'outside',
-                            formatter: '{d}%',
-                            fontSize: 10
-                            // shadowBlur:3,
-                            // shadowOffsetX: 2,
-                            // shadowOffsetY: 2,
-                            // shadowColor: '#999',
-                            // padding: [0, 7],
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '16',
+                                fontWeight: 'bold'
+                            }
                         },
                         labelLine: {
-                            length: 7,
-                            length2: 7
-                        },
-                        itemStyle: {
-                            borderWidth: 2,
-                            borderType: 'solid',
-                            borderColor: '#fff'
-                        },
-                        data: pieData,
-                        hoverOffset: 0
-                    },
-                    {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: ['25%', '28%'],
-                        data: [{name: '1', value: '1'}],
-                        hoverOffset: 0,
-                        label: {
                             show: false
-                        }
+                        },
+                        data: pieData
                     }
                 ]
             };
@@ -387,12 +370,13 @@ export class AdminDashboardPage {
                 series[2].data.push(item.registerCount);
             });
             this.copyOption.line = {
-                color: ['#ff5257', '#27d78f', '#36a0f4'],
+                color: ['#E26767', '#6F9CD2', '#8DE1DE'],
                 legend: {
                     bottom: 10,
                     data: ['已注册', '申请中', '无效'],
                     itemWidth: 8,
                     itemHeight: 8,
+                    icon: 'circle',
                     textStyle: {
                         fontSize: 10
                     }
@@ -430,68 +414,39 @@ export class AdminDashboardPage {
                 });
             });
             this.brandOption.pie = {
-                color: ['#3a9cfd', '#3a9aca', '#3e9793', '#389868'],
-                legend: {
-                    bottom: 10,
-                    data: pieLabels,
-                    itemWidth: 8,
-                    itemHeight: 8,
-                    textStyle: {
-                        fontSize: 10
-                    }
+                color: ['#FFB559', '#5F8FF3', '#69EBB7', '#F46C50', '#5F7194'],
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{d}%'
                 },
-                grid: {
-                    left: '20%',
-                    right: '20%',
-                    bottom: '20%',
-                    containLabel: true
+                legend: {
+                    bottom: 30,
+                    data: pieLabels,
+                    itemWidth: 7,
+                    itemHeight: 7,
+                    icon: 'circle'
                 },
                 series: [
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['57%', '60%'],
-                        data: [{name: '1', value: '1'}],
-                        hoverOffset: 0,
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
                         label: {
-                            show: false
-                        }
-                    },
-                    {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: ['30%', '55%'],
-                        label: {
-                            position: 'outside',
-                            formatter: '{d}%',
-                            fontSize: 10
-                            // shadowBlur:3,
-                            // shadowOffsetX: 2,
-                            // shadowOffsetY: 2,
-                            // shadowColor: '#999',
-                            // padding: [0, 7],
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '16',
+                                fontWeight: 'bold'
+                            }
                         },
                         labelLine: {
-                            length: 7,
-                            length2: 7
-                        },
-                        data: pieData,
-                        itemStyle: {
-                            borderWidth: 2,
-                            borderType: 'solid',
-                            borderColor: '#fff'
-                        },
-                        hoverOffset: 0
-                    },
-                    {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: ['25%', '28%'],
-                        data: [{name: '1', value: '1'}],
-                        hoverOffset: 0,
-                        label: {
                             show: false
-                        }
+                        },
+                        data: pieData
                     }
                 ]
             };
@@ -529,12 +484,13 @@ export class AdminDashboardPage {
                 series[2].data.push(item.registerCount);
             });
             this.brandOption.line = {
-                color: ['#ff5257', '#27d78f', '#36a0f4'],
+                color: ['#E26767', '#6F9CD2', '#8DE1DE'],
                 legend: {
                     bottom: 10,
                     data: ['已注册', '申请中', '无效'],
                     itemWidth: 8,
                     itemHeight: 8,
+                    icon: 'circle',
                     textStyle: {
                         fontSize: 10
                     }
@@ -572,68 +528,39 @@ export class AdminDashboardPage {
                 });
             });
             this.patentOption.pie = {
-                color: ['#3a9cfd', '#3a9aca', '#3e9793', '#389868'],
-                legend: {
-                    bottom: 10,
-                    data: pieLabels,
-                    itemWidth: 8,
-                    itemHeight: 8,
-                    textStyle: {
-                        fontSize: 10
-                    }
+                color: ['#5F7194', '#5F8FF3', '#69EBB7'],
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{d}%'
                 },
-                grid: {
-                    left: '10%',
-                    right: '10%',
-                    bottom: '10%',
-                    containLabel: true
+                legend: {
+                    bottom: 30,
+                    data: pieLabels,
+                    itemWidth: 7,
+                    itemHeight: 7,
+                    icon: 'circle'
                 },
                 series: [
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['57%', '60%'],
-                        data: [{name: '1', value: '1'}],
-                        hoverOffset: 0,
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
                         label: {
-                            show: false
-                        }
-                    },
-                    {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: ['30%', '55%'],
-                        label: {
-                            position: 'outside',
-                            formatter: '{d}%',
-                            fontSize: 10
-                            // shadowBlur:3,
-                            // shadowOffsetX: 2,
-                            // shadowOffsetY: 2,
-                            // shadowColor: '#999',
-                            // padding: [0, 7],
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '16',
+                                fontWeight: 'bold'
+                            }
                         },
                         labelLine: {
-                            length: 7,
-                            length2: 7
-                        },
-                        data: pieData,
-                        itemStyle: {
-                            borderWidth: 2,
-                            borderType: 'solid',
-                            borderColor: '#fff'
-                        },
-                        hoverOffset: 0
-                    },
-                    {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: ['25%', '28%'],
-                        data: [{name: '1', value: '1'}],
-                        hoverOffset: 0,
-                        label: {
                             show: false
-                        }
+                        },
+                        data: pieData
                     }
                 ]
             };
@@ -671,12 +598,13 @@ export class AdminDashboardPage {
                 series[0].data.push(item.invalidCount ? item.invalidCount : 0);
             });
             this.patentOption.line = {
-                color: ['#ff5257', '#27d78f', '#36a0f4'],
+                color: ['#E26767', '#6F9CD2', '#8DE1DE'],
                 legend: {
                     bottom: 10,
                     data: ['已注册', '申请中', '无效'],
                     itemWidth: 8,
                     itemHeight: 8,
+                    icon: 'circle',
                     textStyle: {
                         fontSize: 10
                     }
@@ -709,6 +637,7 @@ export class AdminDashboardPage {
 
         companySvc.source(this.company.id).subscribe(res => {
             this.data = res;
+            // this.drawChart('#c1');
             this.brand = (() => {
                 const list = [];
                 list.push(this.getGroupValue(-100));
@@ -726,6 +655,181 @@ export class AdminDashboardPage {
                 return list;
             })();
         });
+    }
+
+    drawChart(contaniner, cvalue) {
+        this.chartOption = [
+            {value: 2}
+        ];
+
+        const chartContainer = this.el.nativeElement.querySelector(contaniner);
+        // 自定义Shape 部分
+        registerShape('point', 'pointer', {
+            draw(cfg, container) {
+                const group = container.addGroup({});
+                // 获取极坐标系下画布中心点
+                const center = this.parsePoint({x: 0, y: 0});
+                // 绘制指针
+                group.addShape('line', {
+                    attrs: {
+                        x1: center.x,
+                        y1: center.y,
+                        x2: cfg.x,
+                        y2: cfg.y,
+                        stroke: '#389AFF',
+                        lineWidth: 2,
+                        lineCap: 'round'
+                    }
+                });
+                group.addShape('circle', {
+                    attrs: {
+                        x: center.x,
+                        y: center.y,
+                        r: 3,
+                        stroke: '#389AFF',
+                        lineWidth: 1,
+                        fill: '#fff'
+                    }
+                });
+                return group;
+            }
+        });
+
+        const color = ['#389AFF', '#9CFFF6', '#B39AFF'];
+        const chart = new G2.Chart({
+            container: chartContainer,
+            width: 200,
+            height: 220
+        });
+        chart.data(this.chartOption);
+        chart.animate(false);
+
+        chart.coordinate('polar', {
+            startAngle: (-9 / 8) * Math.PI,
+            endAngle: (1 / 8) * Math.PI,
+            radius: 0.85
+        });
+        chart.scale('value', {
+            min: 0,
+            max: 6,
+            tickInterval: 1
+        });
+
+        chart.axis('1', false);
+        chart.axis('value', {
+            line: null,
+            label: {
+                offset: -15,
+                style: {
+                    fontSize: 10,
+                    fill: '#E5ECF3',
+                    textAlign: 'center',
+                    textBaseline: 'middle'
+                }
+            },
+            tickLine: {
+                length: -14
+            },
+            grid: null
+        });
+        chart.legend(false);
+        chart.tooltip(false);
+        chart
+            .point()
+            .position('value*1')
+            .shape('pointer')
+            .color('value', (val) => {
+                if (val < 2) {
+                    return color[0];
+                } else if (val <= 4) {
+                    return color[1];
+                } else if (val <= 6) {
+                    return color[2];
+                }
+            });
+
+        draw(this.chartOption);
+        setInterval(() => {
+            draw(this.chartOption);
+        }, 1000);
+
+        function draw(data) {
+            const val = data[0].value;
+            const lineWidth = 10;
+            chart.annotation().clear(true);
+            // 绘制仪表盘背景
+            chart.annotation().arc({
+                top: false,
+                start: [0, 1],
+                end: [6, 1],
+                style: {
+                    stroke: '#E5ECF3',
+                    lineWidth,
+                    lineDash: null
+                }
+            });
+
+            if (val >= 2) {
+                chart.annotation().arc({
+                    start: [0, 1],
+                    end: [val, 1],
+                    style: {
+                        stroke: color[0],
+                        lineWidth,
+                        lineDash: null
+                    }
+                });
+            }
+
+            if (val >= 4) {
+                chart.annotation().arc({
+                    start: [2, 1],
+                    end: [4, 1],
+                    style: {
+                        stroke: color[1],
+                        lineWidth,
+                        lineDash: null
+                    }
+                });
+            }
+
+            if (val > 4 && val <= 6) {
+                chart.annotation().arc({
+                    start: [4, 1],
+                    end: [val, 1],
+                    style: {
+                        stroke: color[2],
+                        lineWidth,
+                        lineDash: null
+                    }
+                });
+            }
+
+            if (val > 2 && val <= 4) {
+                chart.annotation().arc({
+                    start: [2, 1],
+                    end: [val, 1],
+                    style: {
+                        stroke: color[1],
+                        lineWidth,
+                        lineDash: null
+                    }
+                });
+            }
+
+            if (val < 2) {
+                chart.annotation().arc({
+                    start: [0, 1],
+                    end: [val, 1],
+                    style: {
+                        stroke: color[0],
+                        lineWidth,
+                        lineDash: null
+                    }
+                });
+            }
+            chart.changeData(data);
+        }
     }
 
     getDate(end) {
