@@ -52,7 +52,7 @@
                 <button (click)="presentLoading();" routerLinkActive="active" mat-menu-item>专利快捷提交</button>
                 <button (click)="presentLoading();" routerLinkActive="active" mat-menu-item>版权智能存证登记</button>
             </mat-menu>
-            <h3 [ngClass]="{'active' : menuIndex === 7}" routerLink="/admin/plan/item" routerLinkActive="active" (mouseover)="trustTrigger.closeMenu();keyTrigger.closeMenu();serviceTrigger.closeMenu();"  mat-subheader>
+            <h3 [ngClass]="{'active' : menuIndex === 7}" routerLink="/admin/plan/list" routerLinkActive="active" (mouseover)="trustTrigger.closeMenu();keyTrigger.closeMenu();serviceTrigger.closeMenu();"  mat-subheader>
                 <span class="mat-list-icon">
                     <img src="/assets/images/side/7.png">
                 </span>

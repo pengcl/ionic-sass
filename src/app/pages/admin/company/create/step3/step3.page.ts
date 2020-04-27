@@ -183,4 +183,8 @@ export class AdminCompanyCreateStep3Page implements OnInit {
         });
     }
 
+    remark(id,e){
+
+    }
+
 }

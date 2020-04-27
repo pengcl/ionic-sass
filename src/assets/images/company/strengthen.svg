@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="38px" height="38px" viewBox="0 7 38 38" enable-background="new 0 7 38 38" xml:space="preserve">
+<g id="页面-1_2_">
+	<g id="切图" transform="translate(-191.000000, -246.000000)">
+		<g id="badge03" transform="translate(191.000000, 246.000000)">
+			
+				<linearGradient id="椭圆形_1_" gradientUnits="userSpaceOnUse" x1="33.7119" y1="7.9146" x2="32.6882" y2="8.9382" gradientTransform="matrix(29 0 0 29 -943.8125 -218.4063)">
+				<stop  offset="0" style="stop-color:#BABABA"/>
+				<stop  offset="1" style="stop-color:#7A7777"/>
+			</linearGradient>
+			<circle id="椭圆形" fill="none" stroke="url(#椭圆形_1_)" stroke-width="3" cx="19" cy="26" r="15.875"/>
+			
+				<linearGradient id="形状结合_2_" gradientUnits="userSpaceOnUse" x1="37.749" y1="13.5952" x2="36.6542" y2="14.6899" gradientTransform="matrix(24 0 0 24 -873.8125 -313.4063)">
+				<stop  offset="0" style="stop-color:#BABABA"/>
+				<stop  offset="1" style="stop-color:#7A7777"/>
+			</linearGradient>
+			<path id="形状结合_1_" fill="url(#形状结合_2_)" d="M19,12.862c7.255,0,13.138,5.882,13.138,13.138
+				c0,7.255-5.883,13.138-13.138,13.138c-7.256,0-13.138-5.883-13.138-13.138C5.863,18.744,11.745,12.862,19,12.862z M19,17.531
+				l-2.43,4.924l-5.435,0.79l3.933,3.833l-0.929,5.414L19,29.937l4.861,2.556l-0.93-5.414l3.934-3.833l-5.436-0.79L19,17.531z"/>
+		</g>
+	</g>
+</g>
+</svg>
