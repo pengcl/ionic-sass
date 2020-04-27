@@ -18,6 +18,7 @@ import {CompanyService} from '../company.service';
 import {getIndex} from '../../../../@core/utils/utils';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatTableDataSource} from '@angular/material';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {forkJoin} from 'rxjs';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
     isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -29,6 +30,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 const colors = ['#00cc99', '#339999'];
 const colors2 = ['#3399ff', '#3366ff', '#3300ff', '#330099'];
 const colors3 = ['#ff0000', '#ff6600', '#ff9900', '#ffcc00'];
+
 @Component({
     selector: 'app-admin-company-item',
     templateUrl: './item.page.html',
@@ -144,6 +146,7 @@ export class AdminCompanyItemPage implements OnInit {
     company = this.companySvc.currentCompany;
     loading = false;
     cloudCompany;
+    circle: any = {};
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -160,7 +163,22 @@ export class AdminCompanyItemPage implements OnInit {
                 private industrySvc: IndustryService,
                 private authSvc: AuthService,
                 private companySvc: CompanyService) {
-        this.setForm([2, 17, 18, 19, 21, 24, 25, 26, 28, 29, 30, 31]);
+        forkJoin(
+            this.companySvc.condVal(this.id, 2),
+            this.companySvc.condVal(this.id, 17),
+            this.companySvc.condVal(this.id, 18),
+            this.companySvc.condVal(this.id, 19),
+            this.companySvc.condVal(this.id, 21),
+            this.companySvc.condVal(this.id, 24),
+            this.companySvc.condVal(this.id, 25),
+            this.companySvc.condVal(this.id, 26),
+            this.companySvc.condVal(this.id, 28),
+            this.companySvc.condVal(this.id, 29),
+            this.companySvc.condVal(this.id, 30),
+            this.companySvc.condVal(this.id, 31)
+        ).subscribe(([r2, r17, r18, r19, r21, r24, r25, r26, r28, r29, r30, r31]) => {
+            this.setForm([2, 17, 18, 19, 21, 24, 25, 26, 28, 29, 30, 31], [r2, r17, r18, r19, r21, r24, r25, r26, r28, r29, r30, r31]);
+        });
     }
 
     option: any = {};
@@ -176,11 +194,13 @@ export class AdminCompanyItemPage implements OnInit {
         list: []
     };
     conditions;
+    data;
 
     ngOnInit() {
-        this.getProvinces();
+        this.companySvc.source(this.id).subscribe(res => {
+            this.data = res;
+        });
         this.companySvc.get(this.id).subscribe(res => {
-            console.log(res.busCust);
             this.company = res.busCust;
             this.form.get('company').get('name').setValue(res.busCust.name);
             this.form.get('company').get('mobile').setValue(res.busCust.mobile);
@@ -324,31 +344,122 @@ export class AdminCompanyItemPage implements OnInit {
         return JSON.stringify(conditions);
     }
 
-    setForm(ids) {
+    selectionChange(key, ids) {
+        const data: any = {};
+        data[key] = [];
         ids.forEach(id => {
-            this.getVal(id);
+            const value = this.form.get('conds').get(id + '').value;
+            const options = this.option[id];
+            const index = getIndex(options, 'id', value.valId);
+            const option = options[index];
+            let label = '';
+            if (id === 2) {
+                label = '管理人员';
+            }
+            if (id === 28) {
+                label = '专科';
+            }
+            if (id === 29) {
+                label = '本科及以上';
+            }
+            if (id === 31) {
+                label = '专科';
+            }
+            if (id === 30) {
+                label = '本科及以上';
+            }
+            if (id === 21) {
+                label = '研发';
+            }
+            if (id === 25) {
+                label = '销售';
+            }
+            if (id === 26) {
+                label = '服务';
+            }
+            data[key].push({id, value: option.name, label});
+        });
+        this.getCircle(key, data[key]);
+    }
+
+    setForm(ids, list) {
+        const man = [];
+        const edu = [];
+        const sci = [];
+        const job = [];
+        const rate = [];
+        ids.forEach((id, index) => {
+            list[index].result.forEach(item => {
+                if (item.checked) {
+                    this.form.get('conds').get(id + '').setValue({condId: item.condId, valId: item.id});
+                    // this.getCircle('man', [{id: 2, value: item.name, label: '管理人员'}]);
+                    if (id === 2) {
+                        man.push({id, value: item.name, label: '管理人员'});
+                    }
+                    if (id === 28) {
+                        edu.push({id, value: item.name, label: '专科'});
+                    }
+                    if (id === 29) {
+                        edu.push({id, value: item.name, label: '本科及以上'});
+                    }
+                    if (id === 31) {
+                        sci.push({id, value: item.name, label: '专科'});
+                    }
+                    if (id === 30) {
+                        sci.push({id, value: item.name, label: '本科及以上'});
+                    }
+                    if (id === 21) {
+                        rate.push({id, value: item.name, label: '研发'});
+                        job.push({id, value: item.name, label: '研发'});
+                    }
+                    if (id === 25) {
+                        job.push({id, value: item.name, label: '销售'});
+                    }
+                    if (id === 26) {
+                        job.push({id, value: item.name, label: '服务'});
+                    }
+                }
+            });
+            this.option['' + id] = list[index].result;
+            this.getCircle('job', job);
+            this.getCircle('man', man);
+            this.getCircle('edu', edu);
+            this.getCircle('sci', sci);
+            this.getCircle('rate', rate);
         });
     }
 
     compareFn(c1, c2): boolean {
+        const result = c1 && c2 ? c1.valId === c2.valId : c1 === c2;
+        if (result) {
+            console.log(c1.condId);
+        }
         return c1 && c2 ? c1.valId === c2.valId : c1 === c2;
     }
 
-    getVal(id) {
-        this.companySvc.condVal(this.id, id).subscribe(res => {
-            res.result.forEach(item => {
-                if (item.checked) {
-                    this.form.get('conds').get(id + '').setValue({condId: item.condId, valId: item.id});
-                }
+    getCircle(id, items) {
+        console.log(id);
+        const option = JSON.parse(JSON.stringify(this.brandOption));
+        option.legend.data = [];
+        option.series[0].data = [];
+        let other = 100;
+        items.forEach(item => {
+            const value = parseInt(item.value.replace('%', ''), 10);
+            other = other - value;
+            const name = item.label;
+            option.legend.data.push(name);
+            option.series[0].data.push({
+                name, value
             });
-            this.option['' + id] = res.result;
         });
+        option.legend.data.push('其它');
+        option.series[0].data.push({
+            name: '其它',
+            value: other
+        });
+        this.circle[id] = option;
+        console.log(this.circle);
     }
-
-    getProvinces() {
-
-    }
-
 
     async presentModal() {
         const modal = await this.modalController.create({

@@ -100,7 +100,7 @@
                                             <ion-col size="4">
                                                 <ion-list>
                                                     <ion-list-header style="padding-top: 30px;">管理人员比例</ion-list-header>
-                                                    <div echarts [options]="brandOption"
+                                                    <div *ngIf="circle.man" echarts [options]="circle.man"
                                                          style="width: 200px;height: 200px" class="main-chart"></div>
                                                 </ion-list>
                                             </ion-col>

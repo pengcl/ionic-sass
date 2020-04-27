@@ -277,11 +277,6 @@ export class AdminDashboardPage {
             this.keChuangBao.series[0].data[0].count = res.keChuangBaoCount;
             this.quick.series[0].data[0].value = res.quickAmt;
             this.quick.series[0].data[0].count = res.quickCount;
-            setTimeout(() => {
-                console.log($('#c1'));
-                this.drawChart('#c1', this.quick.series[0].data[0].value);
-                this.drawChart('#c2', this.keChuangBao.series[0].data[0].value);
-            });
         });
         this.ticketSvc.statistics(this.company.id).subscribe(res => {
             this.ticket.ing = res.serviceCount;
@@ -655,6 +650,12 @@ export class AdminDashboardPage {
                 list[1].label = '科研能力';
                 return list;
             })();
+
+            setTimeout(() => {
+                console.log($('#c1'));
+                this.drawChart('#c1', this.quick.series[0].data[0].value);
+                this.drawChart('#c2', this.keChuangBao.series[0].data[0].value);
+            });
         });
     }
 

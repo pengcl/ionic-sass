@@ -423,6 +423,7 @@ export class AdminCompanyQualificationPage implements OnInit {
             this.getCircle('job', [{id: 21, label: '研发'}, {id: 25, label: '销售'}, {id: 26, label: '服务'}]);
             this.getCircle('edu', [{id: 28, label: '专科'}, {id: 29, label: '本科及以上'}]);
             this.getCircle('sci', [{id: 31, label: '专科'}, {id: 30, label: '本科及以上'}]);
+            this.getCircle('man', [{id: 2, label: '管理人员'}]);
             this.getCircle('sci-rate', [{id: 21, label: '研发'}]);
             this.getGroupBar(9);
         });

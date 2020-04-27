@@ -130,7 +130,8 @@
                                             <span class="right">所属地区</span>
                                         </ion-col>
                                         <ion-col size="7">
-                                            <span style="background: #fff" class="right">{{company.province}} {{company.city}} {{company.area}}</span>
+                                            <span style="background: #fff"
+                                                  class="right">{{company.province}} {{company.city}} {{company.area}}</span>
                                         </ion-col>
                                     </ion-row>
                                 </ion-col>
@@ -274,7 +275,10 @@
                                                         <ion-col size="4">
                                                             <mat-form-field appearance="outline">
                                                                 <label>管理人员比例</label>
-                                                                <mat-select [compareWith]="compareFn" formControlName="2">
+                                                                <mat-select
+                                                                        (selectionChange)="selectionChange('man',[2])"
+                                                                        [compareWith]="compareFn"
+                                                                        formControlName="2">
                                                                     <mat-option
                                                                             *ngFor="let item of option['2']"
                                                                             [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
@@ -282,7 +286,7 @@
                                                             </mat-form-field>
                                                         </ion-col>
                                                         <ion-col size="8">
-                                                            <div echarts [options]="brandOption"
+                                                            <div *ngIf="circle['man']" echarts [options]="circle['man']"
                                                                  style="width: 180px;height: 180px;top: -25px;left: -20px;"
                                                                  class="main-chart"></div>
                                                         </ion-col>
@@ -302,7 +306,10 @@
                                                             <mat-form-field appearance="outline"
                                                                             style="margin-bottom: -15px">
                                                                 <label style="left: -60px">职能分布</label>
-                                                                <mat-select [compareWith]="compareFn" formControlName="21">
+                                                                <mat-select
+                                                                        (selectionChange)="selectionChange('job',[21,25,26])"
+                                                                        [compareWith]="compareFn"
+                                                                        formControlName="21">
                                                                     <mat-option
                                                                             *ngFor="let item of option['21']"
                                                                             [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
@@ -310,7 +317,8 @@
                                                             </mat-form-field>
                                                             <mat-form-field appearance="outline"
                                                                             style="margin-bottom: -15px">
-                                                                <mat-select [compareWith]="compareFn" formControlName="25">
+                                                                <mat-select (selectionChange)="selectionChange('job',[21,25,26])" [compareWith]="compareFn"
+                                                                            formControlName="25">
                                                                     <mat-option
                                                                             *ngFor="let item of option['25']"
                                                                             [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
@@ -318,7 +326,8 @@
                                                             </mat-form-field>
                                                             <mat-form-field appearance="outline"
                                                                             style="margin-bottom: -15px">
-                                                                <mat-select [compareWith]="compareFn" formControlName="26">
+                                                                <mat-select (selectionChange)="selectionChange('job',[21,25,26])" [compareWith]="compareFn"
+                                                                            formControlName="26">
                                                                     <mat-option
                                                                             *ngFor="let item of option['26']"
                                                                             [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
@@ -326,7 +335,7 @@
                                                             </mat-form-field>
                                                         </ion-col>
                                                         <ion-col size="6">
-                                                            <div echarts [options]="brandOption"
+                                                            <div *ngIf="circle['job']" echarts [options]="circle['job']"
                                                                  style="width: 180px;height: 180px;top: -25px;left: -20px;"
                                                                  class="main-chart"></div>
                                                         </ion-col>
@@ -343,7 +352,8 @@
                                                             <mat-form-field appearance="outline"
                                                                             style="margin-bottom: -15px">
                                                                 <label style="left: -60px">学历组成</label>
-                                                                <mat-select [compareWith]="compareFn" formControlName="28">
+                                                                <mat-select (selectionChange)="selectionChange('edu',[28,29])" [compareWith]="compareFn"
+                                                                            formControlName="28">
                                                                     <mat-option
                                                                             *ngFor="let item of option['28']"
                                                                             [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
@@ -351,7 +361,8 @@
                                                             </mat-form-field>
                                                             <mat-form-field appearance="outline"
                                                                             style="margin-bottom: -15px">
-                                                                <mat-select [compareWith]="compareFn" formControlName="29">
+                                                                <mat-select (selectionChange)="selectionChange('edu',[28,29])" [compareWith]="compareFn"
+                                                                            formControlName="29">
                                                                     <mat-option
                                                                             *ngFor="let item of option['29']"
                                                                             [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
@@ -359,7 +370,7 @@
                                                             </mat-form-field>
                                                         </ion-col>
                                                         <ion-col size="6">
-                                                            <div echarts [options]="brandOption"
+                                                            <div *ngIf="circle['edu']" echarts [options]="circle['edu']"
                                                                  style="width: 180px;height: 180px;top: -25px;left: -20px;"
                                                                  class="main-chart"></div>
                                                         </ion-col>
@@ -381,7 +392,8 @@
                                                         <ion-col size="4" class="form-field">
                                                             <mat-form-field appearance="outline">
                                                                 <label>企业研发投入</label>
-                                                                <mat-select [compareWith]="compareFn" formControlName="24">
+                                                                <mat-select [compareWith]="compareFn"
+                                                                            formControlName="24">
                                                                     <mat-option
                                                                             *ngFor="let item of option['24']"
                                                                             [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
@@ -400,7 +412,8 @@
                                                                     <mat-form-field appearance="outline"
                                                                                     style="margin-bottom: -15px">
                                                                         <label style="left: -60px">科研人员学历组成</label>
-                                                                        <mat-select [compareWith]="compareFn" formControlName="31">
+                                                                        <mat-select (selectionChange)="selectionChange('sci',[30,31])" [compareWith]="compareFn"
+                                                                                    formControlName="31">
                                                                             <mat-option
                                                                                     *ngFor="let item of option['31']"
                                                                                     [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
@@ -408,7 +421,8 @@
                                                                     </mat-form-field>
                                                                     <mat-form-field appearance="outline"
                                                                                     style="margin-bottom: -15px">
-                                                                        <mat-select [compareWith]="compareFn" formControlName="30">
+                                                                        <mat-select (selectionChange)="selectionChange('sci',[30,31])" [compareWith]="compareFn"
+                                                                                    formControlName="30">
                                                                             <mat-option
                                                                                     *ngFor="let item of option['30']"
                                                                                     [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
@@ -416,7 +430,8 @@
                                                                     </mat-form-field>
                                                                 </ion-col>
                                                                 <ion-col size="6">
-                                                                    <div echarts [options]="brandOption"
+                                                                    <div echarts *ngIf="circle.sci" echarts
+                                                                         [options]="circle.sci"
                                                                          style="width: 180px;height: 180px;top: -25px;left: -20px;"
                                                                          class="main-chart"></div>
                                                                 </ion-col>
@@ -506,7 +521,9 @@
                                                         </mat-form-field>
                                                     </ion-col>
                                                     <ng-container *ngFor="let item of optional.list;let i = index">
-                                                        <ion-col class="form-field"  *ngFor="let condition of item.list;let i = index" [size]="4">
+                                                        <ion-col class="form-field"
+                                                                 *ngFor="let condition of item.list;let i = index"
+                                                                 [size]="4">
                                                             <mat-form-field class="nl"
                                                                             *ngIf="condition.fieldType === '0001'"
                                                                             appearance="outline">
@@ -514,10 +531,14 @@
                                                                         *ngIf="!!condition.required">*</em>{{condition.conditionName}}
                                                                 </label>
                                                                 <input style="display: none"
-                                                                       [formControlName]="condition.conditionId" matInput>
-                                                                <mat-radio-group [formControlName]="condition.conditionId">
-                                                                    <mat-radio-button [value]="true">是</mat-radio-button>
-                                                                    <mat-radio-button [value]="false">否</mat-radio-button>
+                                                                       [formControlName]="condition.conditionId"
+                                                                       matInput>
+                                                                <mat-radio-group
+                                                                        [formControlName]="condition.conditionId">
+                                                                    <mat-radio-button [value]="true">是
+                                                                    </mat-radio-button>
+                                                                    <mat-radio-button [value]="false">否
+                                                                    </mat-radio-button>
                                                                 </mat-radio-group>
                                                             </mat-form-field>
                                                             <mat-form-field
@@ -531,11 +552,13 @@
                                                                        [formControlName]="condition.conditionId"
                                                                        matInput
                                                                        pattern="(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)"
-                                                                       [maxlength]="12" [required]="!!condition.required">
-                                                                <mat-select *ngIf="dict[condition.conditionId]?.length > 0"
-                                                                            [formControlName]="condition.conditionId"
-                                                                            [placeholder]="'请选择'"
-                                                                            [required]="!!condition.required">
+                                                                       [maxlength]="12"
+                                                                       [required]="!!condition.required">
+                                                                <mat-select
+                                                                        *ngIf="dict[condition.conditionId]?.length > 0"
+                                                                        [formControlName]="condition.conditionId"
+                                                                        [placeholder]="'请选择'"
+                                                                        [required]="!!condition.required">
                                                                     <mat-option
                                                                             *ngFor="let item of dict[condition.conditionId]"
                                                                             [value]="item.dictValue">
@@ -548,7 +571,8 @@
                                                                 </mat-error>
                                                                 <mat-error
                                                                         *ngIf="form.get('form').get(condition.conditionId + '').hasError('maxlength') && !form.get('form').get(condition.conditionId + '').hasError('required')">
-                                                                    {{condition.conditionName}}的长度不能大于 <strong>12</strong>
+                                                                    {{condition.conditionName}}的长度不能大于
+                                                                    <strong>12</strong>
                                                                 </mat-error>
                                                                 <mat-error
                                                                         *ngIf="form.get('form').get(condition.conditionId + '').hasError('required')">
@@ -588,7 +612,9 @@
     </ion-grid>
 </div>
 <div class="container-bottom">
-    <ion-button [routerLink]="['/admin/policy/index']" color="primary" style="width: 177px !important;height: 48px!important;">查看企业适配政策</ion-button>
+    <ion-button [routerLink]="['/admin/policy/index']" color="primary"
+                style="width: 177px !important;height: 48px!important;">查看企业适配政策
+    </ion-button>
     <ion-button [routerLink]="['/admin/plan/item']" [queryParams]="{id:id}" color="primary">查看体检报告</ion-button>
     <ion-button (click)="save()" style="--background: rgba(13, 215, 141, 1);">保存本次修改</ion-button>
 </div>
