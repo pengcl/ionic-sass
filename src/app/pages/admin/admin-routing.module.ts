@@ -51,6 +51,27 @@ const routes: Routes = [
                 loadChildren: () =>
                     import('./company/add/add.module').then(m => m.AdminCompanyAddPageModule)
             },
+            {// 创建主体
+                path: 'company/create/step1',
+                data: {name: '新增企业主体', menuIndex: 10},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./company/create/step1/step1.module').then(m => m.AdminCompanyCreateStep1PageModule)
+            },
+            {// 创建主体
+                path: 'company/create/step2/:id',
+                data: {name: '新增企业主体', menuIndex: 10},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./company/create/step2/step2.module').then(m => m.AdminCompanyCreateStep2PageModule)
+            },
+            {// 创建主体
+                path: 'company/create/step3/:id',
+                data: {name: '新增企业主体', menuIndex: 10},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./company/create/step3/step3.module').then(m => m.AdminCompanyCreateStep3PageModule)
+            },
             {// 主体详情
                 path: 'company/item/:id',
                 data: {name: '企业详情', menuIndex: 10},
@@ -80,7 +101,7 @@ const routes: Routes = [
                     import('./plan/list/list.module').then(m => m.AdminPlanListPageModule)
             },
             {// 体检报告列表
-                path: 'plan/item',
+                path: 'plan/item/:id',
                 data: {name: '企业体检报告', menuIndex: 7},
                 canActivate: [CompanyGuard],
                 loadChildren: () =>

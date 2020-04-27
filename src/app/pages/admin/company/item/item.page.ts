@@ -144,6 +144,9 @@ export class AdminCompanyItemPage implements OnInit {
 
     ngOnInit() {
         this.getProvinces();
+        this.companySvc.get(this.id).subscribe(res => {
+            console.log(res);
+        });
         this.form.get('companyName').valueChanges.pipe(
             filter(text => text.length > 1),
             debounceTime(1000),

@@ -65,7 +65,7 @@ mat-card {
     border-bottom: 1px solid #DCE5EC;
 
     mat-card-title {
-      font-weight: 600;
+      font-weight: 400;
       color: rgba(33, 51, 63, 1);
       line-height: 28px;
       font-size: 20px;
@@ -206,6 +206,7 @@ mat-card {
       height: 64px;
       border-radius: 4px;
       border: 1px solid rgba(220, 229, 236, 1);
+     &.redbor{border-color:#E29C9C}
 
       ion-thumbnail {
         width: 16px;
@@ -268,6 +269,7 @@ mat-card {
           margin-top: 20px;
         }
       }
+
     }
 
     .property {
@@ -610,3 +612,4 @@ ion-note {
     transform: rotate(1turn);
   }
 }
+

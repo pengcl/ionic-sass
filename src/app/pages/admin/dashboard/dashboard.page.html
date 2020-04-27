@@ -1,5 +1,5 @@
 <div class="container">
-    <ion-grid>
+    <ion-grid *ngIf="data">
         <ion-row>
             <ion-col size="12">
                 <mat-card style="background: rgba(246,247,249,1)">
@@ -15,23 +15,12 @@
                         <mat-card-title>企业情况
                         </mat-card-title>
                         <mat-card-subtitle>
-                            <span>行业 <em>企业服务</em></span><i>｜</i>
-                            <span>运作时长 <em>5年</em></span><i>｜</i>
-                            <span>企业体量 <em>小型企业</em></span>
+                            <span>行业 <em>{{data?.busindustry.industryName ? data?.busindustry.industryName : '-'}}</em></span><i>｜</i>
+                            <span>运作时长 <em>{{getCondValue(7)}}年</em></span><i>｜</i>
+                            <span>企业体量 <em>{{getGroupValue(11).name}}</em></span>
                         </mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
-                        <!--<app-empty [routerLink]="['/admin/company/qualification',company.id]" [icon]="''"
-                                   *ngIf="completions?.length < 1" [confirmText]="'立即补全资质'"></app-empty>
-                        <ion-list *ngIf="completions?.length > 0">
-                            <ion-list-header>信息填写完成度</ion-list-header>
-                            <ion-item *ngFor="let item of completions" lines="none">
-                                <span slot="start" class="start">{{item.typeName}}</span>
-                                <ion-progress-bar [value]="item.value"
-                                                  [color]="item.value | progress"></ion-progress-bar>
-                                <span slot="end" class="end">{{item.rate}}%</span>
-                            </ion-item>
-                        </ion-list>-->
                         <ion-grid>
                             <ion-row>
                                 <ion-col size="6">
@@ -42,23 +31,15 @@
                                             </ion-thumbnail>
                                             <ion-label>品牌布局</ion-label>
                                         </ion-item>
-                                        <ion-item lines="none">
+                                        <ion-item *ngFor="let item of brand" lines="none">
                                             <ion-thumbnail slot="start"></ion-thumbnail>
                                             <ion-label>
-                                                <p>行业深度</p>
-                                                <ion-progress-bar value="1" color="primary"></ion-progress-bar>
+                                                <p>{{item.label}}</p>
+                                                <ion-progress-bar [value]="item.score / 100" color="primary"></ion-progress-bar>
                                             </ion-label>
                                             <ion-thumbnail slot="end" class="end">
-                                                <img src="/assets/images/dashboard/icon_good.png"/></ion-thumbnail>
-                                        </ion-item>
-                                        <ion-item lines="none">
-                                            <ion-thumbnail slot="start"></ion-thumbnail>
-                                            <ion-label>
-                                                <p>经营广度</p>
-                                                <ion-progress-bar value="0.5" color="warning"></ion-progress-bar>
-                                            </ion-label>
-                                            <ion-thumbnail slot="end" class="end">
-                                                <img src="/assets/images/dashboard/icon_well.png"/></ion-thumbnail>
+                                                <img [src]="'/assets/images/dashboard/icon_' + (item.score >= 81 ? 'good' : item.score >= 60 ? 'well' : 'strengthen') + '.svg'"/>
+                                            </ion-thumbnail>
                                         </ion-item>
                                         <ion-item lines="none" style="margin-top: 13px;">
                                             <ion-thumbnail slot="start"></ion-thumbnail>
@@ -77,24 +58,15 @@
                                             </ion-thumbnail>
                                             <ion-label>科创能力</ion-label>
                                         </ion-item>
-                                        <ion-item lines="none">
+                                        <ion-item *ngFor="let item of scientific" lines="none">
                                             <ion-thumbnail slot="start"></ion-thumbnail>
                                             <ion-label>
-                                                <p>科研成果</p>
-                                                <ion-progress-bar value="0.3" color="danger"></ion-progress-bar>
+                                                <p>{{item.label}}</p>
+                                                <ion-progress-bar [value]="item.score / 100" color="danger"></ion-progress-bar>
                                             </ion-label>
                                             <ion-thumbnail slot="end" class="end">
-                                                <img src="/assets/images/dashboard/icon_strengthen.png"/>
+                                                <img [src]="'/assets/images/dashboard/icon_' + (item.score >= 81 ? 'good' : item.score >= 60 ? 'well' : 'strengthen') + '.svg'"/>
                                             </ion-thumbnail>
-                                        </ion-item>
-                                        <ion-item lines="none">
-                                            <ion-thumbnail slot="start"></ion-thumbnail>
-                                            <ion-label>
-                                                <p>科研能力</p>
-                                                <ion-progress-bar value="1" color="primary"></ion-progress-bar>
-                                            </ion-label>
-                                            <ion-thumbnail slot="end" class="end">
-                                                <img src="/assets/images/dashboard/icon_good.png"/></ion-thumbnail>
                                         </ion-item>
                                     </ion-list>
                                 </ion-col>
@@ -109,26 +81,25 @@
                     <mat-card-header>
                         <mat-card-title>政府项目智能培育
                             <span style="margin-left: 10px" matTooltip="根据企业资质匹配政策补贴金额" matTooltipPosition="after">
-                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;">
+                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px; position:relative;top:3px;">
                             </span>
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <!--<app-empty *ngIf="subsidyOption === null" title="暂时没有相关数据"></app-empty>-->
                         <ion-grid>
                             <ion-row>
-                                <ion-col size="6">
-                                    <div *ngIf="subsidyOption" echarts [options]="subsidyOption"
+                                <ion-col *ngIf="quick" size="6">
+                                    <div echarts [options]="quick"
                                          class="main-chart subsidy-chart"
                                          style="height: 220px;"></div>
                                     <p style="text-align: center;margin-top: -40px;font-size:14px;font-weight:400;color:rgba(42,159,247,1);line-height:24px;">
-                                        <em style="font-style: normal;font-weight:500;color:rgba(42,159,247,1);font-size:24px;line-height:30px;">120</em>万元
+                                        <em style="font-style: normal;font-weight:500;color:rgba(42,159,247,1);font-size:24px;line-height:30px;">{{quick.series[0]?.data[0].value}}</em>万元
                                     </p>
                                     <p style="text-align: center;font-size:12px;font-weight:400;color:rgba(95,113,125,1);line-height:17px;margin-top: -15px">
                                         快速培育可获得</p>
                                     <p style="text-align: center;font-size:14px;font-weight:400;color:#5F717D;line-height:20px;">
                                         可培育项目数<em
-                                            style="font-style: normal;color: #21333F;font-size: 18px;font-weight: 500">8</em>
+                                            style="font-style: normal;color: #21333F;font-size: 18px;font-weight: 500">{{quick.series[0]?.data[0].count}}</em>
                                     </p>
                                     <ion-item lines="none">
                                         <ion-thumbnail slot="start"></ion-thumbnail>
@@ -137,18 +108,18 @@
                                         </ion-button>
                                     </ion-item>
                                 </ion-col>
-                                <ion-col size="6">
-                                    <div *ngIf="subsidyOption" echarts [options]="subsidyOption"
+                                <ion-col *ngIf="keChuangBao" size="6">
+                                    <div echarts [options]="keChuangBao"
                                          class="main-chart subsidy-chart"
                                          style="height: 220px;"></div>
                                     <p style="text-align: center;margin-top: -40px;font-size:14px;font-weight:400;color:rgba(42,159,247,1);line-height:24px;">
-                                        <em style="font-style: normal;font-weight:500;color:rgba(42,159,247,1);font-size:24px;line-height:30px;">300</em>万元
+                                        <em style="font-style: normal;font-weight:500;color:rgba(42,159,247,1);font-size:24px;line-height:30px;">{{keChuangBao.series[0]?.data[0].value}}</em>万元
                                     </p>
                                     <p style="text-align: center;font-size:12px;font-weight:400;color:rgba(95,113,125,1);line-height:17px;margin-top: -15px">
                                         科创直通车(2年)可获得</p>
                                     <p style="text-align: center;font-size:14px;font-weight:400;color:#5F717D;line-height:20px;">
                                         可培育项目数<em
-                                            style="font-style: normal;color: #21333F;font-size: 18px;font-weight: 500">20</em>
+                                            style="font-style: normal;color: #21333F;font-size: 18px;font-weight: 500">{{keChuangBao.series[0]?.data[0].count}}</em>
                                     </p>
                                 </ion-col>
                             </ion-row>
@@ -161,7 +132,7 @@
                     <mat-card-header>
                         <mat-card-title>匹配政策
                             <span style="margin-left: 10px" matTooltip="由中科华海搜集全国范围内的企业相关政策" matTooltipPosition="after">
-                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;">
+                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px; position:relative;top:3px;">
                             </span>
                         </mat-card-title>
                         <mat-card-subtitle>
@@ -170,39 +141,6 @@
                         </mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
-                        <!--<form [formGroup]="form">
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col size="2" style="margin-right: 10px">
-                                        <mat-form-field appearance="outline">
-                                            <mat-select formControlName="province" placeholder="省" required>
-                                                <mat-option *ngFor="let item of provinces" [value]="item.name">
-                                                    {{item.name}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </ion-col>
-                                    <ion-col size="2" style="margin-right: 10px">
-                                        <mat-form-field appearance="outline">
-                                            <mat-select formControlName="city" placeholder="市" required>
-                                                <mat-option *ngFor="let item of cities" [value]="item.name">
-                                                    {{item.name}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </ion-col>
-                                    <ion-col size="2">
-                                        <mat-form-field appearance="outline">
-                                            <mat-select formControlName="area" placeholder="区" required>
-                                                <mat-option *ngFor="let item of districts" [value]="item.name">
-                                                    {{item.name}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-grid>
-                        </form>-->
 
 
                         <div class="hot">
@@ -211,10 +149,10 @@
                                     <ion-col size="3" *ngFor="let item of policy.list.slice(0,4);let i = index">
                                         <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]"
                                              [ngStyle]="{'margin-right': i === 3 ? '0' : '22px'}">
-                                            <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
-                                                <img src="/assets/images/dashboard/icon_hot.png">
+                                            <div class="hot_img">
+                                                <img src="/assets/images/dashboard/icon_hot.svg">
                                             </div>
-                                            <p style="font-size:18px;font-weight:600;color:rgba(33,51,63,1);line-height:25px;margin-bottom:10px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
+                                            <p style="font-size:18px;font-weight:400;color:rgba(33,51,63,1);line-height:25px;margin-bottom:10px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
                                                 {{item.policyName}}</p>
                                             <p style="font-size:14px;font-weight:400;color:rgba(95,113,125,1);line-height:20px;">
                                                 预计补贴金额<span
@@ -230,7 +168,7 @@
                                                 <span style="padding: 6px 15px;border-radius:4px;border:1px solid rgba(63,162,244,1);font-size:14px;font-weight:500;color:rgba(42,159,247,1);line-height:20px;">立即了解</span>
                                                 <span style="float: right;margin-top: -5px;"><img
                                                         src="/assets/images/dashboard/icon_clock.png" height="20"
-                                                        width="20" style="position: relative;top:5px"/><em
+                                                        width="20" style="position: relative;top:5px;right:3px"/><em
                                                         style="font-weight:500;color:rgba(224,32,32,1);font-style: normal">{{getDate(item.reportDateEnd)}}</em>天</span>
                                             </p>
                                         </div>
@@ -242,112 +180,6 @@
                     </mat-card-content>
                 </mat-card>
             </ion-col>
-            <!--<ion-col size="4">
-                <mat-card>
-                    <mat-card-header>
-                        <mat-card-title>知产保障</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <ion-list>
-                            <ion-item style="&#45;&#45;border-style:none">
-                                <img src="/assets/images/dashboard/box.png" slot="start"
-                                     style="width: 30px;height: 30px">
-                                <span>知产保险箱
-                                <img src="/assets/images/qualification.png"
-                                     style="width: 20px;height: 20px;position: absolute;top: 15px;left: 80px;"
-                                     matTooltip="通过华海安全云服务保障企业商业秘密" matTooltipPosition="after">
-                            </span>
-                                <img src="/assets/images/dashboard/to.png" slot="end"
-                                     style="width: 25px;height: 25px;cursor: pointer" (click)="toBox()">
-                            </ion-item>
-
-                            <ion-item style="&#45;&#45;border-style:none">
-                                <img src="/assets/images/dashboard/brand.png" slot="start"
-                                     style="width: 30px;height: 30px">
-                                <span>商标自动续展
-                                <img src="/assets/images/qualification.png"
-                                     style="width: 20px;height: 20px;position: absolute;top: 15px;left: 90px;"
-                                     matTooltip="系统监察商标期限和自动完成续费" matTooltipPosition="after">
-                                </span>
-                                <ion-toggle (click)="presentLoading('one')" [(ngModel)]="guarantee.one" color="primary"
-                                            slot="end"></ion-toggle>
-                            </ion-item>
-
-                            <ion-item style="&#45;&#45;border-style:none">
-                                <img src="/assets/images/dashboard/p.png" slot="start" style="width: 30px;height: 30px">
-                                <span>专利智能续费
-                                <img src="/assets/images/qualification.png"
-                                     style="width: 20px;height: 20px;position: absolute;top: 15px;left: 90px;"
-                                     matTooltip="系统监察专利期限和自动完成续费" matTooltipPosition="after">
-                                </span>
-                                <ion-toggle (click)="presentLoading('two')" [(ngModel)]="guarantee.two" color="primary"
-                                            slot="end"></ion-toggle>
-                            </ion-item>
-
-                            <ion-item style="&#45;&#45;border-style:none">
-                                <img src="/assets/images/dashboard/copyright.png" slot="start"
-                                     style="width: 30px;height: 30px">
-                                <span>版权顾问
-                                <img src="/assets/images/qualification.png"
-                                     style="width: 20px;height: 20px;position: absolute;top: 15px;left: 60px;"
-                                     matTooltip="为客户提供版权咨询和解答服务" matTooltipPosition="after">
-                                </span>
-                                <ion-toggle (click)="presentLoading('three')" [(ngModel)]="guarantee.three"
-                                            color="primary" slot="end"></ion-toggle>
-                            </ion-item>
-                        </ion-list>
-                    </mat-card-content>
-                </mat-card>
-            </ion-col>
-            <ion-col size="8">
-                <mat-card>
-                    <mat-card-header>
-                        <mat-card-title>知产自助服务</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <ion-row class="service" style="margin: 44px auto;">
-                            <ion-col size="4">
-                                <div style="margin: 0 auto">
-                                    <img src="/assets/images/dashboard/rocket.png"
-                                         style="width: 70px;height: 70px;display: block;margin: 0 auto;cursor: pointer"
-                                         (click)="toCheckout()">
-                                    <p>商标自助智能注册
-                                        <img src="/assets/images/qualification.png"
-                                             style="width: 20px;height: 20px;margin-left: 10px;display: inline-block;vertical-align: middle"
-                                             matTooltip="用户通过智能服务自助完成商标注册" matTooltipPosition="after">
-                                    </p>
-                                </div>
-                            </ion-col>
-
-                            <ion-col size="4">
-                                <div style="margin: 0 auto">
-                                    <img src="/assets/images/dashboard/plane.png"
-                                         style="width: 70px;height: 70px;display: block;margin: 0 auto;cursor: pointer"
-                                         (click)="presentLoading()">
-                                    <p>专利快捷提交
-                                        <img src="/assets/images/qualification.png"
-                                             style="width: 20px;height: 20px;margin-left: 10px;display: inline-block;vertical-align: middle"
-                                             matTooltip="用户通过智能服务自助完成专利提交" matTooltipPosition="after">
-                                    </p>
-                                </div>
-                            </ion-col>
-
-                            <ion-col size="4">
-                                <div style="margin: 0 auto">
-                                    <img src="/assets/images/dashboard/e.png"
-                                         style="width: 70px;height: 70px;display: block;margin: 0 auto;cursor: pointer"
-                                         (click)="presentLoading()">
-                                    <p>版权智能存证登记
-                                        <img src="/assets/images/qualification.png"
-                                             style="width: 20px;height: 20px;margin-left: 10px;display: inline-block;vertical-align: middle"
-                                             matTooltip="用户通过智能系统采集证据完成版权存证" matTooltipPosition="after">
-                                    </p>
-                                </div>
-                            </ion-col>
-                        </ion-row>
-                    </mat-card-content>
-                </mat-card>
-            </ion-col>-->
             <ion-col *ngIf="ticket.dataSource?.data.length > 0" size="12">
                 <mat-card>
                     <mat-card-header>
@@ -362,21 +194,21 @@
                     </mat-card-header>
                     <mat-card-content>
                         <ion-row>
-                            <ion-col size="3">
+                            <ion-col size="3.5">
                                 <ion-list class="my_work">
                                     <ion-item lines="none">
                                         <ion-thumbnail slot="start">
                                             <img src="/assets/images/dashboard/order_statistic.png"/></ion-thumbnail>
                                         <ion-label>工单统计
                                             <img src="/assets/images/qualification.png"
-                                                 style="width: 20px;height: 20px;"
+                                                 style="width: 20px;height: 20px; position:relative;top:4px;"
                                                  matTooltip="用户工单概况统计" matTooltipPosition="after"></ion-label>
                                     </ion-item>
                                     <ion-item style="margin-top: 0" lines="none">
                                         <ion-thumbnail slot="start"></ion-thumbnail>
                                         <div class="work">
                                             <ion-item lines="none" style="margin-top: 8px;">
-                                                <ion-thumbnail slot="start">
+                                                <ion-thumbnail slot="start" style="margin:16px 10px 16px 16px">
                                                     <img src="/assets/images/dashboard/order_ing.png"/>
                                                 </ion-thumbnail>
                                                 <ion-label>进行中工单<span
@@ -390,7 +222,7 @@
                                         <ion-thumbnail slot="start"></ion-thumbnail>
                                         <div class="work">
                                             <ion-item lines="none" style="margin-top: 8px;">
-                                                <ion-thumbnail slot="start">
+                                                <ion-thumbnail slot="start" style="margin:16px 10px 16px 16px">
                                                     <img src="/assets/images/dashboard/order_finish.png"/>
                                                 </ion-thumbnail>
                                                 <ion-label>已完成工单<em
@@ -403,9 +235,9 @@
 
                                     <ion-item lines="none">
                                         <ion-thumbnail slot="start"></ion-thumbnail>
-                                        <div class="work">
+                                        <div class="work redbor">
                                             <ion-item lines="none" style="margin-top: 8px;">
-                                                <ion-thumbnail slot="start">
+                                                <ion-thumbnail slot="start" style="margin:16px 10px 16px 16px">
                                                     <img src="/assets/images/dashboard/order_err.png"/>
                                                 </ion-thumbnail>
                                                 <ion-label>异常工单<span
@@ -416,51 +248,51 @@
                                     </ion-item>
                                 </ion-list>
                             </ion-col>
-                            <ion-col size="9">
+                            <ion-col size="8.5">
                                 <ion-list class="my_work">
                                     <ion-item lines="none">
                                         <ion-thumbnail slot="start">
                                             <img src="/assets/images/dashboard/order_status.png"/></ion-thumbnail>
                                         <ion-label>工单最新状态
                                             <img src="/assets/images/qualification.png"
-                                                 style="width: 20px;height: 20px;"
+                                                 style="width: 20px;height: 20px; position:relative;top:4px;"
                                                  matTooltip="用户工单概况统计" matTooltipPosition="after"></ion-label>
                                     </ion-item>
                                     <ion-row>
                                         <ion-col size="1"></ion-col>
                                         <ion-col size="11" style="margin: 6px 0 0 -15px">
-                                            <table *ngIf="ticket.dataSource" mat-table [dataSource]="ticket.dataSource">
+                                            <table *ngIf="ticket.dataSource" mat-table [dataSource]="ticket.dataSource"  style="border: 1px solid #dce5ec;border-radius:3px;display: block;">
 
                                                 <!-- Position Column -->
                                                 <ng-container matColumnDef="content">
                                                     <th mat-header-cell *matHeaderCellDef
-                                                        style="width: 200px;text-align: left;height: 60px"><b>工单内容</b>
+                                                        style="color:#21333F;padding-left: 22px !important;width: 240px;height: 54px;background:none !important;border-bottom-color: none !important;text-align: left !important;border-right: none !important;border-bottom-width: 0;"><b>工单内容</b>
                                                     </th>
                                                     <td mat-cell *matCellDef="let element"
                                                         title="{{element.serviceName}}"
-                                                        style="text-align: left !important;border-bottom-width: 1px !important;">
+                                                        style="color:#5F717D;padding-left:22px !important;text-align: left !important;border-bottom-width: 0 !important; ">
                                                         <img src="/assets/images/dashboard/icon_star.png" height="13"
-                                                             width="13"/>
+                                                             width="13" style="margin-right: 3px;top: 2px;position: relative;"/>
                                                         {{element.serviceName.slice(0, 12)}}{{element.serviceName.length > 12 ? '...' : ''}}
                                                     </td>
                                                 </ng-container>
 
                                                 <!-- Name Column -->
                                                 <ng-container matColumnDef="status">
-                                                    <th mat-header-cell *matHeaderCellDef style="width: 120px">
+                                                    <th mat-header-cell *matHeaderCellDef style="color:#21333F;padding-left: 22px !important;width: 120px;background:none !important;border-bottom-color: 0 !important;text-align: left !important;border-right: none !important;border-bottom-width: 0;">
                                                         <b>流程节点</b></th>
                                                     <td mat-cell *matCellDef="let element"
-                                                        style="border-bottom-width: 1px !important;height: 50px">
+                                                        style="color:#5F717D;padding-left:22px !important; text-align:left !important;border-bottom-width:0 !important;height: 50px">
                                                         {{element.workSatusName}}
                                                     </td>
                                                 </ng-container>
 
                                                 <!-- Weight Column -->
                                                 <ng-container matColumnDef="progress">
-                                                    <th mat-header-cell *matHeaderCellDef><b>进度</b></th>
+                                                    <th mat-header-cell *matHeaderCellDef style="color:#21333F;padding-left: 22px !important;width: 245px;background:none !important;border-bottom-color: 0 !important;text-align: left !important;border-right: none !important;border-bottom-width: 0;"><b>进度</b></th>
                                                     <td mat-cell *matCellDef="let element"
-                                                        style="border-bottom-width: 1px !important;height: 50px">
-                                                        <div style="display: flex;align-items: center;padding: 0 20px">
+                                                        style="padding-left:22px !important;border-bottom-width: 0 !important;height: 50px">
+                                                        <div style="display: flex;align-items: center;padding: 0">
                                                             <ion-progress-bar [value]="element.workSatusRate / 100"
                                                                               [color]="element.workSatusRate / 100 | progress"></ion-progress-bar>
                                                             <span style="margin-left: 10px;width: 50px">{{element.workSatusRate}}
@@ -471,10 +303,10 @@
 
                                                 <!-- Symbol Column -->
                                                 <ng-container matColumnDef="actions">
-                                                    <th mat-header-cell *matHeaderCellDef style="width: 120px"><b>操作</b>
+                                                    <th mat-header-cell *matHeaderCellDef style="color:#21333F;width: 120px;background:none !important;border-bottom-color: 0 !important;border-right: none !important;border-bottom-width: 0;"><b>操作</b>
                                                     </th>
                                                     <td mat-cell *matCellDef="let element"
-                                                        style="border-bottom-width: 1px !important;height: 50px">
+                                                        style="border-bottom-width:0 !important;height: 50px;">
                                                         <a class="actions-icon"
                                                            [routerLink]="['/admin/ticket/item',element.id]" title="查看">
                                                             <img src="/assets/images/view.png">
@@ -500,7 +332,7 @@
                     <mat-card-header>
                         <mat-card-title>知识产权概况
                             <span style="margin-left: 10px" matTooltip="知识产权概况" matTooltipPosition="after">
-                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px;"></span>
+                                <img src="/assets/images/qualification.png" style="width: 20px;height: 20px; position:relative;top:3px;"></span>
                         </mat-card-title>
                         <mat-card-subtitle>
                             <ion-button color="primary"
@@ -517,7 +349,7 @@
                                         *ngIf="(copyOption.count > 0 || patentOption.count > 0 || brandOption.count > 0) && brandOption.count === 0"
                                         title="暂时没有相关数据"></app-empty>-->
                                 <ion-list class="property">
-                                    <ion-list-header>
+                                    <ion-list-header style="padding: 0 20px;line-height: 70px;">
                                         商标<span style="float: right">{{brandOption.count}}</span>
                                     </ion-list-header>
                                     <ion-item lines="none">
@@ -543,7 +375,7 @@
                                         *ngIf="(copyOption.count > 0 || patentOption.count > 0 || brandOption.count > 0) && patentOption.count === 0"
                                         title="暂时没有相关数据"></app-empty>-->
                                 <ion-list class="property">
-                                    <ion-list-header>
+                                    <ion-list-header style="padding: 0 20px;line-height: 70px;">
                                         专利<span style="float: right">{{patentOption.count}}</span>
                                     </ion-list-header>
                                     <ion-item lines="none">
@@ -567,7 +399,7 @@
                                         *ngIf="(copyOption.count > 0 || patentOption.count > 0 || brandOption.count > 0) && copyOption.count === 0"
                                         title="暂时没有相关数据"></app-empty>-->
                                 <ion-list class="property" style="margin-right: 0">
-                                    <ion-list-header>
+                                    <ion-list-header style="padding: 0 20px;line-height: 70px;">
                                         版权<span style="float: right">{{copyOption.count}}</span>
                                     </ion-list-header>
                                     <ion-item lines="none">

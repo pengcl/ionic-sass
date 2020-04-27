@@ -117,7 +117,7 @@ export class AdminPolicyListPage {
     }
 
     getData() {
-        this.toastSvc.show('加载中...', 0);
+        this.toastSvc.loading('加载中...', 0);
         const body = JSON.parse(JSON.stringify(this.form.value));
         body.page = this.params.page;
         body.rows = this.params.rows;

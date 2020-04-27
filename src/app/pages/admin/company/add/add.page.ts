@@ -119,16 +119,29 @@ export class AdminCompanyAddPage implements OnInit {
             }
         } as UploaderOptions)
     };
-    company = this.companySvc.currentCompany;
+    company;
     matcher = new MyErrorStateMatcher();
     provinces = [];
     cities = [];
     districts = [];
     loading = false;
 
-    firstFormGroup: FormGroup;
-    secondFormGroup: FormGroup;
+    firstForm: FormGroup = new FormGroup({
+        companyName: new FormControl('', [Validators.required]),
+        creditNumber: new FormControl('', [Validators.required]),
+        province: new FormControl('', [Validators.required]),
+        city: new FormControl('', [Validators.required]),
+        area: new FormControl('', [Validators.required]),
+        address: new FormControl('', [Validators.required]),
+        mechanismId: new FormControl('', []),
+        operateDate: new FormControl('', [Validators.required]),
+    });
+    secondForm: FormGroup = new FormGroup({
+        custId: new FormControl('', [Validators.required]),
+        custGradeConds: new FormControl('', [Validators.required])
+    });
     isEditable = false;
+    options = [];
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -148,26 +161,24 @@ export class AdminCompanyAddPage implements OnInit {
     }
 
     ngOnInit() {
-        this.firstFormGroup = this.formBuilder.group({
-            firstCtrl: ['', []]
-        });
-        this.secondFormGroup = this.formBuilder.group({
-            secondCtrl: ['',[] ]
-        });
-
         this.getProvinces();
-        this.form.get('companyName').valueChanges.pipe(
+        this.firstForm.get('companyName').valueChanges.pipe(
             filter(text => text.length > 1),
             debounceTime(1000),
             distinctUntilChanged()).subscribe(companyName => {
-            this.companySvc.validatorName(companyName).subscribe(res => {
+            this.companySvc.search(companyName).subscribe(res => {
+                if (res.code === 20000 && res.data) {
+                    this.options = res.data;
+                }
+            });
+            /*this.companySvc.validatorName(companyName).subscribe(res => {
                 if (res && res.id !== this.id) {
                     // this.sameCompany = res;
                     this.form.get('companyName').setErrors(null);
                 } else {
                     // this.sameCompany = false;
                 }
-            });
+            });*/
         });
         this.form.get('province').valueChanges.subscribe(res => {
             this.cities = [];
@@ -215,6 +226,29 @@ export class AdminCompanyAddPage implements OnInit {
                     this.form.get('custId').disable();
                 }
             });
+    }
+
+    /*search() {
+        if (this.firstForm.get('companyName').invalid) {
+            this.dialogSvc.show({content: '请输入公司名称', cancel: '', confirm: '我知道了'}).subscribe();
+        } else {
+            this.companySvc.search(this.firstForm.get('companyName').value).subscribe(res => {
+                if (res.code === 20000) {
+                    if (res.data) {
+                        this.options = res.data;
+                    }
+                }
+            });
+        }
+    }*/
+
+    setCompany() {
+        this.companySvc.find(this.firstForm.get('companyName').value).subscribe(res => {
+            if (res.code === 20000) {
+                this.company = res.data.companyDTO;
+                console.log(this.company);
+            }
+        });
     }
 
     getNumber() {

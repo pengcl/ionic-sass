@@ -34,7 +34,7 @@ export class AdminRiskListPage {
     }
 
     getData() {
-        this.toastSvc.show('加载中...', 0);
+        this.toastSvc.loading('加载中...', 0);
         this.planSvc.list(this.params).subscribe(res => {
             this.toastSvc.hide();
             this.total = res.total;
