@@ -113,9 +113,10 @@
                                     </ion-item>
                                 </ion-col>
                                 <ion-col *ngIf="keChuangBao" size="6">
-                                    <div echarts [options]="keChuangBao"
+                                    <!--<div echarts [options]="keChuangBao"
                                          class="main-chart subsidy-chart"
-                                         style="height: 220px;"></div>
+                                         style="height: 220px;"></div>-->
+                                    <div id="c2" style="display: flex;justify-content: center;margin: 0 auto"></div>
                                     <p style="text-align: center;margin-top: -40px;font-size:14px;font-weight:400;color:rgba(42,159,247,1);line-height:24px;">
                                         <em style="font-style: normal;font-weight:500;color:rgba(42,159,247,1);font-size:24px;line-height:30px;">{{keChuangBao.series[0]?.data[0].value}}</em>万元
                                     </p>

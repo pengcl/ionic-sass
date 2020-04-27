@@ -280,6 +280,7 @@ export class AdminDashboardPage {
             setTimeout(() => {
                 console.log($('#c1'));
                 this.drawChart('#c1', this.quick.series[0].data[0].value);
+                this.drawChart('#c2', this.keChuangBao.series[0].data[0].value);
             });
         });
         this.ticketSvc.statistics(this.company.id).subscribe(res => {

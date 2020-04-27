@@ -26,6 +26,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     }
 }
 
+const colors = ['#00cc99', '#339999'];
+const colors2 = ['#3399ff', '#3366ff', '#3300ff', '#330099'];
+const colors3 = ['#ff0000', '#ff6600', '#ff9900', '#ffcc00'];
 @Component({
     selector: 'app-admin-company-item',
     templateUrl: './item.page.html',
@@ -42,17 +45,17 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class AdminCompanyItemPage implements OnInit {
     brandOption = {
-        color: ['#69EBB7', '#5F8FF3'],
+        color: colors,
         tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+            formatter: '{d}%'
         },
         legend: {
             bottom: 0,
             data: ['执行人员', '管理人员'],
-            itemWidth: 8,
-            itemHeight: 8,
-            borderRadius: 50
+            itemWidth: 15,
+            itemHeight: 15,
+            radius: 4
         },
         series: [
             {
@@ -67,7 +70,7 @@ export class AdminCompanyItemPage implements OnInit {
                 emphasis: {
                     label: {
                         show: true,
-                        fontSize: '30',
+                        fontSize: '16',
                         fontWeight: 'bold'
                     }
                 },
