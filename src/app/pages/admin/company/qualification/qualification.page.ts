@@ -22,6 +22,7 @@ const colors3 = ['#69EBB7', '#5F8FF3', '#56CFFF'];
 const colors4 = ['#63A0E9', '#97C0F0'];
 const colors5 = ['#8DE1DE', '#6F9CD2', '#E26767'];
 const colors6 = ['#E4F5C2', '#8DE1DE', '#6F9CD2'];
+
 @Component({
     selector: 'app-admin-company-qualification',
     templateUrl: 'qualification.page.html',
@@ -424,7 +425,7 @@ export class AdminCompanyQualificationPage implements OnInit {
             this.getCircle('edu', [{id: 28, label: '专科'}, {id: 29, label: '本科及以上'}]);
             this.getCircle('sci', [{id: 31, label: '专科'}, {id: 30, label: '本科及以上'}]);
             this.getCircle('man', [{id: 2, label: '管理人员'}]);
-            this.getCircle('sci-rate', [{id: 21, label: '研发'}]);
+            this.getCircle('sci-rate', [{id: 21, label: '研发人员'}]);
             this.getGroupBar(9);
         });
     }
@@ -452,11 +453,19 @@ export class AdminCompanyQualificationPage implements OnInit {
             option.legend.data.push(item.label);
             option.series[0].data.push({name, value});
         });
-        option.legend.data.push('其它');
-        option.series[0].data.push({
-            name: '其它',
-            value: other
-        });
+        if (id === 'sci-rate') {
+            option.legend.data.push('其它人员');
+            option.series[0].data.push({
+                name: '其它人员',
+                value: other
+            });
+        } else {
+            option.legend.data.push('其它');
+            option.series[0].data.push({
+                name: '其它',
+                value: other
+            });
+        }
         this.circle[id] = option;
     }
 

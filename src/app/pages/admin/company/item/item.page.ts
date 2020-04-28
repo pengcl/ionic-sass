@@ -563,7 +563,11 @@ export class AdminCompanyItemPage implements OnInit {
                         content: '修改成功',
                         cancel: '',
                         confirm: '我知道了'
-                    }).subscribe();
+                    }).subscribe(value => {
+                        if (value.value) {
+                            this.router.navigate(['/admin/company/qualification', this.company.id]);
+                        }
+                    });
                 });
             });
         });

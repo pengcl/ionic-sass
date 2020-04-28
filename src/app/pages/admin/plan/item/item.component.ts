@@ -118,7 +118,7 @@ export class AdminPlanItemPage implements OnInit {
             trigger: 'axis'
         },
         legend: {
-            data: ['企业现状', '行业水平'],
+            data: ['企业现状'],
             right: 0
         },
         grid: {
@@ -264,7 +264,6 @@ export class AdminPlanItemPage implements OnInit {
         charts.forEach(item => {
             option.xAxis.data.push(item.text);
             option.series[0].data.push(item.count);
-            option.series[1].data.push(item.count1);
         });
         // todo count1 is disappear
         this.option[id] = option;

@@ -142,7 +142,7 @@
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;">
                             </tr>
                         </table>
-                        <ion-button color="primary" style="margin-top: 10px;">一键申请全部政策</ion-button>
+                        <ion-button color="primary" style="margin-top: 10px;" (click)="applyPolicy()">一键申请全部政策</ion-button>
                         <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)"
                                        [pageSizeOptions]="[10,20,50]" showFirstLastButtons>123</mat-paginator>
                     </mat-card-content>

@@ -8,6 +8,7 @@ import {LoadingService} from '../../../../@core/services/loading.service';
 import {ToastService} from '../../../../@core/modules/toast';
 import * as G2 from '@antv/g2';
 import {registerShape} from '@antv/g2';
+import {DialogService} from '../../../../@core/modules/dialog';
 
 @Component({
     selector: 'app-policy',
@@ -71,7 +72,8 @@ export class AdminPolicyPage {
                 private router: Router,
                 private policySvc: PolicyService,
                 private toastSvc: ToastService,
-                private el: ElementRef) {
+                private el: ElementRef,
+                private dialogSvc: DialogService) {
         this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
             this.keChuangBao = JSON.parse(JSON.stringify(this.option));
             this.quick = JSON.parse(JSON.stringify(this.option));
@@ -529,6 +531,23 @@ export class AdminPolicyPage {
 
     toPolicyItem() {
         this.router.navigate(['/admin/policy/list']);
+    }
+
+    applyPolicy() {
+        console.log(this.company);
+        const body = {
+            mobile: this.company.mobile,
+            name: this.company.name,
+            company: this.company.companyName + '/全部政策'
+        };
+        this.policySvc.addUserConsult(body).subscribe(res => {
+            this.dialogSvc.show({
+                title: '',
+                content: '您的申请已收到，我们将立即安排科技项目专家与您联系。',
+                cancel: '',
+                confirm: '我知道了'
+            }).subscribe();
+        });
     }
 
 }

@@ -42,4 +42,11 @@ export class PolicyService {
     preDownload(id, type): Observable<any> {
         return this.http.post(this.PREFIX_URL + 'preDownloadPlan', {planId: id, type});
     }
+
+    addUserConsult(body): Observable<any> {
+        return this.http.post(this.PREFIX_URL + 'addUserConsult', body)
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
 }

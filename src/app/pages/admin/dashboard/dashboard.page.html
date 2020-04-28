@@ -13,6 +13,10 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-card-title>企业情况
+                            <span style="margin-left: 10px" matTooltip="企业智能画像的概要情况" matTooltipPosition="after">
+                                <img src="/assets/images/qualification.png"
+                                     style="width: 20px;height: 20px; position:relative;top:3px;">
+                            </span>
                         </mat-card-title>
                         <mat-card-subtitle>
                             <span>行业 <em>{{data?.busindustry.industryName ? data?.busindustry.industryName : '-'}}</em></span><i>｜</i>
@@ -136,14 +140,14 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-card-title>匹配政策
-                            <span style="margin-left: 10px" matTooltip="由中科华海搜集全国范围内的企业相关政策" matTooltipPosition="after">
+                            <span style="margin-left: 10px" matTooltip="根据企业资质匹配政策内容" matTooltipPosition="after">
                                 <img src="/assets/images/qualification.png"
                                      style="width: 20px;height: 20px; position:relative;top:3px;">
                             </span>
                         </mat-card-title>
                         <mat-card-subtitle>
-                            <span>华海政策库已收录 <em>2,000条</em></span><i>｜</i>
-                            <span>最近30天更新政策 <em>500条</em></span>
+                            <span>华海政策库已收录 <em>{{policy.total}}条</em></span><i>｜</i>
+                            <span>最近30天更新政策 <em>{{policy.update}}条</em></span>
                         </mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
@@ -156,7 +160,10 @@
                                         <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]"
                                              [ngStyle]="{'margin-right': i === 3 ? '0' : '22px'}">
                                             <div class="hot_img">
-                                                <img src="/assets/images/dashboard/icon_hot.svg">
+                                                <img src="/assets/images/dashboard/icon_hot.svg"
+                                                     *ngIf="(item.isHot === 1 && item.isNew === 1) || (item.isHot === 1 && item.isNew === 0)">
+                                                <img src="/assets/images/dashboard/icon_new.svg"
+                                                     *ngIf="item.isHot === 0 && item.isNew === 1">
                                             </div>
                                             <p style="font-size:18px;font-weight:400;color:rgba(33,51,63,1);line-height:25px;margin-bottom:10px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
                                                 {{item.policyName}}</p>
@@ -172,7 +179,8 @@
                                             </p>
                                             <p style="font-size:14px;font-weight:400;color:rgba(95,113,125,1);line-height:20px;margin-top: 15px;">
                                                 <span style="padding: 6px 15px;border-radius:4px;border:1px solid rgba(63,162,244,1);font-size:14px;font-weight:500;color:rgba(42,159,247,1);line-height:20px;">立即了解</span>
-                                                <span style="float: right;margin-top: -5px;"><img
+                                                <span style="float: right;margin-top: -5px;"
+                                                      *ngIf="getDate(item.reportDateEnd) <= 60"><img
                                                         src="/assets/images/dashboard/icon_clock.png" height="20"
                                                         width="20" style="position: relative;top:5px;right:3px"/><em
                                                         style="font-weight:500;color:rgba(224,32,32,1);font-style: normal">{{getDate(item.reportDateEnd)}}</em>天</span>
@@ -262,11 +270,15 @@
                                         <ion-label>工单最新状态
                                             <img src="/assets/images/qualification.png"
                                                  style="width: 20px;height: 20px; position:relative;top:4px;"
-                                                 matTooltip="用户工单概况统计" matTooltipPosition="after"></ion-label>
+                                                 matTooltip="最近更新的工单及进度" matTooltipPosition="after"></ion-label>
                                     </ion-item>
                                     <ion-row>
                                         <ion-col size="1"></ion-col>
                                         <ion-col size="11" style="margin: 6px 0 0 -15px">
+                                            <div *ngIf="!ticket.dataSource" class="chart-empty" style="border-radius:4px;border:1px solid #DCE5EC;margin: 0;height: 214px">
+                                                <img src="/assets/images/dashboard/order_empty.png">
+                                                <span style="margin-top: -10px">暂无工单信息</span>
+                                            </div>
                                             <table *ngIf="ticket.dataSource" mat-table [dataSource]="ticket.dataSource"
                                                    style="border: 1px solid #dce5ec;border-radius:3px;display: block;margin-left: 10px;">
 
@@ -345,11 +357,7 @@
             <ion-col size="12">
                 <mat-card>
                     <mat-card-header>
-                        <mat-card-title>知识产权概况
-                            <span style="margin-left: 10px" matTooltip="知识产权概况" matTooltipPosition="after">
-                                <img src="/assets/images/qualification.png"
-                                     style="width: 20px;height: 20px; position:relative;top:3px;"></span>
-                        </mat-card-title>
+                        <mat-card-title>知识产权概况</mat-card-title>
                         <mat-card-subtitle>
                             <ion-button color="primary"
                                         style="width: 146px;height: 32px !important;margin-top: -5px"
@@ -371,6 +379,12 @@
                                     <ion-item lines="none">
                                         <ion-grid>
                                             <ion-row>
+                                                <ion-col size="12" *ngIf="!brandOption.line && !brandOption.pie">
+                                                    <div class="chart-empty">
+                                                        <img src="/assets/images/dashboard/brand_empty.png">
+                                                        <span>暂无商标信息</span>
+                                                    </div>
+                                                </ion-col>
                                                 <ion-col size="6">
                                                     <div *ngIf="brandOption.line" echarts [options]="brandOption.line"
                                                          style="width: 200px;height: 300px" class="main-chart"></div>
@@ -397,6 +411,12 @@
                                     <ion-item lines="none">
                                         <ion-grid>
                                             <ion-row>
+                                                <ion-col size="12" *ngIf="!patentOption.line && !patentOption.pie">
+                                                    <div class="chart-empty">
+                                                        <img src="/assets/images/dashboard/patent_empty.png">
+                                                        <span>暂无专利信息</span>
+                                                    </div>
+                                                </ion-col>
                                                 <ion-col size="6">
                                                     <div *ngIf="patentOption.line" echarts [options]="patentOption.line"
                                                          style="width: 200px;height: 300px" class="main-chart"></div>
@@ -421,6 +441,12 @@
                                     <ion-item lines="none">
                                         <ion-grid>
                                             <ion-row>
+                                                <ion-col size="12" *ngIf="!copyOption.line && !copyOption.pie">
+                                                    <div class="chart-empty">
+                                                        <img src="/assets/images/dashboard/copy_empty.png">
+                                                        <span>暂无版权信息</span>
+                                                    </div>
+                                                </ion-col>
                                                 <ion-col size="6">
                                                     <div *ngIf="copyOption.line" echarts [options]="copyOption.line"
                                                          style="width: 200px;height: 300px" class="main-chart"></div>
