@@ -590,6 +590,7 @@ export class AdminDashboardPage {
             res.histograms.forEach(item => {
                 years.push(item.applyYear);
                 series[2].data.push(item.registerCount ? item.registerCount : 0);
+
                 series[1].data.push(item.applyCount ? item.applyCount : 0);
                 series[0].data.push(item.invalidCount ? item.invalidCount : 0);
             });
@@ -652,19 +653,22 @@ export class AdminDashboardPage {
             })();
 
             setTimeout(() => {
-                console.log($('#c1'));
-                this.drawChart('#c1', this.quick.series[0].data[0].value);
-                this.drawChart('#c2', this.keChuangBao.series[0].data[0].value);
+                this.drawChart(this.quick.series[0].data[0].value);
+            });
+
+            setTimeout(() => {
+                this.drawChart2(this.keChuangBao.series[0].data[0].value);
             });
         });
     }
 
-    drawChart(contaniner, cvalue) {
+    drawChart(cvalue) {
+        const _value = this.quick.series[0].data[0].value > this.keChuangBao.series[0].data[0].value ? (cvalue / this.quick.series[0].data[0].value) * 6 : (cvalue / this.keChuangBao.series[0].data[0].value) * 6;
         this.chartOption = [
-            {value: 2}
+            {value: _value}
         ];
 
-        const chartContainer = this.el.nativeElement.querySelector(contaniner);
+        const chartContainer = this.el.nativeElement.querySelector('#c1');
         // 自定义Shape 部分
         registerShape('point', 'pointer', {
             draw(cfg, container) {
@@ -697,7 +701,183 @@ export class AdminDashboardPage {
             }
         });
 
-        const color = ['#389AFF', '#9CFFF6', '#B39AFF'];
+        const color = ['#389AFF', '#9CFFF6', '#9CFFF6'];
+        const chart = new G2.Chart({
+            container: chartContainer,
+            width: 200,
+            height: 220
+        });
+        chart.data(this.chartOption);
+        chart.animate(false);
+
+        chart.coordinate('polar', {
+            startAngle: (-9 / 8) * Math.PI,
+            endAngle: (1 / 8) * Math.PI,
+            radius: 0.85
+        });
+        chart.scale('value', {
+            min: 0,
+            max: 6,
+            tickInterval: 1
+        });
+
+        chart.axis('1', false);
+        chart.axis('value', {
+            line: null,
+            label: {
+                offset: -15,
+                style: {
+                    fontSize: 10,
+                    fill: '#E5ECF3',
+                    textAlign: 'center',
+                    textBaseline: 'middle'
+                }
+            },
+            tickLine: {
+                length: -14
+            },
+            grid: null
+        });
+        chart.legend(false);
+        chart.tooltip(false);
+        chart
+            .point()
+            .position('value*1')
+            .shape('pointer')
+            .color('value', (val) => {
+                if (val < 2) {
+                    return color[0];
+                } else if (val <= 4) {
+                    return color[1];
+                } else if (val <= 6) {
+                    return color[2];
+                }
+            });
+
+        draw(this.chartOption);
+        setInterval(() => {
+            draw(this.chartOption);
+        }, 1000);
+
+        function draw(data) {
+            const val = data[0].value;
+            const lineWidth = 10;
+            chart.annotation().clear(true);
+            // 绘制仪表盘背景
+            chart.annotation().arc({
+                top: false,
+                start: [0, 1],
+                end: [6, 1],
+                style: {
+                    stroke: '#E5ECF3',
+                    lineWidth,
+                    lineDash: null
+                }
+            });
+
+            if (val >= 2) {
+                chart.annotation().arc({
+                    start: [0, 1],
+                    end: [val, 1],
+                    style: {
+                        stroke: color[0],
+                        lineWidth,
+                        lineDash: null
+                    }
+                });
+            }
+
+            if (val >= 4) {
+                chart.annotation().arc({
+                    start: [2, 1],
+                    end: [4, 1],
+                    style: {
+                        stroke: color[1],
+                        lineWidth,
+                        lineDash: null
+                    }
+                });
+            }
+
+            if (val > 4 && val <= 6) {
+                chart.annotation().arc({
+                    start: [4, 1],
+                    end: [val, 1],
+                    style: {
+                        stroke: color[2],
+                        lineWidth,
+                        lineDash: null
+                    }
+                });
+            }
+
+            if (val > 2 && val <= 4) {
+                chart.annotation().arc({
+                    start: [2, 1],
+                    end: [val, 1],
+                    style: {
+                        stroke: color[1],
+                        lineWidth,
+                        lineDash: null
+                    }
+                });
+            }
+
+            if (val < 2) {
+                chart.annotation().arc({
+                    start: [0, 1],
+                    end: [val, 1],
+                    style: {
+                        stroke: color[0],
+                        lineWidth,
+                        lineDash: null
+                    }
+                });
+            }
+            chart.changeData(data);
+        }
+    }
+
+    drawChart2(cvalue) {
+        const _value = this.quick.series[0].data[0].value > this.keChuangBao.series[0].data[0].value ? (cvalue / this.quick.series[0].data[0].value) * 6 : (cvalue / this.keChuangBao.series[0].data[0].value) * 6;
+        this.chartOption = [
+            {value: _value}
+        ];
+
+        const chartContainer = this.el.nativeElement.querySelector('#c2');
+        // 自定义Shape 部分
+        registerShape('point', 'pointer', {
+            draw(cfg, container) {
+                const group = container.addGroup({});
+                // 获取极坐标系下画布中心点
+                const center = this.parsePoint({x: 0, y: 0});
+                // 绘制指针
+                group.addShape('line', {
+                    attrs: {
+                        x1: center.x,
+                        y1: center.y,
+                        x2: cfg.x,
+                        y2: cfg.y,
+                        stroke: '#389AFF',
+                        lineWidth: 2,
+                        lineCap: 'round'
+                    }
+                });
+                group.addShape('circle', {
+                    attrs: {
+                        x: center.x,
+                        y: center.y,
+                        r: 3,
+                        stroke: '#389AFF',
+                        lineWidth: 1,
+                        fill: '#fff'
+                    }
+                });
+                return group;
+            }
+        });
+
+        const color = ['#B39AFF', '#518DFF', '#518DFF'];
         const chart = new G2.Chart({
             container: chartContainer,
             width: 200,

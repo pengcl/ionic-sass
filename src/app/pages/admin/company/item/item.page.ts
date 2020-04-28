@@ -64,6 +64,7 @@ export class AdminCompanyItemPage implements OnInit {
                 name: '访问来源',
                 type: 'pie',
                 radius: ['50%', '70%'],
+                center: ['50%', '35%'],
                 avoidLabelOverlap: false,
                 label: {
                     show: false,
@@ -440,6 +441,12 @@ export class AdminCompanyItemPage implements OnInit {
     getCircle(id, items) {
         console.log(id);
         const option = JSON.parse(JSON.stringify(this.brandOption));
+        if (id === 'job') {
+            option.color = colors2;
+        }
+        if (id === 'edu' || id === 'sci') {
+            option.color = colors3;
+        }
         option.legend.data = [];
         option.series[0].data = [];
         let other = 100;

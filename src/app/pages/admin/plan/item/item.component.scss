@@ -909,3 +909,8 @@ table {
     }
   }
 }
+ion-label{
+  text-overflow: unset !important;
+  white-space: normal !important;
+  overflow: auto !important;
+}
