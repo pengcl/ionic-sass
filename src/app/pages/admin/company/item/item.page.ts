@@ -554,10 +554,16 @@ export class AdminCompanyItemPage implements OnInit {
             }
         }
         this.toastSvc.loading('加载中...', 0);
-        this.companySvc.change(this.form.get('company').value).subscribe(() => {
-            this.companySvc.updateCond(body).subscribe(res => {
+        this.companySvc.change(this.form.get('company').value).subscribe((res) => {
+            this.companySvc.updateCond(body).subscribe(() => {
                 this.companySvc.updateCred(this.form.get('match').value).subscribe(() => {
                     this.toastSvc.hide();
+                    this.dialogSvc.show({
+                        title: '',
+                        content: '修改成功',
+                        cancel: '',
+                        confirm: '我知道了'
+                    }).subscribe();
                 });
             });
         });

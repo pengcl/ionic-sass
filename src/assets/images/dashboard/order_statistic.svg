@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="68px" height="68px" viewBox="0 0 68 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>classify03</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="34" cy="34" r="24"></circle>
+        <filter x="-31.2%" y="-31.2%" width="162.5%" height="162.5%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.782526677   0 0 0 0 0.880700959   0 0 0 0 1  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="100%" y1="0%" x2="0.712626689%" y2="99.2873733%" id="linearGradient-3">
+            <stop stop-color="#FFBF5C" offset="0%"></stop>
+            <stop stop-color="#FF8344" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-281.000000, -155.000000)">
+            <g id="classify03" transform="translate(281.000000, 155.000000)">
+                <g id="椭圆形">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <circle id="椭圆形" fill="url(#linearGradient-3)" cx="34" cy="34" r="17"></circle>
+                <g id="统计" transform="translate(26.000000, 26.000000)" fill-rule="nonzero">
+                    <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+                    <path d="M7.75,13.3110937 L1.5625,13.3110937 L1.5625,2.64125 L14.4375,2.64125 L14.4375,5.609375 L13.6875,5.609375 L13.6875,3.39125 L2.3125,3.39125 L2.3125,12.5610937 L7.75,12.5610937 L7.75,13.3110937 Z M14.4375,5.984375 L1.5625,5.984375 L1.5625,2.640625 L14.4375,2.640625 L14.4375,5.984375 Z M2.3125,5.234375 L13.6875,5.234375 L13.6875,3.390625 L2.3125,3.390625 L2.3125,5.234375 Z M3.34375,7.8903125 L7.24546875,7.8903125 L7.24546875,8.6403125 L3.34375,8.6403125 L3.34375,7.8903125 Z M3.34375,9.81921875 L6.46421875,9.81921875 L6.46421875,10.5692187 L3.34375,10.5692187 L3.34375,9.81921875 Z M9.7228125,8.754375 L10.4728125,8.754375 L10.4728125,11.9465625 L9.7228125,11.9465625 L9.7228125,8.754375 Z M11.2865625,9.57125 L12.0365625,9.57125 L12.0365625,11.9464062 L11.2865625,11.9464062 L11.2865625,9.57125 Z M12.8503125,10.7473437 L13.6003125,10.7473437 L13.6003125,11.9465625 L12.8503125,11.9465625 L12.8503125,10.7473437 Z M11.6615625,13.9531385 C9.94132919,13.9532597 8.46055739,12.7382085 8.12483412,11.0510533 C7.78911085,9.36389818 8.69194056,7.67453945 10.2811849,7.01612847 C11.8704293,6.35771749 13.7034576,6.91363255 14.6592554,8.3438959 C15.6150532,9.77415925 15.4274151,11.680419 14.2110937,12.896875 C13.5364666,13.5753939 12.6183816,13.955749 11.6615625,13.9531385 Z M11.6615625,7.49203125 C10.0870312,7.49203125 8.8059375,8.77328125 8.8059375,10.3475 C8.8059375,11.9217187 10.0870312,13.203125 11.6615625,13.203125 C13.2360937,13.203125 14.5171875,11.921875 14.5171875,10.3473437 C14.5171875,8.7728125 13.2360937,7.491875 11.6615625,7.491875 L11.6615625,7.49203125 Z" id="形状" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

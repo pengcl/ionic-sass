@@ -196,6 +196,7 @@ export class AdminDashboardPage {
     scientific;
 
     chartOption: any;
+    chartOption2: any;
     private chart: G2.Chart;
 
     constructor(private router: Router,
@@ -654,9 +655,6 @@ export class AdminDashboardPage {
 
             setTimeout(() => {
                 this.drawChart(this.quick.series[0].data[0].value);
-            });
-
-            setTimeout(() => {
                 this.drawChart2(this.keChuangBao.series[0].data[0].value);
             });
         });
@@ -701,7 +699,7 @@ export class AdminDashboardPage {
             }
         });
 
-        const color = ['#389AFF', '#9CFFF6', '#9CFFF6'];
+        const color = ['#389AFF', '#389AFF', '#389AFF'];
         const chart = new G2.Chart({
             container: chartContainer,
             width: 200,
@@ -725,7 +723,7 @@ export class AdminDashboardPage {
         chart.axis('value', {
             line: null,
             label: {
-                offset: -15,
+                offset: -20,
                 style: {
                     fontSize: 10,
                     fill: '#E5ECF3',
@@ -840,7 +838,7 @@ export class AdminDashboardPage {
 
     drawChart2(cvalue) {
         const _value = this.quick.series[0].data[0].value > this.keChuangBao.series[0].data[0].value ? (cvalue / this.quick.series[0].data[0].value) * 6 : (cvalue / this.keChuangBao.series[0].data[0].value) * 6;
-        this.chartOption = [
+        this.chartOption2 = [
             {value: _value}
         ];
 
@@ -877,13 +875,13 @@ export class AdminDashboardPage {
             }
         });
 
-        const color = ['#B39AFF', '#518DFF', '#518DFF'];
+        const color = ['#6FF9FF', '#6FF9FF', '#6FF9FF'];
         const chart = new G2.Chart({
             container: chartContainer,
             width: 200,
             height: 220
         });
-        chart.data(this.chartOption);
+        chart.data(this.chartOption2);
         chart.animate(false);
 
         chart.coordinate('polar', {
@@ -901,7 +899,7 @@ export class AdminDashboardPage {
         chart.axis('value', {
             line: null,
             label: {
-                offset: -15,
+                offset: -20,
                 style: {
                     fontSize: 10,
                     fill: '#E5ECF3',
@@ -930,9 +928,9 @@ export class AdminDashboardPage {
                 }
             });
 
-        draw(this.chartOption);
+        draw(this.chartOption2);
         setInterval(() => {
-            draw(this.chartOption);
+            draw(this.chartOption2);
         }, 1000);
 
         function draw(data) {
