@@ -33,9 +33,11 @@
                                         </ion-item>
                                         <ion-item *ngFor="let item of brand" lines="none">
                                             <ion-thumbnail slot="start"></ion-thumbnail>
-                                            <ion-label>
+                                            <ion-label style="padding-bottom: 5px;">
                                                 <p>{{item.label}}</p>
+                                                <div style="margin:0 10px;padding:3px;background: #fff;border-radius:5px;box-shadow:0px 0px 8px rgba(175,214,232,0.5);">
                                                 <ion-progress-bar [value]="item.score / 100" color="primary"></ion-progress-bar>
+                                                </div>
                                             </ion-label>
                                             <ion-thumbnail slot="end" class="end">
                                                 <img [src]="'/assets/images/dashboard/icon_' + (item.score >= 81 ? 'good' : item.score >= 60 ? 'well' : 'strengthen') + '.svg'"/>
