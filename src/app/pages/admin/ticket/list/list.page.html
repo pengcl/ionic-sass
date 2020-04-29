@@ -42,7 +42,7 @@
                 </ion-col>
                 <ion-col size="2">
                     <mat-form-field appearance="outline">
-                        <mat-select name="workStatus" [(ngModel)]="params.workStatus" (ngModelChange)="getData()" placeholder="服务状态" multiple>
+                        <mat-select name="serviceStatus" [(ngModel)]="params.serviceStatus" (ngModelChange)="getData()" placeholder="服务状态" multiple>
                             <mat-option *ngFor="let item of serviceStatuses" [value]="item.dictValue">
                                 {{item.dictName}}
                             </mat-option>

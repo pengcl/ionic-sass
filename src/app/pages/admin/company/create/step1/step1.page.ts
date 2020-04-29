@@ -46,7 +46,9 @@ export class AdminCompanyCreateStep1Page implements OnInit {
             filter(text => text.length > 1),
             debounceTime(1000),
             distinctUntilChanged()).subscribe(companyName => {
+            this.toastSvc.loading('查询中...', 0);
             this.companySvc.search(companyName).subscribe(res => {
+                this.toastSvc.hide();
                 if (res.code === '200' && res.data) {
                     this.options = res.data;
                 }

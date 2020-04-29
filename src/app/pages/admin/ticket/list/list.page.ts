@@ -54,6 +54,7 @@ export class AdminTicketListPage {
                 private authSvc: AuthService,
                 private companySvc: CompanyService,
                 private ticketSvc: TicketService) {
+        console.log(this.params);
         ticketSvc.statuses().subscribe(res => {
             const statuses = [];
             for (const value in res) {
@@ -96,6 +97,17 @@ export class AdminTicketListPage {
                 }
             });
             body.workStatus = workStatus;
+        }
+        if (body.serviceStatus) {
+            let serviceStatus = '';
+            body.serviceStatus.forEach(item => {
+                if (serviceStatus) {
+                    serviceStatus = serviceStatus + ',' + item;
+                } else {
+                    serviceStatus = serviceStatus + item;
+                }
+            });
+            body.serviceStatus = serviceStatus;
         }
         return body;
     }

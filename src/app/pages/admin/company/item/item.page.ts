@@ -382,7 +382,7 @@ export class AdminCompanyItemPage implements OnInit {
             if (id === 26) {
                 label = '服务';
             }
-            data[key].push({id, value: option.name, label});
+            data[key].push({id, value: option ? option.name : null, label});
         });
         this.getCircle(key, data[key]);
     }
@@ -451,7 +451,7 @@ export class AdminCompanyItemPage implements OnInit {
         option.series[0].data = [];
         let other = 100;
         items.forEach(item => {
-            const value = parseInt(item.value.replace('%', ''), 10);
+            const value = item.value ? parseInt(item.value.replace('%', ''), 10) : 0;
             other = other - value;
             const name = item.label;
             option.legend.data.push(name);

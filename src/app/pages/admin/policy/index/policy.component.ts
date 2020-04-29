@@ -147,7 +147,11 @@ export class AdminPolicyPage {
     }
 
     drawChart(cvalue) {
-        const _value = this.quick.series[0].data[0].value > this.keChuangBao.series[0].data[0].value ? (cvalue / this.quick.series[0].data[0].value) * 6 : (cvalue / this.keChuangBao.series[0].data[0].value) * 6;
+
+        let _value = 0;
+        if (cvalue) {
+            _value = this.quick.series[0].data[0].value > this.keChuangBao.series[0].data[0].value ? (cvalue / this.quick.series[0].data[0].value) * 6 : (cvalue / this.keChuangBao.series[0].data[0].value) * 6;
+        }
         this.chartOption = [
             {value: _value}
         ];
@@ -323,7 +327,10 @@ export class AdminPolicyPage {
     }
 
     drawChart2(cvalue) {
-        const _value = this.quick.series[0].data[0].value > this.keChuangBao.series[0].data[0].value ? (cvalue / this.quick.series[0].data[0].value) * 6 : (cvalue / this.keChuangBao.series[0].data[0].value) * 6;
+        let _value = 0;
+        if (cvalue) {
+            _value = this.quick.series[0].data[0].value > this.keChuangBao.series[0].data[0].value ? (cvalue / this.quick.series[0].data[0].value) * 6 : (cvalue / this.keChuangBao.series[0].data[0].value) * 6;
+        }
         this.chartOption2 = [
             {value: _value}
         ];

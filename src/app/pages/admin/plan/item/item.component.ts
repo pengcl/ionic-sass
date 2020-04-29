@@ -319,21 +319,28 @@ export class AdminPlanItemPage implements OnInit {
         this.circle[id] = option;
     }
 
+    getCond(id) {
+        const index = getIndex(this.data.conds, 'condId', id);
+        const cond = this.data.conds[index];
+        return cond || {};
+    }
+
     getCondValue(id, key?) {
         const index = getIndex(this.data.conds, 'condId', id);
         const cond = this.data.conds[index];
-        console.log(id, cond);
-        let value: any = '';
+        if (!cond) {
+            return '-';
+        }
+        let value: any = '-';
         if (key) {
             value = cond[key] ? cond[key] : '-';
         } else {
             value = '-';
             if (cond) {
                 const v2 = cond.val2;
-                const v1 = cond.val1;
                 const v0 = cond.val;
                 if (v2) {
-                    value = v1 + '-' + v2;
+                    value = v2;
                 } else {
                     value = v0;
                 }

@@ -17,6 +17,7 @@ import {getIndex} from '../../../../@core/utils/utils';
 import {DashboardService} from '../../dashboard/dashboard.service';
 
 const colors = ['#5F8FF3', '#69EBB7'];
+const colors1 = ['#69EBB7', '#5F8FF3'];
 const colors2 = ['#FFB559', '#5F8FF3', '#5D6F92', '#F46C50'];
 const colors3 = ['#69EBB7', '#5F8FF3', '#56CFFF'];
 const colors4 = ['#63A0E9', '#97C0F0'];
@@ -399,16 +400,16 @@ export class AdminCompanyQualificationPage implements OnInit {
             this.data = res;
             this.brand = (() => {
                 const list = [];
-                list.push(this.getGroupValue(-100));
-                list.push(this.getGroupValue(-101));
+                list.push(this.getGroupValue(-100) ? this.getGroupValue(-100) : {});
+                list.push(this.getGroupValue(-101) ? this.getGroupValue(-101) : {});
                 list[0].label = '行业深度';
                 list[1].label = '经营广度';
                 return list;
             })();
             this.scientific = (() => {
                 const list = [];
-                list.push(this.getGroupValue(9));
-                list.push(this.getGroupValue(10));
+                list.push(this.getGroupValue(9) ? this.getGroupValue(9) : {});
+                list.push(this.getGroupValue(10) ? this.getGroupValue(10) : {});
                 list[0].label = '科研成果';
                 list[1].label = '科研能力';
                 return list;
@@ -437,11 +438,14 @@ export class AdminCompanyQualificationPage implements OnInit {
         if (id === 'edu' || id === 'sci') {
             option.color = colors3;
         }
+        if (id === 'man') {
+            option.color = colors1;
+        }
         option.legend.data = [];
         option.series[0].data = [];
         let other = 100;
         items.forEach(item => {
-            let value = this.getCondValue(item.id);
+            let value = this.getCondValue(item.id) ? this.getCondValue(item.id) : 0;
             value = typeof value !== 'string' ? value : parseInt(value.split('-')[1], 10);
             other = other - value;
             const name = item.label;
@@ -455,11 +459,19 @@ export class AdminCompanyQualificationPage implements OnInit {
                 value: other
             });
         } else {
-            option.legend.data.push('其它');
-            option.series[0].data.push({
-                name: '其它',
-                value: other
-            });
+            if (id === 'man') {
+                option.legend.data.push('执行人员');
+                option.series[0].data.push({
+                    name: '执行人员',
+                    value: other
+                });
+            } else {
+                option.legend.data.push('其它');
+                option.series[0].data.push({
+                    name: '其它',
+                    value: other
+                });
+            }
         }
         this.circle[id] = option;
     }
@@ -498,7 +510,7 @@ export class AdminCompanyQualificationPage implements OnInit {
                     show: true,
                     position: 'insideLeft',
                     formatter: (params) => {
-                        return '平均值';
+                        return '行业平均水平';
                     }
                 };
             }
@@ -550,8 +562,7 @@ export class AdminCompanyQualificationPage implements OnInit {
 
     getCondValue(id, key?) {
         const index = getIndex(this.data.conds, 'condId', id);
-        const cond = this.data.conds[index];
-        console.log(id, cond);
+        const cond = this.data.conds[index] || {};
         let value: any = '';
         if (key) {
             value = cond[key] ? cond[key] : '-';

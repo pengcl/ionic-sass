@@ -29,7 +29,6 @@ export class ErrorInterceptor implements HttpInterceptor {
     }
 
     private handleResponse(res: any): void {
-        this.toastSvc.hide();
         this.dialogSvc.destroyAll();
         this.loadingSvc.hide();
         if (res.body) {

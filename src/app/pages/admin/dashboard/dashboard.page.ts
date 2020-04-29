@@ -248,6 +248,7 @@ export class AdminDashboardPage {
                 city: this.form.get('city').value
             };
             this.dashboardSvc.policies(body).subscribe(res => {
+                console.log(res);
                 this.policy.total = res.totalCount;
                 this.policy.update = res.updateCount;
                 this.policy.list = res.list;
@@ -364,16 +365,6 @@ export class AdminDashboardPage {
             });
             this.copyOption.line = {
                 color: ['#E26767', '#6F9CD2', '#8DE1DE'],
-                legend: {
-                    bottom: 10,
-                    data: ['已注册', '申请中', '无效'],
-                    itemWidth: 8,
-                    itemHeight: 8,
-                    icon: 'circle',
-                    textStyle: {
-                        fontSize: 10
-                    }
-                },
                 grid: {
                     left: '3%',
                     right: '4%',
@@ -595,16 +586,6 @@ export class AdminDashboardPage {
             });
             this.patentOption.line = {
                 color: ['#E26767', '#6F9CD2', '#8DE1DE'],
-                legend: {
-                    bottom: 10,
-                    data: ['已注册', '申请中', '无效'],
-                    itemWidth: 8,
-                    itemHeight: 8,
-                    icon: 'circle',
-                    textStyle: {
-                        fontSize: 10
-                    }
-                },
                 grid: {
                     left: '3%',
                     right: '4%',
@@ -636,18 +617,26 @@ export class AdminDashboardPage {
             // this.drawChart('#c1');
             this.brand = (() => {
                 const list = [];
-                list.push(this.getGroupValue(-100));
-                list.push(this.getGroupValue(-101));
-                list[0].label = '行业深度';
-                list[1].label = '经营广度';
+                if (this.getGroupValue(-100)) {
+                    list.push(this.getGroupValue(-100));
+                    list[0].label = '行业深度';
+                }
+                if (this.getGroupValue(-101)) {
+                    list.push(this.getGroupValue(-101));
+                    list[0].label = '经营广度';
+                }
                 return list;
             })();
             this.scientific = (() => {
                 const list = [];
-                list.push(this.getGroupValue(9));
-                list.push(this.getGroupValue(10));
-                list[0].label = '科研成果';
-                list[1].label = '科研能力';
+                if (this.getGroupValue(9)) {
+                    list.push(this.getGroupValue(9));
+                    list[0].label = '科研成果';
+                }
+                if (this.getGroupValue(10)) {
+                    list.push(this.getGroupValue(10));
+                    list[1].label = '科研能力';
+                }
                 return list;
             })();
 
@@ -659,7 +648,10 @@ export class AdminDashboardPage {
     }
 
     drawChart(cvalue) {
-        const _value = this.quick.series[0].data[0].value > this.keChuangBao.series[0].data[0].value ? (cvalue / this.quick.series[0].data[0].value) * 6 : (cvalue / this.keChuangBao.series[0].data[0].value) * 6;
+        let _value = 0;
+        if (cvalue) {
+            _value = this.quick.series[0].data[0].value > this.keChuangBao.series[0].data[0].value ? (cvalue / this.quick.series[0].data[0].value) * 6 : (cvalue / this.keChuangBao.series[0].data[0].value) * 6;
+        }
         this.chartOption = [
             {value: _value}
         ];
@@ -835,7 +827,10 @@ export class AdminDashboardPage {
     }
 
     drawChart2(cvalue) {
-        const _value = this.quick.series[0].data[0].value > this.keChuangBao.series[0].data[0].value ? (cvalue / this.quick.series[0].data[0].value) * 6 : (cvalue / this.keChuangBao.series[0].data[0].value) * 6;
+        let _value = 0;
+        if (cvalue) {
+            _value = this.quick.series[0].data[0].value > this.keChuangBao.series[0].data[0].value ? (cvalue / this.quick.series[0].data[0].value) * 6 : (cvalue / this.keChuangBao.series[0].data[0].value) * 6;
+        }
         this.chartOption2 = [
             {value: _value}
         ];

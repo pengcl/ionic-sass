@@ -19,7 +19,7 @@
                         </ion-col>
                         <ion-col size="4">
                             <div class="company_condition_m">
-                                <p>所属行业<span>{{data.busindustry.industryName ? data.busindustry.industryName : '-'}}</span></p>
+                                <p>所属行业<span>{{data.busindustry ? data.busindustry?.industryName : '-'}}</span></p>
                             </div>
                         </ion-col>
                         <ion-col size="4">
@@ -44,15 +44,13 @@
                                     </ion-thumbnail>
                                     <ion-label>
                                         <p>行业</p>
-                                        <h3>{{data.busindustry.industryName ? data.busindustry.industryName : '-'}}</h3>
+                                        <h3>{{data.busindustry ? data.busindustry.industryName : '-'}}</h3>
                                     </ion-label>
                                 </ion-item>
                             </ion-col>
                             <ion-col size="8">
                                 <ion-item lines="none"style="--background:rgba(246,247,249,1);border-top-right-radius:4px;border-bottom-right-radius:4px;">
-                                    <article style="padding: 30px 40px;height:140px;overflow: auto" [innerHTML]="data.busindustry.summaryContent">
-                                        <!--{{data.busindustry.summaryContent ? data.busindustry.summaryContent : '-'}}-->
-                                    </article>
+                                    <article style="padding: 30px 40px;height:140px;overflow: auto" [innerHTML]="data.busindustry ? data.busindustry.summaryContent : '-'"></article>
                                     <div style="width:4px;height:28px;background:rgba(211,211,211,1);border-radius:2px;position: absolute;top: 33px;right: 21px; display: none"></div>
                                 </ion-item>
                             </ion-col>
@@ -75,7 +73,7 @@
                                     </ion-thumbnail>
                                     <ion-label>
                                         <p>年营业收入范围</p>
-                                        <h2 [ngStyle]="{'color': getGroupValue(15).score >= 60 ? '#3fa2f4' : '#B81F1C'}">{{getCondValue(19)}}万元</h2>
+                                        <h2 [ngStyle]="{'color': getGroupValue(15).score >= 60 ? '#3fa2f4' : '#B81F1C'}">{{getCondValue(19,'name')}}</h2>
                                     </ion-label>
                                     <div class="result_img">
                                         <img src="/assets/images/company/hand.png"/>
@@ -98,7 +96,7 @@
                                     </ion-thumbnail>
                                     <ion-label>
                                         <p>固定资产范围</p>
-                                        <h2 [ngStyle]="{'color': getGroupValue(16).score >= 60 ? '#3fa2f4' : '#B81F1C'}">{{getCondValue(17)}}万元</h2>
+                                        <h2 [ngStyle]="{'color': getGroupValue(16).score >= 60 ? '#3fa2f4' : '#B81F1C'}">{{getCondValue(17,'name')}}</h2>
                                     </ion-label>
                                     <div class="result_img">
                                         <img src="/assets/images/company/tick.png"/>
@@ -164,7 +162,10 @@
                             </ion-col>
                             <ion-col size="8">
                                 <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
-                                    <ion-label [innerHTML]="getGroupValue(18).suggest"></ion-label>
+                                    <ion-label>
+                                        <h2>正常范围：17 - 23%</h2>
+                                        <p>{{getGroupValue(18).suggest}}</p>
+                                    </ion-label>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
@@ -254,10 +255,6 @@
                                                     <td class="user">其他</td>
                                                     <td class="grade">5-10%</td>
                                                 </tr>
-                                                <tr>
-                                                    <td class="user">其他</td>
-                                                    <td class="grade">5-10%</td>
-                                                </tr>
                                                 </tbody>
                                             </table>
                                         </ion-col>
@@ -297,8 +294,9 @@
                             <ion-col size="8" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                 <ion-item lines="none">
                                     <article style="color: #5F717D;padding: 48px 37px 47px 40px;">
-                                        <ion-label [innerHTML]="getGroupValue(-100).suggest"></ion-label>
-                                        <ion-label [innerHTML]="getGroupValue(-101).suggest"></ion-label>
+                                        <ion-label>
+                                            {{getGroupValue(-100).suggest}}{{getGroupValue(-101).suggest}}
+                                        </ion-label>
                                     </article>
                                 </ion-item>
                             </ion-col>
@@ -428,8 +426,9 @@
                             <ion-col size="8" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                 <ion-item lines="none">
                                     <article style="color: #5F717D;padding: 48px 37px 38px 40px;">
-                                        <ion-label [innerHTML]="getGroupValue(9).suggest"></ion-label>
-                                        <ion-label [innerHTML]="getGroupValue(10).suggest"></ion-label>
+                                        <ion-label>
+                                            {{getGroupValue(9).suggest}}{{getGroupValue(10).suggest}}
+                                        </ion-label>
                                     </article>
                                 </ion-item>
                             </ion-col>
@@ -494,7 +493,10 @@
                             </ion-col>
                             <ion-col size="8">
                                 <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
-                                    <ion-label [innerHTML]="getGroupValue(19).suggest"></ion-label>
+                                    <ion-label>
+                                        <h2>正常范围：10 - 40%</h2>
+                                        <p>{{getGroupValue(19).suggest}}</p>
+                                    </ion-label>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
@@ -517,7 +519,10 @@
                             </ion-col>
                             <ion-col size="8">
                                 <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
-                                    <ion-label [innerHTML]="getGroupValue(20).suggest"></ion-label>
+                                    <ion-label>
+                                        <h2>正常范围：45-70%</h2>
+                                        <p>{{getGroupValue(20).suggest}}</p>
+                                    </ion-label>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
@@ -540,7 +545,10 @@
                             </ion-col>
                             <ion-col size="8">
                                 <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
-                                    <ion-label [innerHTML]="getGroupValue(21).suggest"></ion-label>
+                                    <ion-label>
+                                        <h2>正常范围：3 - 5%</h2>
+                                        <p>{{getGroupValue(21).suggest}}</p>
+                                    </ion-label>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
