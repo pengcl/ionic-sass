@@ -31,17 +31,18 @@
                                             </ion-thumbnail>
                                             <ion-label>品牌布局</ion-label>
                                         </ion-item>
-                                        <ion-item *ngFor="let item of brand" lines="none">
-                                            <ion-thumbnail slot="start"></ion-thumbnail>
-                                            <ion-label style="padding-bottom: 5px;margin-top:0;margin-bottom:0;">
-                                                <p>{{item.label}}</p>
-                                                <div style="margin:0 5px;padding:3px;background: #fff;border-radius:5px;box-shadow:0px 0px 8px rgba(175,214,232,0.5);">
-                                                <ion-progress-bar [value]="item.score / 100" color="primary"></ion-progress-bar>
-                                                </div>
-                                            </ion-label>
-                                            <ion-thumbnail slot="end" class="end">
-                                                <img [src]="'/assets/images/dashboard/icon_' + (item.score >= 81 ? 'good' : item.score >= 60 ? 'well' : 'strengthen') + '.svg'"/>
-                                            </ion-thumbnail>
+                                        <ion-item *ngFor="let item of brand" lines="none" style="margin-right:15px;--inner-padding-bottom: 30px;position: relative;--inner-padding-end: 40px;">
+
+                                                <ion-thumbnail slot="start"></ion-thumbnail>
+                                                <ion-label style="padding-bottom: 5px;margin-top:0;margin-bottom:0;">
+                                                    <p>{{item.label}}</p>
+                                                    <div style="margin:0 5px;padding:3px;background: #fff;border-radius:5px;box-shadow:0px 0px 8px rgba(175,214,232,0.5);">
+                                                    <ion-progress-bar [value]="item.score / 100" color="primary"></ion-progress-bar>
+                                                    </div>
+                                                </ion-label>
+                                                <ion-thumbnail slot="end" class="end" style="margin-top:0; position:absolute;top:20px;right:0;">
+                                                    <img [src]="'/assets/images/dashboard/icon_' + (item.score >= 81 ? 'good' : item.score >= 60 ? 'well' : 'strengthen') + '.svg'"/>
+                                                </ion-thumbnail>
                                         </ion-item>
                                         <ion-item lines="none" style="margin-top: 13px;">
                                             <ion-thumbnail slot="start"></ion-thumbnail>
@@ -60,15 +61,15 @@
                                             </ion-thumbnail>
                                             <ion-label>科创能力</ion-label>
                                         </ion-item>
-                                        <ion-item *ngFor="let item of scientific" lines="none">
+                                        <ion-item *ngFor="let item of scientific" lines="none" style="margin-right:15px;--inner-padding-bottom: 30px;position: relative;--inner-padding-end: 40px;">
                                             <ion-thumbnail slot="start"></ion-thumbnail>
-                                            <ion-label style="padding-bottom: 5px;">
+                                            <ion-label  style="padding-bottom: 5px;margin-top:0;margin-bottom:0;">
                                                 <p>{{item.label}}</p>
                                                 <div style="margin:0 5px;padding:3px;background: #fff;border-radius:5px;box-shadow:0px 0px 8px rgba(175,214,232,0.5);">
                                                 <ion-progress-bar [value]="item.score / 100" color="danger"></ion-progress-bar>
                                                 </div>
                                             </ion-label>
-                                            <ion-thumbnail slot="end" class="end">
+                                            <ion-thumbnail slot="end" class="end" style="margin-top:0; position:absolute;top:20px;right:0;">
                                                 <img [src]="'/assets/images/dashboard/icon_' + (item.score >= 81 ? 'good' : item.score >= 60 ? 'well' : 'strengthen') + '.svg'"/>
                                             </ion-thumbnail>
                                         </ion-item>
@@ -151,8 +152,7 @@
                             <ion-grid>
                                 <ion-row>
                                     <ion-col size="3" *ngFor="let item of policy.list.slice(0,4);let i = index">
-                                        <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]"
-                                             [ngStyle]="{'margin-right': i === 3 ? '0' : '22px'}">
+                                        <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]">
                                             <div class="hot_img">
                                                 <img src="/assets/images/dashboard/icon_hot.svg">
                                             </div>
@@ -265,12 +265,12 @@
                                     <ion-row>
                                         <ion-col size="1"></ion-col>
                                         <ion-col size="11" style="margin: 6px 0 0 -15px">
-                                            <table *ngIf="ticket.dataSource" mat-table [dataSource]="ticket.dataSource"  style="background: none;border: 1px solid #dce5ec;border-radius:3px;display: block;">
+                                            <table *ngIf="ticket.dataSource" mat-table [dataSource]="ticket.dataSource"  style="background: none;border: 1px solid #dce5ec;border-radius:3px;">
 
                                                 <!-- Position Column -->
                                                 <ng-container matColumnDef="content">
                                                     <th mat-header-cell *matHeaderCellDef
-                                                        style="color:#21333F;padding-left: 22px !important;width: 240px;height: 54px;background:none !important;border-bottom-color: none !important;text-align: left !important;border-right: none !important;border-bottom-width: 0;"><b>工单内容</b>
+                                                        style="color:#21333F;padding-left: 22px !important;width: 38%;height: 54px;background:none !important;border-bottom-color: none !important;text-align: left !important;border-right: none !important;border-bottom-width: 0;"><b>工单内容</b>
                                                     </th>
                                                     <td mat-cell *matCellDef="let element"
                                                         title="{{element.serviceName}}"
@@ -283,7 +283,7 @@
 
                                                 <!-- Name Column -->
                                                 <ng-container matColumnDef="status">
-                                                    <th mat-header-cell *matHeaderCellDef style="color:#21333F;padding-left: 22px !important;width: 120px;background:none !important;border-bottom-color: 0 !important;text-align: left !important;border-right: none !important;border-bottom-width: 0;">
+                                                    <th mat-header-cell *matHeaderCellDef style="color:#21333F;padding-left: 22px !important;width: 15%;background:none !important;border-bottom-color: 0 !important;text-align: left !important;border-right: none !important;border-bottom-width: 0;">
                                                         <b>流程节点</b></th>
                                                     <td mat-cell *matCellDef="let element"
                                                         style="color:#5F717D;padding-left:22px !important; text-align:left !important;border-bottom-width:0 !important;height: 50px">
@@ -293,13 +293,14 @@
 
                                                 <!-- Weight Column -->
                                                 <ng-container matColumnDef="progress">
-                                                    <th mat-header-cell *matHeaderCellDef style="color:#21333F;padding-left: 22px !important;width: 245px;background:none !important;border-bottom-color: 0 !important;text-align: left !important;border-right: none !important;border-bottom-width: 0;"><b>进度</b></th>
+                                                    <th mat-header-cell *matHeaderCellDef style="color:#21333F;padding-left: 22px !important;width: 38%;background:none !important;border-bottom-color: 0 !important;text-align: left !important;border-right: none !important;border-bottom-width: 0;"><b>进度</b></th>
                                                     <td mat-cell *matCellDef="let element"
                                                         style="padding-left:22px !important;border-bottom-width: 0 !important;height: 50px">
                                                         <div style="display: flex;align-items: center;padding: 0">
-
-                                                            <ion-progress-bar [value]="element.workSatusRate / 100"
-                                                                              [color]="element.workSatusRate / 100 | progress"></ion-progress-bar>
+                                                            <div style="width:100%;background: #fff;border-radius:5px;box-shadow:0px 0px 8px rgba(175,214,232,0.5);">
+                                                                <ion-progress-bar [value]="element.workSatusRate / 100"
+                                                                              [color]="element.workSatusRate / 100 | progress" style="width:calc(100% - 6px);margin:3px;"></ion-progress-bar>
+                                                            </div>
                                                             <span style="margin-left: 10px;width: 50px">{{element.workSatusRate}}
                                                                 %</span>
                                                         </div>
@@ -308,7 +309,7 @@
 
                                                 <!-- Symbol Column -->
                                                 <ng-container matColumnDef="actions">
-                                                    <th mat-header-cell *matHeaderCellDef style="color:#21333F;width: 120px;background:none !important;border-bottom-color: 0 !important;border-right: none !important;border-bottom-width: 0;"><b>操作</b>
+                                                    <th mat-header-cell *matHeaderCellDef style="color:#21333F;width: 20%;background:none !important;border-bottom-color: 0 !important;border-right: none !important;border-bottom-width: 0;"><b>操作</b>
                                                     </th>
                                                     <td mat-cell *matCellDef="let element"
                                                         style="border-bottom-width:0 !important;height: 50px;">
