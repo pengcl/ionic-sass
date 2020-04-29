@@ -703,7 +703,7 @@ export class AdminDashboardPage {
         const chart = new G2.Chart({
             container: chartContainer,
             width: 200,
-            height: 220
+            height: 195
         });
         chart.data(this.chartOption);
         chart.animate(false);
@@ -875,11 +875,11 @@ export class AdminDashboardPage {
             }
         });
 
-        const color = ['#6FF9FF', '#6FF9FF', '#6FF9FF'];
+        const color = ['#389AFF', '#389AFF', '#389AFF'];
         const chart = new G2.Chart({
             container: chartContainer,
             width: 200,
-            height: 220
+            height: 195
         });
         chart.data(this.chartOption2);
         chart.animate(false);

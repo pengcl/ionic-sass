@@ -361,7 +361,7 @@ export class AdminPolicyPage {
             }
         });
 
-        const color = ['#6FF9FF', '#6FF9FF', '#6FF9FF'];
+        const color = ['#389AFF', '#389AFF', '#389AFF'];
         const chart = new G2.Chart({
             container: chartContainer,
             width: 200,
