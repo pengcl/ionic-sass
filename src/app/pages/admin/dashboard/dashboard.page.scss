@@ -80,7 +80,7 @@ mat-card {
     border-bottom: 1px solid #DCE5EC;
 
     margin:0 -16px;
-    padding:0 16px;
+    padding:5px 16px 8px 16px;
 
     mat-card-title {
       font-weight: 400;
@@ -90,7 +90,7 @@ mat-card {
     }
 
     mat-card-subtitle {
-      top: 16px;
+      top: 22px;
       right: 16px;
       position: absolute;
       margin: 0;
@@ -246,7 +246,11 @@ mat-card {
       height: 64px;
       border-radius: 4px;
       border: 1px solid rgba(220, 229, 236, 1);
-     &.redbor{border-color:#E29C9C}
+      cursor: pointer;
+     &.redbor{border-color:#EEDADA;
+     &:hover{
+       border-color:#E02020;
+     }}
 
       ion-thumbnail {
         width: 16px;
