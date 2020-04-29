@@ -19,9 +19,24 @@
       box-shadow: none;
     }
 
+    span.btn-span{
+      padding: 6px 15px;
+      border-radius: 4px;
+      border: 1px solid #3FA2F4;
+      font-size: 14px;
+      font-weight: 500;
+      color: #2A9FF7;
+      line-height: 20px;
+      &:hover{
+        color:#fff;
+        background:#3FA2F4;
+      }
+    }
+
     mat-card-header {
       border-bottom: 1px solid #DCE5EC;
-
+      margin:0 -16px;
+      padding:0 16px;
       mat-card-title {
         font-weight: 600;
         color: rgba(33, 51, 63, 1);
@@ -411,7 +426,7 @@ ion-row {
     border-radius: 4px;
     position: relative;
     cursor: pointer;
-
+    margin: 0 10px;
 
     p {
       margin: 0 17px;
@@ -548,7 +563,7 @@ ion-row {
 
 .company_condition_l, .company_condition_m, .company_condition_r {
   p {
-    padding: 25px 0px 31px 45px;
+    padding: 25px 0px 31px 78px;
     font-size: 18px;
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
