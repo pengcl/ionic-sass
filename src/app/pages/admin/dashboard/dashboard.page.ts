@@ -660,8 +660,9 @@ export class AdminDashboardPage {
     }
 
     drawChart(contaniner, cvalue) {
+        // let _value =this.quick.series[0].data[0].value> = cvalue ? (cvalue/this.quick.series[0].data[0].value)*6 : (this.quick.series[0].data[0].value/cvalue)*6;
         this.chartOption = [
-            {value: 2}
+            {value:  2}
         ];
 
         const chartContainer = this.el.nativeElement.querySelector(contaniner);

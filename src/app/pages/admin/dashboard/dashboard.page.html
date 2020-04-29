@@ -239,7 +239,8 @@
                                         </div>
                                     </ion-item>
 
-                                    <ion-item lines="none">
+                                    <ion-item [routerLink]="['/admin/ticket/list']" [queryParams]="{workStatus:'2'}"
+                                              lines="none">
                                         <ion-thumbnail slot="start"></ion-thumbnail>
                                         <div class="work redbor">
                                             <ion-item lines="none" style="margin-top: 8px;">

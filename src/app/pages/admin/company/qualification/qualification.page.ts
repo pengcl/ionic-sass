@@ -22,6 +22,7 @@ const colors3 = ['#69EBB7', '#5F8FF3', '#56CFFF'];
 const colors4 = ['#63A0E9', '#97C0F0'];
 const colors5 = ['#8DE1DE', '#6F9CD2', '#E26767'];
 const colors6 = ['#E4F5C2', '#8DE1DE', '#6F9CD2'];
+
 @Component({
     selector: 'app-admin-company-qualification',
     templateUrl: 'qualification.page.html',
@@ -418,7 +419,7 @@ export class AdminCompanyQualificationPage implements OnInit {
                 return list;
             })();
             this.getHBar(6, '个');
-            this.getHBar(4, '%');
+            this.getHBar(4, '%', 2);
             this.getVBar(8);
             this.getCircle('job', [{id: 21, label: '研发'}, {id: 25, label: '销售'}, {id: 26, label: '服务'}]);
             this.getCircle('edu', [{id: 28, label: '专科'}, {id: 29, label: '本科及以上'}]);
@@ -446,8 +447,8 @@ export class AdminCompanyQualificationPage implements OnInit {
         let other = 100;
         items.forEach(item => {
             let value = this.getCondValue(item.id);
-            other = other - value;
             value = typeof value !== 'string' ? value : parseInt(value.split('-')[1], 10);
+            other = other - value;
             const name = item.label;
             option.legend.data.push(item.label);
             option.series[0].data.push({name, value});
@@ -460,12 +461,19 @@ export class AdminCompanyQualificationPage implements OnInit {
         this.circle[id] = option;
     }
 
-    getHBar(id, unit) {
+    getHBar(id, unit, isMulti?) {
         const chats = this.getChatValue(id);
+        console.log(chats);
+        chats.sort((a, b) => {
+            return a.count - b.count;
+        });
         const option = JSON.parse(JSON.stringify(this.subsidyOption));
         option.xAxis.name = unit;
         option.yAxis.data = [];
         option.series[0].data = [];
+        if (isMulti) {
+            option.series[1] = JSON.parse(JSON.stringify(option.series[0]));
+        }
         chats.forEach((item, index) => {
             option.yAxis.data.push(item.text);
             option.series[0].data.push(item.count);
@@ -482,6 +490,16 @@ export class AdminCompanyQualificationPage implements OnInit {
                     return colorList[params.dataIndex];
                 }
             };
+            if (isMulti) {
+                option.series[1].data.push(item.count1);
+                option.series[1].label = {
+                    show: true,
+                    position: 'insideLeft',
+                    formatter: (params) => {
+                        return '平均值';
+                    }
+                };
+            }
         });
         this.option[id] = option;
     }

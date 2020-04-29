@@ -159,7 +159,7 @@ export class AdminPlanItemPage implements OnInit {
             itemHeight: 7,
             icon: 'circle',
             left: 70,
-            itemGap: 20,
+            itemGap: 20
         },
         grid: {
             left: '3%',
@@ -273,6 +273,9 @@ export class AdminPlanItemPage implements OnInit {
     getGroupBar(id) {
         const option = JSON.parse(JSON.stringify(this.groupOption));
         const charts = this.getChatValue(id);
+        charts.sort((a, b) => {
+            return a.count - b.count;
+        });
         option.legend.data = ['企业现况', '行业平均水平'];
         option.series[0].name = '企业现况';
         option.series[1].name = '行业平均水平';
@@ -314,6 +317,7 @@ export class AdminPlanItemPage implements OnInit {
     getCondValue(id, key?) {
         const index = getIndex(this.data.conds, 'condId', id);
         const cond = this.data.conds[index];
+        console.log(id, cond);
         let value: any = '';
         if (key) {
             value = cond[key] ? cond[key] : '-';
@@ -354,7 +358,6 @@ export class AdminPlanItemPage implements OnInit {
 
     getData() {
         this.companySvc.source(this.id).subscribe(res => {
-            console.log(res);
             this.data = res;
             this.getVBar(8);
             this.getCircle('job', [{id: 21, label: '研发'}, {id: 25, label: '销售'}, {id: 26, label: '服务'}]);
@@ -397,14 +400,12 @@ export class AdminPlanItemPage implements OnInit {
             })();
         });
         this.dashboardSvc.subsidies(this.id).subscribe(res => {
-            console.log(res);
             this.amt.keChuangBao = res.keChuangBaoAmt;
             this.amt.quick = res.quickAmt;
             this.amt.rate = (res.keChuangBaoAmt - res.quickAmt) !== 0 ? ((res.keChuangBaoAmt - res.quickAmt) * 100 / res.quickAmt)
                 .toFixed(2) : 0;
         });
         this.companySvc.get(this.id).subscribe(res => {
-            console.log(res);
             this.company = res.busCust;
             this.form.get('province').setValue(this.company.province);
             this.form.get('city').setValue(this.company.city);
