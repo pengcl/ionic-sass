@@ -33,9 +33,9 @@
                                         </ion-item>
                                         <ion-item *ngFor="let item of brand" lines="none">
                                             <ion-thumbnail slot="start"></ion-thumbnail>
-                                            <ion-label style="padding-bottom: 5px;">
+                                            <ion-label style="padding-bottom: 5px;margin-top:0;margin-bottom:0;">
                                                 <p>{{item.label}}</p>
-                                                <div style="margin:0 10px;padding:3px;background: #fff;border-radius:5px;box-shadow:0px 0px 8px rgba(175,214,232,0.5);">
+                                                <div style="margin:0 5px;padding:3px;background: #fff;border-radius:5px;box-shadow:0px 0px 8px rgba(175,214,232,0.5);">
                                                 <ion-progress-bar [value]="item.score / 100" color="primary"></ion-progress-bar>
                                                 </div>
                                             </ion-label>
@@ -62,9 +62,11 @@
                                         </ion-item>
                                         <ion-item *ngFor="let item of scientific" lines="none">
                                             <ion-thumbnail slot="start"></ion-thumbnail>
-                                            <ion-label>
+                                            <ion-label style="padding-bottom: 5px;">
                                                 <p>{{item.label}}</p>
+                                                <div style="margin:0 5px;padding:3px;background: #fff;border-radius:5px;box-shadow:0px 0px 8px rgba(175,214,232,0.5);">
                                                 <ion-progress-bar [value]="item.score / 100" color="danger"></ion-progress-bar>
+                                                </div>
                                             </ion-label>
                                             <ion-thumbnail slot="end" class="end">
                                                 <img [src]="'/assets/images/dashboard/icon_' + (item.score >= 81 ? 'good' : item.score >= 60 ? 'well' : 'strengthen') + '.svg'"/>
@@ -167,7 +169,7 @@
                                                     style="font-style: normal;font-size:14px;font-weight:400;color:rgba(63,162,244,1);line-height:20px;">{{item.reportTiming}}</em>个月</span>
                                             </p>
                                             <p style="font-size:14px;font-weight:400;color:rgba(95,113,125,1);line-height:20px;margin-top: 15px;">
-                                                <span style="padding: 6px 15px;border-radius:4px;border:1px solid rgba(63,162,244,1);font-size:14px;font-weight:500;color:rgba(42,159,247,1);line-height:20px;">立即了解</span>
+                                                <span class="btn-span">立即了解</span>
                                                 <span style="float: right;margin-top: -5px;"><img
                                                         src="/assets/images/dashboard/icon_clock.png" height="20"
                                                         width="20" style="position: relative;top:5px;right:3px"/><em
@@ -200,7 +202,7 @@
                                 <ion-list class="my_work">
                                     <ion-item lines="none">
                                         <ion-thumbnail slot="start">
-                                            <img src="/assets/images/dashboard/order_statistic.png"/></ion-thumbnail>
+                                            <img src="/assets/images/dashboard/order_statistic.svg"/></ion-thumbnail>
                                         <ion-label>工单统计
                                             <img src="/assets/images/qualification.png"
                                                  style="width: 20px;height: 20px; position:relative;top:4px;"
@@ -209,7 +211,7 @@
                                     <ion-item style="margin-top: 0" lines="none">
                                         <ion-thumbnail slot="start"></ion-thumbnail>
                                         <div class="work">
-                                            <ion-item lines="none" style="margin-top: 8px;">
+                                            <ion-item lines="none" style="margin-top: 8px;border-radius: 10px;">
                                                 <ion-thumbnail slot="start" style="margin:16px 10px 16px 16px">
                                                     <img src="/assets/images/dashboard/order_ing.png"/>
                                                 </ion-thumbnail>
@@ -223,7 +225,7 @@
                                     <ion-item lines="none">
                                         <ion-thumbnail slot="start"></ion-thumbnail>
                                         <div class="work">
-                                            <ion-item lines="none" style="margin-top: 8px;">
+                                            <ion-item lines="none" style="margin-top: 8px;border-radius: 10px;">
                                                 <ion-thumbnail slot="start" style="margin:16px 10px 16px 16px">
                                                     <img src="/assets/images/dashboard/order_finish.png"/>
                                                 </ion-thumbnail>
@@ -238,7 +240,7 @@
                                     <ion-item lines="none">
                                         <ion-thumbnail slot="start"></ion-thumbnail>
                                         <div class="work redbor">
-                                            <ion-item lines="none" style="margin-top: 8px;">
+                                            <ion-item lines="none" style="margin-top: 8px;border-radius: 10px;">
                                                 <ion-thumbnail slot="start" style="margin:16px 10px 16px 16px">
                                                     <img src="/assets/images/dashboard/order_err.png"/>
                                                 </ion-thumbnail>
@@ -254,7 +256,7 @@
                                 <ion-list class="my_work">
                                     <ion-item lines="none">
                                         <ion-thumbnail slot="start">
-                                            <img src="/assets/images/dashboard/order_status.png"/></ion-thumbnail>
+                                            <img src="/assets/images/dashboard/order_status.svg"/></ion-thumbnail>
                                         <ion-label>工单最新状态
                                             <img src="/assets/images/qualification.png"
                                                  style="width: 20px;height: 20px; position:relative;top:4px;"
@@ -263,7 +265,7 @@
                                     <ion-row>
                                         <ion-col size="1"></ion-col>
                                         <ion-col size="11" style="margin: 6px 0 0 -15px">
-                                            <table *ngIf="ticket.dataSource" mat-table [dataSource]="ticket.dataSource"  style="border: 1px solid #dce5ec;border-radius:3px;display: block;">
+                                            <table *ngIf="ticket.dataSource" mat-table [dataSource]="ticket.dataSource"  style="background: none;border: 1px solid #dce5ec;border-radius:3px;display: block;">
 
                                                 <!-- Position Column -->
                                                 <ng-container matColumnDef="content">
@@ -295,6 +297,7 @@
                                                     <td mat-cell *matCellDef="let element"
                                                         style="padding-left:22px !important;border-bottom-width: 0 !important;height: 50px">
                                                         <div style="display: flex;align-items: center;padding: 0">
+
                                                             <ion-progress-bar [value]="element.workSatusRate / 100"
                                                                               [color]="element.workSatusRate / 100 | progress"></ion-progress-bar>
                                                             <span style="margin-left: 10px;width: 50px">{{element.workSatusRate}}
