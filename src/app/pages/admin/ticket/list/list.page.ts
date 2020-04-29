@@ -33,6 +33,7 @@ export class AdminTicketListPage {
         rows: 10,
         workOrderNo: '',
         workStatus: this.route.snapshot.queryParams.workStatus ? this.route.snapshot.queryParams.workStatus.split(',') : '',
+        serviceStatus: this.route.snapshot.queryParams.serviceStatus ? this.route.snapshot.queryParams.serviceStatus.split(',') : '',
         workType: '',
         createDateBegin: '',
         createDateEnd: '',
@@ -40,6 +41,7 @@ export class AdminTicketListPage {
         updateDateEnd: ''
     };
     statuses;
+    serviceStatuses;
     types;
 
     items;
@@ -63,6 +65,9 @@ export class AdminTicketListPage {
                 }
             }
             this.statuses = statuses;
+        });
+        ticketSvc.serviceStatuses().subscribe(res => {
+            this.serviceStatuses = res;
         });
         ticketSvc.types().subscribe(res => {
             this.types = res;

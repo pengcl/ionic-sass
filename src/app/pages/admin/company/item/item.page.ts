@@ -15,7 +15,7 @@ import {IndustryComponent} from '../../../../@shared/components/industry/industr
 import {DictService} from '../../../../@core/services/dict.service';
 import {AddressService} from '../../../../@core/services/address.service';
 import {CompanyService} from '../company.service';
-import {getIndex} from '../../../../@core/utils/utils';
+import {getIndex, listToTree} from '../../../../@core/utils/utils';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatTableDataSource} from '@angular/material';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {forkJoin} from 'rxjs';
@@ -144,6 +144,7 @@ export class AdminCompanyItemPage implements OnInit {
     loading = false;
     cloudCompany;
     circle: any = {};
+    industryPanelShow = false;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -192,7 +193,7 @@ export class AdminCompanyItemPage implements OnInit {
     };
     conditions;
     data;
-
+    sourceIndustries;
     ngOnInit() {
         this.companySvc.source(this.id).subscribe(res => {
             this.data = res;
@@ -203,7 +204,7 @@ export class AdminCompanyItemPage implements OnInit {
             this.form.get('company').get('mobile').setValue(res.busCust.mobile);
             this.form.get('company').get('job').setValue(res.busCust.job);
             this.form.get('company').get('operateDate').setValue(res.busCust.operateDate);
-            this.form.get('company').get('industryIds').setValue(res.busCust.industryIds);
+            this.form.get('company').get('industryIds').setValue(parseInt(res.busCust.industryIds, 10));
             this.companySvc.find(res.busCust.companyName).subscribe(cloud => {
                 if (cloud.code === 20000) {
                     this.cloudCompany = cloud.data.companyDTO;
@@ -217,15 +218,8 @@ export class AdminCompanyItemPage implements OnInit {
             });
 
             this.industrySvc.list().subscribe(industries => {
-                const selected = [];
-                res.busCust.industryIds.split(',').forEach(id => {
-                    const index = getIndex(industries, 'id', parseInt(id, 10));
-                    if (index) {
-                        selected.push(industries[index]);
-                    }
-                });
-                this.selectedIndustries = selected;
-                this.setIndustries();
+                this.sourceIndustries = industries;
+                this.industries = listToTree(industries, {idKey: 'id', parentKey: 'parentId', childrenKey: 'children'});
             });
         });
         this.companySvc.getCred(this.id).subscribe(res => {
@@ -471,35 +465,6 @@ export class AdminCompanyItemPage implements OnInit {
             value: other
         });
         this.circle[id] = option;
-    }
-
-    async presentModal() {
-        const modal = await this.modalController.create({
-            showBackdrop: true,
-            component: IndustryComponent,
-            componentProps: {items: this.selectedIndustries}
-        });
-        await modal.present();
-        const {data} = await modal.onDidDismiss(); // 获取关闭传回的值
-        this.form.get('company').get('industryIds').markAsTouched();
-        this.selectedIndustries = data;
-        this.setIndustries();
-    }
-
-    remove(item) {
-        const index = getIndex(this.selectedIndustries, 'id', item.id);
-        if (index >= 0) {
-            this.selectedIndustries.splice(index, 1);
-        }
-        this.setIndustries();
-    }
-
-    setIndustries() {
-        const ids = [];
-        this.selectedIndustries.forEach(item => {
-            ids.push(item.id);
-        });
-        this.form.get('company').get('industryIds').setValue(ids);
     }
 
     submit() {

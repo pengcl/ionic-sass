@@ -59,21 +59,30 @@
                                                         <ion-col size="4" class="form-field">
                                                             <mat-form-field appearance="outline">
                                                                 <label><em>*</em>行业</label>
-                                                                <input style="display: none"
-                                                                       formControlName="industryIds" placeholder="所属行业"
-                                                                       matInput required>
-                                                                <mat-chip-list #chipList required>
-                                                                    <mat-chip
-                                                                            *ngFor="let industry of selectedIndustries"
-                                                                            (removed)="remove(industry)">{{industry.industryName}}
-                                                                        <mat-icon matChipRemove>cancel</mat-icon>
-                                                                    </mat-chip>
-                                                                    <input [matChipInputFor]="chipList"
-                                                                           (click)="presentModal()" matInput required
-                                                                           readonly>
-                                                                </mat-chip-list>
+                                                                <input (click)="industryPanelShow = true" [value]="form.get('company').get('industryIds').value | industryName : sourceIndustries" placeholder="所属行业" matInput
+                                                                       required readonly>
                                                                 <ion-icon matSuffix name="arrow-down"></ion-icon>
                                                             </mat-form-field>
+                                                            <div *ngIf="industryPanelShow" class="industry-container">
+                                                                <div class="main-content">
+                                                                    <ion-radio-group formControlName="industryIds" [value]="form.get('company').get('industryIds').value">
+                                                                        <ul>
+                                                                            <li *ngFor="let item of industries">
+                                                                                <ion-radio [value]="item.id"></ion-radio>
+                                                                                {{item.industryName}}
+                                                                                <div class="sub-content">
+                                                                                    <ul>
+                                                                                        <li *ngFor="let sub of item.children">
+                                                                                            <ion-radio [value]="sub.id"></ion-radio>{{sub.industryName}}
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </ion-radio-group>
+                                                                </div>
+                                                                <div class="sub-content"></div>
+                                                            </div>
                                                         </ion-col>
                                                         <ion-col size="8">
                                                             <mat-form-field appearance="outline"
@@ -609,4 +618,5 @@
             </mat-horizontal-stepper>
         </mat-card-content>
     </mat-card>
+    <div (click)="industryPanelShow = false" *ngIf="industryPanelShow" class="selected-overlay"></div>
 </div>

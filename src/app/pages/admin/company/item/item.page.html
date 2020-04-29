@@ -202,18 +202,38 @@
                                                 <ion-col size="4" class="form-field">
                                                     <mat-form-field appearance="outline">
                                                         <label><em>*</em>行业</label>
-                                                        <input style="display: none" formControlName="industryIds"
-                                                               placeholder="所属行业" matInput required>
-                                                        <mat-chip-list #chipList required>
+                                                        <input (click)="industryPanelShow = true" [value]="form.get('company').get('industryIds').value | industryName : sourceIndustries" placeholder="所属行业" matInput
+                                                               required readonly>
+                                                        <!--<mat-chip-list #chipList required>
                                                             <mat-chip *ngFor="let industry of selectedIndustries"
                                                                       (removed)="remove(industry)">{{industry.industryName}}
                                                                 <mat-icon matChipRemove>cancel</mat-icon>
                                                             </mat-chip>
                                                             <input [matChipInputFor]="chipList"
                                                                    (click)="presentModal()" matInput required readonly>
-                                                        </mat-chip-list>
+                                                        </mat-chip-list>-->
                                                         <ion-icon matSuffix name="arrow-down"></ion-icon>
                                                     </mat-form-field>
+                                                    <div *ngIf="industryPanelShow" class="industry-container">
+                                                        <div class="main-content">
+                                                            <ion-radio-group formControlName="industryIds" [value]="form.get('company').get('industryIds').value">
+                                                                <ul>
+                                                                    <li *ngFor="let item of industries">
+                                                                        <ion-radio [value]="item.id"></ion-radio>
+                                                                        {{item.industryName}}
+                                                                        <div class="sub-content">
+                                                                            <ul>
+                                                                                <li *ngFor="let sub of item.children">
+                                                                                    <ion-radio [value]="sub.id"></ion-radio>{{sub.industryName}}
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </ion-radio-group>
+                                                        </div>
+                                                        <div class="sub-content"></div>
+                                                    </div>
                                                 </ion-col>
                                                 <ion-col size="8">
                                                     <mat-form-field appearance="outline"
@@ -318,8 +338,10 @@
                                                             </mat-form-field>
                                                             <mat-form-field appearance="outline"
                                                                             style="margin-bottom: -15px">
-                                                                <mat-select (selectionChange)="selectionChange('job',[21,25,26])" [compareWith]="compareFn"
-                                                                            formControlName="25">
+                                                                <mat-select
+                                                                        (selectionChange)="selectionChange('job',[21,25,26])"
+                                                                        [compareWith]="compareFn"
+                                                                        formControlName="25">
                                                                     <mat-option
                                                                             [disabled]="getDisabled(item,[21,25,26])"
                                                                             *ngFor="let item of option['25']"
@@ -328,8 +350,10 @@
                                                             </mat-form-field>
                                                             <mat-form-field appearance="outline"
                                                                             style="margin-bottom: -15px">
-                                                                <mat-select (selectionChange)="selectionChange('job',[21,25,26])" [compareWith]="compareFn"
-                                                                            formControlName="26">
+                                                                <mat-select
+                                                                        (selectionChange)="selectionChange('job',[21,25,26])"
+                                                                        [compareWith]="compareFn"
+                                                                        formControlName="26">
                                                                     <mat-option
                                                                             [disabled]="getDisabled(item,[21,25,26])"
                                                                             *ngFor="let item of option['26']"
@@ -355,8 +379,10 @@
                                                             <mat-form-field appearance="outline"
                                                                             style="margin-bottom: -15px">
                                                                 <label style="left: -60px">学历组成</label>
-                                                                <mat-select (selectionChange)="selectionChange('edu',[28,29])" [compareWith]="compareFn"
-                                                                            formControlName="28">
+                                                                <mat-select
+                                                                        (selectionChange)="selectionChange('edu',[28,29])"
+                                                                        [compareWith]="compareFn"
+                                                                        formControlName="28">
                                                                     <mat-option
                                                                             [disabled]="getDisabled(item,[28,29])"
                                                                             *ngFor="let item of option['28']"
@@ -365,8 +391,10 @@
                                                             </mat-form-field>
                                                             <mat-form-field appearance="outline"
                                                                             style="margin-bottom: -15px">
-                                                                <mat-select (selectionChange)="selectionChange('edu',[28,29])" [compareWith]="compareFn"
-                                                                            formControlName="29">
+                                                                <mat-select
+                                                                        (selectionChange)="selectionChange('edu',[28,29])"
+                                                                        [compareWith]="compareFn"
+                                                                        formControlName="29">
                                                                     <mat-option
                                                                             [disabled]="getDisabled(item,[28,29])"
                                                                             *ngFor="let item of option['29']"
@@ -417,8 +445,10 @@
                                                                     <mat-form-field appearance="outline"
                                                                                     style="margin-bottom: -15px">
                                                                         <label style="left: -60px">科研人员学历组成</label>
-                                                                        <mat-select (selectionChange)="selectionChange('sci',[30,31])" [compareWith]="compareFn"
-                                                                                    formControlName="31">
+                                                                        <mat-select
+                                                                                (selectionChange)="selectionChange('sci',[30,31])"
+                                                                                [compareWith]="compareFn"
+                                                                                formControlName="31">
                                                                             <mat-option
                                                                                     [disabled]="getDisabled(item,[30,31])"
                                                                                     *ngFor="let item of option['31']"
@@ -427,8 +457,10 @@
                                                                     </mat-form-field>
                                                                     <mat-form-field appearance="outline"
                                                                                     style="margin-bottom: -15px">
-                                                                        <mat-select (selectionChange)="selectionChange('sci',[30,31])" [compareWith]="compareFn"
-                                                                                    formControlName="30">
+                                                                        <mat-select
+                                                                                (selectionChange)="selectionChange('sci',[30,31])"
+                                                                                [compareWith]="compareFn"
+                                                                                formControlName="30">
                                                                             <mat-option
                                                                                     [disabled]="getDisabled(item,[30,31])"
                                                                                     *ngFor="let item of option['30']"
@@ -634,3 +666,4 @@
     <ion-button [routerLink]="['/admin/plan/item']" [queryParams]="{id:id}" color="primary">查看体检报告</ion-button>
     <ion-button (click)="save()" style="--background: rgba(13, 215, 141, 1);">保存本次修改</ion-button>
 </div>
+<div (click)="industryPanelShow = false" *ngIf="industryPanelShow" class="selected-overlay"></div>

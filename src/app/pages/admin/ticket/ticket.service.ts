@@ -18,6 +18,13 @@ export class TicketService {
             }));
     }
 
+    serviceStatuses(): Observable<any> {
+        return this.http.get(this.PREFIX_URL + 'getServiceStatus')
+            .pipe(observableMargeMap((res: any) => {
+                return resultProcess(res);
+            }));
+    }
+
     statistics(id): Observable<any> {
         return this.http.get(this.PREFIX_URL + 'getWorkOrderSurvey', {params: {custId: id}})
             .pipe(observableMargeMap((res: any) => {

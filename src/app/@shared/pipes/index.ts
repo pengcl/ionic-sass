@@ -16,7 +16,8 @@ import {
     TableLabelPipe,
     ColorPipe,
     ScorePipe,
-    ProgressPipe
+    ProgressPipe,
+    IndustryNamePipe
 } from './pipes.pipe';
 
 export const PIPES_DECLARATIONS = [
@@ -37,5 +38,6 @@ export const PIPES_DECLARATIONS = [
     TableLabelPipe,
     ColorPipe,
     ScorePipe,
-    ProgressPipe
+    ProgressPipe,
+    IndustryNamePipe
 ];

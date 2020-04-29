@@ -40,6 +40,15 @@
                         </mat-select>
                     </mat-form-field>
                 </ion-col>
+                <ion-col size="2">
+                    <mat-form-field appearance="outline">
+                        <mat-select name="workStatus" [(ngModel)]="params.workStatus" (ngModelChange)="getData()" placeholder="服务状态" multiple>
+                            <mat-option *ngFor="let item of serviceStatuses" [value]="item.dictValue">
+                                {{item.dictName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </ion-col>
                 <ion-col size="1" class="search-label">开始时间</ion-col>
                 <ion-col size="2">
                     <mat-form-field appearance="outline">

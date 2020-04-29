@@ -8,7 +8,7 @@ import {ModalController} from '@ionic/angular';
 import {AddressService} from '../../../../../@core/services/address.service';
 import {CompanyService} from '../../company.service';
 import {IndustryService} from '../../../../../@shared/components/industry/industry.service';
-import {getIndex} from '../../../../../@core/utils/utils';
+import {getIndex, listToTree} from '../../../../../@core/utils/utils';
 import {IndustryComponent} from '../../../../../@shared/components/industry/industry';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatTableDataSource} from '@angular/material';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
@@ -120,7 +120,8 @@ export class AdminCompanyCreateStep2Page implements OnInit {
         valueNum: 0,
         list: []
     };
-
+    sourceIndustries;
+    industryPanelShow = false;
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private location: LocationStrategy,
@@ -152,8 +153,9 @@ export class AdminCompanyCreateStep2Page implements OnInit {
     }
 
     ngOnInit() {
-        this.industrySvc.list().subscribe(res => {
-            this.industries = res;
+        this.industrySvc.list().subscribe(industries => {
+            this.sourceIndustries = industries;
+            this.industries = listToTree(industries, {idKey: 'id', parentKey: 'parentId', childrenKey: 'children'});
         });
         this.companySvc.get(this.id).subscribe(res => {
             this.company = res.busCust;

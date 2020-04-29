@@ -374,3 +374,19 @@ export class ScorePipe implements PipeTransform {
         return color;
     }
 }
+
+@Pipe({
+    name: 'industryName',
+    pure: false
+})
+// not being finished
+@Injectable()
+export class IndustryNamePipe implements PipeTransform {
+    transform(id, list): any {
+        if (!id || !list) {
+            return id;
+        }
+        const index = getIndex(list, 'id', id);
+        return list[index].industryName;
+    }
+}
