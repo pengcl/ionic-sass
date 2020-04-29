@@ -61,8 +61,20 @@ mat-card {
 
   }
 
+  span.btn-span{ padding: 6px 15px;
+    border-radius: 4px;
+    border: 1px solid #3FA2F4;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2A9FF7;
+    line-height: 20px;}
+  span:hover.btn-span{color:#fff;background:#3FA2F4 }
+
   mat-card-header {
     border-bottom: 1px solid #DCE5EC;
+
+    margin:0 -16px;
+    padding:0 16px;
 
     mat-card-title {
       font-weight: 400;
@@ -197,6 +209,7 @@ mat-card {
         border-radius: 4px;
         position: relative;
         cursor: pointer;
+        margin: 0 10px;
 
 
         .time-left {
