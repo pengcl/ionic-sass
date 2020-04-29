@@ -64,6 +64,7 @@ export class AdminCompanyItemPage implements OnInit {
                 name: '访问来源',
                 type: 'pie',
                 radius: ['50%', '70%'],
+                center: ['50%', '35%'],
                 avoidLabelOverlap: false,
                 label: {
                     show: false,
@@ -440,6 +441,12 @@ export class AdminCompanyItemPage implements OnInit {
     getCircle(id, items) {
         console.log(id);
         const option = JSON.parse(JSON.stringify(this.brandOption));
+        if (id === 'job') {
+            option.color = colors2;
+        }
+        if (id === 'edu' || id === 'sci') {
+            option.color = colors3;
+        }
         option.legend.data = [];
         option.series[0].data = [];
         let other = 100;
@@ -547,10 +554,20 @@ export class AdminCompanyItemPage implements OnInit {
             }
         }
         this.toastSvc.loading('加载中...', 0);
-        this.companySvc.change(this.form.get('company').value).subscribe(() => {
-            this.companySvc.updateCond(body).subscribe(res => {
+        this.companySvc.change(this.form.get('company').value).subscribe((res) => {
+            this.companySvc.updateCond(body).subscribe(() => {
                 this.companySvc.updateCred(this.form.get('match').value).subscribe(() => {
                     this.toastSvc.hide();
+                    this.dialogSvc.show({
+                        title: '',
+                        content: '修改成功',
+                        cancel: '',
+                        confirm: '我知道了'
+                    }).subscribe(value => {
+                        if (value.value) {
+                            this.router.navigate(['/admin/company/qualification', this.company.id]);
+                        }
+                    });
                 });
             });
         });

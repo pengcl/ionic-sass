@@ -4,9 +4,11 @@
 }
 
 .bottom {
+  position: fixed;
+  bottom: 0;
   height: 74px;
   background: rgba(33, 51, 63, 0.8);
-  width: 100%;
+  width: 87%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -295,6 +297,27 @@ mat-card {
   }
 
   mat-card-content {
+
+    .chart-empty{
+      display: flex;
+      flex-direction: column;
+      img{
+        width: 128px;
+        height: 128px;
+        display: block;
+        margin: 30px auto 22px;
+      }
+      span{
+        padding: 6px 16px;
+        color: #2A9FF7;
+        border: 1px solid #2A9FF7;
+        border-radius:4px;
+        display: block;
+        margin: 0 auto;
+        cursor: pointer;
+      }
+    }
+
     .hot {
       display: flex;
       flex-direction: row;

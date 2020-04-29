@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="34px" height="34px" viewBox="17 17 34 34" enable-background="new 17 17 34 34" xml:space="preserve">
+<title>classify03</title>
+<desc>Created with Sketch.</desc>
+<linearGradient id="椭圆形_2_" gradientUnits="userSpaceOnUse" x1="36.2402" y1="30.1338" x2="35.2474" y2="29.1409" gradientTransform="matrix(34 0 0 -34 -1181.1563 1041.5313)">
+	<stop  offset="0" style="stop-color:#FFBF5C"/>
+	<stop  offset="1" style="stop-color:#FF8344"/>
+</linearGradient>
+<circle id="椭圆形_1_" fill="url(#椭圆形_2_)" cx="34" cy="34" r="17"/>
+<g id="统计" transform="translate(26.000000, 26.000000)">
+	<rect id="矩形" fill-opacity="0" width="16" height="16"/>
+	<path id="形状" fill="#FFFFFF" d="M7.75,13.311H1.563V2.641h12.875v2.968h-0.75V3.391H2.313v9.169H7.75V13.311z M14.438,5.984
+		H1.563V2.641h12.875V5.984z M2.313,5.234h11.375V3.391H2.313V5.234z M3.344,7.89h3.902v0.75H3.344V7.89z M3.344,9.819h3.121v0.75
+		H3.344V9.819z M9.723,8.754h0.75v3.193h-0.75V8.754z M11.287,9.571h0.75v2.375h-0.75V9.571z M12.85,10.748h0.75v1.199h-0.75V10.748
+		z M11.662,13.953c-1.721,0-3.202-1.215-3.537-2.902c-0.336-1.688,0.566-3.376,2.156-4.035s3.422-0.103,4.378,1.328
+		c0.956,1.431,0.769,3.337-0.448,4.553C13.537,13.575,12.618,13.955,11.662,13.953z M11.662,7.492c-1.575,0-2.855,1.281-2.855,2.855
+		s1.28,2.855,2.855,2.855c1.574,0,2.855-1.281,2.855-2.855S13.236,7.492,11.662,7.492L11.662,7.492z"/>
+</g>
+</svg>

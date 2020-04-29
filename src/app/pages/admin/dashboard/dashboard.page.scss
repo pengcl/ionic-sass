@@ -11,6 +11,9 @@ ion-grid {
   }
 }
 
+span.btn-more{ display:inline-block;padding: 6px 15px;border-radius:4px;border:1px solid rgba(63,162,244,1);font-size:14px;font-weight:500;color:rgba(42,159,247,1);line-height:20px;}
+span.btn-more:hover{border:1px solid rgba(63,162,244,1); background:rgba(63,162,244,1);color:#fff;}
+
 mat-card {
   margin: 10px;
 
@@ -61,8 +64,20 @@ mat-card {
 
   }
 
+  span.btn-span{ padding: 6px 15px;
+    border-radius: 4px;
+    border: 1px solid #3FA2F4;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2A9FF7;
+    line-height: 20px;}
+  span:hover.btn-span{color:#fff;background:#3FA2F4 }
+
   mat-card-header {
     border-bottom: 1px solid #DCE5EC;
+
+    margin:0 -16px;
+    padding:0 16px;
 
     mat-card-title {
       font-weight: 400;
@@ -135,6 +150,27 @@ mat-card {
   mat-card-content {
     height: calc(100% - 32px);
 
+    .chart-empty{
+      margin: 48px auto 35px;
+      display: flex;
+      flex-direction: column;
+      img{
+        width: 220px;
+        height: auto;
+        display: block;
+        margin: 30px auto 22px;
+      }
+      span{
+        padding: 6px 16px;
+        display: block;
+        margin: 0 auto;
+        color: #B5C4D0;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 25px;
+      }
+    }
+
     .subsidy-chart {
       width: calc(100% - 1px);
     }
@@ -176,6 +212,7 @@ mat-card {
         border-radius: 4px;
         position: relative;
         cursor: pointer;
+        margin: 0 10px;
 
 
         .time-left {
@@ -195,7 +232,7 @@ mat-card {
       ion-thumbnail {
         width: 34px;
         height: 34px;
-        margin: 14px;
+        margin: 12px;
       }
 
     }
