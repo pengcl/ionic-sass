@@ -63,22 +63,18 @@ export class AdminCompanyItemPage implements OnInit {
             {
                 name: '访问来源',
                 type: 'pie',
-                radius: ['50%', '70%'],
+                radius: ['40%', '70%'],
                 center: ['50%', '35%'],
                 avoidLabelOverlap: false,
+                itemStyle: {
+                    borderWidth: 1,
+                    borderType: 'solid',
+                    borderColor: '#fff'
+                },
                 label: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    label: {
-                        show: true,
-                        fontSize: '16',
-                        fontWeight: 'bold'
-                    }
-                },
-                labelLine: {
-                    show: false
+                    show: true,
+                    position: 'inside',
+                    formatter: '{d}' + '%'
                 },
                 data: [
                     {value: 25, name: '执行人员'},

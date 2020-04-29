@@ -94,21 +94,21 @@ export class AdminPlanItemPage implements OnInit {
                 type: 'bar',
                 stack: '1',
                 data: [1, 2, 3],
-                barWidth: 14
+                barWidth: 7
             },
             {
                 name: '申请中',
                 type: 'bar',
                 stack: '1',
                 data: [1, 2, 3],
-                barWidth: 14
+                barWidth: 7
             },
             {
                 name: '已注册',
                 type: 'bar',
                 stack: '1',
                 data: [1, 2, 3],
-                barWidth: 14
+                barWidth: 7
             }
         ]
     };

@@ -313,21 +313,17 @@ export class AdminDashboardPage {
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['50%', '70%'],
+                        radius: ['45%', '70%'],
                         avoidLabelOverlap: false,
+                        itemStyle: {
+                            borderWidth: 1,
+                            borderType: 'solid',
+                            borderColor: '#fff'
+                        },
                         label: {
-                            show: false,
-                            position: 'center'
-                        },
-                        emphasis: {
-                            label: {
-                                show: true,
-                                fontSize: '16',
-                                fontWeight: 'bold'
-                            }
-                        },
-                        labelLine: {
-                            show: false
+                            show: true,
+                            position: 'inside',
+                            formatter: '{d}' + '%'
                         },
                         data: pieData
                     }
@@ -340,21 +336,21 @@ export class AdminDashboardPage {
                     type: 'bar',
                     stack: '1',
                     data: [],
-                    barWidth: 14
+                    barWidth: 7
                 },
                 {
                     name: '申请中',
                     type: 'bar',
                     stack: '1',
                     data: [],
-                    barWidth: 14
+                    barWidth: 7
                 },
                 {
                     name: '已注册',
                     type: 'bar',
                     stack: '1',
                     data: [],
-                    barWidth: 14
+                    barWidth: 7
                 }
             ];
             res.histograms.sort((a, b) => {
@@ -427,21 +423,17 @@ export class AdminDashboardPage {
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['50%', '70%'],
+                        radius: ['45%', '70%'],
                         avoidLabelOverlap: false,
+                        itemStyle: {
+                            borderWidth: 1,
+                            borderType: 'solid',
+                            borderColor: '#fff'
+                        },
                         label: {
-                            show: false,
-                            position: 'center'
-                        },
-                        emphasis: {
-                            label: {
-                                show: true,
-                                fontSize: '16',
-                                fontWeight: 'bold'
-                            }
-                        },
-                        labelLine: {
-                            show: false
+                            show: true,
+                            position: 'inside',
+                            formatter: '{d}' + '%'
                         },
                         data: pieData
                     }
@@ -454,21 +446,21 @@ export class AdminDashboardPage {
                     type: 'bar',
                     stack: '1',
                     data: [],
-                    barWidth: 14
+                    barWidth: 7
                 },
                 {
                     name: '申请中',
                     type: 'bar',
                     stack: '1',
                     data: [],
-                    barWidth: 14
+                    barWidth: 7
                 },
                 {
                     name: '已注册',
                     type: 'bar',
                     stack: '1',
                     data: [],
-                    barWidth: 14
+                    barWidth: 7
                 }
             ];
             res.histograms.sort((a, b) => {
@@ -568,21 +560,21 @@ export class AdminDashboardPage {
                     type: 'bar',
                     stack: '1',
                     data: [],
-                    barWidth: 14
+                    barWidth: 7
                 },
                 {
                     name: '申请中',
                     type: 'bar',
                     stack: '1',
                     data: [],
-                    barWidth: 14
+                    barWidth: 7
                 },
                 {
                     name: '已注册',
                     type: 'bar',
                     stack: '1',
                     data: [],
-                    barWidth: 14
+                    barWidth: 7
                 }
             ];
             res.histograms.sort((a, b) => {

@@ -126,21 +126,16 @@ export class AdminCompanyQualificationPage implements OnInit {
             {
                 name: '访问来源',
                 type: 'pie',
-                radius: ['50%', '70%'],
-                avoidLabelOverlap: false,
+                radius: ['40%', '70%'],
+                itemStyle: {
+                    borderWidth: 1,
+                    borderType: 'solid',
+                    borderColor: '#fff'
+                },
                 label: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    label: {
-                        show: true,
-                        fontSize: '16',
-                        fontWeight: 'bold'
-                    }
-                },
-                labelLine: {
-                    show: false
+                    show: true,
+                    position: 'inside',
+                    formatter: '{d}' + '%'
                 },
                 data: [
                     {value: 25, name: '执行人员'},
@@ -230,21 +225,21 @@ export class AdminCompanyQualificationPage implements OnInit {
                 type: 'bar',
                 stack: '1',
                 data: [1, 2, 3],
-                barWidth: 14
+                barWidth: 7
             },
             {
                 name: '申请中',
                 type: 'bar',
                 stack: '1',
                 data: [1, 2, 3],
-                barWidth: 14
+                barWidth: 7
             },
             {
                 name: '已注册',
                 type: 'bar',
                 stack: '1',
                 data: [1, 2, 3],
-                barWidth: 14
+                barWidth: 7
             }
         ]
     };
