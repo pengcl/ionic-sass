@@ -241,11 +241,10 @@
                                         </div>
                                     </ion-item>
 
-                                    <ion-item [routerLink]="['/admin/ticket/list']" [queryParams]="{workStatus:'2'}"
-                                              lines="none">
+                                    <ion-item lines="none">
                                         <ion-thumbnail slot="start"></ion-thumbnail>
-                                        <div class="work redbor">
-                                            <ion-item lines="none" style="margin-top: 8px;border-radius: 8px;">
+                                        <div class="work redbor" [routerLink]="['/admin/ticket/list']" [queryParams]="{workStatus:'2'}">
+                                            <ion-item lines="none" style="margin-top: 8px;border-radius: 8px;--background-hover: transparent;">
                                                 <ion-thumbnail slot="start" style="margin:16px 10px 16px 16px">
                                                     <img src="/assets/images/dashboard/order_err.png"/>
                                                 </ion-thumbnail>
