@@ -127,7 +127,7 @@ export class AdminCompanyQualificationPage implements OnInit {
             {
                 name: '访问来源',
                 type: 'pie',
-                radius: ['40%', '70%'],
+                radius: ['40%', '60%'],
                 itemStyle: {
                     borderWidth: 1,
                     borderType: 'solid',

@@ -623,7 +623,7 @@ export class AdminDashboardPage {
                 }
                 if (this.getGroupValue(-101)) {
                     list.push(this.getGroupValue(-101));
-                    list[0].label = '经营广度';
+                    list[1].label = '经营广度';
                 }
                 return list;
             })();
