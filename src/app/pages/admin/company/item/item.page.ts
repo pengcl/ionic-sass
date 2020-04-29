@@ -208,7 +208,6 @@ export class AdminCompanyItemPage implements OnInit {
             this.form.get('company').get('job').setValue(res.busCust.job);
             this.form.get('company').get('operateDate').setValue(res.busCust.operateDate);
             this.form.get('company').get('industryIds').setValue(res.busCust.industryIds);
-            console.log(this.form.get('company').get('operateDate').value);
             this.companySvc.find(res.busCust.companyName).subscribe(cloud => {
                 if (cloud.code === 20000) {
                     this.cloudCompany = cloud.data.companyDTO;
@@ -226,7 +225,6 @@ export class AdminCompanyItemPage implements OnInit {
                 res.busCust.industryIds.split(',').forEach(id => {
                     const index = getIndex(industries, 'id', parseInt(id, 10));
                     if (index) {
-                        console.log(index);
                         selected.push(industries[index]);
                     }
                 });
@@ -244,6 +242,23 @@ export class AdminCompanyItemPage implements OnInit {
                 this.getNum();
             });
         });
+    }
+
+    getDisabled(option, ids) {
+        let total = 100;
+        ids.forEach(item => {
+            if (item !== option.condId) {
+                let value = 0;
+                const selected = this.form.get('conds').get(item + '').value;
+                if (selected) {
+                    const index = getIndex(this.option[item], 'id', selected.valId);
+                    value = this.option[item][index].val2 || this.option[item][index].val1;
+                }
+                total = total - value;
+            }
+        });
+        total = total - (option.val2 || option.val1);
+        return total < 0;
     }
 
     setupForm(conditions) {
@@ -332,7 +347,6 @@ export class AdminCompanyItemPage implements OnInit {
 
     getConditions() {
         const conditions = [];
-        console.log(this.form.get('form').value);
         for (const key in this.form.get('form').value) {
             if (key) {
                 conditions.push({
@@ -432,14 +446,10 @@ export class AdminCompanyItemPage implements OnInit {
 
     compareFn(c1, c2): boolean {
         const result = c1 && c2 ? c1.valId === c2.valId : c1 === c2;
-        if (result) {
-            console.log(c1.condId);
-        }
         return c1 && c2 ? c1.valId === c2.valId : c1 === c2;
     }
 
     getCircle(id, items) {
-        console.log(id);
         const option = JSON.parse(JSON.stringify(this.brandOption));
         if (id === 'job') {
             option.color = colors2;
@@ -465,7 +475,6 @@ export class AdminCompanyItemPage implements OnInit {
             value: other
         });
         this.circle[id] = option;
-        console.log(this.circle);
     }
 
     async presentModal() {
@@ -478,7 +487,6 @@ export class AdminCompanyItemPage implements OnInit {
         const {data} = await modal.onDidDismiss(); // 获取关闭传回的值
         this.form.get('company').get('industryIds').markAsTouched();
         this.selectedIndustries = data;
-        console.log(this.selectedIndustries);
         this.setIndustries();
     }
 

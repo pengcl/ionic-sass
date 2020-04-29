@@ -311,6 +311,7 @@
                                                                         [compareWith]="compareFn"
                                                                         formControlName="21">
                                                                     <mat-option
+                                                                            [disabled]="getDisabled(item,[21,25,26])"
                                                                             *ngFor="let item of option['21']"
                                                                             [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
                                                                 </mat-select>
@@ -320,6 +321,7 @@
                                                                 <mat-select (selectionChange)="selectionChange('job',[21,25,26])" [compareWith]="compareFn"
                                                                             formControlName="25">
                                                                     <mat-option
+                                                                            [disabled]="getDisabled(item,[21,25,26])"
                                                                             *ngFor="let item of option['25']"
                                                                             [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
                                                                 </mat-select>
@@ -329,6 +331,7 @@
                                                                 <mat-select (selectionChange)="selectionChange('job',[21,25,26])" [compareWith]="compareFn"
                                                                             formControlName="26">
                                                                     <mat-option
+                                                                            [disabled]="getDisabled(item,[21,25,26])"
                                                                             *ngFor="let item of option['26']"
                                                                             [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
                                                                 </mat-select>
@@ -355,6 +358,7 @@
                                                                 <mat-select (selectionChange)="selectionChange('edu',[28,29])" [compareWith]="compareFn"
                                                                             formControlName="28">
                                                                     <mat-option
+                                                                            [disabled]="getDisabled(item,[28,29])"
                                                                             *ngFor="let item of option['28']"
                                                                             [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
                                                                 </mat-select>
@@ -364,6 +368,7 @@
                                                                 <mat-select (selectionChange)="selectionChange('edu',[28,29])" [compareWith]="compareFn"
                                                                             formControlName="29">
                                                                     <mat-option
+                                                                            [disabled]="getDisabled(item,[28,29])"
                                                                             *ngFor="let item of option['29']"
                                                                             [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
                                                                 </mat-select>
@@ -415,6 +420,7 @@
                                                                         <mat-select (selectionChange)="selectionChange('sci',[30,31])" [compareWith]="compareFn"
                                                                                     formControlName="31">
                                                                             <mat-option
+                                                                                    [disabled]="getDisabled(item,[30,31])"
                                                                                     *ngFor="let item of option['31']"
                                                                                     [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
                                                                         </mat-select>
@@ -424,6 +430,7 @@
                                                                         <mat-select (selectionChange)="selectionChange('sci',[30,31])" [compareWith]="compareFn"
                                                                                     formControlName="30">
                                                                             <mat-option
+                                                                                    [disabled]="getDisabled(item,[30,31])"
                                                                                     *ngFor="let item of option['30']"
                                                                                     [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
                                                                         </mat-select>
@@ -453,6 +460,9 @@
                                             </mat-card-header>
                                             <mat-card-content>
                                                 <ion-row formGroupName="form">
+                                                    <ion-col size="12">
+                                                        <h3>必填资质（{{required.valueNum}} / {{required.num}}）</h3>
+                                                    </ion-col>
                                                     <ion-col class="form-field"
                                                              *ngFor="let condition of required.list;let i = index"
                                                              [size]="4">
@@ -520,7 +530,13 @@
                                                             <mat-datepicker #picker></mat-datepicker>
                                                         </mat-form-field>
                                                     </ion-col>
+                                                    <ion-col size="12">
+                                                        <h3>选填资质（{{optional.valueNum}} / {{optional.num}}）</h3>
+                                                    </ion-col>
                                                     <ng-container *ngFor="let item of optional.list;let i = index">
+                                                        <ion-col [size]="12">
+                                                            <span class="value">{{item._name}}</span>
+                                                        </ion-col>
                                                         <ion-col class="form-field"
                                                                  *ngFor="let condition of item.list;let i = index"
                                                                  [size]="4">

@@ -471,7 +471,6 @@ export class AdminCompanyQualificationPage implements OnInit {
 
     getHBar(id, unit, isMulti?) {
         const chats = this.getChatValue(id);
-        console.log(chats);
         chats.sort((a, b) => {
             return a.count - b.count;
         });
@@ -557,6 +556,7 @@ export class AdminCompanyQualificationPage implements OnInit {
     getCondValue(id, key?) {
         const index = getIndex(this.data.conds, 'condId', id);
         const cond = this.data.conds[index];
+        console.log(id, cond);
         let value: any = '';
         if (key) {
             value = cond[key] ? cond[key] : '-';

@@ -13,6 +13,7 @@ import {IndustryComponent} from '../../../../../@shared/components/industry/indu
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatTableDataSource} from '@angular/material';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DictService} from '../../../../../@core/services/dict.service';
+import {forkJoin} from 'rxjs';
 
 const colors = ['#00cc99', '#339999'];
 const colors2 = ['#3399ff', '#3366ff', '#3300ff', '#330099'];
@@ -57,12 +58,12 @@ export class AdminCompanyCreateStep2Page implements OnInit {
             24: new FormControl('', []),
             30: new FormControl('', []),
             31: new FormControl('', [])
-        }),
-        form: new FormGroup({}),
-        match: new FormGroup({
+        })
+        /*form: new FormGroup({}),*/
+        /*match: new FormGroup({
             custId: new FormControl(this.id, [Validators.required]),
             conditions: new FormControl('', [Validators.required])
-        })
+        })*/
     });
     option: any = {};
     company;
@@ -134,14 +135,35 @@ export class AdminCompanyCreateStep2Page implements OnInit {
                 private addressSvc: AddressService,
                 private companySvc: CompanyService,
                 private dictSvc: DictService) {
-        this.setForm([2, 17, 18, 19, 21, 24, 25, 26, 28, 29, 30, 31]);
+        this.toastSvc.loading('加载中...', 0);
+        forkJoin(
+            this.companySvc.condVal(this.id, 2),
+            this.companySvc.condVal(this.id, 17),
+            this.companySvc.condVal(this.id, 18),
+            this.companySvc.condVal(this.id, 19),
+            this.companySvc.condVal(this.id, 21),
+            this.companySvc.condVal(this.id, 24),
+            this.companySvc.condVal(this.id, 25),
+            this.companySvc.condVal(this.id, 26),
+            this.companySvc.condVal(this.id, 28),
+            this.companySvc.condVal(this.id, 29),
+            this.companySvc.condVal(this.id, 30),
+            this.companySvc.condVal(this.id, 31)
+        ).subscribe(([r2, r17, r18, r19, r21, r24, r25, r26, r28, r29, r30, r31]) => {
+            this.setForm([2, 17, 18, 19, 21, 24, 25, 26, 28, 29, 30, 31], [r2, r17, r18, r19, r21, r24, r25, r26, r28, r29, r30, r31]);
+            this.toastSvc.hide();
+        });
     }
 
     ngOnInit() {
         this.industrySvc.list().subscribe(res => {
             this.industries = res;
         });
-        this.companySvc.getCred(this.id).subscribe(res => {
+        this.companySvc.get(this.id).subscribe(res => {
+            this.company = res.busCust;
+            this.form.get('company').get('operateDate').setValue(res.busCust.operateDate);
+        });
+        /*this.companySvc.getCred(this.id).subscribe(res => {
             this.setupForm(res.conditions);
             this.conditions = res.conditions;
             this.setupForm(res.conditions);
@@ -150,10 +172,10 @@ export class AdminCompanyCreateStep2Page implements OnInit {
             this.form.valueChanges.subscribe(() => {
                 this.getNum();
             });
-        });
+        });*/
     }
 
-    getNum() {
+    /*getNum() {
         this.required.valueNum = 0;
         this.optional.valueNum = 0;
         this.conditions.forEach(item => {
@@ -172,6 +194,23 @@ export class AdminCompanyCreateStep2Page implements OnInit {
                 }
             }
         });
+    }*/
+
+    getDisabled(option, ids) {
+        let total = 100;
+        ids.forEach(item => {
+            if (item !== option.condId) {
+                let value = 0;
+                const selected = this.form.get('conds').get(item + '').value;
+                if (selected) {
+                    const index = getIndex(this.option[item], 'id', selected.valId);
+                    value = this.option[item][index].val2 || this.option[item][index].val1;
+                }
+                total = total - value;
+            }
+        });
+        total = total - (option.val2 || option.val1);
+        return total < 0;
     }
 
 
@@ -219,10 +258,6 @@ export class AdminCompanyCreateStep2Page implements OnInit {
     }
 
     compareFn(c1, c2): boolean {
-        const result = c1 && c2 ? c1.valId === c2.valId : c1 === c2;
-        if (result) {
-            console.log(c1.condId);
-        }
         return c1 && c2 ? c1.valId === c2.valId : c1 === c2;
     }
 
@@ -259,13 +294,12 @@ export class AdminCompanyCreateStep2Page implements OnInit {
             if (id === 26) {
                 label = '服务';
             }
-            data[key].push({id, value: option.name, label});
+            data[key].push({id, value: option ? option.name : null, label});
         });
         this.getCircle(key, data[key]);
     }
 
     getCircle(id, items) {
-        console.log(id);
         const option = JSON.parse(JSON.stringify(this.brandOption));
         if (id === 'job') {
             option.color = colors2;
@@ -277,7 +311,7 @@ export class AdminCompanyCreateStep2Page implements OnInit {
         option.series[0].data = [];
         let other = 100;
         items.forEach(item => {
-            const value = parseInt(item.value.replace('%', ''), 10);
+            const value = item.value ? parseInt(item.value.replace('%', ''), 10) : 0;
             other = other - value;
             const name = item.label;
             option.legend.data.push(name);
@@ -291,16 +325,56 @@ export class AdminCompanyCreateStep2Page implements OnInit {
             value: other
         });
         this.circle[id] = option;
-        console.log(this.circle);
     }
 
-    setForm(ids) {
-        ids.forEach(id => {
-            this.getVal(id);
+    setForm(ids, list) {
+        const man = [];
+        const edu = [];
+        const sci = [];
+        const job = [];
+        const rate = [];
+        ids.forEach((id, index) => {
+            list[index].result.forEach(item => {
+                if (item.checked) {
+                    this.form.get('conds').get(id + '').setValue({condId: item.condId, valId: item.id});
+                    // this.getCircle('man', [{id: 2, value: item.name, label: '管理人员'}]);
+                    if (id === 2) {
+                        man.push({id, value: item.name, label: '管理人员'});
+                    }
+                    if (id === 28) {
+                        edu.push({id, value: item.name, label: '专科'});
+                    }
+                    if (id === 29) {
+                        edu.push({id, value: item.name, label: '本科及以上'});
+                    }
+                    if (id === 31) {
+                        sci.push({id, value: item.name, label: '专科'});
+                    }
+                    if (id === 30) {
+                        sci.push({id, value: item.name, label: '本科及以上'});
+                    }
+                    if (id === 21) {
+                        rate.push({id, value: item.name, label: '研发'});
+                        job.push({id, value: item.name, label: '研发'});
+                    }
+                    if (id === 25) {
+                        job.push({id, value: item.name, label: '销售'});
+                    }
+                    if (id === 26) {
+                        job.push({id, value: item.name, label: '服务'});
+                    }
+                }
+            });
+            this.option['' + id] = list[index].result;
+            this.getCircle('job', job);
+            this.getCircle('man', man);
+            this.getCircle('edu', edu);
+            this.getCircle('sci', sci);
+            this.getCircle('rate', rate);
         });
     }
 
-    setupForm(conditions) {
+    /*setupForm(conditions) {
         conditions.forEach(condition => {
             if (condition.fieldType === '0001') {
                 // @ts-ignore
@@ -318,7 +392,7 @@ export class AdminCompanyCreateStep2Page implements OnInit {
                     [!!condition.required ? Validators.required : Validators.nullValidator]));
             }
         });
-    }
+    }*/
 
     getVal(id) {
         this.companySvc.condVal(this.id, id).subscribe(res => {
@@ -355,10 +429,6 @@ export class AdminCompanyCreateStep2Page implements OnInit {
         this.form.get('company').get('industryIds').setValue(ids);
     }
 
-    dateChange(e) {
-        this.form.get('company').get('operateDate').setValue(e.value._i.year + '-' + e.value._i.month + '-' + e.value._i.date);
-    }
-
     submit() {
         if (this.form.invalid) {
             return false;
@@ -377,7 +447,6 @@ export class AdminCompanyCreateStep2Page implements OnInit {
         this.companySvc.change(this.form.get('company').value).subscribe(() => {
             this.companySvc.updateCond(body).subscribe(res => {
                 this.toastSvc.hide();
-                console.log(res);
                 this.router.navigate(['/admin/company/create/step3', this.id]);
             });
         });
