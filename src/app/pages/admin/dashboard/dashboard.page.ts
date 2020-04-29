@@ -535,9 +535,15 @@ export class AdminDashboardPage {
                         type: 'pie',
                         radius: ['50%', '70%'],
                         avoidLabelOverlap: false,
+                        itemStyle: {
+                            borderWidth: 1,
+                            borderType: 'solid',
+                            borderColor: '#fff'
+                        },
                         label: {
-                            show: false,
-                            position: 'center'
+                            show: true,
+                            position: 'inside',
+                            formatter: '{d}' + '%'
                         },
                         emphasis: {
                             label: {

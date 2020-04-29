@@ -50,8 +50,8 @@
                             </ion-col>
                             <ion-col size="8">
                                 <ion-item lines="none"style="--background:rgba(246,247,249,1);border-top-right-radius:4px;border-bottom-right-radius:4px;">
-                                    <article style="padding: 30px 40px;height:140px;overflow: auto">
-                                        {{data.busindustry.summaryContent ? data.busindustry.summaryContent : '-'}}
+                                    <article style="padding: 30px 40px;height:140px;overflow: auto" [innerHTML]="data.busindustry.summaryContent">
+                                        <!--{{data.busindustry.summaryContent ? data.busindustry.summaryContent : '-'}}-->
                                     </article>
                                     <div style="width:4px;height:28px;background:rgba(211,211,211,1);border-radius:2px;position: absolute;top: 33px;right: 21px; display: none"></div>
                                 </ion-item>
