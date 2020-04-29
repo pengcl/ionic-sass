@@ -340,17 +340,14 @@ export class ColorPipe implements PipeTransform {
 export class ProgressPipe implements PipeTransform {
     transform(value): any {
         let colorName = 'primary';
-        if (value <= 0.2) {
+        if (value <= 0.6) {
             colorName = 'danger';
         }
-        if (value > 0.2 && value <= 0.5) {
+        if (value >= 0.6 && value < 0.81) {
             colorName = 'warning';
         }
-        if (value > 0.5 && value < 1) {
+        if (value >= 0.81) {
             colorName = 'primary';
-        }
-        if (value === 1) {
-            colorName = 'success';
         }
         return colorName;
     }

@@ -147,6 +147,27 @@ mat-card {
   mat-card-content {
     height: calc(100% - 32px);
 
+    .chart-empty{
+      margin: 48px auto 35px;
+      display: flex;
+      flex-direction: column;
+      img{
+        width: 220px;
+        height: auto;
+        display: block;
+        margin: 30px auto 22px;
+      }
+      span{
+        padding: 6px 16px;
+        display: block;
+        margin: 0 auto;
+        color: #B5C4D0;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 25px;
+      }
+    }
+
     .subsidy-chart {
       width: calc(100% - 1px);
     }
@@ -206,9 +227,9 @@ mat-card {
 
     .my_work {
       ion-thumbnail {
-        width: 34px;
-        height: 34px;
-        margin: 14px;
+        width: 68px;
+        height: 68px;
+        margin: 0;
       }
 
     }
@@ -367,6 +388,7 @@ ion-list {
         width: 36px;
         height: 51px;
         margin-top: 40px;
+        margin-left: 10px;
       }
     }
 

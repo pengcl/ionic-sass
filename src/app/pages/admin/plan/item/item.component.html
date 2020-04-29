@@ -194,11 +194,11 @@
                                                 <tbody>
                                                 <tr>
                                                     <td class="user">研发</td>
-                                                    <td class="grade">15-25%</td>
+                                                    <td class="grade">10-40%</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="user">销售</td>
-                                                    <td class="grade">35-45%</td>
+                                                    <td class="grade">20-50%</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="user">服务</td>
@@ -247,12 +247,12 @@
                                                     <td class="grade">10-20%</td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="user">本科</td>
-                                                    <td class="grade">40-50%</td>
+                                                    <td class="user">本科及以上</td>
+                                                    <td class="grade">30-70%</td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="user">研究生及以上</td>
-                                                    <td class="grade">20-40%</td>
+                                                    <td class="user">其他</td>
+                                                    <td class="grade">5-10%</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="user">其他</td>
@@ -288,7 +288,7 @@
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/depth.png"/>
                                     </ion-thumbnail>
-                                    <ion-label>{{item.label}}<span>{{item.name}}</span></ion-label>
+                                    <ion-label>{{item.label}}<span [ngStyle]="{'color': getGroupValue(-100).score >= 60 ? '#3fa2f4' : '#B81F1C'}">{{item.name}}</span></ion-label>
                                     <div class="result_img">
                                         <img [src]="'/assets/images/company/' + (item.score >= 81 ? 'hand' : item.score >= 60 ? 'tick' : 'warn') + '.png'"/>
                                     </div>
@@ -552,7 +552,7 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-card-title>匹配政策
-                            <span style="margin-left: 10px" matTooltip="由中科华海搜集全国范围内的企业相关政策" matTooltipPosition="after">
+                            <span style="margin-left: 10px" matTooltip="根据企业资质匹配政策内容" matTooltipPosition="after">
                                 <img src="/assets/images/qualification.png" style="width: 20px;height: 20px; position:relative;top:3px;">
                             </span>
                         </mat-card-title>
@@ -563,7 +563,7 @@
                                 <div class="policy-left">
                                     <p>
                                         快速培育可获得<em>{{amt.quick}}</em>万元
-                                        <span>快速培育
+                                        <span style="cursor: pointer" routerLink="/admin/policy/index">快速培育
                                             <img src="/assets/images/company/into.png" height="13" width="13"/>
                                         </span>
                                     </p>
@@ -573,7 +573,7 @@
                                 <div class="policy-right">
                                     <p style="text-shadow:0px 2px 4px rgba(255,90,90,0.5);">
                                         科创直通车(2年)可获得<em style="text-shadow:0px 2px 4px rgba(255,90,90,0.5);">{{amt.keChuangBao}}</em>万元
-                                        <span class="right">政策收益提升
+                                        <span class="right" routerLink="/admin/policy/index" style="cursor: pointer">政策收益提升
                                         <em style="text-shadow:0px 2px 4px rgba(255,90,90,0.5);">{{amt.rate}}%</em>
                                         <img src="/assets/images/company/into.png" height="13" width="13"/>
                                         </span>
@@ -587,8 +587,9 @@
                                     <ion-col size="3" *ngFor="let item of policy.list.slice(0,4);let i = index">
                                         <div class="hot_right" [routerLink]="['/admin/policy/item',item.id]"
                                              [ngStyle]="{'margin-right': i === 3 ? '0' : '22px'}">
-                                            <div class="hot_img" *ngIf="item.policyName.indexOf('疫情政策') !== -1 ">
-                                                <img src="/assets/images/dashboard/icon_hot.png">
+                                            <div class="hot_img">
+                                                <img src="/assets/images/dashboard/icon_hot.svg" *ngIf="(item.isHot === 1 && item.isNew === 1) || (item.isHot === 1 && item.isNew === 0)">
+                                                <img src="/assets/images/dashboard/icon_new.svg" *ngIf="item.isHot === 0 && item.isNew === 1">
                                             </div>
                                             <p style="font-size:18px;font-weight:400;color:rgba(33,51,63,1);line-height:25px;margin-bottom:10px;margin-top: 30px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap">
                                                 {{item.policyName}}</p>
@@ -604,7 +605,7 @@
                                             </p>
                                             <p style="font-size:14px;font-weight:400;color:rgba(95,113,125,1);line-height:20px;margin-top: 15px;">
                                                 <span style="padding: 6px 15px;border-radius:4px;border:1px solid rgba(63,162,244,1);font-size:14px;font-weight:500;color:rgba(42,159,247,1);line-height:20px;">立即了解</span>
-                                                <span style="float: right;margin-top: -5px;"><img
+                                                <span style="float: right;margin-top: -5px;" *ngIf="getDate(item.reportDateEnd) <= 60"><img
                                                         src="/assets/images/dashboard/icon_clock.png" height="20"
                                                         width="20" style="position: relative;top:5px"/><em
                                                         style="font-weight:500;color:rgba(224,32,32,1);font-style: normal">{{getDate(item.reportDateEnd)}}</em>天</span>

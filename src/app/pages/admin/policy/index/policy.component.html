@@ -12,8 +12,42 @@
                     </mat-card-header>
                     <mat-card-content>
                         <app-empty *ngIf="subsidyOption === null" title="暂时没有相关数据"></app-empty>
-                        <div *ngIf="subsidyOption" echarts [options]="subsidyOption" class="main-chart subsidy-chart"
-                             style="height: 230px;"></div>
+                        <!--<div *ngIf="subsidyOption" echarts [options]="subsidyOption" class="main-chart subsidy-chart"
+                             style="height: 230px;"></div>-->
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col *ngIf="quick" size="6">
+                                    <div id="c1" style="display: flex;justify-content: center;margin: 0 auto"></div>
+                                    <!--<div echarts [options]="quick"
+                                         class="main-chart subsidy-chart"
+                                         style="height: 220px;"></div>-->
+                                    <p style="text-align: center;margin-top: -40px;font-size:14px;font-weight:400;color:rgba(42,159,247,1);line-height:24px;">
+                                        <em style="font-style: normal;font-weight:500;color:rgba(42,159,247,1);font-size:24px;line-height:30px;">{{quick.series[0]?.data[0]?.value}}</em>万元
+                                    </p>
+                                    <p style="text-align: center;font-size:12px;font-weight:400;color:rgba(95,113,125,1);line-height:17px;margin-top: -15px">
+                                        快速培育可获得</p>
+                                    <p style="text-align: center;font-size:14px;font-weight:400;color:#5F717D;line-height:20px;">
+                                        可培育项目数<em
+                                            style="font-style: normal;color: #21333F;font-size: 18px;font-weight: 500">{{quick.series[0]?.data[0]?.count}}</em>
+                                    </p>
+                                </ion-col>
+                                <ion-col *ngIf="keChuangBao" size="6">
+                                    <!--<div echarts [options]="keChuangBao"
+                                         class="main-chart subsidy-chart"
+                                         style="height: 220px;"></div>-->
+                                    <div id="c2" style="display: flex;justify-content: center;margin: 0 auto"></div>
+                                    <p style="text-align: center;margin-top: -40px;font-size:14px;font-weight:400;color:rgba(42,159,247,1);line-height:24px;">
+                                        <em style="font-style: normal;font-weight:500;color:rgba(42,159,247,1);font-size:24px;line-height:30px;">{{keChuangBao.series[0]?.data[0]?.value}}</em>万元
+                                    </p>
+                                    <p style="text-align: center;font-size:12px;font-weight:400;color:rgba(95,113,125,1);line-height:17px;margin-top: -15px">
+                                        科创直通车(2年)可获得</p>
+                                    <p style="text-align: center;font-size:14px;font-weight:400;color:#5F717D;line-height:20px;">
+                                        可培育项目数<em
+                                            style="font-style: normal;color: #21333F;font-size: 18px;font-weight: 500">{{keChuangBao.series[0]?.data[0]?.count}}</em>
+                                    </p>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
                     </mat-card-content>
                 </mat-card>
             </ion-col>
@@ -108,7 +142,7 @@
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;">
                             </tr>
                         </table>
-                        <ion-button color="primary" style="margin-top: 10px;">一键申请全部政策</ion-button>
+                        <ion-button color="primary" style="margin-top: 10px;" (click)="applyPolicy()">一键申请全部政策</ion-button>
                         <mat-paginator [pageIndex]="params.page - 1" [pageSize]="params.rows" [length]="total" (page)="page($event)"
                                        [pageSizeOptions]="[10,20,50]" showFirstLastButtons>123</mat-paginator>
                     </mat-card-content>

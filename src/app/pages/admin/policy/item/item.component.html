@@ -10,7 +10,7 @@
                         </div>
                         <div class="company_left"></div>
                         <div class="company_right"><p>{{policy?.name}}</p></div>
-                        <ion-button color="primary" style="position: absolute;right: 18px;">一键申请政策</ion-button>
+                        <ion-button color="primary" style="position: absolute;right: 18px;" (click)="applyPolicy(policy.name)">一键申请政策</ion-button>
                     </div>
                 </mat-card>
             </ion-col>

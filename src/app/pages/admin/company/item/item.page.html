@@ -4,245 +4,13 @@
             <mat-icon slot="start">home</mat-icon>
             首页</a>
         <a routerLink="/admin/company/list" class="link" href="javascript:;">我的主体</a>
-        <span>{{id === '0' ? '添加主体' : form.get('companyName').value}}</span>
+        <span>{{id === '0' ? '添加主体' : form.get('company').value}}</span>
     </div>
     <mat-card-header>
-        <mat-card-title>{{id === '0' ? '添加主体' : form.get('companyName').value}}</mat-card-title>
+        <mat-card-title>{{id === '0' ? '添加主体' : form.get('company').value}}</mat-card-title>
     </mat-card-header>
 </mat-card>
 <div class="container">
-    <!--<form [formGroup]="form">
-        <ion-grid>
-            <ion-row>
-                <ion-col size="6">
-                    <mat-form-field appearance="outline">
-                        <mat-label>企业名称</mat-label>
-                        <input type="text" formControlName="companyName" matInput placeholder="企业名称" required>
-                        <mat-error
-                                *ngIf="form.get('companyName').hasError('maxLength') && !form.get('companyName').hasError('required')">
-                            企业名称必须小于 <strong>32位</strong>
-                        </mat-error>
-                        <mat-error
-                                *ngIf="form.get('companyName').hasError('minLength') && !form.get('companyName').hasError('required')">
-                            企业名称须大于 <strong>4位</strong>
-                        </mat-error>
-                        <mat-error *ngIf="form.get('companyName').hasError('required')">
-                            企业名称是 <strong>必填</strong> 项
-                        </mat-error>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="6">
-                    <mat-form-field appearance="outline">
-                        <mat-label>统一社会信用代码</mat-label>
-                        <input type="text" formControlName="creditNumber" matInput placeholder="统一社会信用代码" required>
-                        <span (click)="getNumber()" mat-button matSuffix>获取</span>
-                        <mat-error
-                                *ngIf="form.get('creditNumber').hasError('maxLength') && !form.get('creditNumber').hasError('required')">
-                            统一社会信用代码必须小于 <strong>18位</strong>
-                        </mat-error>
-                        <mat-error
-                                *ngIf="form.get('creditNumber').hasError('minLength') && !form.get('creditNumber').hasError('required')">
-                            统一社会信用代码必须大于 <strong>18位</strong>
-                        </mat-error>
-                        <mat-error *ngIf="form.get('creditNumber').hasError('required')">
-                            统一社会信用代码是 <strong>必填</strong> 项
-                        </mat-error>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="4">
-                    <mat-form-field appearance="outline">
-                        <mat-label>省</mat-label>
-                        <mat-select formControlName="province" placeholder="省" required>
-                            <mat-option *ngFor="let item of provinces" [value]="item.name">
-                                {{item.name}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="4">
-                    <mat-form-field appearance="outline">
-                        <mat-label>市</mat-label>
-                        <mat-select formControlName="city" placeholder="市" required>
-                            <mat-option *ngFor="let item of cities" [value]="item.name">
-                                {{item.name}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="4">
-                    <mat-form-field appearance="outline">
-                        <mat-label>区</mat-label>
-                        <mat-select formControlName="area" placeholder="区" required>
-                            <mat-option *ngFor="let item of districts" [value]="item.name">
-                                {{item.name}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="12">
-                    <mat-form-field appearance="outline">
-                        <mat-label>详细地址</mat-label>
-                        <input formControlName="address" matInput placeholder="详细地址" required>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="6">
-                    <mat-form-field appearance="outline">
-                        <mat-label>所属行业</mat-label>
-                        <input style="display: none" formControlName="industryIds" placeholder="所属行业" matInput
-                               required>
-                        <mat-chip-list #chipList required>
-                            <mat-chip *ngFor="let industry of selectedIndustries" (removed)="remove(industry)">
-                                {{industry.industryName}}
-                                <mat-icon matChipRemove>cancel</mat-icon>
-                            </mat-chip>
-                            <input [matChipInputFor]="chipList" (click)="presentModal()" matInput
-                                   required readonly>
-                        </mat-chip-list>
-                        <button (click)="presentModal()" mat-button matSuffix mat-icon-button>
-                            <ion-icon name="arrow-down"></ion-icon>
-                        </button>
-                        <mat-error *ngIf="form.get('industryIds').hasError('required')">
-                            所属行业是 <strong>必填</strong> 项
-                        </mat-error>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="6">
-                    <mat-form-field appearance="outline">
-                        <mat-label>联系人</mat-label>
-                        <input type="text" formControlName="name" matInput placeholder="联系人" required>
-                        <mat-error
-                                *ngIf="form.get('name').hasError('pattern') && !form.get('name').hasError('required')">
-                            联系人必须是 <strong>中文</strong>
-                        </mat-error>
-                        <mat-error *ngIf="form.get('name').hasError('required')">
-                            联系人名称是 <strong>必填</strong> 项
-                        </mat-error>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="6">
-                    <mat-form-field appearance="outline">
-                        <mat-label>联系电话</mat-label>
-                        <input type="text" formControlName="mobile" matInput placeholder="联系电话" required>
-                        <mat-error
-                                *ngIf="form.get('mobile').hasError('pattern') && !form.get('mobile').hasError('required')">
-                            请输入 <strong>正确</strong> 的联系电话
-                        </mat-error>
-                        <mat-error *ngIf="form.get('mobile').hasError('required')">
-                            联系电话是 <strong>必填</strong> 项
-                        </mat-error>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="6">
-                    <mat-form-field appearance="outline">
-                        <mat-label>邮箱</mat-label>
-                        <input matInput formControlName="email" placeholder="邮箱" [errorStateMatcher]="matcher">
-                        &lt;!&ndash;<mat-hint>Errors appear instantly!</mat-hint>&ndash;&gt;
-                        <mat-error
-                                *ngIf="form.get('email').hasError('email') && !form.get('email').hasError('required')">
-                            请输入<strong>正确</strong>的邮箱地址
-                        </mat-error>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="6">
-                    <mat-form-field class="uploader">
-                        <mat-label>营业执照</mat-label>
-                        <input type="text" formControlName="licenseFileId" matInput placeholder="请填写统一社会信用代码"
-                               style="display: none">
-                        <div class="weui-uploader">
-                            <div class="weui-uploader__hd">
-                                <div class="weui-uploader__info"></div>
-                            </div>
-                            <div class="weui-uploader__bd">
-                                <div class="weui-uploader__input-box"
-                                     [ngClass]="{'uploaded' : form.get('licenseFileId').valid}"
-                                     [ngStyle]="{'backgroundImage':'url(' + FILE_PREFIX_URL + form.get('licenseFileId').value + ')'}">
-                                    <div *ngIf="form.get('licenseFileId').invalid"
-                                         class="weui-uploader__input-box-text">
-                                        <ion-icon name="cloud-upload"></ion-icon>
-                                        <h3>请选择上传文件</h3>
-                                        <p>可上传图片、文档类型文件</p>
-                                    </div>
-                                    <div *ngIf="form.get('licenseFileId').valid" class="weui-uploader__input-box-text">
-                                        <ion-icon name="cloud-upload"></ion-icon>
-                                        <h3>重新上传</h3>
-                                    </div>
-                                    <input
-                                            class="weui-uploader__input"
-                                            type="file"
-                                            accept="image/*"
-                                            multiple
-                                            [weui-uploader-file]="uploader.A"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="6">
-                    <mat-form-field class="uploader">
-                        <mat-label>组织机构代证</mat-label>
-                        <input type="text" formControlName="mechanismId" matInput placeholder="请上传组织机构代证"
-                               style="display: none">
-                        <div class="weui-uploader">
-                            <div class="weui-uploader__hd">
-                                <div class="weui-uploader__info"></div>
-                            </div>
-                            <div class="weui-uploader__bd">
-                                <div class="weui-uploader__input-box"
-                                     [ngClass]="{'uploaded' : form.get('mechanismId').valid}"
-                                     [ngStyle]="{'backgroundImage':'url(' + FILE_PREFIX_URL + form.get('mechanismId').value + ')'}">
-                                    <div *ngIf="form.get('mechanismId').invalid" class="weui-uploader__input-box-text">
-                                        <ion-icon name="cloud-upload"></ion-icon>
-                                        <h3>请选择上传文件</h3>
-                                        <p>可上传图片、文档类型文件</p>
-                                    </div>
-                                    <div *ngIf="form.get('mechanismId').valid" class="weui-uploader__input-box-text">
-                                        <ion-icon name="cloud-upload"></ion-icon>
-                                        <h3>重新上传</h3>
-                                    </div>
-                                    <input
-                                            class="weui-uploader__input"
-                                            type="file"
-                                            accept="image/*"
-                                            multiple
-                                            [weui-uploader-file]="uploader.B"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="12">
-                    <mat-form-field appearance="outline">
-                        <mat-label>备注</mat-label>
-                        <textarea formControlName="remark" matInput
-                                  placeholder="备注"></textarea>
-                    </mat-form-field>
-                </ion-col>
-                <ion-col size="12">
-                    <div class="row-buttons">
-                        <ion-button [disabled]="form.invalid" (click)="submit()" color="primary">
-                            <span *ngIf="id === '0'">
-                                <span [routerLink]="['/admin/company/qualification',form.get('custId').value]"
-                                      *ngIf="submitted">生成报告</span>
-                                <span *ngIf="!submitted">确定新增</span>
-                            </span>
-                            <span *ngIf="id !== '0'">修改</span>
-                            <ion-ripple-effect></ion-ripple-effect>
-                        </ion-button>
-                        <ion-button *ngIf="id !== '0'"
-                                    [routerLink]="['/admin/company/qualification',form.get('custId').value]"
-                                     color="primary" style="margin-left: 10px">
-                            查看企业资质
-                        </ion-button>
-                        <ion-button (click)="back()" color="light" style="margin-left: 10px">
-                            返回
-                        </ion-button>
-                    </div>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </form>-->
     <ion-grid>
         <ion-row>
             <ion-col size="12">
@@ -251,443 +19,602 @@
                         <mat-card-title>工商基础信息</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <ion-row>
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="5">
-                                        <span class="right bottom">企业名称</span>
-                                    </ion-col>
-                                    <ion-col size="7">
-                                        <span style="background: #fff" class="right bottom">广州卡趴网络科技有限公司</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="5">
-                                        <span class="right bottom">法人</span>
-                                    </ion-col>
-                                    <ion-col size="7">
-                                        <span style="background: #fff" class="right bottom">盘小龙</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="5">
-                                        <span class="right bottom">经营状态</span>
-                                    </ion-col>
-                                    <ion-col size="7">
-                                        <span style="background: #fff" class="bottom">在营（开业）企业</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="5">
-                                        <span class="right bottom">成立时间</span>
-                                    </ion-col>
-                                    <ion-col size="7">
-                                        <span style="background: #fff" class="right bottom">2014-12-22</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="5">
-                                        <span class="right bottom">注册资金</span>
-                                    </ion-col>
-                                    <ion-col size="7">
-                                        <span style="background: #fff" class="right bottom">588.2353万元人民币</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="5">
-                                        <span class="right bottom">实缴资本</span>
-                                    </ion-col>
-                                    <ion-col size="7">
-                                        <span style="background: #fff" class="bottom">-</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="5">
-                                        <span class="right bottom">统一社会信用代码</span>
-                                    </ion-col>
-                                    <ion-col size="7">
-                                        <span style="background: #fff" class="right bottom">914401053211030519</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="5">
-                                        <span class="right bottom">组织机构代码</span>
-                                    </ion-col>
-                                    <ion-col size="7">
-                                        <span style="background: #fff" class="right bottom">32110305-1</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="5">
-                                        <span class="right bottom">工商注册号</span>
-                                    </ion-col>
-                                    <ion-col size="7">
-                                        <span style="background: #fff" class="bottom">440105000409523</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="5">
-                                        <span class="right bottom">纳税人识别号</span>
-                                    </ion-col>
-                                    <ion-col size="7">
-                                        <span style="background: #fff" class="right bottom">914401053211030519</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="5">
-                                        <span class="right bottom">企业类型</span>
-                                    </ion-col>
-                                    <ion-col size="7">
-                                        <span style="background: #fff" class="right bottom">有限责任公司(自然人投资或控股)</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="5">
-                                        <span class="right bottom">营业期限</span>
-                                    </ion-col>
-                                    <ion-col size="7">
-                                        <span style="background: #fff" class="bottom">2014-12-22 至 -</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="5">
-                                        <span class="right">所属地区</span>
-                                    </ion-col>
-                                    <ion-col size="7">
-                                        <span style="background: #fff" class="right">广东省广州市天河区</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-                            <ion-col size="8">
-                                <ion-row>
-                                    <ion-col size="2.5">
-                                        <span class="right">企业地址</span>
-                                    </ion-col>
-                                    <ion-col size="9.5">
-                                        <span style="background: #fff">广州市天河区科韵路12号之一101自编之十一</span>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-                        </ion-row>
-
-                    </mat-card-content>
-                </mat-card>
-            </ion-col>
-
-            <ion-col size="12">
-                <mat-card>
-                    <mat-card-header>
-                        <mat-card-title style="margin-bottom: 50px">联系人信息</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <ion-grid>
+                        <ng-container *ngIf="cloudCompany">
                             <ion-row>
                                 <ion-col size="4">
-                                    <mat-form-field appearance="outline" style="margin-bottom: 0">
-                                        <label><em>*</em>联系人</label>
-                                        <input type="text" matInput required>
-                                    </mat-form-field>
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">企业名称</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff"
+                                                  class="right bottom">{{cloudCompany.companyName ? cloudCompany.companyName : '-'}}</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">法人</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff"
+                                                  class="right bottom">{{cloudCompany.legalRepresentative ? cloudCompany.legalRepresentative : '-'}}</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">经营状态</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff"
+                                                  class="bottom">{{cloudCompany.businessType ? cloudCompany.businessType : '-'}}</span>
+                                        </ion-col>
+                                    </ion-row>
                                 </ion-col>
 
                                 <ion-col size="4">
-                                    <mat-form-field appearance="outline" style="margin-bottom: 0">
-                                        <label><em>*</em>联系电话</label>
-                                        <input type="text" matInput required>
-                                    </mat-form-field>
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">成立时间</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff"
+                                                  class="right bottom">{{cloudCompany.registeredDate ? cloudCompany.registeredDate : '-'}}</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">注册资金</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff"
+                                                  class="right bottom">{{cloudCompany.registeredCapitalStr ? cloudCompany.registeredCapitalStr : '-'}}</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">实缴资本</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff"
+                                                  class="bottom">{{cloudCompany.paidInCapitalStr ? cloudCompany.paidInCapitalStr : '-'}}</span>
+                                        </ion-col>
+                                    </ion-row>
                                 </ion-col>
 
                                 <ion-col size="4">
-                                    <mat-form-field appearance="outline" style="margin-bottom: 0">
-                                        <label>职务</label>
-                                        <input type="text" matInput>
-                                    </mat-form-field>
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">统一社会信用代码</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff"
+                                                  class="right bottom">{{cloudCompany.unifiedSocialCreditCode ? cloudCompany.unifiedSocialCreditCode : ''}}</span>
+                                        </ion-col>
+                                    </ion-row>
                                 </ion-col>
-                            </ion-row>
-                        </ion-grid>
-                    </mat-card-content>
-                </mat-card>
-            </ion-col>
-
-            <ion-col size="12">
-                <mat-card>
-                    <mat-card-header>
-                        <mat-card-title style="margin-bottom: 50px">经营信息</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <ion-grid>
-                            <ion-row>
-                                <ion-col size="4" class="form-field">
-                                    <mat-form-field appearance="outline">
-                                        <label><em>*</em>行业</label>
-                                        <mat-select required>
-                                            <mat-option>互联网+/生活服务</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">组织机构代码</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff"
+                                                  class="right bottom">{{cloudCompany.organizationCode ? cloudCompany.organizationCode : '-'}}</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right bottom">营业期限</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff"
+                                                  class="bottom">{{cloudCompany.businessTermStartDate ? cloudCompany.businessTermStartDate : '-'}}
+                                                至 {{cloudCompany.businessTermEndDate ? cloudCompany.businessTermEndDate : '-'}}</span>
+                                        </ion-col>
+                                    </ion-row>
                                 </ion-col>
 
+                                <ion-col size="4">
+                                    <ion-row>
+                                        <ion-col size="5">
+                                            <span class="right">所属地区</span>
+                                        </ion-col>
+                                        <ion-col size="7">
+                                            <span style="background: #fff"
+                                                  class="right">{{company.province}} {{company.city}} {{company.area}}</span>
+                                        </ion-col>
+                                    </ion-row>
+                                </ion-col>
                                 <ion-col size="8">
-                                    <mat-form-field appearance="outline" style="width: 40%;">
-                                        <label><em>*</em>业务运营时间</label>
-                                        <input required matInput placeholder="请选择" [matDatepicker]="picker">
-                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker></mat-datepicker>
-                                    </mat-form-field>
-                                    <span style="display: inline;border: none;background: #fff;font-weight: 400;color: #FF0000;font-size: 14px">
-                                        <em style="font-style: normal;">*</em>注：企业每年仅可调整一次</span>
-                                </ion-col>
-
-                                <ion-col size="4" class="form-field">
-                                    <mat-form-field appearance="outline">
-                                        <label><em>*</em>企业总人数</label>
-                                        <mat-select required>
-                                            <mat-option>10-50人</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </ion-col>
-
-                                <ion-col size="4" class="form-field">
-                                    <mat-form-field appearance="outline">
-                                        <label><em>*</em>年营收范围</label>
-                                        <mat-select required>
-                                            <mat-option>2000-5000万</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </ion-col>
-
-                                <ion-col size="4">
-                                    <mat-form-field appearance="outline">
-                                        <label><em>*</em>固定资产范围</label>
-                                        <mat-select required>
-                                            <mat-option>500-1000万</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </ion-col>
-
-                                <ion-col size="4" class="form-field">
                                     <ion-row>
-                                        <ion-col size="4">
-                                            <mat-form-field appearance="outline">
-                                                <label>管理人员比例</label>
-                                                <mat-select required>
-                                                    <mat-option>20%</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
+                                        <ion-col size="2.5">
+                                            <span class="right">企业地址</span>
                                         </ion-col>
-                                        <ion-col size="8">
-                                            <div echarts [options]="brandOption"
-                                                 style="width: 180px;height: 180px;top: -25px;left: -20px;" class="main-chart"></div>
-                                        </ion-col>
-                                    </ion-row>
-                                </ion-col>
-
-                                <ion-col size="4" class="form-field">
-                                    <ion-row>
-                                        <ion-col size="2">
-                                            <span class="function">研发</span>
-                                            <span class="function" style="margin-top: 5px">销售</span>
-                                            <span class="function" style="margin-top: 5px">服务</span>
-                                        </ion-col>
-                                        <ion-col size="4">
-                                            <mat-form-field appearance="outline" style="margin-bottom: -15px">
-                                                <label style="left: -60px">职能分布</label>
-                                                <mat-select required>
-                                                    <mat-option>20%</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <mat-form-field appearance="outline" style="margin-bottom: -15px">
-                                                <mat-select required>
-                                                    <mat-option>20%</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <mat-form-field appearance="outline" style="margin-bottom: -15px">
-                                                <mat-select required>
-                                                    <mat-option>20%</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </ion-col>
-                                        <ion-col size="6">
-                                            <div echarts [options]="brandOption"
-                                                 style="width: 180px;height: 180px;top: -25px;left: -20px;" class="main-chart"></div>
-                                        </ion-col>
-                                    </ion-row>
-                                </ion-col>
-
-                                <ion-col size="4">
-                                    <ion-row>
-                                        <ion-col size="2">
-                                            <span class="function">专科</span>
-                                            <span class="function" style="margin-top: 5px">本科</span>
-                                            <span class="function" style="margin-top: -3px">研究生及以上</span>
-                                        </ion-col>
-                                        <ion-col size="4">
-                                            <mat-form-field appearance="outline" style="margin-bottom: -15px">
-                                                <label style="left: -60px">学历组成</label>
-                                                <mat-select required>
-                                                    <mat-option>20%</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <mat-form-field appearance="outline" style="margin-bottom: -15px">
-                                                <mat-select required>
-                                                    <mat-option>20%</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <mat-form-field appearance="outline" style="margin-bottom: -15px">
-                                                <mat-select required>
-                                                    <mat-option>20%</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </ion-col>
-                                        <ion-col size="6">
-                                            <div echarts [options]="brandOption"
-                                                 style="width: 180px;height: 180px;top: -25px;left: -20px;" class="main-chart"></div>
+                                        <ion-col size="9.5">
+                                            <span style="background: #fff">{{cloudCompany.address ? cloudCompany.address : '-'}}</span>
                                         </ion-col>
                                     </ion-row>
                                 </ion-col>
                             </ion-row>
-                        </ion-grid>
+                        </ng-container>
+
                     </mat-card-content>
                 </mat-card>
             </ion-col>
+            <form [formGroup]="form">
+                <ng-template matStepLabel>填写经营及重要信息</ng-template>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="12">
+                            <ng-container formGroupName="company">
+                                <mat-card>
+                                    <mat-card-header>
+                                        <mat-card-title style="margin-bottom: 50px">联系人信息
+                                        </mat-card-title>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <ion-grid>
+                                            <ion-row>
+                                                <ion-col size="4">
+                                                    <mat-form-field appearance="outline"
+                                                                    style="margin-bottom: 0">
+                                                        <label><em>*</em>联系人</label>
+                                                        <input formControlName="name" type="text" matInput required>
+                                                    </mat-form-field>
+                                                </ion-col>
 
-            <ion-col size="12">
-                <mat-card>
-                    <mat-card-header>
-                        <mat-card-title style="margin-bottom: 50px">科研创造力信息</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <ion-row>
-                            <ion-col size="4" class="form-field">
-                                <mat-form-field appearance="outline">
-                                    <label>企业研发投入</label>
-                                    <mat-select required>
-                                        <mat-option>500-1000万</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </ion-col>
+                                                <ion-col size="4">
+                                                    <mat-form-field appearance="outline"
+                                                                    style="margin-bottom: 0">
+                                                        <label><em>*</em>联系电话</label>
+                                                        <input formControlName="mobile" type="text" matInput required>
+                                                    </mat-form-field>
+                                                </ion-col>
 
-                            <ion-col size="4">
-                                <ion-row>
-                                    <ion-col size="2">
-                                        <span class="function">专科</span>
-                                        <span class="function" style="margin-top: 5px">本科</span>
-                                        <span class="function" style="margin-top: -3px">研究生及以上</span>
-                                    </ion-col>
-                                    <ion-col size="4">
-                                        <mat-form-field appearance="outline" style="margin-bottom: -15px">
-                                            <label style="left: -60px">科研人员学历组成</label>
-                                            <mat-select required>
-                                                <mat-option>20%</mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                        <mat-form-field appearance="outline" style="margin-bottom: -15px">
-                                            <mat-select required>
-                                                <mat-option>20%</mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                        <mat-form-field appearance="outline" style="margin-bottom: -15px">
-                                            <mat-select required>
-                                                <mat-option>20%</mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </ion-col>
-                                    <ion-col size="6">
-                                        <div echarts [options]="brandOption"
-                                             style="width: 180px;height: 180px;top: -25px;left: -20px;" class="main-chart"></div>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
-                        </ion-row>
-                    </mat-card-content>
-                </mat-card>
-            </ion-col>
+                                                <ion-col size="4">
+                                                    <mat-form-field appearance="outline"
+                                                                    style="margin-bottom: 0">
+                                                        <label>职务</label>
+                                                        <input formControlName="job" type="text" matInput>
+                                                    </mat-form-field>
+                                                </ion-col>
+                                            </ion-row>
+                                        </ion-grid>
+                                    </mat-card-content>
+                                </mat-card>
+                                <mat-card>
+                                    <mat-card-header>
+                                        <mat-card-title style="margin-bottom: 50px">经营信息</mat-card-title>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <ion-grid>
+                                            <ion-row>
+                                                <ion-col size="4" class="form-field">
+                                                    <mat-form-field appearance="outline">
+                                                        <label><em>*</em>行业</label>
+                                                        <input style="display: none" formControlName="industryIds"
+                                                               placeholder="所属行业" matInput required>
+                                                        <mat-chip-list #chipList required>
+                                                            <mat-chip *ngFor="let industry of selectedIndustries"
+                                                                      (removed)="remove(industry)">{{industry.industryName}}
+                                                                <mat-icon matChipRemove>cancel</mat-icon>
+                                                            </mat-chip>
+                                                            <input [matChipInputFor]="chipList"
+                                                                   (click)="presentModal()" matInput required readonly>
+                                                        </mat-chip-list>
+                                                        <ion-icon matSuffix name="arrow-down"></ion-icon>
+                                                    </mat-form-field>
+                                                </ion-col>
+                                                <ion-col size="8">
+                                                    <mat-form-field appearance="outline"
+                                                                    style="width: 40%;">
+                                                        <label><em>*</em>业务运营时间</label>
+                                                        <input formControlName="operateDate" required matInput
+                                                               placeholder="请选择" [matDatepicker]="picker">
+                                                        <mat-datepicker-toggle matSuffix
+                                                                               [for]="picker"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker></mat-datepicker>
+                                                    </mat-form-field>
+                                                    <span style="display: inline;border: none;background: #fff;font-weight: 400;color: #FF0000;font-size: 14px">
+                                        <em style="font-style: normal;">*</em>注：企业每年仅可调整一次</span>
+                                                </ion-col>
+                                            </ion-row>
+                                        </ion-grid>
+                                    </mat-card-content>
+                                </mat-card>
+                            </ng-container>
+                        </ion-col>
+                        <ion-col size="12">
+                            <ng-container formGroupName="conds">
+                                <mat-card>
+                                    <mat-card-content>
+                                        <ion-grid>
+                                            <ion-row>
+                                                <ion-col size="4" class="form-field">
+                                                    <mat-form-field appearance="outline">
+                                                        <label><em>*</em>企业总人数</label>
+                                                        <mat-select [compareWith]="compareFn" formControlName="18">
+                                                            <mat-option *ngFor="let item of option['18']"
+                                                                        [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </ion-col>
 
-            <ion-col size="12">
-                <mat-card>
-                    <mat-card-header>
-                        <mat-card-title style="margin-bottom: 25px;">政策匹配信息</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <ion-row>
-                            <ion-col size="4" class="form_field">
-                                <ion-row>
-                                    <ion-col size="12">
-                                        <label style="color: #21333F;font-size: 14px;font-weight: 400;"><em style="font-style: normal;color: #FF0000;">*</em>是否有研发支出专账</label>
-                                    </ion-col>
-                                    <ion-col size="12">
-                                        <mat-radio-group>
-                                            <mat-radio-button [value]="true">是</mat-radio-button>
-                                            <mat-radio-button [value]="false">否</mat-radio-button>
-                                        </mat-radio-group>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
+                                                <ion-col size="4" class="form-field">
+                                                    <mat-form-field appearance="outline">
+                                                        <label><em>*</em>年营收范围</label>
+                                                        <mat-select [compareWith]="compareFn" formControlName="19">
+                                                            <mat-option *ngFor="let item of option['19']"
+                                                                        [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </ion-col>
 
-                            <ion-col size="4" class="form_field">
-                                <ion-row>
-                                    <ion-col size="12">
-                                        <label style="color: #21333F;font-size: 14px;font-weight: 400;"><em style="font-style: normal;color: #FF0000;">*</em>是否为国家高新技术企业</label>
-                                    </ion-col>
-                                    <ion-col size="12">
-                                        <mat-radio-group>
-                                            <mat-radio-button [value]="true">是</mat-radio-button>
-                                            <mat-radio-button [value]="false">否</mat-radio-button>
-                                        </mat-radio-group>
-                                    </ion-col>
-                                </ion-row>
-                            </ion-col>
+                                                <ion-col size="4">
+                                                    <mat-form-field appearance="outline">
+                                                        <label><em>*</em>固定资产范围</label>
+                                                        <mat-select [compareWith]="compareFn" formControlName="17">
+                                                            <mat-option *ngFor="let item of option['17']"
+                                                                        [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </ion-col>
 
-                            <ion-col size="4">
+                                                <ion-col size="4" class="form-field">
+                                                    <ion-row>
+                                                        <ion-col size="4">
+                                                            <mat-form-field appearance="outline">
+                                                                <label>管理人员比例</label>
+                                                                <mat-select
+                                                                        (selectionChange)="selectionChange('man',[2])"
+                                                                        [compareWith]="compareFn"
+                                                                        formControlName="2">
+                                                                    <mat-option
+                                                                            *ngFor="let item of option['2']"
+                                                                            [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </ion-col>
+                                                        <ion-col size="8">
+                                                            <div *ngIf="circle['man']" echarts [options]="circle['man']"
+                                                                 style="width: 180px;height: 180px;top: -25px;left: -20px;"
+                                                                 class="main-chart"></div>
+                                                        </ion-col>
+                                                    </ion-row>
+                                                </ion-col>
 
+                                                <ion-col size="4" class="form-field">
+                                                    <ion-row>
+                                                        <ion-col size="2">
+                                                            <span class="function">研发</span>
+                                                            <span class="function"
+                                                                  style="margin-top: 5px">销售</span>
+                                                            <span class="function"
+                                                                  style="margin-top: 5px">服务</span>
+                                                        </ion-col>
+                                                        <ion-col size="4">
+                                                            <mat-form-field appearance="outline"
+                                                                            style="margin-bottom: -15px">
+                                                                <label style="left: -60px">职能分布</label>
+                                                                <mat-select
+                                                                        (selectionChange)="selectionChange('job',[21,25,26])"
+                                                                        [compareWith]="compareFn"
+                                                                        formControlName="21">
+                                                                    <mat-option
+                                                                            *ngFor="let item of option['21']"
+                                                                            [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                            <mat-form-field appearance="outline"
+                                                                            style="margin-bottom: -15px">
+                                                                <mat-select (selectionChange)="selectionChange('job',[21,25,26])" [compareWith]="compareFn"
+                                                                            formControlName="25">
+                                                                    <mat-option
+                                                                            *ngFor="let item of option['25']"
+                                                                            [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                            <mat-form-field appearance="outline"
+                                                                            style="margin-bottom: -15px">
+                                                                <mat-select (selectionChange)="selectionChange('job',[21,25,26])" [compareWith]="compareFn"
+                                                                            formControlName="26">
+                                                                    <mat-option
+                                                                            *ngFor="let item of option['26']"
+                                                                            [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </ion-col>
+                                                        <ion-col size="6">
+                                                            <div *ngIf="circle['job']" echarts [options]="circle['job']"
+                                                                 style="width: 180px;height: 180px;top: -25px;left: -20px;"
+                                                                 class="main-chart"></div>
+                                                        </ion-col>
+                                                    </ion-row>
+                                                </ion-col>
+                                                <ion-col size="4">
+                                                    <ion-row>
+                                                        <ion-col size="2">
+                                                            <span class="function">专科</span>
+                                                            <span class="function"
+                                                                  style="margin-top: 5px">本科</span>
+                                                        </ion-col>
+                                                        <ion-col size="4">
+                                                            <mat-form-field appearance="outline"
+                                                                            style="margin-bottom: -15px">
+                                                                <label style="left: -60px">学历组成</label>
+                                                                <mat-select (selectionChange)="selectionChange('edu',[28,29])" [compareWith]="compareFn"
+                                                                            formControlName="28">
+                                                                    <mat-option
+                                                                            *ngFor="let item of option['28']"
+                                                                            [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                            <mat-form-field appearance="outline"
+                                                                            style="margin-bottom: -15px">
+                                                                <mat-select (selectionChange)="selectionChange('edu',[28,29])" [compareWith]="compareFn"
+                                                                            formControlName="29">
+                                                                    <mat-option
+                                                                            *ngFor="let item of option['29']"
+                                                                            [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </ion-col>
+                                                        <ion-col size="6">
+                                                            <div *ngIf="circle['edu']" echarts [options]="circle['edu']"
+                                                                 style="width: 180px;height: 180px;top: -25px;left: -20px;"
+                                                                 class="main-chart"></div>
+                                                        </ion-col>
+                                                    </ion-row>
+                                                </ion-col>
+                                            </ion-row>
+                                        </ion-grid>
+                                    </mat-card-content>
+                                </mat-card>
+                                <ion-grid>
                                     <ion-row>
                                         <ion-col size="12">
-                                            <label style="color: #21333F;font-size: 14px;font-weight: 400;"><em style="font-style: normal;color: #FF0000;">*</em>研发设备总价值（万元）</label>
-                                        </ion-col>
-                                        <ion-col size="12">
-                                            <mat-form-field appearance="outline" style="margin:10px 0 0 0">
-                                                <mat-select required>
-                                                    <mat-option>100-200</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
+                                            <mat-card>
+                                                <mat-card-header>
+                                                    <mat-card-title style="margin-bottom: 50px">科研创造力信息</mat-card-title>
+                                                </mat-card-header>
+                                                <mat-card-content>
+                                                    <ion-row>
+                                                        <ion-col size="4" class="form-field">
+                                                            <mat-form-field appearance="outline">
+                                                                <label>企业研发投入</label>
+                                                                <mat-select [compareWith]="compareFn"
+                                                                            formControlName="24">
+                                                                    <mat-option
+                                                                            *ngFor="let item of option['24']"
+                                                                            [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </ion-col>
+
+                                                        <ion-col size="4">
+                                                            <ion-row>
+                                                                <ion-col size="2">
+                                                                    <span class="function">专科</span>
+                                                                    <span class="function"
+                                                                          style="margin-top: 5px">本科</span>
+                                                                </ion-col>
+                                                                <ion-col size="4">
+                                                                    <mat-form-field appearance="outline"
+                                                                                    style="margin-bottom: -15px">
+                                                                        <label style="left: -60px">科研人员学历组成</label>
+                                                                        <mat-select (selectionChange)="selectionChange('sci',[30,31])" [compareWith]="compareFn"
+                                                                                    formControlName="31">
+                                                                            <mat-option
+                                                                                    *ngFor="let item of option['31']"
+                                                                                    [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
+                                                                        </mat-select>
+                                                                    </mat-form-field>
+                                                                    <mat-form-field appearance="outline"
+                                                                                    style="margin-bottom: -15px">
+                                                                        <mat-select (selectionChange)="selectionChange('sci',[30,31])" [compareWith]="compareFn"
+                                                                                    formControlName="30">
+                                                                            <mat-option
+                                                                                    *ngFor="let item of option['30']"
+                                                                                    [value]="{condId:item.condId,valId:item.id}">{{item.name}}</mat-option>
+                                                                        </mat-select>
+                                                                    </mat-form-field>
+                                                                </ion-col>
+                                                                <ion-col size="6">
+                                                                    <div echarts *ngIf="circle.sci" echarts
+                                                                         [options]="circle.sci"
+                                                                         style="width: 180px;height: 180px;top: -25px;left: -20px;"
+                                                                         class="main-chart"></div>
+                                                                </ion-col>
+                                                            </ion-row>
+                                                        </ion-col>
+                                                    </ion-row>
+                                                </mat-card-content>
+                                            </mat-card>
                                         </ion-col>
                                     </ion-row>
-                            </ion-col>
-                        </ion-row>
-                    </mat-card-content>
-                </mat-card>
-            </ion-col>
+                                </ion-grid>
+                            </ng-container>
+                            <ng-container>
+                                <ion-grid>
+                                    <ion-col size="12">
+                                        <mat-card>
+                                            <mat-card-header>
+                                                <mat-card-title style="margin-bottom: 50px">政策匹配信息</mat-card-title>
+                                            </mat-card-header>
+                                            <mat-card-content>
+                                                <ion-row formGroupName="form">
+                                                    <ion-col class="form-field"
+                                                             *ngFor="let condition of required.list;let i = index"
+                                                             [size]="4">
+                                                        <mat-form-field class="nl"
+                                                                        *ngIf="condition.fieldType === '0001'"
+                                                                        appearance="outline">
+                                                            <label><em
+                                                                    *ngIf="!!condition.required">*</em>{{condition.conditionName}}
+                                                            </label>
+                                                            <input style="display: none"
+                                                                   [formControlName]="condition.conditionId" matInput
+                                                                   [required]="!!condition.required">
+                                                            <mat-radio-group [formControlName]="condition.conditionId">
+                                                                <mat-radio-button [value]="true">是</mat-radio-button>
+                                                                <mat-radio-button [value]="false">否</mat-radio-button>
+                                                            </mat-radio-group>
+                                                        </mat-form-field>
+                                                        <mat-form-field
+                                                                *ngIf="condition.fieldType === '0002' && dict[condition.conditionId]"
+                                                                appearance="outline">
+                                                            <label><em
+                                                                    *ngIf="!!condition.required">*</em>{{condition.conditionName}}
+                                                            </label>
+                                                            <input *ngIf="dict[condition.conditionId]?.length < 1"
+                                                                   [placeholder]="'请输入' + condition.conditionName"
+                                                                   [formControlName]="condition.conditionId"
+                                                                   matInput
+                                                                   pattern="(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)"
+                                                                   [maxlength]="12" [required]="!!condition.required">
+                                                            <mat-select *ngIf="dict[condition.conditionId]?.length > 0"
+                                                                        [formControlName]="condition.conditionId"
+                                                                        [placeholder]="'请选择'"
+                                                                        [required]="!!condition.required">
+                                                                <mat-option
+                                                                        *ngFor="let item of dict[condition.conditionId]"
+                                                                        [value]="item.dictValue">
+                                                                    {{item.dictName}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                            <mat-error
+                                                                    *ngIf="form.get('form').get(condition.conditionId + '').hasError('pattern') && !form.get('form').get(condition.conditionId + '').hasError('required')">
+                                                                {{condition.conditionName}}必须是 <strong>数字</strong>
+                                                            </mat-error>
+                                                            <mat-error
+                                                                    *ngIf="form.get('form').get(condition.conditionId + '').hasError('maxlength') && !form.get('form').get(condition.conditionId + '').hasError('required')">
+                                                                {{condition.conditionName}}的长度不能大于 <strong>12</strong>
+                                                            </mat-error>
+                                                            <mat-error
+                                                                    *ngIf="form.get('form').get(condition.conditionId + '').hasError('required')">
+                                                                {{condition.conditionName}}是 <strong>必填</strong> 项
+                                                            </mat-error>
+                                                        </mat-form-field>
+                                                        <mat-form-field
+                                                                *ngIf="condition.fieldType === '0003'"
+                                                                appearance="outline">
+                                                            <label><em
+                                                                    *ngIf="!!condition.required">*</em>{{condition.conditionName}}
+                                                            </label>
+                                                            <input [formControlName]="condition.conditionId" matInput
+                                                                   placeholder="请选择"
+                                                                   [matDatepicker]="picker"
+                                                                   [required]="!!condition.required">
+                                                            <mat-datepicker-toggle matSuffix
+                                                                                   [for]="picker"></mat-datepicker-toggle>
+                                                            <mat-datepicker #picker></mat-datepicker>
+                                                        </mat-form-field>
+                                                    </ion-col>
+                                                    <ng-container *ngFor="let item of optional.list;let i = index">
+                                                        <ion-col class="form-field"
+                                                                 *ngFor="let condition of item.list;let i = index"
+                                                                 [size]="4">
+                                                            <mat-form-field class="nl"
+                                                                            *ngIf="condition.fieldType === '0001'"
+                                                                            appearance="outline">
+                                                                <label><em
+                                                                        *ngIf="!!condition.required">*</em>{{condition.conditionName}}
+                                                                </label>
+                                                                <input style="display: none"
+                                                                       [formControlName]="condition.conditionId"
+                                                                       matInput>
+                                                                <mat-radio-group
+                                                                        [formControlName]="condition.conditionId">
+                                                                    <mat-radio-button [value]="true">是
+                                                                    </mat-radio-button>
+                                                                    <mat-radio-button [value]="false">否
+                                                                    </mat-radio-button>
+                                                                </mat-radio-group>
+                                                            </mat-form-field>
+                                                            <mat-form-field
+                                                                    *ngIf="condition.fieldType === '0002'"
+                                                                    appearance="outline">
+                                                                <label><em
+                                                                        *ngIf="!!condition.required">*</em>{{condition.conditionName}}
+                                                                </label>
+                                                                <input *ngIf="dict[condition.conditionId]?.length < 1"
+                                                                       [placeholder]="'请输入' + condition.conditionName"
+                                                                       [formControlName]="condition.conditionId"
+                                                                       matInput
+                                                                       pattern="(^([-]?)[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^([-]?)(0){1}$)|(^([-]?)[0-9]\.[0-9]([0-9])?$)"
+                                                                       [maxlength]="12"
+                                                                       [required]="!!condition.required">
+                                                                <mat-select
+                                                                        *ngIf="dict[condition.conditionId]?.length > 0"
+                                                                        [formControlName]="condition.conditionId"
+                                                                        [placeholder]="'请选择'"
+                                                                        [required]="!!condition.required">
+                                                                    <mat-option
+                                                                            *ngFor="let item of dict[condition.conditionId]"
+                                                                            [value]="item.dictValue">
+                                                                        {{item.dictName}}
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                                <mat-error
+                                                                        *ngIf="form.get('form').get(condition.conditionId + '').hasError('pattern') && !form.get('form').get(condition.conditionId + '').hasError('required')">
+                                                                    {{condition.conditionName}}必须是 <strong>数字</strong>
+                                                                </mat-error>
+                                                                <mat-error
+                                                                        *ngIf="form.get('form').get(condition.conditionId + '').hasError('maxlength') && !form.get('form').get(condition.conditionId + '').hasError('required')">
+                                                                    {{condition.conditionName}}的长度不能大于
+                                                                    <strong>12</strong>
+                                                                </mat-error>
+                                                                <mat-error
+                                                                        *ngIf="form.get('form').get(condition.conditionId + '').hasError('required')">
+                                                                    {{condition.conditionName}}是 <strong>必填</strong> 项
+                                                                </mat-error>
+                                                            </mat-form-field>
+                                                            <mat-form-field
+                                                                    *ngIf="condition.fieldType === '0003'"
+                                                                    appearance="outline">
+                                                                <label><em
+                                                                        *ngIf="!!condition.required">*</em>{{condition.conditionName}}
+                                                                </label>
+                                                                <input [formControlName]="condition.conditionId"
+                                                                       placeholder="请选择" matInput
+                                                                       [matDatepicker]="picker"
+                                                                       [required]="!!condition.required">
+                                                                <mat-datepicker-toggle matSuffix
+                                                                                       [for]="picker"></mat-datepicker-toggle>
+                                                                <mat-datepicker #picker></mat-datepicker>
+                                                            </mat-form-field>
+                                                        </ion-col>
+                                                    </ng-container>
+                                                </ion-row>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </ion-col>
+                                </ion-grid>
+                            </ng-container>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+
+                    </ion-row>
+                </ion-grid>
+            </form>
         </ion-row>
     </ion-grid>
 </div>
 <div class="container-bottom">
-    <ion-button color="primary" style="width: 177px !important;height: 48px!important;">查看企业适配政策</ion-button>
-    <ion-button color="primary">查看体检报告</ion-button>
-    <ion-button style="--background: rgba(13, 215, 141, 1);">保存本次修改</ion-button>
+    <ion-button [routerLink]="['/admin/policy/index']" color="primary"
+                style="width: 177px !important;height: 48px!important;">查看企业适配政策
+    </ion-button>
+    <ion-button [routerLink]="['/admin/plan/item']" [queryParams]="{id:id}" color="primary">查看体检报告</ion-button>
+    <ion-button (click)="save()" style="--background: rgba(13, 215, 141, 1);">保存本次修改</ion-button>
 </div>

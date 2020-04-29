@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material';
 import {DialogService} from '../../../../@core/modules/dialog';
 import {CompanyService} from '../company.service';
 
+
 @Component({
     selector: 'app-admin-company-list',
     templateUrl: './list.page.html',

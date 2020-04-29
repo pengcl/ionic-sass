@@ -49,7 +49,7 @@
         <!-- Name Column -->
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>目标企业</th>
-            <td mat-cell *matCellDef="let element" style="text-align: left">
+            <td mat-cell *matCellDef="let element" style="text-align: left!important;text-indent: 20px">
                 <a [routerLink]="['/admin/company/item',element.id]"
                    class="link"
                    href="javascript:;"
@@ -103,7 +103,7 @@
                     智能画像
                 </ion-button>
                 <ion-button color="primary"
-                            [routerLink]="['/admin/plan/list']"
+                            [routerLink]="['/admin/plan/item']" [queryParams]="{id:element.id}"
                             (click)="$event.stopPropagation()">
                     体检报告
                 </ion-button>

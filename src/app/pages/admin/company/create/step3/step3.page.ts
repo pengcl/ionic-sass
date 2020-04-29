@@ -30,7 +30,7 @@ export class AdminCompanyCreateStep3Page implements OnInit {
     id = this.route.snapshot.params.id;
     reportType = 2;
     submitForm = new FormGroup({
-        custId: new FormControl('', [Validators.required]),
+        custId: new FormControl(this.id, [Validators.required]),
         conditions: new FormControl('', [Validators.required])
     });
     form: FormGroup = new FormGroup({});
@@ -46,6 +46,7 @@ export class AdminCompanyCreateStep3Page implements OnInit {
         list: []
     };
     conditions;
+
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private location: LocationStrategy,
@@ -171,11 +172,14 @@ export class AdminCompanyCreateStep3Page implements OnInit {
         if (this.form.invalid) {
             return false;
         }
+        this.submitForm.get('conditions').setValue(this.getConditions());
+        if (this.submitForm.invalid) {
+            return false;
+        }
         this.toastSvc.loading('提交中...', 0);
-        this.companySvc.create(this.form.value).subscribe(res => {
-            console.log(res.busCust.id);
+        this.companySvc.updateCred(this.submitForm.value).subscribe(res => {
             this.toastSvc.hide();
-            this.router.navigate(['/admin/company/create/step2', res.busCust.id]);
+            this.router.navigate(['/admin/company/list']);
         });
     }
 

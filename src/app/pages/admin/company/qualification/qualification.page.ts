@@ -16,7 +16,12 @@ import {CompanyService} from '../company.service';
 import {getIndex} from '../../../../@core/utils/utils';
 import {DashboardService} from '../../dashboard/dashboard.service';
 
-const colors = ['#5F7194', '#56CFFF', '#5F8FF3', '#69EBB7'];
+const colors = ['#5F8FF3', '#69EBB7'];
+const colors2 = ['#FFB559', '#5F8FF3', '#5D6F92', '#F46C50'];
+const colors3 = ['#69EBB7', '#5F8FF3', '#56CFFF'];
+const colors4 = ['#63A0E9', '#97C0F0'];
+const colors5 = ['#8DE1DE', '#6F9CD2', '#E26767'];
+const colors6 = ['#E4F5C2', '#8DE1DE', '#6F9CD2'];
 
 @Component({
     selector: 'app-admin-company-qualification',
@@ -108,14 +113,14 @@ export class AdminCompanyQualificationPage implements OnInit {
         color: colors,
         tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+            formatter: '{d}%'
         },
         legend: {
             bottom: 0,
             data: ['执行人员', '管理人员'],
-            itemWidth: 8,
-            itemHeight: 8,
-            borderRadius: 50
+            itemWidth: 7,
+            itemHeight: 7,
+            icon: 'circle'
         },
         series: [
             {
@@ -130,7 +135,7 @@ export class AdminCompanyQualificationPage implements OnInit {
                 emphasis: {
                     label: {
                         show: true,
-                        fontSize: '30',
+                        fontSize: '16',
                         fontWeight: 'bold'
                     }
                 },
@@ -188,14 +193,17 @@ export class AdminCompanyQualificationPage implements OnInit {
         ]
     };
     copyOption = {
-        color: colors,
+        color: colors5,
         legend: {
-            bottom: 10,
+            left: 40,
+            bottom: 0,
             data: ['已注册', '申请中', '无效'],
-            itemWidth: 8,
-            itemHeight: 8,
+            itemWidth: 7,
+            itemHeight: 7,
+            itemGap: 20,
             textStyle: {
-                fontSize: 10
+                fontSize: 12,
+                color: '#60717D'
             }
         },
         grid: {
@@ -241,13 +249,14 @@ export class AdminCompanyQualificationPage implements OnInit {
         ]
     };
     group = {
-        color: colors,
+        color: colors6,
         legend: {
+            left: 40,
             bottom: 0,
             data: ['执行人员', '管理人员'],
             itemWidth: 8,
             itemHeight: 8,
-            borderRadius: 50
+            radius: 2
         },
         xAxis: [
             {
@@ -415,7 +424,8 @@ export class AdminCompanyQualificationPage implements OnInit {
             this.getCircle('job', [{id: 21, label: '研发'}, {id: 25, label: '销售'}, {id: 26, label: '服务'}]);
             this.getCircle('edu', [{id: 28, label: '专科'}, {id: 29, label: '本科及以上'}]);
             this.getCircle('sci', [{id: 31, label: '专科'}, {id: 30, label: '本科及以上'}]);
-            this.getCircle('sci-rate', [{id: 21, label: '研发'}]);
+            this.getCircle('man', [{id: 2, label: '管理人员'}]);
+            this.getCircle('sci-rate', [{id: 21, label: '研发人员'}]);
             this.getGroupBar(9);
         });
     }
@@ -426,6 +436,12 @@ export class AdminCompanyQualificationPage implements OnInit {
 
     getCircle(id, items) {
         const option = JSON.parse(JSON.stringify(this.brandOption));
+        if (id === 'job') {
+            option.color = colors2;
+        }
+        if (id === 'edu' || id === 'sci') {
+            option.color = colors3;
+        }
         option.legend.data = [];
         option.series[0].data = [];
         let other = 100;
@@ -437,11 +453,19 @@ export class AdminCompanyQualificationPage implements OnInit {
             option.legend.data.push(item.label);
             option.series[0].data.push({name, value});
         });
-        option.legend.data.push('其它');
-        option.series[0].data.push({
-            name: '其它',
-            value: other
-        });
+        if (id === 'sci-rate') {
+            option.legend.data.push('其它人员');
+            option.series[0].data.push({
+                name: '其它人员',
+                value: other
+            });
+        } else {
+            option.legend.data.push('其它');
+            option.series[0].data.push({
+                name: '其它',
+                value: other
+            });
+        }
         this.circle[id] = option;
     }
 
@@ -463,7 +487,7 @@ export class AdminCompanyQualificationPage implements OnInit {
             };
             option.series[0].itemStyle.normal = {
                 color: (params) => {
-                    const colorList = colors;
+                    const colorList = colors4;
                     return colorList[params.dataIndex];
                 }
             };
@@ -475,10 +499,10 @@ export class AdminCompanyQualificationPage implements OnInit {
         const chats = this.getChatValue(id);
         const option = JSON.parse(JSON.stringify(this.group));
         option.series = option.series.slice(0, 3);
-        option.legend.data = ['发明专利', '使用新型专利', '软件著作权'];
+        option.legend.data = ['发明专利', '实用新型专利', '软件著作权'];
         option.series[0].name = '发明专利';
         option.series[0].data = [];
-        option.series[1].name = '使用新型专利';
+        option.series[1].name = '实用新型专利';
         option.series[1].data = [];
         option.series[2].name = '软件著作权';
         option.series[2].data = [];
@@ -495,11 +519,14 @@ export class AdminCompanyQualificationPage implements OnInit {
     getVBar(id) {
         const chats = this.getChatValue(id);
         const option = JSON.parse(JSON.stringify(this.copyOption));
-        option.legend.data = [];
+        option.legend.data = ['已注册', '申请中', '无效'];
         option.xAxis.data = [];
         option.series[0].data = [];
+        option.series[0].name = '已注册';
         option.series[1].data = [];
+        option.series[1].name = '申请中';
         option.series[2].data = [];
+        option.series[2].name = '无效';
         chats.forEach(item => {
             option.legend.data.push(item.text);
             option.xAxis.data.push(item.text);
