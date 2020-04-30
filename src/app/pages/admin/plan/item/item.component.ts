@@ -252,7 +252,7 @@ export class AdminPlanItemPage implements OnInit {
                 }
             },
             axisLabel: {
-                color: '#B5C4D0'
+                color: '#5F717D'
             },
             splitLine: {
                 lineStyle: {
