@@ -24,6 +24,7 @@ const colors4 = ['#63A0E9', '#97C0F0'];
 const colors5 = ['#8DE1DE', '#6F9CD2', '#E26767'];
 const colors6 = ['#E4F5C2', '#8DE1DE', '#6F9CD2'];
 
+
 @Component({
     selector: 'app-admin-company-qualification',
     templateUrl: 'qualification.page.html',
