@@ -13,6 +13,7 @@ const colors2 = ['#69EBB7', '#5F8FF3', '#56CFFF'];
 const colors3 = ['#5F8FF9', '#5AD8A6'];
 const color4 = ['#6497EE', '#75EBE7'];
 
+
 @Component({
     selector: 'app-admin-plan-item',
     templateUrl: './item.component.html',
