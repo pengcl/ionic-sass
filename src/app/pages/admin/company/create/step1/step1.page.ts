@@ -30,6 +30,7 @@ export class AdminCompanyCreateStep1Page implements OnInit {
     cities = [];
     districts = [];
     options = [];
+    loading = false;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -46,9 +47,9 @@ export class AdminCompanyCreateStep1Page implements OnInit {
             filter(text => text.length > 1),
             debounceTime(1000),
             distinctUntilChanged()).subscribe(companyName => {
-            this.toastSvc.loading('查询中...', 0);
+            this.loading = true;
             this.companySvc.search(companyName).subscribe(res => {
-                this.toastSvc.hide();
+                this.loading = false;
                 if (res.code === '200' && res.data) {
                     this.options = res.data;
                 }
@@ -118,9 +119,10 @@ export class AdminCompanyCreateStep1Page implements OnInit {
         }
         this.toastSvc.loading('提交中...', 0);
         this.companySvc.create(this.form.value).subscribe(res => {
-            console.log(res.busCust.id);
             this.toastSvc.hide();
-            this.router.navigate(['/admin/company/create/step2', res.busCust.id]);
+            if (res) {
+                this.router.navigate(['/admin/company/create/step2', res.busCust.id]);
+            }
         });
     }
 
