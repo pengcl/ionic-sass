@@ -81,7 +81,7 @@
                                 </ion-item>
                             </ion-col>
                             <ion-col size="8">
-                                <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
+                                <ion-item lines="none" class="result_r" style="color:#60717D;font-size:14px;border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                     <ion-label [innerHTML]="getGroupValue(15).suggest"></ion-label>
                                 </ion-item>
                             </ion-col>
@@ -104,7 +104,7 @@
                                 </ion-item>
                             </ion-col>
                             <ion-col size="8">
-                                <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
+                                <ion-item lines="none" class="result_r" style="color:#60717D;font-size:14px;border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                     <ion-label [innerHTML]="getGroupValue(16).suggest"></ion-label>
                                 </ion-item>
                             </ion-col>
@@ -129,7 +129,7 @@
                                 </ion-item>
                             </ion-col>
                             <ion-col size="8">
-                                <ion-item lines="none" class="result_r" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
+                                <ion-item lines="none" class="result_r" style="color:#60717D;font-size:14px;border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                     <ion-label [innerHTML]="getGroupValue(17).suggest"></ion-label>
                                 </ion-item>
                             </ion-col>
@@ -343,14 +343,14 @@
                                 <ion-item lines="none" style="margin-top: -10px;">
                                     <ion-thumbnail style="margin: 0 27px"></ion-thumbnail>
                                     <ion-label
-                                            style="font-size:14px;font-weight:500;color:rgba(95,113,125,1);line-height:32px;">
+                                            style="margin-top:0;margin-bottom:0;font-size:14px;font-weight:500;color:rgba(95,113,125,1);line-height:32px;">
                                         商标注册总数 <em style="font-style: normal;color: #3FA2F4;font-size: 24px">{{getCondValue(5)}}</em>
                                     </ion-label>
                                 </ion-item>
-                                <ion-item lines="none">
+                                <ion-item lines="none" style="margin-left: 70px;">
                                     <div *ngIf="option[2]" echarts [options]="option[2]"
                                          class="main-chart subsidy-chart"
-                                         style="height: 230px;"></div>
+                                         style="height: 200px;"></div>
                                 </ion-item>
                             </ion-col>
                         </ion-row>
@@ -366,7 +366,7 @@
                                 <ion-item lines="none">
                                     <div *ngIf="option[3]" echarts [options]="option[3]"
                                          class="main-chart subsidy-chart"
-                                         style="height: 230px;"></div>
+                                         style="height: 276px;margin-left:70px;"></div>
                                 </ion-item>
                             </ion-col>
                             <ion-col size="6">
@@ -383,7 +383,7 @@
                                         注册类别总数 <em style="font-style: normal;color: #3FA2F4;font-size: 24px">{{getCondValue(6)}}</em>
                                     </ion-label>
                                 </ion-item>
-                                <div>
+                                <div style="margin-left:70px;">
                                     <ul class="types">
                                         <li [class.selected]="type.selected" *ngFor="let type of types">{{type.id}}</li>
                                     </ul>
@@ -401,11 +401,11 @@
                         <mat-card-title>科研创造力分析结果</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <ion-row class="scientific" style="margin-top: 20px">
+                        <ion-row style="margin-top: 20px">
                             <ion-col size="4">
                                 <ion-item [class.low]="item.score < 60" [class.height]="item.score > 80" *ngFor="let item of scientific;let i = index" lines="none" class="layout_l">
                                     <ion-thumbnail>
-                                        <img src="/assets/images/company/depth.png"/>
+                                        <img src="/assets/images/company/achievement.png"/>
                                     </ion-thumbnail>
                                     <ion-label>{{item.label}}<span [ngStyle]="{'color': item.score >= 60 ? '#3fa2f4' : '#B81F1C'}">{{item.name}}</span></ion-label>
                                     <div class="result_img">
@@ -413,7 +413,7 @@
                                     </div>
                                 </ion-item>
                             </ion-col>
-                            <ion-col size="8">
+                            <ion-col size="8" style="border-top-right-radius:4px;border-bottom-right-radius:4px;">
                                 <ion-item lines="none">
                                     <article style="color: #5F717D;padding: 48px 37px 38px 40px;">
                                         <ion-label>
