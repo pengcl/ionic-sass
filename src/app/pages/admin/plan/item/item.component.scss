@@ -931,3 +931,20 @@ ion-label{
   white-space: normal !important;
   overflow: auto !important;
 }
+
+.scientific {
+  ion-item {
+    border-style: solid;
+    border-color: #e5ebf0;
+    &:first-child {
+      border-radius: 4px 0 0 0;
+      border-width: 1px 1px 1px 1px;
+    }
+    &:last-child {
+      border-radius: 0 0 0 4px;
+      border-width: 0 1px 1px 1px;
+    }
+    &.low {
+    }
+  }
+}
