@@ -20,10 +20,18 @@ span {
 }
 
 mat-icon.loading-hide {
+  line-height: 1;
+  font-size: 24px;
+  color: #999;
+  display: none !important;
+}
+
+mat-icon.loading-show {
   animation: loading 1s infinite;
   line-height: 1;
   font-size: 24px;
   color: #999;
+  display: block;
 }
 
 @keyframes loading {

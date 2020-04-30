@@ -15,9 +15,13 @@ import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdap
 import {DictService} from '../../../../../@core/services/dict.service';
 import {forkJoin} from 'rxjs';
 
-const colors = ['#00cc99', '#339999'];
-const colors2 = ['#3399ff', '#3366ff', '#3300ff', '#330099'];
-const colors3 = ['#ff0000', '#ff6600', '#ff9900', '#ffcc00'];
+const colors = ['#5F8FF3', '#69EBB7'];
+const colors1 = ['#69EBB7', '#5F8FF3'];
+const colors2 = ['#FFB559', '#5F8FF3', '#5D6F92', '#F46C50'];
+const colors3 = ['#69EBB7', '#5F8FF3', '#56CFFF'];
+const colors4 = ['#63A0E9', '#97C0F0'];
+const colors5 = ['#8DE1DE', '#6F9CD2', '#E26767'];
+const colors6 = ['#E4F5C2', '#8DE1DE', '#6F9CD2'];
 
 @Component({
     selector: 'app-admin-company-create-step2',
@@ -305,6 +309,9 @@ export class AdminCompanyCreateStep2Page implements OnInit {
         if (id === 'edu' || id === 'sci') {
             option.color = colors3;
         }
+        if (id === 'man') {
+            option.color = colors1;
+        }
         option.legend.data = [];
         option.series[0].data = [];
         let other = 100;
@@ -317,11 +324,27 @@ export class AdminCompanyCreateStep2Page implements OnInit {
                 name, value
             });
         });
-        option.legend.data.push('其它');
-        option.series[0].data.push({
-            name: '其它',
-            value: other
-        });
+        if (id === 'sci-rate') {
+            option.legend.data.push('其它人员');
+            option.series[0].data.push({
+                name: '其它人员',
+                value: other
+            });
+        } else {
+            if (id === 'man') {
+                option.legend.data.push('执行人员');
+                option.series[0].data.push({
+                    name: '执行人员',
+                    value: other
+                });
+            } else {
+                option.legend.data.push('其它');
+                option.series[0].data.push({
+                    name: '其它',
+                    value: other
+                });
+            }
+        }
         this.circle[id] = option;
     }
 

@@ -119,9 +119,10 @@ export class AdminCompanyCreateStep1Page implements OnInit {
         }
         this.toastSvc.loading('提交中...', 0);
         this.companySvc.create(this.form.value).subscribe(res => {
-            console.log(res.busCust.id);
             this.toastSvc.hide();
-            this.router.navigate(['/admin/company/create/step2', res.busCust.id]);
+            if (res) {
+                this.router.navigate(['/admin/company/create/step2', res.busCust.id]);
+            }
         });
     }
 
