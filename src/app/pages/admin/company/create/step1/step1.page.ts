@@ -30,6 +30,7 @@ export class AdminCompanyCreateStep1Page implements OnInit {
     cities = [];
     districts = [];
     options = [];
+    loading = false;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -46,9 +47,9 @@ export class AdminCompanyCreateStep1Page implements OnInit {
             filter(text => text.length > 1),
             debounceTime(1000),
             distinctUntilChanged()).subscribe(companyName => {
-            this.toastSvc.loading('查询中...', 0);
+            this.loading = true;
             this.companySvc.search(companyName).subscribe(res => {
-                this.toastSvc.hide();
+                this.loading = false;
                 if (res.code === '200' && res.data) {
                     this.options = res.data;
                 }
