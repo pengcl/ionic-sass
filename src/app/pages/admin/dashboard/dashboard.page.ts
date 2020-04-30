@@ -378,10 +378,36 @@ export class AdminDashboardPage {
                     axisTick: {
                         alignWithLabel: true,
                         interval: 0
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#EEF2F5'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#B5C4D0'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#EEF2F5'
+                        }
                     }
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#EEF2F5'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#B5C4D0'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#EEF2F5'
+                        }
+                    }
                 },
                 series
             };
@@ -488,10 +514,36 @@ export class AdminDashboardPage {
                     axisTick: {
                         alignWithLabel: true,
                         interval: 0
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#EEF2F5'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#B5C4D0'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#EEF2F5'
+                        }
                     }
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#EEF2F5'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#B5C4D0'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#EEF2F5'
+                        }
+                    }
                 },
                 series
             };
@@ -599,10 +651,36 @@ export class AdminDashboardPage {
                     axisTick: {
                         alignWithLabel: true,
                         interval: 0
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#EEF2F5'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#B5C4D0'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#EEF2F5'
+                        }
                     }
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#EEF2F5'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#B5C4D0'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#EEF2F5'
+                        }
+                    }
                 },
                 series
             };

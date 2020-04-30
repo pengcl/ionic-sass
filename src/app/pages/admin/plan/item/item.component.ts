@@ -90,10 +90,36 @@ export class AdminPlanItemPage implements OnInit {
             axisTick: {
                 alignWithLabel: true,
                 interval: 0
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            },
+            axisLabel: {
+                color: '#B5C4D0'
+            },
+            splitLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
             }
         },
         yAxis: {
-            type: 'value'
+            type: 'value',
+            axisLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            },
+            axisLabel: {
+                color: '#B5C4D0'
+            },
+            splitLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            }
         },
         series: [
             {
@@ -137,10 +163,36 @@ export class AdminPlanItemPage implements OnInit {
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            axisLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            },
+            axisLabel: {
+                color: '#B5C4D0'
+            },
+            splitLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            }
         },
         yAxis: {
-            type: 'value'
+            type: 'value',
+            axisLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            },
+            axisLabel: {
+                color: '#B5C4D0'
+            },
+            splitLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            }
         },
         series: [
             {
@@ -176,11 +228,37 @@ export class AdminPlanItemPage implements OnInit {
         },
         xAxis: {
             type: 'value',
-            boundaryGap: [0, 0.01]
+            boundaryGap: [0, 0.01],
+            axisLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            },
+            axisLabel: {
+                color: '#B5C4D0'
+            },
+            splitLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            }
         },
         yAxis: {
             type: 'category',
-            data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)']
+            data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)'],
+            axisLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            },
+            axisLabel: {
+                color: '#B5C4D0'
+            },
+            splitLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            }
         },
         series: [
             {

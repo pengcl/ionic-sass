@@ -157,12 +157,35 @@ export class AdminCompanyQualificationPage implements OnInit {
             type: 'value',
             boundaryGap: [0, 0.01],
             name: '万元',
-            fontSize: '14px'
+            fontSize: '14px',
+            axisLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            },
+            axisLabel: {
+                color: '#B5C4D0'
+            },
+            splitLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            }
         },
         yAxis: {
             axisLabel: false,
             type: 'category',
-            data: []
+            data: [],
+            axisLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            },
+            splitLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            }
         },
         series: [
             {
@@ -216,10 +239,36 @@ export class AdminCompanyQualificationPage implements OnInit {
             axisTick: {
                 alignWithLabel: true,
                 interval: 0
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            },
+            axisLabel: {
+                color: '#B5C4D0'
+            },
+            splitLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
             }
         },
         yAxis: {
-            type: 'value'
+            type: 'value',
+            axisLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            },
+            axisLabel: {
+                color: '#B5C4D0'
+            },
+            splitLine: {
+                lineStyle: {
+                    color: '#EEF2F5'
+                }
+            }
         },
         series: [
             {
@@ -259,12 +308,38 @@ export class AdminCompanyQualificationPage implements OnInit {
             {
                 type: 'category',
                 axisTick: {show: false},
-                data: ['2012', '2013', '2014', '2015', '2016']
+                data: ['2012', '2013', '2014', '2015', '2016'],
+                axisLine: {
+                    lineStyle: {
+                        color: '#EEF2F5'
+                    }
+                },
+                axisLabel: {
+                    color: '#B5C4D0'
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: '#EEF2F5'
+                    }
+                }
             }
         ],
         yAxis: [
             {
-                type: 'value'
+                type: 'value',
+                axisLine: {
+                    lineStyle: {
+                        color: '#EEF2F5'
+                    }
+                },
+                axisLabel: {
+                    color: '#B5C4D0'
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: '#EEF2F5'
+                    }
+                }
             }
         ],
         series: [
