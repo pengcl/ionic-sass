@@ -19,15 +19,14 @@ span {
   }
 }
 
-mat-icon.loading-hide {
+.el-loading-spinner.loading-hide {
   line-height: 1;
   font-size: 24px;
   color: #999;
   display: none !important;
 }
 
-mat-icon.loading-show {
-  animation: loading 1s infinite;
+.el-loading-spinner.loading-show {
   line-height: 1;
   font-size: 24px;
   color: #999;
@@ -43,3 +42,18 @@ mat-icon.loading-show {
     transform: rotate3d(0, 0, 1, 360deg);
   }
 }
+
+
+.el-icon-loading {animation: rotating 2s linear infinite;}
+.el-loading-spinner{ position: absolute;right:-5px;top:8px;}
+.el-loading-spinner i,.el-loading-spinner i img{width:24px;height:24px;}
+
+@keyframes rotating {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
