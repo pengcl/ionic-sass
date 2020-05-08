@@ -208,11 +208,11 @@ export class AdminCompanyItemPage implements OnInit {
             this.form.get('company').get('name').setValue(res.busCust.name);
             this.form.get('company').get('mobile').setValue(res.busCust.mobile);
             this.form.get('company').get('job').setValue(res.busCust.job);
-            this.form.get('company').get('operateDate').setValue(res.busCust.operateDate);
             this.form.get('company').get('industryIds').setValue(parseInt(res.busCust.industryIds, 10));
             this.companySvc.find(res.busCust.companyName).subscribe(cloud => {
                 if (cloud.code === 20000) {
                     this.cloudCompany = cloud.data.companyDTO;
+                    this.form.get('company').get('operateDate').setValue(res.busCust.operateDate ? res.busCust.operateDate : this.cloudCompany.registeredDate);
                     /*this.company = res.data.companyDTO;
                     this.form.get('companyName').setValue(this.company.companyName);
                     this.form.get('creditNumber').setValue(this.company.unifiedSocialCreditCode);

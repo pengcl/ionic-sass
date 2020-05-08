@@ -19,7 +19,7 @@
                         <mat-card-title>工商基础信息</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table-style">
+                        <table *ngIf="cloudCompany" width="100%" border="0" cellspacing="0" cellpadding="0" class="table-style">
                             <tr>
                                 <td align="left" valign="middle" bgcolor="#f6f7f9">企业名称</td>
                                 <td align="left" valign="middle">{{cloudCompany.companyName ? cloudCompany.companyName : '-'}}</td>
@@ -30,7 +30,7 @@
                             </tr>
                             <tr>
                                 <td align="left" valign="middle" bgcolor="#f6f7f9">成立时间</td>
-                                <td align="left" valign="middle">{{cloudCompany.registeredDate ? cloudCompany.registeredDate : '-'}}</td>
+                                <td align="left" valign="middle">{{cloudCompany.registeredDate ? (cloudCompany.registeredDate | repairDate | date : 'yyyy-MM-dd') : '-'}}</td>
                                 <td align="left" valign="middle" bgcolor="#f6f7f9">注册资金</td>
                                 <td align="left" valign="middle">{{cloudCompany.registeredCapitalStr ? cloudCompany.registeredCapitalStr : '-'}}</td>
                                 <td align="left" valign="middle" bgcolor="#f6f7f9">实缴资本</td>
@@ -42,7 +42,7 @@
                                 <td align="left" valign="middle" bgcolor="#f6f7f9">组织机构代码</td>
                                 <td align="left" valign="middle">{{cloudCompany.organizationCode ? cloudCompany.organizationCode : '-'}}</td>
                                 <td align="left" valign="middle" bgcolor="#f6f7f9">营业期限</td>
-                                <td align="left" valign="middle">{{cloudCompany.businessTermStartDate ? cloudCompany.businessTermStartDate : '-'}} 至 {{cloudCompany.businessTermEndDate ? cloudCompany.businessTermEndDate : '-'}}</td>
+                                <td align="left" valign="middle">{{cloudCompany.businessTermStartDate ? (cloudCompany.businessTermStartDate  | repairDate | date : 'yyyy-MM-dd') : '-'}} 至 {{cloudCompany.businessTermEndDate ? (cloudCompany.businessTermEndDate | repairDate | date : 'yyyy-MM-dd') : '-'}}</td>
                             </tr>
                             <tr>
                                 <td align="left" valign="middle" bgcolor="#f6f7f9">所属地区</td>
