@@ -25,7 +25,40 @@
                                 <ion-col size="8">
                                     <button mat-raised-button color="primary" style="margin-left: 20px">搜索</button>
                                 </ion-col>
-                                <ng-container *ngIf="company">
+
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table-style"  *ngIf="company">
+                                    <tr>
+                                        <td align="left" valign="middle" bgcolor="#f6f7f9">企业名称</td>
+                                        <td align="left" valign="middle">{{company.companyName ? company.companyName : '-'}}</td>
+                                        <td align="left" valign="middle" bgcolor="#f6f7f9">法人</td>
+                                        <td align="left" valign="middle">{{company.legalRepresentative ? company.legalRepresentative : '-'}}</td>
+                                        <td align="left" valign="middle" bgcolor="#f6f7f9">    经营状态</td>
+                                        <td align="left" valign="middle">{{company.businessType ? company.businessType : '-'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" valign="middle" bgcolor="#f6f7f9">成立时间</td>
+                                        <td align="left" valign="middle">{{company.registeredDate ? company.registeredDate : '-'}}</td>
+                                        <td align="left" valign="middle" bgcolor="#f6f7f9">注册资金</td>
+                                        <td align="left" valign="middle">{{company.registeredCapitalStr ? company.registeredCapitalStr : '-'}}</td>
+                                        <td align="left" valign="middle" bgcolor="#f6f7f9">实缴资本</td>
+                                        <td align="left" valign="middle">{{company.paidInCapitalStr ? company.paidInCapitalStr : '-'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" valign="middle" bgcolor="#f6f7f9">统一社会信用代码</td>
+                                        <td align="left" valign="middle">{{company.unifiedSocialCreditCode ? company.unifiedSocialCreditCode : ''}}</td>
+                                        <td align="left" valign="middle" bgcolor="#f6f7f9">组织机构代码</td>
+                                        <td align="left" valign="middle">{{company.organizationCode ? company.organizationCode : '-'}}</td>
+                                        <td align="left" valign="middle" bgcolor="#f6f7f9">营业期限</td>
+                                        <td align="left" valign="middle">{{company.businessTermStartDate ? company.businessTermStartDate : '-'}} 至 {{company.businessTermEndDate ? company.businessTermEndDate : '-'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" valign="middle" bgcolor="#f6f7f9">所属地区</td>
+                                        <td align="left" valign="middle">{{company.province}} {{company.city}} {{company.area}}</td>
+                                        <td align="left" valign="middle" bgcolor="#f6f7f9">企业地址</td>
+                                        <td colspan="3" align="left" valign="middle">{{company.address ? company.address : '-'}}</td>
+                                    </tr>
+                                </table>
+                                <!--<ng-container *ngIf="company">
                                     <ion-col size="4">
                                         <ion-row>
                                             <ion-col size="5">
@@ -141,7 +174,7 @@
                                         </ion-row>
                                     </ion-col>
 
-                                </ng-container>
+                                </ng-container>-->
                             </ion-row>
                             <ion-row *ngIf="company">
                                 <ion-col size="12">

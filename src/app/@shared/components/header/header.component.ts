@@ -15,6 +15,7 @@ import {filter, map, mergeMap} from 'rxjs/operators';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
+
 export class HeaderComponent {
     title = 'SMP';
     user = this.authSvc.currentUser;
