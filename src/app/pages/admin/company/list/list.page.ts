@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material';
 import {DialogService} from '../../../../@core/modules/dialog';
@@ -23,7 +23,10 @@ export class AdminCompanyListPage {
     dataSource;
     selection = new SelectionModel<any>(true, []);
 
-    constructor(private route: ActivatedRoute, private dialogSvc: DialogService, private companySvc: CompanyService) {
+    constructor(private route: ActivatedRoute,
+                private router: Router,
+                private dialogSvc: DialogService,
+                private companySvc: CompanyService) {
         this.getData();
     }
 
@@ -55,12 +58,26 @@ export class AdminCompanyListPage {
     change(item) {
         if (this.company.id === item.id) {
             this.dialogSvc.show({content: '您当必须拥有一个主体'}).subscribe();
-            return false;
         } else {
-            this.company = item;
-            this.companySvc.updateCompanyStatus(item);
-            return false;
+            this.companySvc.source(item.id).subscribe(res => {
+                if (res.id) {
+                    this.company = item;
+                    this.companySvc.updateCompanyStatus(item);
+                } else {
+                    this.dialogSvc.show({
+                        title: '使用提醒',
+                        content: '您当前使用的企业数据版本过旧，无法生成企业智能画像。请按照流程完成数据更新，感谢配合。',
+                        cancel: '暂不更新',
+                        confirm: '更新数据'
+                    }).subscribe(result => {
+                        if (result.value) {
+                            this.router.navigate(['/admin/company/item/', item.id], {queryParams: {default: true}});
+                        }
+                    });
+                }
+            });
         }
+        return false;
     }
 
     /** Whether the number of selected elements matches the total number of rows. */

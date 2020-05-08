@@ -198,6 +198,7 @@ export class AdminCompanyItemPage implements OnInit {
     conditions;
     data;
     sourceIndustries;
+
     ngOnInit() {
         this.companySvc.source(this.id).subscribe(res => {
             this.data = res;
@@ -557,6 +558,9 @@ export class AdminCompanyItemPage implements OnInit {
                         confirm: '我知道了'
                     }).subscribe(value => {
                         if (value.value) {
+                            if (this.route.snapshot.queryParams.default) {
+                                this.companySvc.updateCompanyStatus(this.company);
+                            }
                             this.router.navigate(['/admin/company/qualification', this.company.id]);
                         }
                     });

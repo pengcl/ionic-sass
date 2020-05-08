@@ -473,32 +473,43 @@ export class AdminCompanyQualificationPage implements OnInit {
             this.company = res.busCust;
         });
         this.companySvc.source(this.id).subscribe(res => {
-            this.data = res;
-            this.brand = (() => {
-                const list = [];
-                list.push(this.getGroupValue(-100) ? this.getGroupValue(-100) : {});
-                list.push(this.getGroupValue(-101) ? this.getGroupValue(-101) : {});
-                list[0].label = '行业深度';
-                list[1].label = '经营广度';
-                return list;
-            })();
-            this.scientific = (() => {
-                const list = [];
-                list.push(this.getGroupValue(9) ? this.getGroupValue(9) : {});
-                list.push(this.getGroupValue(10) ? this.getGroupValue(10) : {});
-                list[0].label = '科研成果';
-                list[1].label = '科研能力';
-                return list;
-            })();
-            this.getHBar(6, '个');
-            this.getHBar(4, '%', 2);
-            this.getVBar(8);
-            this.getCircle('job', [{id: 21, label: '研发'}, {id: 25, label: '销售'}, {id: 26, label: '服务'}]);
-            this.getCircle('edu', [{id: 28, label: '专科'}, {id: 29, label: '本科及以上'}]);
-            this.getCircle('sci', [{id: 31, label: '专科'}, {id: 30, label: '本科及以上'}]);
-            this.getCircle('man', [{id: 2, label: '管理人员'}]);
-            this.getCircle('sci-rate', [{id: 21, label: '研发人员'}]);
-            this.getGroupBar(9);
+            if (res.id) {
+                this.data = res;
+                this.brand = (() => {
+                    const list = [];
+                    list.push(this.getGroupValue(-100) ? this.getGroupValue(-100) : {});
+                    list.push(this.getGroupValue(-101) ? this.getGroupValue(-101) : {});
+                    list[0].label = '行业深度';
+                    list[1].label = '经营广度';
+                    return list;
+                })();
+                this.scientific = (() => {
+                    const list = [];
+                    list.push(this.getGroupValue(9) ? this.getGroupValue(9) : {});
+                    list.push(this.getGroupValue(10) ? this.getGroupValue(10) : {});
+                    list[0].label = '科研成果';
+                    list[1].label = '科研能力';
+                    return list;
+                })();
+                this.getHBar(6, '个');
+                this.getHBar(4, '%', 2);
+                this.getVBar(8);
+                this.getCircle('job', [{id: 21, label: '研发'}, {id: 25, label: '销售'}, {id: 26, label: '服务'}]);
+                this.getCircle('edu', [{id: 28, label: '专科'}, {id: 29, label: '本科及以上'}]);
+                this.getCircle('sci', [{id: 31, label: '专科'}, {id: 30, label: '本科及以上'}]);
+                this.getCircle('man', [{id: 2, label: '管理人员'}]);
+                this.getCircle('sci-rate', [{id: 21, label: '研发人员'}]);
+                this.getGroupBar(9);
+            } else {
+                this.dialogSvc.show({
+                    title: '使用提醒',
+                    content: '您当前使用的企业数据版本过旧，无法生成企业智能画像。请按照流程完成数据更新，感谢配合。',
+                    cancel: '',
+                    confirm: '更新数据'
+                }).subscribe(() => {
+                    this.router.navigate(['/admin/company/item/', this.company.id]);
+                });
+            }
         });
     }
 
