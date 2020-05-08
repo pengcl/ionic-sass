@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DialogService} from '../../../../@core/modules/dialog';
 import {DashboardService} from '../../dashboard/dashboard.service';
 import {CompanyService} from '../../company/company.service';
 import {PlanService} from '../plan.service';
@@ -310,7 +311,9 @@ export class AdminPlanItemPage implements OnInit {
     types;
 
     constructor(private route: ActivatedRoute,
+                private router: Router,
                 @Inject('FILE_PREFIX_URL') public FILE_PREFIX_URL,
+                private dialogSvc: DialogService,
                 private dashboardSvc: DashboardService,
                 private companySvc: CompanyService) {
         this.route.queryParamMap.pipe(map(queryParam => this.id = queryParam.get('id') ? queryParam.get('id') : this.companySvc.currentCompany.id)).subscribe(id => {
@@ -449,46 +452,57 @@ export class AdminPlanItemPage implements OnInit {
 
     getData() {
         this.companySvc.source(this.id).subscribe(res => {
-            this.data = res;
-            this.getVBar(8);
-            this.getCircle('job', [{id: 21, label: '研发'}, {id: 25, label: '销售'}, {id: 26, label: '服务'}]);
-            this.getCircle('edu', [{id: 28, label: '专科'}, {id: 29, label: '本科及以上'}]);
-            this.getGroupBar(3);
-            this.getGroupBar(7);
-            this.getLineBar(2);
-            const selectedTypes = this.getChatValue(5);
-            const items = Array(45)
-                .fill(0)
-                .map((v: any, i: number) => i);
-            const types = [];
-            items.forEach(item => {
-                const index = getIndex(selectedTypes, 'text', item + '');
-                let selected = false;
-                if (typeof index === 'number') {
-                    selected = true;
-                }
-                types.push({
-                    id: item + 1,
-                    selected
+            if (res.id) {
+                this.data = res;
+                this.getVBar(8);
+                this.getCircle('job', [{id: 21, label: '研发'}, {id: 25, label: '销售'}, {id: 26, label: '服务'}]);
+                this.getCircle('edu', [{id: 28, label: '专科'}, {id: 29, label: '本科及以上'}]);
+                this.getGroupBar(3);
+                this.getGroupBar(7);
+                this.getLineBar(2);
+                const selectedTypes = this.getChatValue(5);
+                const items = Array(45)
+                    .fill(0)
+                    .map((v: any, i: number) => i);
+                const types = [];
+                items.forEach(item => {
+                    const index = getIndex(selectedTypes, 'text', item + '');
+                    let selected = false;
+                    if (typeof index === 'number') {
+                        selected = true;
+                    }
+                    types.push({
+                        id: item + 1,
+                        selected
+                    });
                 });
-            });
-            this.types = types;
-            this.brand = (() => {
-                const list = [];
-                list.push(this.getGroupValue(-100));
-                list.push(this.getGroupValue(-101));
-                list[0].label = '行业深度';
-                list[1].label = '经营广度';
-                return list;
-            })();
-            this.scientific = (() => {
-                const list = [];
-                list.push(this.getGroupValue(9));
-                list.push(this.getGroupValue(10));
-                list[0].label = '科研成果';
-                list[1].label = '科研能力';
-                return list;
-            })();
+                this.types = types;
+                this.brand = (() => {
+                    const list = [];
+                    list.push(this.getGroupValue(-100));
+                    list.push(this.getGroupValue(-101));
+                    list[0].label = '行业深度';
+                    list[1].label = '经营广度';
+                    return list;
+                })();
+                this.scientific = (() => {
+                    const list = [];
+                    list.push(this.getGroupValue(9));
+                    list.push(this.getGroupValue(10));
+                    list[0].label = '科研成果';
+                    list[1].label = '科研能力';
+                    return list;
+                })();
+            } else {
+                this.dialogSvc.show({
+                    title: '使用提醒',
+                    content: '您当前使用的企业数据版本过旧，无法生成企业智能画像。请按照流程完成数据更新，感谢配合。',
+                    cancel: '',
+                    confirm: '更新数据'
+                }).subscribe(() => {
+                    this.router.navigate(['/admin/company/item/', this.company.id]);
+                });
+            }
         });
         this.dashboardSvc.subsidies(this.id).subscribe(res => {
             this.amt.keChuangBao = res.keChuangBaoAmt;

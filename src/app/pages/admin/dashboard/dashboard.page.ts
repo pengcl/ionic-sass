@@ -25,7 +25,7 @@ declare var $: any;
     templateUrl: './dashboard.page.html',
     styleUrls: ['./dashboard.page.scss']
 })
-export class AdminDashboardPage {
+export class AdminDashboardPage implements OnInit{
     option = {
         tooltip: {},
         series: [
@@ -689,39 +689,53 @@ export class AdminDashboardPage {
         monitorSvc.list({custId: this.company.id}).subscribe(res => {
             this.monitorDataSource = new MatTableDataSource<any>(res.list);
         });
+    }
 
-        companySvc.source(this.company.id).subscribe(res => {
-            this.data = res;
+    ngOnInit() {
+        this.companySvc.source(this.company.id).subscribe(res => {
             // this.drawChart('#c1');
-            this.brand = (() => {
-                const list = [];
-                if (this.getGroupValue(-100)) {
-                    list.push(this.getGroupValue(-100));
-                    list[0].label = '行业深度';
-                }
-                if (this.getGroupValue(-101)) {
-                    list.push(this.getGroupValue(-101));
-                    list[1].label = '经营广度';
-                }
-                return list;
-            })();
-            this.scientific = (() => {
-                const list = [];
-                if (this.getGroupValue(9)) {
-                    list.push(this.getGroupValue(9));
-                    list[0].label = '科研成果';
-                }
-                if (this.getGroupValue(10)) {
-                    list.push(this.getGroupValue(10));
-                    list[1].label = '科研能力';
-                }
-                return list;
-            })();
+            if (res.id) {
+                this.data = res;
+                this.brand = (() => {
+                    const list = [];
+                    if (this.getGroupValue(-100)) {
+                        list.push(this.getGroupValue(-100));
+                        list[0].label = '行业深度';
+                    }
+                    if (this.getGroupValue(-101)) {
+                        list.push(this.getGroupValue(-101));
+                        list[1].label = '经营广度';
+                    }
+                    return list;
+                })();
+                this.scientific = (() => {
+                    const list = [];
+                    if (this.getGroupValue(9)) {
+                        list.push(this.getGroupValue(9));
+                        list[0].label = '科研成果';
+                    }
+                    if (this.getGroupValue(10)) {
+                        list.push(this.getGroupValue(10));
+                        list[1].label = '科研能力';
+                    }
+                    return list;
+                })();
 
-            setTimeout(() => {
-                this.drawChart(this.quick.series[0].data[0].value);
-                this.drawChart2(this.keChuangBao.series[0].data[0].value);
-            });
+                setTimeout(() => {
+                    this.drawChart(this.quick.series[0].data[0].value);
+                    this.drawChart2(this.keChuangBao.series[0].data[0].value);
+                });
+            } else {
+
+                this.dialogSvc.show({
+                    title: '使用提醒',
+                    content: '您当前使用的企业数据版本过旧，无法生成企业智能画像。请按照流程完成数据更新，感谢配合。',
+                    cancel: '',
+                    confirm: '更新数据'
+                }).subscribe(() => {
+                    this.router.navigate(['/admin/company/item/', this.company.id]);
+                });
+            }
         });
     }
 

@@ -29,7 +29,6 @@ export class ErrorInterceptor implements HttpInterceptor {
     }
 
     private handleResponse(res: any): void {
-        this.dialogSvc.destroyAll();
         this.loadingSvc.hide();
         if (res.body) {
             if ((typeof (res.body.code) !== 'number' && res.body.code !== '0000') && res.body.code !== '200') {
