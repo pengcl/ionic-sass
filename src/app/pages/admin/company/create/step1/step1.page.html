@@ -18,7 +18,8 @@
                                                 {{option}}
                                             </mat-option>
                                         </mat-autocomplete>
-                                        <mat-icon [class.loading-show]="loading" [class.loading-hide]="!loading" matSuffix>loop</mat-icon>
+                                        <!--<mat-icon [class.loading-show]="loading" [class.loading-hide]="!loading" matSuffix>loop</mat-icon>-->
+                                        <div class="el-loading-spinner" [class.loading-show]="loading" [class.loading-hide]="!loading"><i><img src="/assets/images/loading_search.png"  class="el-icon-loading"></i></div>
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="8">
