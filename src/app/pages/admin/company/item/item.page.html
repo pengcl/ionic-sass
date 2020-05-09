@@ -271,7 +271,12 @@
                                                 <ion-col size="8">
                                                     <mat-form-field appearance="outline"
                                                                     style="width: 40%;">
-                                                        <label><em>*</em>业务运营时间</label>
+                                                        <label><em>*</em>业务运营时间
+                                                                <img src="/assets/images/qualification.png"
+                                                                     matTooltip="企业当前主营业务开始运营时间。因企业存在转型情况，所以需要按照新主营业务时间生成智能画像"
+                                                                     matTooltipPosition="after"
+                                                                     style="width: 20px;height: 20px; position:relative;top:5px;left: 4px">
+                                                        </label>
                                                         <input formControlName="operateDate" required matInput
                                                                placeholder="请选择" [matDatepicker]="picker">
                                                         <mat-datepicker-toggle matSuffix
@@ -526,7 +531,7 @@
                                             <mat-card-content>
                                                 <ion-row formGroupName="form">
                                                     <ion-col size="12">
-                                                        <h3>必填资质（{{required.valueNum}} / {{required.num}}）</h3>
+                                                        <h3 *ngIf="required.num">必填资质（{{required.valueNum}} / {{required.num}}）</h3>
                                                     </ion-col>
                                                     <ion-col class="form-field"
                                                              *ngFor="let condition of required.list;let i = index"
@@ -536,6 +541,7 @@
                                                                         appearance="outline">
                                                             <label><em
                                                                     *ngIf="!!condition.required">*</em>{{condition.conditionName}}
+                                                                <i [matTooltip]="condition.conditionRemark" matTooltipPosition="after"  *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i>
                                                             </label>
                                                             <input style="display: none"
                                                                    [formControlName]="condition.conditionId" matInput
@@ -550,6 +556,7 @@
                                                                 appearance="outline">
                                                             <label><em
                                                                     *ngIf="!!condition.required">*</em>{{condition.conditionName}}
+                                                                <i [matTooltip]="condition.conditionRemark" matTooltipPosition="after"  *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i>
                                                             </label>
                                                             <input *ngIf="dict[condition.conditionId]?.length < 1"
                                                                    [placeholder]="'请输入' + condition.conditionName"
@@ -585,6 +592,7 @@
                                                                 appearance="outline">
                                                             <label><em
                                                                     *ngIf="!!condition.required">*</em>{{condition.conditionName}}
+                                                                <i [matTooltip]="condition.conditionRemark" matTooltipPosition="after"  *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i>
                                                             </label>
                                                             <input [formControlName]="condition.conditionId" matInput
                                                                    placeholder="请选择"
@@ -610,6 +618,7 @@
                                                                             appearance="outline">
                                                                 <label><em
                                                                         *ngIf="!!condition.required">*</em>{{condition.conditionName}}
+                                                                    <i [matTooltip]="condition.conditionRemark" matTooltipPosition="after"  *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i>
                                                                 </label>
                                                                 <input style="display: none"
                                                                        [formControlName]="condition.conditionId"
@@ -627,6 +636,7 @@
                                                                     appearance="outline">
                                                                 <label><em
                                                                         *ngIf="!!condition.required">*</em>{{condition.conditionName}}
+                                                                    <i [matTooltip]="condition.conditionRemark" matTooltipPosition="after"  *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i>
                                                                 </label>
                                                                 <input *ngIf="dict[condition.conditionId]?.length < 1"
                                                                        [placeholder]="'请输入' + condition.conditionName"
@@ -665,6 +675,7 @@
                                                                     appearance="outline">
                                                                 <label><em
                                                                         *ngIf="!!condition.required">*</em>{{condition.conditionName}}
+                                                                    <i [matTooltip]="condition.conditionRemark" matTooltipPosition="after"  *ngIf="condition.conditionRemark"><img src="/assets/images/remark.png"></i>
                                                                 </label>
                                                                 <input [formControlName]="condition.conditionId"
                                                                        placeholder="请选择" matInput

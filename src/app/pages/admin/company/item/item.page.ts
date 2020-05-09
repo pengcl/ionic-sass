@@ -531,6 +531,10 @@ export class AdminCompanyItemPage implements OnInit {
         });
     }
 
+    remark(content, e) {
+        e.preventDefault();
+    }
+
     save() {
         this.form.get('match').get('conditions').setValue(this.getConditions());
         if (this.form.invalid) {

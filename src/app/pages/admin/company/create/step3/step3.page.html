@@ -14,7 +14,7 @@
                         <ion-grid>
                             <ion-row>
                                 <ion-col *ngIf="reportType === 2" size="12">
-                                    <h3>必填资质（{{required.valueNum}} / {{required.num}}）</h3>
+                                    <h3 *ngIf="required.num">必填资质（{{required.valueNum}} / {{required.num}}）</h3>
                                 </ion-col>
                                 <ion-col class="{{(i + 1) % 3 !== 0 ? 'form-field' : ''}}" *ngFor="let condition of required.list;let i = index" [size]="reportType === 1 ? 12 : 4">
                                     <mat-form-field class="nl"

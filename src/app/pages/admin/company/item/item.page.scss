@@ -140,6 +140,13 @@ mat-form-field {
       font-style: normal;
     }
   }
+  i{
+    display: inline-block;
+    margin-left: 10px;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+  }
 
   &::ng-deep {
 
