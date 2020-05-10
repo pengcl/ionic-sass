@@ -384,9 +384,9 @@ export class ScorePipe implements PipeTransform {
 export class IndustryNamePipe implements PipeTransform {
     transform(id, list): any {
         if (!id || !list) {
-            return id;
+            return '';
         }
         const index = getIndex(list, 'id', id);
-        return list[index].industryName;
+        return list[index] ? list[index].industryName : '';
     }
 }
