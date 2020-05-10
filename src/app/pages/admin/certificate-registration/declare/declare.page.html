@@ -1,0 +1,172 @@
+<div class="tip">
+  温馨提示：选择提交即表示您承诺所填写信息符合现行国家法律法规相关规定，并且上传文件内容为原创作品，如因作品权属问题发生争议，由本人承担相关责任。
+</div>
+<div class="container declare-page">
+  <div class="form-wrap">
+    <h4 class="title">申请版权存证（可信时间戳认证）</h4>
+    <form [formGroup]="dataForm">
+      <ion-grid style="margin: 0 -10px">
+        <ion-row>
+          <ion-col size="1" class="label-col">
+            <label class="label"><span class="label-require">*</span>上传作品:</label>
+          </ion-col>
+          <ion-col size="">
+              <div class="input-wrap">
+                <ion-button color="primary" mat-button>{{dataForm.get('work_md5').value ? '重新上传' : '选择文件'}}</ion-button>
+                <input
+                    class="weui-uploader__input"
+                    type="file"
+                    multiple
+                    (change)="handleFileChange($event)"
+                />
+                <input style="display: none" type="text" formControlName="work_md5">
+              </div>
+            <ion-row><span *ngIf="dataForm.get('work_md5').value">{{fileName}}</span></ion-row>
+            <div class="tip-wrap">
+              <p>温馨提示</p>
+              <p>1.上传文件大小不得超过20M；</p>
+              <p>2.支持上传格式：</p>
+              <p>图片：png、jpg、jpeg；</p>
+              <p>文档：txt、pdf、docx、doc、xlsx、xls、ppt；</p>
+              <p>音频：cd、ogg、mp3、asf、wma、wav、mp3pro、rm、real、ape、module、midi、vpf、flac、aac；</p>
+              <p>视频：mp4、3gp、avi、mkv、wmv、mpeg、vob、flv、swf、mov</p>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="1" class="label-col">
+            <label class="label"><span class="label-require">*</span>著作权人:</label>
+          </ion-col>
+          <ion-col size="3">
+            <mat-form-field appearance="outline">
+              <mat-label>请输入您需要查询的作品名称</mat-label>
+              <input style="color: #000" [value]="company?.companyName" disabled="disabled" type="text" name="workOrderNo" matInput
+                     placeholder="请输入您需要查询的作品名称">
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="1" class="label-col">
+            <label class="label"><span class="label-require">*</span>作品名称:</label>
+          </ion-col>
+          <ion-col size="3">
+            <mat-form-field appearance="outline">
+              <mat-label>请输入作品名称，不多于30汉字</mat-label>
+              <input formControlName="work_name" name="name" type="text" name="workOrderNo" matInput
+                     placeholder="请输入作品名称，不多于30汉字">
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="1" class="label-col">
+            <label class="label"><span class="label-require">*</span>作品类型:</label>
+          </ion-col>
+          <ion-col size="3">
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="work_type" name="status" placeholder="请选择作品类型">
+                <mat-option *ngFor="let item of regStateOptions?.work_type" [value]="item.code">
+                  {{item.label}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="1" class="label-col">
+            <label class="label"><span class="label-require">*</span>作品完成时间:</label>
+          </ion-col>
+          <ion-col size="3">
+            <mat-form-field appearance="outline">
+              <mat-label>请选择日期</mat-label>
+              <input [max]="maxDate" formControlName="finish_date" name="time" matInput [(ngModel)]="params.time"
+                     [matDatepicker]="pickerDate" placeholder="请选择日期">
+              <mat-datepicker-toggle matSuffix [for]="pickerDate"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-datepicker #pickerDate></mat-datepicker>
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="1" class="label-col">
+            <label class="label"><span class="label-require">*</span>创作地点:</label>
+          </ion-col>
+          <ion-col size="3"  class="cascader-wrap">
+            <nz-cascader [nzPlaceHolder]="'请选择创作地点'" [nzSize]="'large'" [nzOptions]="nzOptions" [formControlName]="'area'"> </nz-cascader>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="1" class="label-col">
+            <label class="label"><span class="label-require">*</span>发表状态:</label>
+          </ion-col>
+          <ion-col size="3" class="radio-wrap">
+            <mat-radio-group
+                formControlName="publish_state"
+                (change)="radioChange($event)"
+                required>
+              <mat-radio-button
+                  style="margin-right: 20px"
+                  *ngFor="let item of regStateOptions?.publish_state"
+                  [(value)]="item.code">
+                {{item.label}}
+              </mat-radio-button>
+              <ion-col size="3"></ion-col>
+            </mat-radio-group>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="params.status === 1">
+          <ion-col size="1" class="label-col">
+            <label class="label"><span class="label-require">*</span>首次发表时间:</label>
+          </ion-col>
+          <ion-col size="3">
+            <mat-form-field appearance="outline">
+              <input [max]="maxDate" formControlName="publish_date" name="firstTime" matInput
+                     [matDatepicker]="firstDate" placeholder="请选择日期">
+              <mat-datepicker-toggle matSuffix [for]="firstDate"></mat-datepicker-toggle>
+              <mat-datepicker #firstDate></mat-datepicker>
+              <mat-datepicker #firstDate></mat-datepicker>
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="params.status === 1">
+          <ion-col size="1" class="label-col">
+            <label class="label"><span class="label-require">*</span>首次发表地点:</label>
+          </ion-col>
+          <ion-col size="3" class="cascader-wrap">
+            <nz-cascader [nzSize]="'large'" [nzOptions]="nzOptions" [formControlName]="'firstArea'"></nz-cascader>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="1" class="label-col">
+            <label class="label"><span class="label-require">*</span>作品说明:</label>
+          </ion-col>
+          <ion-col size="5">
+            <mat-form-field appearance="outline">
+            <textarea formControlName="work_des" maxlength="500" rows="5" name="remark" type="text" name="workOrderNo"
+                      matInput
+                      placeholder="本作品的主要内容是________________ ，灵感来源于________________ ，意在通过作品表达；创作过程耗时________________ ，作品的特点或独特之处体现在________________ 。"></textarea>
+            </mat-form-field>
+
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </form>
+
+    <ion-row>
+      <ion-col size="1" class="label-col">
+      </ion-col>
+      <ion-button (click)="submitData('submit')" [disabled]="this.dataForm.invalid" color="primary" mat-button>提交申请</ion-button>
+<!--      <ion-button (click)="submitData('save')" [disabled]="this.dataForm.invalid" color="primary" mat-button>保存信息</ion-button>-->
+    </ion-row>
+  </div>
+
+</div>

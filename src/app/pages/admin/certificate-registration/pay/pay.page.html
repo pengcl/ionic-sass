@@ -1,0 +1,58 @@
+<div class="container">
+  <h4 class="title">作品信息</h4>
+  <div class="info-wrap">
+    <div class="info-item info-item-half">
+      <div class="info-item-label">作品名称</div>
+      <div class="info-item-value">{{detailData?.work_name}}</div>
+    </div>
+    <div class="info-item info-item-half">
+      <div class="info-item-label">作品完成时间</div>
+      <div class="info-item-value">{{detailData?.finish_date}}</div>
+    </div>
+    <div class="info-item info-item-half">
+      <div class="info-item-label">著作权人</div>
+      <div class="info-item-value">{{detailData?.owner_name}}</div>
+    </div>
+    <div class="info-item info-item-half">
+      <div class="info-item-label">作品类型</div>
+      <div class="info-item-value">{{filterLabel('work_type', +detailData?.work_type)}}</div>
+    </div>
+    <div class="info-item info-item-half">
+      <div class="info-item-label">创作地点</div>
+      <div class="info-item-value">{{localFormat([detailData?.c_province,detailData?.c_city,detailData?.c_district])}}</div>
+    </div>
+    <div class="info-item info-item-half">
+      <div class="info-item-label">发表状态</div>
+      <div class="info-item-value">{{filterLabel('publish_state', +detailData?.publish_state)}}</div>
+    </div>
+    <div *ngIf="+detailData?.publish_state === 1" class="info-item info-item-half">
+      <div class="info-item-label">首次发表地点</div>
+      <div class="info-item-value">{{localFormat([detailData?.p_province,detailData?.p_city,detailData?.p_district])}}</div>
+    </div>
+    <div *ngIf="+detailData?.publish_state === 1" class="info-item info-item-half">
+      <div class="info-item-label">首次发表时间</div>
+      <div class="info-item-value">{{(detailData?.publish_date || detailData?.reg_date) | date : 'yyyy-MM-dd HH:mm:ss'	}}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-item-label">作品介绍</div>
+      <div class="info-item-value">{{detailData?.work_des	}}</div>
+    </div>
+  </div>
+
+  <div class="container-header">
+    <h4 class="title">预存支付</h4>
+    <p class="pay-tip">本次支付费用<b style="color: red">25</b>元，请使用<span style="color: #6abf4a">微信支付</span>完成支付。</p>
+  </div>
+  <div class="img-box">
+    <div (click)="getPayConfig()" *ngIf="payCode === false" class="er-code-mask">
+      <p>获取失败</p>
+      <p>点击重新获取</p>
+    </div>
+    <ngx-qrcode
+            [qrc-element-type]="'url'"
+            [qrc-value] = "payCode"
+            qrc-class = "'qr'"
+            qrc-errorCorrectionLevel = "H">
+    </ngx-qrcode>
+  </div>
+</div>
