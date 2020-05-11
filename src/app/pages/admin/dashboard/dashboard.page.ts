@@ -287,6 +287,7 @@ export class AdminDashboardPage implements OnInit{
             this.ticket.dataSource = new MatTableDataSource<any>(res.list);
         });
         this.dashboardSvc.copies(this.company.id).subscribe(res => {
+            console.log(res);
             this.copyOption.count = res.totalCount;
             const pieLabels = [];
             const pieData = [];
@@ -726,7 +727,6 @@ export class AdminDashboardPage implements OnInit{
                     this.drawChart2(this.keChuangBao.series[0].data[0].value);
                 });
             } else {
-
                 this.dialogSvc.show({
                     title: '使用提醒',
                     content: '您当前使用的企业数据版本过旧，无法生成企业智能画像。请按照流程完成数据更新，感谢配合。',

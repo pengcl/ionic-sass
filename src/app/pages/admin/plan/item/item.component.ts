@@ -309,6 +309,11 @@ export class AdminPlanItemPage implements OnInit {
         .fill(0)
         .map((v: any, i: number) => i);
     types;
+    top3 = [
+        {},
+        {},
+        {}
+    ];
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -460,6 +465,10 @@ export class AdminPlanItemPage implements OnInit {
                 this.getGroupBar(3);
                 this.getGroupBar(7);
                 this.getLineBar(2);
+                const top3 = this.getChatValue(1);
+                if (top3.length > 0) {
+                    this.top3 = top3;
+                }
                 const selectedTypes = this.getChatValue(5);
                 const items = Array(45)
                     .fill(0)

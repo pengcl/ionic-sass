@@ -59,9 +59,9 @@
                                                         <ion-col size="4" class="form-field">
                                                             <mat-form-field appearance="outline">
                                                                 <label><em>*</em>行业</label>
-                                                                <input (click)="industryPanelShow = true" [value]="form.get('company').get('industryIds').value | industryName : sourceIndustries" placeholder="所属行业" matInput
+                                                                <input style="cursor: pointer" (click)="industryPanelShow = true" [value]="form.get('company').get('industryIds').value | industryName : sourceIndustries" placeholder="所属行业" matInput
                                                                        required readonly>
-                                                                <ion-icon matSuffix name="arrow-down"></ion-icon>
+                                                                <ion-icon style="cursor: pointer" (click)="industryPanelShow = true" matSuffix name="arrow-down"></ion-icon>
                                                             </mat-form-field>
                                                             <div *ngIf="industryPanelShow" class="industry-container">
                                                                 <div class="main-content">

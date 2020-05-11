@@ -321,13 +321,13 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr *ngFor="let item of getChatValue(1);let i = index">
+                                        <tr *ngFor="let item of top3;let i = index">
                                             <td class="user">
                                                 <img [src]="'/assets/images/company/' + (i + 1) + '.png'" height="auto" width="24"/>
                                             </td>
-                                            <td class="grade">{{item.text}}</td>
-                                            <td class="consumption">{{item.count}}</td>
-                                            <td class="date">{{item.count1}}年</td>
+                                            <td class="grade">{{item.text ? item.text : '-'}}</td>
+                                            <td class="consumption">{{item.count ? item.count : '-'}}</td>
+                                            <td class="date">{{item.count1 ? item.count1 + '年' : '-'}}</td>
                                         </tr>
                                         </tbody>
                                     </table>

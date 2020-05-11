@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AdminPolicyPage} from '../index/policy.component';
+import {ActivatedRoute} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CompanyService} from '../../company/company.service';
 import {AddressService} from '../../../../@core/services/address.service';
@@ -21,10 +22,11 @@ export class AdminPolicyListPage {
     cities = [];
     districts = [];
     company = this.companySvc.currentCompany;
+    id = this.route.snapshot.queryParams.id || this.company.id;
     dataSource;
     displayedColumns = ['name', 'area', 'money', 'rate', 'scope', 'time', 'actions'];
     form: FormGroup = new FormGroup({
-        custId: new FormControl(this.company.id, [Validators.required]),
+        custId: new FormControl(this.id, [Validators.required]),
         province: new FormControl('', []),
         area: new FormControl('', []),
         city: new FormControl('', []),
@@ -43,6 +45,7 @@ export class AdminPolicyListPage {
     };
 
     constructor(private datePipe: DatePipe,
+                private route: ActivatedRoute,
                 private companySvc: CompanyService,
                 private addressSvc: AddressService,
                 private policySvc: PolicyService,

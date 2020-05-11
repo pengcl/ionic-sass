@@ -535,7 +535,7 @@ export class AdminCompanyItemPage implements OnInit {
         e.preventDefault();
     }
 
-    save() {
+    save(type?) {
         this.form.get('match').get('conditions').setValue(this.getConditions());
         if (this.form.invalid) {
             return false;
@@ -565,7 +565,16 @@ export class AdminCompanyItemPage implements OnInit {
                             if (this.route.snapshot.queryParams.default) {
                                 this.companySvc.updateCompanyStatus(this.company);
                             }
-                            this.router.navigate(['/admin/company/qualification', this.company.id]);
+                            if (type) {
+                                if (type === 1) {
+                                    this.router.navigate(['/admin/policy/index'], {queryParams: {id: this.id}});
+                                }
+                                if (type === 2) {
+                                    this.router.navigate(['/admin/plan/item'], {queryParams: {id: this.id}});
+                                }
+                            } else {
+                                this.router.navigate(['/admin/company/qualification', this.company.id]);
+                            }
                         }
                     });
                 });
