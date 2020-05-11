@@ -7,5 +7,14 @@
     },
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  "/tsa": {
+    "target": "http://120.78.163.133:8000",
+    "secure": false,
+    "pathRewrite": {
+      "^/tsa/": ""
+    },
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

@@ -1,0 +1,139 @@
+<mat-card class="profile">
+  <div class="position">
+    <a routerLink="/admin/dashboard" href="javascript:;" class="link">
+      <mat-icon slot="start">home</mat-icon>
+      首页</a>
+    <span>知产托管</span>
+  </div>
+  <mat-card-header>
+    <mat-card-title>知产托管</mat-card-title>
+  </mat-card-header>
+</mat-card>
+<div class="container">
+  <form>
+    <ion-grid style="margin: 0 -10px">
+      <ion-row class="form-line-1">
+        <div>
+          <mat-form-field appearance="outline">
+            <input name="name" type="text" name="workOrderNo" matInput [(ngModel)]="params.work_name"
+                   placeholder="请输入您需要查询的作品名称">
+          </mat-form-field>
+          <ion-button (click)="getData()" color="primary" mat-button>查询</ion-button>
+        </div>
+        <div>
+          <a class="actions-icon" [routerLink]="['/admin/certificate/declare']">
+            <ion-button class="right-button" color="primary" mat-button>申请版权存证</ion-button>
+          </a>
+        </div>
+      </ion-row>
+      <ion-row class="form-item">
+        <span size="1" class="search-label">存证状态</span>
+        <mat-form-field appearance="outline">
+          <mat-select name="status" [(ngModel)]="params.reg_state" placeholder="请选择状态">
+            <mat-option [value]="''">
+              全部
+            </mat-option>
+            <mat-option *ngFor="let item of regStateOptions?.reg_state" [value]="item.code">
+              {{item.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span size="1" class="search-label">存证类型</span>
+        <mat-form-field appearance="outline">
+          <mat-select name="type" [(ngModel)]="params.work_type" placeholder="请选择类型">
+            <mat-option [value]="''">
+              全部
+            </mat-option>
+            <mat-option *ngFor="let item of regStateOptions?.work_type" [value]="item.code">
+              {{item.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span class="search-label">存证时间</span>
+        <mat-form-field appearance="outline">
+          <input name="beginDate" [(ngModel)]="params.reg_date1" (ngModelChange)="change()"
+                 placeholder="请选择开始日期" matInput
+                 [matDatepicker]="startPicker">
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+        <span class="search-label">至</span>
+        <mat-form-field appearance="outline">
+          <input name="endDate" [(ngModel)]="params.reg_date2" (ngModelChange)="change()"
+                 placeholder="请选择结束日期" matInput
+                 [matDatepicker]="endPicker">
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker dataformatas="" #endPicker></mat-datepicker>
+        </mat-form-field>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+  <table *ngIf="dataSource" mat-table [dataSource]="dataSource">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef><b>作品名称</b></th>
+      <td mat-cell *matCellDef="let element">
+        {{element.work_name}}
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef><b>作品类型</b></th>
+      <td mat-cell *matCellDef="let element">
+        {{filterLabel('work_type', element.work_type) || '-'}}
+      </td>
+    </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="certificateType">
+      <th mat-header-cell *matHeaderCellDef><b>存证方式</b></th>
+      <td mat-cell  *matCellDef="let element">
+        {{filterLabel('reg_type', element.reg_type) || '-'}}
+      </td>
+    </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef><b>存证状态</b></th>
+      <td mat-cell  *matCellDef="let element">
+        <span *ngIf="element.reg_state === 100" style="color: #2C9EF7">
+          {{filterLabel('reg_state', element.reg_state) || '-'}}
+        </span>
+        <span *ngIf="element.reg_state === 101" style="color: #FF0000">
+          {{filterLabel('reg_state', element.reg_state) || '-'}}
+        </span>
+        <span *ngIf="element.reg_state === 102" style="color: #333333">
+          {{filterLabel('reg_state', element.reg_state) || '-'}}
+        </span>
+      </td>
+    </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef style="width: 200px"><b>存证时间</b></th>
+      <td mat-cell *matCellDef="let element">
+        {{(element.reg_time | date : 'yyyy-MM-dd HH:mm:ss') || '-'}}
+      </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef style="width: 250px"><b>操作</b></th>
+      <td mat-cell *matCellDef="let element">
+        <a *ngIf="element.reg_state === 100" class="actions-icon" [routerLink]="['/admin/certificate/itemDetail',element.id]"
+           [queryParams]="{type:element.type}" title="查看">
+          <img src="/assets/images/view.png">
+        </a>
+        <a *ngIf="element.reg_state === 101 || element.reg_state === 102" class="actions-icon" (click)="toDetail(element)">
+          <img src="/assets/images/edit.png">
+        </a>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+  </table>
+  <mat-paginator [pageIndex]="params.pageNo - 1" [pageSize]="params.pageSize" [length]="total" (page)="page($event)"
+                 [pageSizeOptions]="[10,20,50]" showFirstLastButtons></mat-paginator>
+</div>

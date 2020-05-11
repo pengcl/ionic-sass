@@ -197,7 +197,42 @@ const routes: Routes = [
                 canActivate: [CompanyGuard],
                 loadChildren: () =>
                     import('./policy/list/list.module').then(m => m.AdminPolicyListPageModule)
-            }
+            },
+            {// 智能存证列表
+                path: 'certificate/list',
+                data: {name: '智能存证列表', menuIndex: 10},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./certificate-registration/list/list.module').then(m => m.AdminCertificateListPageModule)
+            },
+            {// 智能存证详情
+                path: 'certificate/itemDetail/:id',
+                data: {name: '智能存证详情', menuIndex: 10},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./certificate-registration/item/item.module').then(m => m.AdminCertificateItemDetailPageModule)
+            },
+            {// 申请版权存证
+                path: 'certificate/declare',
+                data: {name: '申请版权存证', menuIndex: 10},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./certificate-registration/declare/declare.module').then(m => m.AdminCertificateDeclarePageModule)
+            },
+            {// 申请版权存证
+                path: 'certificate/declare/:id',
+                data: {name: '申请版权存证', menuIndex: 10},
+                canActivate: [CompanyGuard],
+                loadChildren: () =>
+                    import('./certificate-registration/declare/declare.module').then(m => m.AdminCertificateDeclarePageModule)
+            },
+            {
+                // 申请版权存证
+                path: "certificate/pay",
+                data: { name: "存证信息确认和支付", menuIndex: 6 },
+                canActivate: [CompanyGuard],
+                loadChildren: () => import("./certificate-registration/pay/pay.module").then((m) => m.AdminCertificatePayPageModule),
+            },
         ]
     }
 ];
