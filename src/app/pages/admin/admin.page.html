@@ -3,25 +3,31 @@
 
     <mat-sidenav mode="side" opened>
         <mat-list>
-            <h3 [ngClass]="{'active' : menuIndex === 1}" routerLink="/admin/dashboard" routerLinkActive="active" (mouseover)="trustTrigger.closeMenu();keyTrigger.closeMenu();serviceTrigger.closeMenu();" mat-subheader>
+            <h3 [ngClass]="{'active' : menuIndex === 1}" routerLink="/admin/dashboard" routerLinkActive="active" (mouseover)="serviceTrigger.closeMenu();" mat-subheader>
                 <span class="mat-list-icon">
                     <img src="/assets/images/side/1.png">
                 </span>
                 首页
             </h3>
-            <h3 [ngClass]="{'active' : menuIndex === 2}" [routerLink]="['/admin/company/qualification',company.id]" routerLinkActive="active" (mouseover)="trustTrigger.closeMenu();keyTrigger.closeMenu();serviceTrigger.closeMenu();" mat-subheader>
+            <h3 [ngClass]="{'active' : menuIndex === 2}" [routerLink]="['/admin/company/qualification',company.id]" routerLinkActive="active" (mouseover)="serviceTrigger.closeMenu();" mat-subheader>
                 <span class="mat-list-icon">
                     <img src="/assets/images/side/2.png">
                 </span>
                 企业智能画像
             </h3>
-            <h3 [ngClass]="{'active' : menuIndex === 3}" routerLink="/admin/policy/index" routerLinkActive="active" (mouseover)="trustTrigger.closeMenu();keyTrigger.closeMenu();serviceTrigger.closeMenu();"  mat-subheader>
+            <h3 [ngClass]="{'active' : menuIndex === 7}" routerLink="/admin/plan/item" routerLinkActive="active" (mouseover)="serviceTrigger.closeMenu();"  mat-subheader>
+                <span class="mat-list-icon">
+                    <img src="/assets/images/side/7.png">
+                </span>
+                企业体检报告
+            </h3>
+            <h3 [ngClass]="{'active' : menuIndex === 3}" routerLink="/admin/policy/index" routerLinkActive="active" (mouseover)="serviceTrigger.closeMenu();"  mat-subheader>
                 <span class="mat-list-icon">
                     <img src="/assets/images/side/3.png">
                 </span>
                 政府项目智能培育
             </h3>
-            <h3 [ngClass]="{'active' : menuIndex === 4}" [matMenuTriggerFor]="menuTrust" #trustTrigger="matMenuTrigger" (mouseover)="trustTrigger.openMenu();keyTrigger.closeMenu();serviceTrigger.closeMenu();" mat-subheader>
+            <!--<h3 [ngClass]="{'active' : menuIndex === 4}" [matMenuTriggerFor]="menuTrust" #trustTrigger="matMenuTrigger" (mouseover)="trustTrigger.openMenu();keyTrigger.closeMenu();serviceTrigger.closeMenu();" mat-subheader>
                 <span class="mat-list-icon">
                     <img src="/assets/images/side/4.png">
                 </span>
@@ -30,8 +36,8 @@
             <mat-menu [hasBackdrop]="false" xPosition="after" [classList]="'side-sub-menu'" #menuTrust="matMenu">
                 <button [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:0}" routerLinkActive="active" mat-menu-item>商标托管</button>
                 <button [routerLink]="['/admin/trust/list']" [queryParams]="{selectedIndex:1}" routerLinkActive="active" mat-menu-item>专利托管</button>
-            </mat-menu>
-            <h3 [ngClass]="{'active' : menuIndex === 5}" [matMenuTriggerFor]="menuKey" #keyTrigger="matMenuTrigger" (mouseover)="trustTrigger.closeMenu();keyTrigger.openMenu();serviceTrigger.closeMenu();" mat-subheader>
+            </mat-menu>-->
+            <!--<h3 [ngClass]="{'active' : menuIndex === 5}" [matMenuTriggerFor]="menuKey" #keyTrigger="matMenuTrigger" (mouseover)="trustTrigger.closeMenu();keyTrigger.openMenu();serviceTrigger.closeMenu();" mat-subheader>
                 <span class="mat-list-icon">
                     <img src="/assets/images/side/5.png">
                 </span>
@@ -40,8 +46,8 @@
             <mat-menu [hasBackdrop]="false" xPosition="after" [classList]="'side-sub-menu'" #menuKey="matMenu">
                 <button routerLink="/admin/box/list" routerLinkActive="active" mat-menu-item>我的知产</button>
                 <button routerLink="/admin/box/upload" routerLinkActive="active" mat-menu-item>添加知产</button>
-            </mat-menu>
-            <h3 [ngClass]="{'active' : menuIndex === 6}" [matMenuTriggerFor]="menuService" #serviceTrigger="matMenuTrigger" (mouseover)="trustTrigger.closeMenu();keyTrigger.closeMenu();serviceTrigger.openMenu();" mat-subheader>
+            </mat-menu>-->
+            <h3 [ngClass]="{'active' : menuIndex === 6}" [matMenuTriggerFor]="menuService" #serviceTrigger="matMenuTrigger" (mouseover)="serviceTrigger.openMenu();" mat-subheader>
                 <span class="mat-list-icon">
                     <img src="/assets/images/side/6.png">
                 </span>
@@ -49,15 +55,10 @@
             </h3>
             <mat-menu [hasBackdrop]="false" xPosition="after" [classList]="'side-sub-menu'" #menuService="matMenu">
                 <button routerLink="/admin/checkout" routerLinkActive="active" mat-menu-item>商标自助智能注册</button>
-                <button (click)="presentLoading();" routerLinkActive="active" mat-menu-item>专利快捷提交</button>
+                <!--<button (click)="presentLoading();" routerLinkActive="active" mat-menu-item>专利快捷提交</button>-->
                 <button routerLink="/admin/certificate/list" routerLinkActive="active" mat-menu-item>版权智能存证登记</button>
             </mat-menu>
-            <h3 [ngClass]="{'active' : menuIndex === 7}" routerLink="/admin/plan/item" routerLinkActive="active" (mouseover)="trustTrigger.closeMenu();keyTrigger.closeMenu();serviceTrigger.closeMenu();"  mat-subheader>
-                <span class="mat-list-icon">
-                    <img src="/assets/images/side/7.png">
-                </span>
-                企业体检报告
-            </h3>
+            <!--
             <h3 [ngClass]="{'active' : menuIndex === 8}" routerLink="/admin/risk/list" routerLinkActive="active" (mouseover)="trustTrigger.closeMenu();keyTrigger.closeMenu();serviceTrigger.closeMenu();"  mat-subheader>
                 <span class="mat-list-icon">
                     <img src="/assets/images/side/8.png">
@@ -69,11 +70,11 @@
                     <img src="/assets/images/side/9.png">
                 </span>
                 企业雷达监控
-            </h3>
+            </h3>-->
         </mat-list>
     </mat-sidenav>
 
-    <mat-sidenav-content (mouseover)="trustTrigger.closeMenu();keyTrigger.closeMenu();serviceTrigger.closeMenu();">
+    <mat-sidenav-content (mouseover)="serviceTrigger.closeMenu();">
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

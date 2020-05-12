@@ -372,7 +372,7 @@
                     </mat-card-header>
                     <mat-card-content>
                         <ion-row>
-                            <ion-col size="4">
+                            <ion-col size="4" size-md="12" size-lg="4">
                                 <!--<app-empty
                                         *ngIf="(copyOption.count > 0 || patentOption.count > 0 || brandOption.count > 0) && brandOption.count === 0"
                                         title="暂时没有相关数据"></app-empty>-->
@@ -389,13 +389,13 @@
                                                         <span>暂无商标信息</span>
                                                     </div>
                                                 </ion-col>
-                                                <ion-col size="6">
+                                                <ion-col size="7">
                                                     <div *ngIf="brandOption.line" echarts [options]="brandOption.line"
-                                                         style="width: 200px;height: 300px" class="main-chart"></div>
+                                                         style="height: 300px" class="main-chart"></div>
                                                 </ion-col>
-                                                <ion-col size="6">
+                                                <ion-col size="5">
                                                     <div *ngIf="brandOption.pie" echarts [options]="brandOption.pie"
-                                                         style="width: 200px;height: 300px" class="main-chart"></div>
+                                                         style="height: 300px" class="main-chart"></div>
                                                 </ion-col>
                                             </ion-row>
                                         </ion-grid>
@@ -403,7 +403,7 @@
                                 </ion-list>
 
                             </ion-col>
-                            <ion-col size="4">
+                            <ion-col size="4" size-md="12" size-lg="4">
 
                                 <!--<app-empty
                                         *ngIf="(copyOption.count > 0 || patentOption.count > 0 || brandOption.count > 0) && patentOption.count === 0"
@@ -421,20 +421,20 @@
                                                         <span>暂无专利信息</span>
                                                     </div>
                                                 </ion-col>
-                                                <ion-col size="6">
+                                                <ion-col size="7">
                                                     <div *ngIf="patentOption.line" echarts [options]="patentOption.line"
-                                                         style="width: 200px;height: 300px" class="main-chart"></div>
+                                                         style="height: 300px" class="main-chart"></div>
                                                 </ion-col>
-                                                <ion-col size="6">
+                                                <ion-col size="5">
                                                     <div *ngIf="patentOption.pie" echarts [options]="patentOption.pie"
-                                                         style="width: 200px;height: 300px" class="main-chart"></div>
+                                                         style="height: 300px" class="main-chart"></div>
                                                 </ion-col>
                                             </ion-row>
                                         </ion-grid>
                                     </ion-item>
                                 </ion-list>
                             </ion-col>
-                            <ion-col size="4">
+                            <ion-col size="4" size-md="12" size-lg="4">
                                 <!--<app-empty
                                         *ngIf="(copyOption.count > 0 || patentOption.count > 0 || brandOption.count > 0) && copyOption.count === 0"
                                         title="暂时没有相关数据"></app-empty>-->
@@ -451,13 +451,13 @@
                                                         <span>暂无版权信息</span>
                                                     </div>
                                                 </ion-col>
-                                                <ion-col size="6">
+                                                <ion-col size="7">
                                                     <div *ngIf="copyOption.line" echarts [options]="copyOption.line"
-                                                         style="width: 200px;height: 300px" class="main-chart"></div>
+                                                         style="height: 300px" class="main-chart"></div>
                                                 </ion-col>
-                                                <ion-col size="6">
+                                                <ion-col size="5">
                                                     <div *ngIf="copyOption.pie" echarts [options]="copyOption.pie"
-                                                         style="width: 200px;height: 300px;z-index:1"
+                                                         style="height: 300px;z-index:1"
                                                          class="main-chart"></div>
                                                 </ion-col>
                                             </ion-row>
