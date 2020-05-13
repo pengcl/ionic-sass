@@ -52,7 +52,7 @@
                                         </ion-item>
                                         <ion-item lines="none" style="margin-top: 13px;">
                                             <ion-thumbnail slot="start"></ion-thumbnail>
-                                            <ion-button color="primary" style="width: 60%;"
+                                            <ion-button color="primary" style="width:110px;"
                                                         [routerLink]="['/admin/company/qualification',company.id]">
                                                 查看智能画像
                                             </ion-button>
@@ -114,12 +114,11 @@
                                         可培育项目数<em
                                             style="margin-left:6px;font-style: normal;color: #21333F;font-size: 18px;font-weight: 500">{{quick.series[0]?.data[0].count}}</em>
                                     </p>
-                                    <ion-item lines="none" style="margin-bottom:6px;">
-                                        <ion-thumbnail slot="start"></ion-thumbnail>
-                                        <ion-button color="primary" style="width: 60%;"
+                                    <div style="display: flex;margin-bottom: 30px; justify-content: center">
+                                        <ion-button color="primary" style="width:110px;"
                                                     [routerLink]="['/admin/policy/index']">查看匹配政策
                                         </ion-button>
-                                    </ion-item>
+                                    </div>
                                 </ion-col>
                                 <ion-col *ngIf="keChuangBao" size="6">
                                     <div id="c2" style="display: flex;justify-content: center;margin: 0 auto"></div>
