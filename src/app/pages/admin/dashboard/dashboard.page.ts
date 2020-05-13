@@ -674,6 +674,7 @@ export class AdminDashboardPage implements OnInit{
             };
         });
 
+
         monitorSvc.list({custId: this.company.id}).subscribe(res => {
             this.monitorDataSource = new MatTableDataSource<any>(res.list);
         });
