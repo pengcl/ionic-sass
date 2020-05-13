@@ -334,21 +334,7 @@ export class AdminDashboardPage implements OnInit{
             const years = [];
             const series = [
                 {
-                    name: '无效',
-                    type: 'bar',
-                    stack: '1',
-                    data: [],
-                    barWidth: 7
-                },
-                {
-                    name: '申请中',
-                    type: 'bar',
-                    stack: '1',
-                    data: [],
-                    barWidth: 7
-                },
-                {
-                    name: '已注册',
+                    name: '已登记',
                     type: 'bar',
                     stack: '1',
                     data: [],
@@ -360,12 +346,20 @@ export class AdminDashboardPage implements OnInit{
             });
             res.histograms.forEach(item => {
                 years.push(item.applyYear);
-                series[0].data.push(item.invalidCount);
-                series[1].data.push(item.applyCount);
-                series[2].data.push(item.registerCount);
+                series[0].data.push(item.registerCount);
             });
             this.copyOption.line = {
-                color: ['#E26767', '#6F9CD2', '#8DE1DE'],
+                color: ['#8DE1DE'],
+                legend: {
+                    bottom: 10,
+                    data: ['已登记'],
+                    itemWidth: 8,
+                    itemHeight: 8,
+                    icon: 'circle',
+                    textStyle: {
+                        fontSize: 10
+                    }
+                },
                 grid: {
                     left: '3%',
                     right: '4%',
@@ -606,21 +600,7 @@ export class AdminDashboardPage implements OnInit{
             const years = [];
             const series = [
                 {
-                    name: '无效',
-                    type: 'bar',
-                    stack: '1',
-                    data: [],
-                    barWidth: 7
-                },
-                {
-                    name: '申请中',
-                    type: 'bar',
-                    stack: '1',
-                    data: [],
-                    barWidth: 7
-                },
-                {
-                    name: '已注册',
+                    name: '已公开（公告）',
                     type: 'bar',
                     stack: '1',
                     data: [],
@@ -632,13 +612,20 @@ export class AdminDashboardPage implements OnInit{
             });
             res.histograms.forEach(item => {
                 years.push(item.applyYear);
-                series[2].data.push(item.registerCount ? item.registerCount : 0);
-
-                series[1].data.push(item.applyCount ? item.applyCount : 0);
-                series[0].data.push(item.invalidCount ? item.invalidCount : 0);
+                series[0].data.push(item.registerCount ? item.registerCount : 0);
             });
             this.patentOption.line = {
-                color: ['#E26767', '#6F9CD2', '#8DE1DE'],
+                color: ['#8DE1DE'],
+                legend: {
+                    bottom: 10,
+                    data: ['已公开（公告）'],
+                    itemWidth: 8,
+                    itemHeight: 8,
+                    icon: 'circle',
+                    textStyle: {
+                        fontSize: 10
+                    }
+                },
                 grid: {
                     left: '3%',
                     right: '4%',
