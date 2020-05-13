@@ -279,13 +279,13 @@
                             <ion-col size="4">
                                 <ion-item *ngFor="let item of brand;let i = index" lines="none" class="layout_l"
                                           style="border-top-left-radius: 4px;border-bottom-left-radius: 4px;"
-                                [ngStyle]="{'border-bottom':i === brand.length-1 ? 'none' : '1px solid rgba(229,235,240,1)',
+                                [ngStyle]="{'border-bottom':i === brand.length-1 ? 'none' : '1px solid #e5ebf0',
                                             'border-right-color':item.score < 60 ? '#EEDADA' : '',
-                                            'border-bottom-color':item.score < 60 ? '#EEDADA' : ''}">
+                                            'border-bottom-color':item.score < 60 ? '#EEDADA' : '#e5ebf0'}">
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/depth.png"/>
                                     </ion-thumbnail>
-                                    <ion-label>{{item.label}}<span [ngStyle]="{'color': item.score >= 60 ? '#3fa2f4' : '#B81F1C'}">{{item.name}}</span></ion-label>
+                                    <ion-label>{{item.label}}<span [ngStyle]="{'color': item.score >= 60 ? '#3fa2f4' : '#B81F1C'}" style="font-size:18px">{{item.name}}</span></ion-label>
                                     <div class="result_img">
                                         <img [src]="'/assets/images/company/' + (item.score >= 81 ? 'hand' : item.score >= 60 ? 'tick' : 'warn') + '.png'"/>
                                     </div>
@@ -314,20 +314,20 @@
                                     <table cellpadding="0" cellspacing="0" border="0" class="table_top">
                                         <thead>
                                         <tr>
-                                            <th class="user"></th>
-                                            <th class="grade">商标名称</th>
-                                            <th class="consumption">类别数量</th>
-                                            <th class="date">使用时长</th>
+                                            <th class="user" style="font-size:14px;"></th>
+                                            <th class="grade" style="font-size:14px;">商标名称</th>
+                                            <th class="consumption" style="font-size:14px;">类别数量</th>
+                                            <th class="date" style="font-size:14px;">使用时长</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr *ngFor="let item of getChatValue(1);let i = index">
+                                        <tr *ngFor="let item of top3;let i = index">
                                             <td class="user">
                                                 <img [src]="'/assets/images/company/' + (i + 1) + '.png'" height="auto" width="24"/>
                                             </td>
-                                            <td class="grade">{{item.text}}</td>
-                                            <td class="consumption">{{item.count}}</td>
-                                            <td class="date">{{item.count1}}年</td>
+                                            <td class="grade">{{item.text ? item.text : '-'}}</td>
+                                            <td class="consumption">{{item.count ? item.count : '-'}}</td>
+                                            <td class="date">{{item.count1 ? item.count1 + '年' : '-'}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -401,9 +401,12 @@
                         <mat-card-title>科研创造力分析结果</mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <ion-row style="margin-top: 20px">
+                        <ion-row style="margin-top: 20px" [ngStyle]="{'border-color':getGroupValue(10).score < 60 ? '#EEDADA' : '' }">
                             <ion-col size="4">
-                                <ion-item [class.low]="item.score < 60" [class.height]="item.score > 80" *ngFor="let item of scientific;let i = index" lines="none" class="layout_l">
+                                <ion-item [class.low]="item.score < 60" [class.height]="item.score > 80" *ngFor="let item of scientific;let i = index" lines="none" class="layout_l"
+                                          [ngStyle]="{'border-bottom':i === brand.length-1 ? 'none' : '1px solid #e5ebf0',
+                                            'border-right-color':item.score < 60 ? '#EEDADA' : '',
+                                            'border-bottom-color':item.score < 60 ? '#EEDADA' : '#e5ebf0'}">
                                     <ion-thumbnail>
                                         <img src="/assets/images/company/achievement.png"/>
                                     </ion-thumbnail>

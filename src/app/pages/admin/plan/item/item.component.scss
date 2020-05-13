@@ -204,7 +204,7 @@ ion-row {
 
         span {
           float: right;
-          font-size: 24px;
+          font-size: 18px;
           font-weight: 500;
           color: rgba(63, 162, 244, 1);
           line-height: 33px;
@@ -237,7 +237,7 @@ ion-row {
         margin-top: -1px;
 
         h2 {
-          font-size: 24px;
+          font-size: 18px;
           font-weight: 500;
           color: rgba(63, 162, 244, 1);
           line-height: 33px;
@@ -304,7 +304,7 @@ ion-row {
       }
 
       h3 {
-        font-size: 24px;
+        font-size: 18px;
         font-weight: 500;
         color: rgba(32, 51, 63, 1);
         line-height: 33px;
@@ -955,6 +955,15 @@ ion-label {
     }
 
     &.low {
+      border-color: #EEDADA;
+      border-top: 1px solid #EEDADA;
+
+      & + .low {
+        border-top: 0;
+      }
+    }
+
+    &.height {
       border-color: #EEDADA;
       border-top: 1px solid #EEDADA;
 

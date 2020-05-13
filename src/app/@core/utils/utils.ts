@@ -45,14 +45,10 @@ export function resultProcess(res) {
     }
 }
 
-function getList(p?) {
-    if (p) {
-    } else {
-
-    }
-}
-
 export function listToTree(data, options?) {
+    data.sort((a, b) => {
+        return a.id - b.id;
+    });
     options = options || {};
     const ID_KEY = options.idKey || 'i';
     const PARENT_KEY = options.parentKey || 'p';

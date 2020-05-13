@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {LocationStrategy} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -7,6 +7,7 @@ import {DialogService} from '../../../../../@core/modules/dialog';
 import {debounceTime, filter, distinctUntilChanged} from 'rxjs/operators';
 import {AddressService} from '../../../../../@core/services/address.service';
 import {CompanyService} from '../../company.service';
+import {MatAutocompleteTrigger} from '@angular/material';
 
 
 @Component({
@@ -42,6 +43,9 @@ export class AdminCompanyCreateStep1Page implements OnInit {
                 private companySvc: CompanyService) {
     }
 
+    // @ViewChild('auto', {read: MatAutocompleteTrigger, static: false}) private auto: MatAutocompleteTrigger;
+    @ViewChild(MatAutocompleteTrigger, {static: false}) auto: MatAutocompleteTrigger;
+
     ngOnInit() {
         this.getProvinces();
         this.form.get('companyName').valueChanges.pipe(
@@ -75,19 +79,15 @@ export class AdminCompanyCreateStep1Page implements OnInit {
         });
     }
 
-    /*search() {
-        if (this.firstForm.get('companyName').invalid) {
-            this.dialogSvc.show({content: '请输入公司名称', cancel: '', confirm: '我知道了'}).subscribe();
-        } else {
-            this.companySvc.search(this.firstForm.get('companyName').value).subscribe(res => {
-                if (res.code === 20000) {
-                    if (res.data) {
-                        this.options = res.data;
-                    }
-                }
-            });
-        }
-    }*/
+    search() {
+        this.companySvc.search(this.form.get('companyName').value).subscribe(res => {
+            this.loading = false;
+            if (res.code === '200' && res.data) {
+                this.options = res.data;
+                this.auto.openPanel();
+            }
+        });
+    }
 
     setCompany() {
         this.companySvc.find(this.form.get('companyName').value).subscribe(res => {

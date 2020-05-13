@@ -280,7 +280,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
     }
 
     typesChange(e) {
-        console.log(e);
         this.order.count = 0;
         this.order.amount = 0;
         this.order.total = 0;
@@ -337,7 +336,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         });
         this.secondForm.get('brandTypes').setValue(ids);
         this.secondForm.get('brandNames').setValue(names);
-        console.log(this.secondForm.value);
     }
 
     setFormValue(formName) {
@@ -366,7 +364,6 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
                 this.thirdForm.get('address').value,
             zipCode: this.thirdForm.get('zipCode').value
         }).subscribe(res => {
-            console.log(res);
             this.proxyId = res;
         });
     }

@@ -309,6 +309,11 @@ export class AdminPlanItemPage implements OnInit {
         .fill(0)
         .map((v: any, i: number) => i);
     types;
+    top3 = [
+        {},
+        {},
+        {}
+    ];
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -460,13 +465,18 @@ export class AdminPlanItemPage implements OnInit {
                 this.getGroupBar(3);
                 this.getGroupBar(7);
                 this.getLineBar(2);
+                const top3 = this.getChatValue(1);
+                if (top3.length > 0) {
+                    this.top3 = top3;
+                }
                 const selectedTypes = this.getChatValue(5);
+                console.log(selectedTypes);
                 const items = Array(45)
                     .fill(0)
                     .map((v: any, i: number) => i);
                 const types = [];
                 items.forEach(item => {
-                    const index = getIndex(selectedTypes, 'text', item + '');
+                    const index = getIndex(selectedTypes, 'text', item + 1 + '');
                     let selected = false;
                     if (typeof index === 'number') {
                         selected = true;
@@ -477,6 +487,7 @@ export class AdminPlanItemPage implements OnInit {
                     });
                 });
                 this.types = types;
+                console.log(this.types);
                 this.brand = (() => {
                     const list = [];
                     list.push(this.getGroupValue(-100));

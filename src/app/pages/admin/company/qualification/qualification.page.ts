@@ -443,7 +443,10 @@ export class AdminCompanyQualificationPage implements OnInit {
                 private companySvc: CompanyService,
                 private qualificationSvc: QualificationService,
                 private dashboardSvc: DashboardService) {
-        planSvc.list(this.params).subscribe(res => {
+    }
+
+    ngOnInit() {
+        this.planSvc.list(this.params).subscribe(res => {
             this.dataSource = new MatTableDataSource<any>(res.list);
         });
 
@@ -465,9 +468,6 @@ export class AdminCompanyQualificationPage implements OnInit {
             this.subsidy.quick.series[0].data[0].value = res.quickAmt;
             this.subsidy.quick.series[0].data[0].count = res.quickCount;
         });
-    }
-
-    ngOnInit() {
         this.title.setTitle(this.type === '0' ? '企业资质信息' : this.type === '1' ? '项目' : '员工');
         this.companySvc.get(this.id).subscribe(res => {
             this.company = res.busCust;

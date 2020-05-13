@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {DashboardService} from '../../dashboard/dashboard.service';
 import {CompanyService} from '../../company/company.service';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {PolicyService} from '../policy.service';
 import {MatTableDataSource} from '@angular/material';
 import {LoadingService} from '../../../../@core/services/loading.service';
@@ -52,12 +52,13 @@ export class AdminPolicyPage {
     };
     subsidyOption;
     company = this.companySvc.currentCompany;
+    id = this.route.snapshot.queryParams.id || this.company.id;
     policy;
     dateTime = new Date();
     dataSource;
     displayedColumns = ['name', 'money', 'type', 'scope', 'time', 'actions'];
     params = {
-        custId: this.company.id,
+        custId: this.id,
         page: 1,
         rows: 10
     };
@@ -70,11 +71,16 @@ export class AdminPolicyPage {
     constructor(private dashboardSvc: DashboardService,
                 private companySvc: CompanyService,
                 private router: Router,
+                private route: ActivatedRoute,
                 private policySvc: PolicyService,
                 private toastSvc: ToastService,
                 private el: ElementRef,
                 private dialogSvc: DialogService) {
-        this.dashboardSvc.subsidies(this.company.id).subscribe(res => {
+        const id = this.id || this.company.id;
+        this.companySvc.get(id).subscribe(res => {
+            this.company = res.busCust;
+        });
+        this.dashboardSvc.subsidies(id).subscribe(res => {
             this.keChuangBao = JSON.parse(JSON.stringify(this.option));
             this.quick = JSON.parse(JSON.stringify(this.option));
             this.keChuangBao.series[0].data[0].value = res.keChuangBaoAmt;
@@ -140,7 +146,7 @@ export class AdminPolicyPage {
             }
         });
 
-        this.policySvc.count(this.company.id).subscribe(res => {
+        this.policySvc.count(id).subscribe(res => {
             this.policy = res;
         });
         this.getData();
@@ -537,11 +543,10 @@ export class AdminPolicyPage {
     }
 
     toPolicyItem() {
-        this.router.navigate(['/admin/policy/list']);
+        this.router.navigate(['/admin/policy/list'], {queryParams: {id: this.id}});
     }
 
     applyPolicy() {
-        console.log(this.company);
         const body = {
             mobile: this.company.mobile,
             name: this.company.name,

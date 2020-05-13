@@ -1,4 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+
 import {ModalController} from '@ionic/angular';
 import {TypesService} from './types.service';
 import {IndustryService} from '../../../../@shared/components/industry/industry.service';
@@ -14,6 +15,10 @@ export class AdminCheckoutTypesComponent implements OnInit, OnChanges {
     @Input() name;
     @Input() data = {type: 0, industries: [], types: [], items: []};
     @Output() change = new EventEmitter<any>();
+    industries;
+    sourceIndustries;
+    industryPanelShow = false;
+    industryIds;
 
     constructor(private modalController: ModalController, private industrySvc: IndustryService, private typesSvc: TypesService) {
         this.getTypes();
@@ -74,6 +79,10 @@ export class AdminCheckoutTypesComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
+        this.industrySvc.list(true).subscribe(industries => {
+            this.sourceIndustries = industries;
+            this.industries = listToTree(industries, {idKey: 'id', parentKey: 'parentId', childrenKey: 'children'});
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -82,38 +91,15 @@ export class AdminCheckoutTypesComponent implements OnInit, OnChanges {
         }
     }
 
-    async presentModal() {
-        const modal = await this.modalController.create({
-            showBackdrop: true,
-            component: IndustryComponent,
-            componentProps: {items: this.data.industries, type: 'order'}
-        });
-        await modal.present();
-        const {data} = await modal.onDidDismiss(); // 获取关闭传回的值
-        // this.form.get('industryIds').markAsTouched();
-        this.data.industries = data;
-        this.setIndustries();
-    }
-
-    remove(item) {
-        const index = getIndex(this.data.industries, 'id', item.id);
-        if (index >= 0) {
-            this.data.industries.splice(index, 1);
+    industryChange(e) {
+        if (e.detail.value) {
+            this.setIndustries(e.detail.value);
         }
-        this.setIndustries();
     }
 
-    setIndustries() {
-        let ids = '';
-        this.data.industries.forEach(item => {
-            if (ids) {
-                ids = ids + ',' + item.id;
-            } else {
-                ids = item.id;
-            }
-        });
-        if (ids) {
-            this.typesSvc.getTypes(ids).subscribe(res => {
+    setIndustries(id?) {
+        if (id) {
+            this.typesSvc.getTypes(id).subscribe(res => {
                 res = res ? res : [];
                 this.data.items = [];
                 const types = listToTree(res);
@@ -151,6 +137,7 @@ export class AdminCheckoutTypesComponent implements OnInit, OnChanges {
         } else {
             this.data.types = [];
             this.data.items = [];
+            console.log(this.data);
             this.change.emit(this.data);
             // this.setPrice();
         }

@@ -107,3 +107,146 @@ mat-expansion-panel {
     border: 1px dashed rgba(27, 178, 43, 1);
   }
 }
+
+.industry-container {
+  position: absolute;
+  z-index: 10001;
+  background: #fff;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+  border-radius: 4px;
+  margin-top: -60px;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      font-size: 14px;
+      line-height: 3em;
+      height: 3em;
+      margin: 0;
+      padding: 0 16px 0 46px;
+      cursor: pointer;
+      text-overflow: unset;
+      white-space: nowrap;
+      min-width: 160px;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.04);
+
+        .sub-content {
+          display: block;
+        }
+      }
+
+      &.selected {
+        color: #3f51b5;
+        background: rgba(0, 0, 0, 0.12);
+      }
+
+      ion-radio {
+        position: absolute;
+        margin-left: -30px;
+        margin-top: 11px;
+      }
+
+      .sub-content {
+        position: absolute;
+        left: 100%;
+        background: #fff;
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+        top: 50%;
+        transform: translate3d(0, -50%, 0);
+        height: 100%;
+        overflow-y: scroll;
+        display: none;
+      }
+    }
+  }
+}
+
+.selected-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10000;
+}
+
+mat-form-field {
+  width: 80%;
+  margin-bottom: 50px;
+  label {
+    position: absolute;
+    top: -30px;
+    white-space: nowrap;
+    em {
+      color: #FD5451;
+      font-style: normal;
+    }
+  }
+
+  &::ng-deep {
+
+    .mat-form-field-subscript-wrapper {
+      position: absolute;
+      margin-top: 0;
+      top: 0;
+      left: 220px;
+    }
+
+    .mat-form-field-outline {
+      .mat-form-field-outline-end, .mat-form-field-outline-start, .mat-form-field-outline-gap {
+        border-width: 1px !important;
+      }
+    }
+
+    .mat-form-field-infix {
+
+      input {
+        font-size: 14px;
+      }
+    }
+
+    .mat-select-placeholder {
+      font-size: 14px;
+    }
+
+    .mat-select-value {
+      font-size: 14px;
+    }
+
+    .mat-form-field-suffix {
+      font-size: 14px;
+
+    }
+  }
+
+
+  label {
+    font-size: 14px;
+  }
+
+  &.nl {
+    &::ng-deep {
+      .mat-form-field-outline-start, .mat-form-field-outline-gap, .mat-form-field-outline-end {
+        border: none !important;
+      }
+    }
+  }
+}
+mat-horizontal-stepper{
+  &::ng-deep{
+    .mat-horizontal-content-container{
+      padding: 0;
+    }
+  }
+}
+mat-radio-group {
+  mat-radio-button {
+    margin: 15px 50px 15px 0 !important;
+  }
+
+}

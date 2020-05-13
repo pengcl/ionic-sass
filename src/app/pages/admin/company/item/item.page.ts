@@ -165,22 +165,6 @@ export class AdminCompanyItemPage implements OnInit {
                 private industrySvc: IndustryService,
                 private authSvc: AuthService,
                 private companySvc: CompanyService) {
-        forkJoin(
-            this.companySvc.condVal(this.id, 2),
-            this.companySvc.condVal(this.id, 17),
-            this.companySvc.condVal(this.id, 18),
-            this.companySvc.condVal(this.id, 19),
-            this.companySvc.condVal(this.id, 21),
-            this.companySvc.condVal(this.id, 24),
-            this.companySvc.condVal(this.id, 25),
-            this.companySvc.condVal(this.id, 26),
-            this.companySvc.condVal(this.id, 28),
-            this.companySvc.condVal(this.id, 29),
-            this.companySvc.condVal(this.id, 30),
-            this.companySvc.condVal(this.id, 31)
-        ).subscribe(([r2, r17, r18, r19, r21, r24, r25, r26, r28, r29, r30, r31]) => {
-            this.setForm([2, 17, 18, 19, 21, 24, 25, 26, 28, 29, 30, 31], [r2, r17, r18, r19, r21, r24, r25, r26, r28, r29, r30, r31]);
-        });
     }
 
     option: any = {};
@@ -200,6 +184,22 @@ export class AdminCompanyItemPage implements OnInit {
     sourceIndustries;
 
     ngOnInit() {
+        forkJoin(
+            this.companySvc.condVal(this.id, 2),
+            this.companySvc.condVal(this.id, 17),
+            this.companySvc.condVal(this.id, 18),
+            this.companySvc.condVal(this.id, 19),
+            this.companySvc.condVal(this.id, 21),
+            this.companySvc.condVal(this.id, 24),
+            this.companySvc.condVal(this.id, 25),
+            this.companySvc.condVal(this.id, 26),
+            this.companySvc.condVal(this.id, 28),
+            this.companySvc.condVal(this.id, 29),
+            this.companySvc.condVal(this.id, 30),
+            this.companySvc.condVal(this.id, 31)
+        ).subscribe(([r2, r17, r18, r19, r21, r24, r25, r26, r28, r29, r30, r31]) => {
+            this.setForm([2, 17, 18, 19, 21, 24, 25, 26, 28, 29, 30, 31], [r2, r17, r18, r19, r21, r24, r25, r26, r28, r29, r30, r31]);
+        });
         this.companySvc.source(this.id).subscribe(res => {
             this.data = res;
         });
@@ -535,7 +535,7 @@ export class AdminCompanyItemPage implements OnInit {
         e.preventDefault();
     }
 
-    save() {
+    save(type?) {
         this.form.get('match').get('conditions').setValue(this.getConditions());
         if (this.form.invalid) {
             return false;
@@ -565,7 +565,16 @@ export class AdminCompanyItemPage implements OnInit {
                             if (this.route.snapshot.queryParams.default) {
                                 this.companySvc.updateCompanyStatus(this.company);
                             }
-                            this.router.navigate(['/admin/company/qualification', this.company.id]);
+                            if (type) {
+                                if (type === 1) {
+                                    this.router.navigate(['/admin/policy/index'], {queryParams: {id: this.id}});
+                                }
+                                if (type === 2) {
+                                    this.router.navigate(['/admin/plan/item'], {queryParams: {id: this.id}});
+                                }
+                            } else {
+                                this.router.navigate(['/admin/company/qualification', this.company.id]);
+                            }
                         }
                     });
                 });

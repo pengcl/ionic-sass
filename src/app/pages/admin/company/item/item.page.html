@@ -235,7 +235,7 @@
                                                 <ion-col size="4" class="form-field">
                                                     <mat-form-field appearance="outline">
                                                         <label><em>*</em>行业</label>
-                                                        <input (click)="industryPanelShow = true" [value]="form.get('company').get('industryIds').value | industryName : sourceIndustries" placeholder="所属行业" matInput
+                                                        <input style="cursor: pointer" (click)="industryPanelShow = true" [value]="form.get('company').get('industryIds').value | industryName : sourceIndustries" placeholder="所属行业" matInput
                                                                required readonly>
                                                         <!--<mat-chip-list #chipList required>
                                                             <mat-chip *ngFor="let industry of selectedIndustries"
@@ -245,7 +245,7 @@
                                                             <input [matChipInputFor]="chipList"
                                                                    (click)="presentModal()" matInput required readonly>
                                                         </mat-chip-list>-->
-                                                        <ion-icon matSuffix name="arrow-down"></ion-icon>
+                                                        <ion-icon style="cursor: pointer" (click)="industryPanelShow = true" matSuffix name="arrow-down"></ion-icon>
                                                     </mat-form-field>
                                                     <div *ngIf="industryPanelShow" class="industry-container">
                                                         <div class="main-content">
@@ -704,10 +704,10 @@
     </ion-grid>
 </div>
 <div class="container-bottom">
-    <ion-button [routerLink]="['/admin/policy/index']" color="primary"
+    <ion-button (click)="save(1)" color="primary"
                 style="width: 177px !important;height: 48px!important;">查看企业适配政策
     </ion-button>
-    <ion-button [routerLink]="['/admin/plan/item']" [queryParams]="{id:id}" color="primary">查看体检报告</ion-button>
+    <ion-button (click)="save(2)" color="primary">查看体检报告</ion-button>
     <ion-button (click)="save()" style="--background: rgba(13, 215, 141, 1);">保存本次修改</ion-button>
 </div>
 <div (click)="industryPanelShow = false" *ngIf="industryPanelShow" class="selected-overlay"></div>

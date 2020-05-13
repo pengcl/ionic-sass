@@ -26,7 +26,7 @@
                     <mat-card-content>
                         <ion-grid>
                             <ion-row>
-                                <ion-col size="4">
+                                <ion-col size="5">
                                     <ion-grid>
                                         <ion-row>
                                             <ion-col size="5">
@@ -94,7 +94,7 @@
                                         </ion-row>
                                     </ion-grid>
                                 </ion-col>
-                                <ion-col size="8">
+                                <ion-col size="7">
                                     <ion-grid>
                                         <ion-row>
                                             <ion-col size="4">
@@ -105,7 +105,7 @@
                                                         <span [routerLink]="['/admin/company/item',company.id]">完善资料</span>
                                                     </div>
                                                     <div *ngIf="circle.man" echarts [options]="circle.man"
-                                                         style="width: 200px;height: 200px" class="main-chart"></div>
+                                                         style="height: 200px" class="main-chart"></div>
                                                 </ion-list>
                                             </ion-col>
                                             <ion-col size="4">
@@ -116,7 +116,7 @@
                                                         <span [routerLink]="['/admin/company/item',company.id]">完善资料</span>
                                                     </div>
                                                     <div *ngIf="circle.job" echarts [options]="circle.job"
-                                                         style="width: 200px;height: 200px" class="main-chart"></div>
+                                                         style="height: 200px" class="main-chart"></div>
                                                 </ion-list>
                                             </ion-col>
                                             <ion-col size="4">
@@ -127,7 +127,7 @@
                                                         <span [routerLink]="['/admin/company/item',company.id]">完善资料</span>
                                                     </div>
                                                     <div *ngIf="circle.edu" echarts [options]="circle.edu"
-                                                         style="width: 200px;height: 200px" class="main-chart"></div>
+                                                         style="height: 200px" class="main-chart"></div>
                                                 </ion-list>
                                             </ion-col>
                                         </ion-row>
@@ -194,10 +194,10 @@
                                         <table cellpadding="0" cellspacing="0" border="0">
                                             <thead>
                                             <tr>
-                                                <th class="user"></th>
-                                                <th class="grade">商标名称</th>
-                                                <th class="consumption">类别数量</th>
-                                                <th class="date">使用时长</th>
+                                                <th class="user" style="font-size:14px;"></th>
+                                                <th class="grade" style="font-size:14px;">商标名称</th>
+                                                <th class="consumption" style="font-size:14px;">类别数量</th>
+                                                <th class="date" style="font-size:14px;">使用时长</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -330,7 +330,7 @@
                                                     <span [routerLink]="['/admin/company/item',company.id]">完善资料</span>
                                                 </div>
                                                 <div *ngIf="circle['sci-rate']" echarts [options]="circle['sci-rate']"
-                                                     style="width: 200px;height: 200px" class="main-chart"></div>
+                                                     style="height: 200px" class="main-chart"></div>
                                             </ion-list>
                                         </ion-col>
                                         <ion-col size="6">
@@ -341,7 +341,7 @@
                                                     <span [routerLink]="['/admin/company/item',company.id]">完善资料</span>
                                                 </div>
                                                 <div *ngIf="circle.sci" echarts [options]="circle.sci"
-                                                     style="width: 200px;height: 200px" class="main-chart"></div>
+                                                     style="height: 200px" class="main-chart"></div>
                                             </ion-list>
                                         </ion-col>
                                     </ion-row>
