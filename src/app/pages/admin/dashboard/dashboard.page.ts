@@ -20,6 +20,7 @@ import {registerShape} from '@antv/g2';
 
 declare var $: any;
 
+
 @Component({
     selector: 'app-admin-dashboard',
     templateUrl: './dashboard.page.html',
