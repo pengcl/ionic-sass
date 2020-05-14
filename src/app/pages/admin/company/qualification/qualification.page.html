@@ -154,7 +154,7 @@
                                 <ion-col *ngFor="let item of brand" size="3">
                                     <div class="brand">
                                         <ion-item lines="none" style="padding: 6px 15px;background: none;">
-                                            <ion-label>{{item.label}}</ion-label>
+                                            <ion-label [title]="item.label">{{item.label}}</ion-label>
                                             <div style="display: flex;flex-direction: row;float: right">
                                                 <ion-thumbnail style="width: 32px;height: 32px">
                                                     <img [src]="'/assets/images/company/' + (item.score >= 81 ? 'good' : item.score >= 60 ? 'well' : 'strengthen') + '.png'"/>
@@ -167,7 +167,7 @@
                                 <ion-col size="3">
                                     <div class="brand">
                                         <ion-item lines="none" style="padding: 6px 15px;background: none;">
-                                            <ion-label>商标数量</ion-label>
+                                            <ion-label title="商标数量">商标数量</ion-label>
                                             <div style="display: flex;flex-direction: row;float: right">
                                                 <em>{{getCondValue(5) ? getCondValue(5) : 0}}</em>
                                                 <span class="num">个</span>
@@ -179,7 +179,7 @@
                                 <ion-col size="3">
                                     <div class="brand" style="margin-right: 0">
                                         <ion-item lines="none" style="padding: 6px 15px;background: none;">
-                                            <ion-label>商标类别数量</ion-label>
+                                            <ion-label title="商标类别数量">商标类别数量</ion-label>
                                             <div style="display: flex;flex-direction: row;float: right">
                                                 <em>{{getCondValue(6) ? getCondValue(6) : 0}}</em>
                                                 <span class="num">类</span>
@@ -252,7 +252,7 @@
                                         <ion-col *ngFor="let item of scientific" size="6">
                                             <div class="brand">
                                                 <ion-item lines="none" style="padding: 6px 15px;background: none;">
-                                                    <ion-label>{{item.label}}</ion-label>
+                                                    <ion-label [title]="item.label">{{item.label}}</ion-label>
                                                     <div style="display: flex;flex-direction: row;float: right">
                                                         <ion-thumbnail style="width: 32px;height: 32px">
                                                             <img [src]="'/assets/images/company/' + (item.score >= 81 ? 'good' : item.score >= 60 ? 'well' : 'strengthen') + '.svg'"/>
@@ -284,7 +284,7 @@
                                         <ion-col size="4">
                                             <div class="research">
                                                 <ion-item lines="none" style="padding: 6px 15px;background: none;">
-                                                    <ion-label>发明专利</ion-label>
+                                                    <ion-label title="发明专利">发明专利</ion-label>
                                                     <div style="display: flex;flex-direction: row;float: right">
                                                         <em>{{getCondValue(8) ? getCondValue(8) : 0}}</em>
                                                         <span class="num">个</span>
@@ -296,7 +296,7 @@
                                         <ion-col size="4">
                                             <div class="research">
                                                 <ion-item lines="none" style="padding: 6px 15px;background: none;">
-                                                    <ion-label>实用新型专利</ion-label>
+                                                    <ion-label title="实用新型专利">实用新型专利</ion-label>
                                                     <div style="display: flex;flex-direction: row;float: right">
                                                         <em>{{getCondValue(9) ? getCondValue(9) : 0}}</em>
                                                         <span class="num">个</span>
@@ -308,7 +308,7 @@
                                         <ion-col size="4">
                                             <div class="research" style="margin-right: 0">
                                                 <ion-item lines="none" style="padding: 6px 15px;background: none;">
-                                                    <ion-label>软件著作权</ion-label>
+                                                    <ion-label title="软件著作权">软件著作权</ion-label>
                                                     <div style="display: flex;flex-direction: row;float: right">
                                                         <em>{{getCondValue(11) ? getCondValue(11) : 0}}</em>
                                                         <span class="num">个</span>
