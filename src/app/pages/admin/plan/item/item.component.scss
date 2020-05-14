@@ -986,3 +986,37 @@ ion-label {
     }
   }
 }
+
+
+@media screen and (max-width:1280px){
+
+  .policy-left, .policy-right {
+    p {
+      padding: 3px 30px 0px 22px !important;
+      font-size: 14px !important;
+      line-height:20px !important;
+
+
+      em {
+        font-size: 24px !important;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      span {
+        display: inline-block !important;
+        float: none !important;
+        padding: 0 20px !important;
+        margin-top:0 !important;
+        height:40px;
+        line-height:40px !important;
+      }
+      strong{ display: block}
+    }
+  }
+
+  .policy-left{
+
+    span {width:203px; text-align: center;}
+  }
+
+}
