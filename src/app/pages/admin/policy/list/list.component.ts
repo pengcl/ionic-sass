@@ -11,6 +11,7 @@ import {debounceTime, filter, map, distinctUntilChanged, switchMap} from 'rxjs/o
 import {LoadingService} from '../../../../@core/services/loading.service';
 import {ToastService} from '../../../../@core/modules/toast';
 
+
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
