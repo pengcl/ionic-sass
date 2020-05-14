@@ -283,6 +283,8 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
         this.order.count = 0;
         this.order.amount = 0;
         this.order.total = 0;
+        this.order.secondForm.brandNames = '';
+        this.order.secondForm.brandTypes = '';
         e.items.forEach(type => {
             const count = typeof type.priceCount === 'number' ? type.priceCount : 0;
             const total = typeof type.total === 'number' ? type.total : 0;
@@ -291,6 +293,8 @@ export class AdminCheckoutPage implements OnInit, OnDestroy {
             this.order.total = this.order.amount;
         });
         this.secondForm.get('protectType').setValue(e.type);
+        this.secondForm.get('brandNames').setValue('');
+        this.secondForm.get('brandTypes').setValue('');
         this.storageSvc.set('order', JSON.stringify(this.order));
         this.setSource();
         if (this.order.count > 0) {
