@@ -562,9 +562,7 @@ export class AdminCompanyItemPage implements OnInit {
                         confirm: '我知道了'
                     }).subscribe(value => {
                         if (value.value) {
-                            if (this.route.snapshot.queryParams.default) {
-                                this.companySvc.updateCompanyStatus(this.company);
-                            }
+                            this.companySvc.updateCompanyStatus(this.company);
                             if (type) {
                                 if (type === 1) {
                                     this.router.navigate(['/admin/policy/index'], {queryParams: {id: this.id}});

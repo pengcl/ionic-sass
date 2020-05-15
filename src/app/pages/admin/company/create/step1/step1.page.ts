@@ -80,6 +80,7 @@ export class AdminCompanyCreateStep1Page implements OnInit {
     }
 
     search() {
+        this.loading = true;
         this.companySvc.search(this.form.get('companyName').value).subscribe(res => {
             this.loading = false;
             if (res.code === '200' && res.data) {
