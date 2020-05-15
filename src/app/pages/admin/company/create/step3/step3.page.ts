@@ -46,7 +46,7 @@ export class AdminCompanyCreateStep3Page implements OnInit {
         list: []
     };
     conditions;
-
+    company;
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private location: LocationStrategy,
@@ -58,8 +58,10 @@ export class AdminCompanyCreateStep3Page implements OnInit {
     }
 
     ngOnInit() {
+        this.companySvc.get(this.id).subscribe(res => {
+            this.company = res.busCust;
+        });
         this.companySvc.getCred(this.id).subscribe(res => {
-            console.log(res.conditions);
             this.setupForm(res.conditions);
             this.conditions = res.conditions;
             this.setupForm(res.conditions);
@@ -179,7 +181,8 @@ export class AdminCompanyCreateStep3Page implements OnInit {
         this.toastSvc.loading('提交中...', 0);
         this.companySvc.updateCred(this.submitForm.value).subscribe(res => {
             this.toastSvc.hide();
-            this.router.navigate(['/admin/company/list']);
+            this.companySvc.updateCompanyStatus(this.company);
+            this.router.navigate(['/admin/company/qualification', this.company.id]);
         });
     }
 

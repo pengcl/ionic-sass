@@ -23,7 +23,7 @@
                                     </mat-form-field>
                                 </ion-col>
                                 <ion-col size="8">
-                                    <button (click)="search()" mat-raised-button color="primary" style="margin-left: 20px">搜索</button>
+                                    <button (click)="search()" [disabled]="loading" mat-raised-button color="primary" style="margin-left: 20px">搜索</button>
                                 </ion-col>
 
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table-style"  *ngIf="company">

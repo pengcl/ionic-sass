@@ -9,7 +9,7 @@
             </mat-button-toggle-group>
         </ion-col>
         <ion-col size="12">
-            <mat-form-field style="margin-top: 20px;" appearance="outline">
+            <mat-form-field *ngIf="data.type === 0" style="margin-top: 20px;" appearance="outline">
                 <label><em>*</em>行业</label>
                 <input style="cursor: pointer" (click)="industryPanelShow = true" [value]="industryIds | industryName : sourceIndustries" placeholder="所属行业" matInput
                        required readonly>

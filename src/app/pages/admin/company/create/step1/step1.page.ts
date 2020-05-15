@@ -80,6 +80,7 @@ export class AdminCompanyCreateStep1Page implements OnInit {
     }
 
     search() {
+        this.loading = true;
         this.companySvc.search(this.form.get('companyName').value).subscribe(res => {
             this.loading = false;
             if (res.code === '200' && res.data) {
@@ -90,7 +91,9 @@ export class AdminCompanyCreateStep1Page implements OnInit {
     }
 
     setCompany() {
+        this.toastSvc.loading('加载中...', 0);
         this.companySvc.find(this.form.get('companyName').value).subscribe(res => {
+            this.toastSvc.hide();
             if (res.code === 20000) {
                 this.company = res.data.companyDTO;
                 this.form.get('companyName').setValue(this.company.companyName);
