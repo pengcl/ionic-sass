@@ -34,6 +34,7 @@ export class AdminCompanyListPage {
         this.companySvc.list(this.params).subscribe(res => {
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
+            console.log(this.dataSource);
         });
     }
 

@@ -15,9 +15,13 @@
             <ion-col size="6">
                 <mat-form-field appearance="outline" style="width: 100%">
                     <mat-label>搜索企业主体</mat-label>
-                    <input [(ngModel)]="params.companyName" type="text" placeholder="搜索企业主体" matInput
-                           autocomplete="off">
-                    <mat-icon matSuffix>search</mat-icon>
+                    <input [(ngModel)]="params.companyName"
+                           type="text"
+                           placeholder="搜索企业主体"
+                           matInput
+                           autocomplete="off"
+                           (change)="getData()">
+                    <mat-icon matSuffix (click)="getData()" style="cursor: pointer">search</mat-icon>
                 </mat-form-field>
             </ion-col>
             <ion-col size="6">
