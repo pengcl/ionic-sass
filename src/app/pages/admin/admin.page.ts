@@ -8,6 +8,7 @@ import {AccountService} from './account/account.service';
 import {PerfectScrollbarConfigInterface} from 'ngx-perfect-scrollbar';
 import {filter, map, mergeMap} from 'rxjs/operators';
 import {NavigationEnd} from '@angular/router';
+import {ToastService} from '../../@core/modules/toast';
 
 @Component({
     selector: 'app-admin',
@@ -28,7 +29,8 @@ export class AdminPage {
                 private dialogSvc: DialogService,
                 private authSvc: AuthService,
                 private accountSvc: AccountService,
-                private companySvc: CompanyService) {
+                private companySvc: CompanyService,
+                private toastSvc: ToastService) {
         router.events.pipe(
             filter(event => event instanceof NavigationEnd),
             map(() => this.activatedRoute),
@@ -52,13 +54,8 @@ export class AdminPage {
         });
     }
 
-    async presentLoading() {
-        const loading = await this.loadingController.create({
-            message: '功能即将开放，敬请期待',
-            duration: 1000
-        });
-        await loading.present();
-        await loading.onDidDismiss();
+    presentLoading() {
+        this.toastSvc.loading('', 1000);
     }
 
     logout() {

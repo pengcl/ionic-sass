@@ -76,7 +76,7 @@
                                         <h2 [ngStyle]="{'color': getGroupValue(15).score >= 60 ? '#3fa2f4' : '#B81F1C'}">{{getCondValue(19,'name')}}</h2>
                                     </ion-label>
                                     <div class="result_img">
-                                        <img src="/assets/images/company/hand.png"/>
+                                        <img [src]="'/assets/images/company/' + (getGroupValue(15).score >= 81 ? 'hand' : getGroupValue(15).score >= 60 ? 'tick' : 'warn') + '.png'"/>
                                     </div>
                                 </ion-item>
                             </ion-col>
@@ -99,7 +99,7 @@
                                         <h2 [ngStyle]="{'color': getGroupValue(16).score >= 60 ? '#3fa2f4' : '#B81F1C'}">{{getCondValue(17,'name')}}</h2>
                                     </ion-label>
                                     <div class="result_img">
-                                        <img src="/assets/images/company/tick.png"/>
+                                        <img [src]="'/assets/images/company/' + (getGroupValue(16).score >= 81 ? 'hand' : getGroupValue(16).score >= 60 ? 'tick' : 'warn') + '.png'"/>
                                     </div>
                                 </ion-item>
                             </ion-col>
