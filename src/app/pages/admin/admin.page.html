@@ -50,7 +50,7 @@
             <mat-menu [hasBackdrop]="false" xPosition="after" [classList]="'side-sub-menu'" #menuService="matMenu">
                 <button routerLink="/admin/checkout" routerLinkActive="active" mat-menu-item>商标自助智能注册</button>
                 <!--<button (click)="presentLoading();" routerLinkActive="active" mat-menu-item>专利快捷提交</button>-->
-                <button (click)="presentLoading();" routerLinkActive="active" mat-menu-item>版权智能存证登记</button>
+                <button routerLink="/admin/certificate/list" routerLinkActive="active" mat-menu-item>版权智能存证登记</button>
             </mat-menu>
             <h3 [ngClass]="{'active' : menuIndex === 7}" routerLink="/admin/plan/item" routerLinkActive="active" (mouseover)="trustTrigger.closeMenu();keyTrigger.closeMenu();serviceTrigger.closeMenu();"  mat-subheader>
                 <span class="mat-list-icon">

@@ -34,7 +34,6 @@ export class AdminCompanyListPage {
         this.companySvc.list(this.params).subscribe(res => {
             this.total = res.total;
             this.dataSource = new MatTableDataSource<any>(res.list);
-            console.log(this.dataSource);
         });
     }
 
@@ -58,7 +57,7 @@ export class AdminCompanyListPage {
 
     change(item) {
         if (this.company.id === item.id) {
-            this.dialogSvc.show({content: '您当必须拥有一个主体'}).subscribe();
+            this.dialogSvc.show({content: '您必须拥有一个主体'}).subscribe();
         } else {
             this.companySvc.source(item.id).subscribe(res => {
                 if (res.id) {
