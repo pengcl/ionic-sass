@@ -1,4 +1,5 @@
-import {CompanyGuard} from "../company/company.guard";
+import {CompanyGuard} from '../company/company.guard';
+
 
 export default [
     {// 智能存证列表
