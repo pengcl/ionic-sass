@@ -27,7 +27,7 @@
     "echarts": "^4.6.0",
     "hammerjs": "^2.0.8",
     "list-to-tree": "^2.2.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "ng-circle-progress": "^1.5.1",
     "ngx-countup": "^7.3.0",
     "ngx-echarts": "^4.2.2",
